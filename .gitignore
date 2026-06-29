@@ -1,0 +1,25 @@
+# ============================================================
+# El repo solo contiene la WEB: código + imágenes webp + tooling.
+# Todo el material FUENTE pesado se queda en tu disco, fuera de git.
+# ============================================================
+
+# macOS
+.DS_Store
+
+# Fotos originales (jpg/tif/jxl, ~320MB). En el repo va solo el .webp de assets/img/.
+/FOTOS AGENDA/
+/FOTOS EDICIONS/
+/FOTOS_MR/
+
+# Material fuente / referencia (no lo necesita la web)
+/FULLS DE SALA/
+/referencias/
+/Recurso 2.png
+/web tatara-TEXT.pages
+
+# Config local del preview (ruta absoluta, específica de máquina)
+.claude/launch.json
+
+# Temporales
+*.log
+node_modules/

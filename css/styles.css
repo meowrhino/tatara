@@ -1,0 +1,200 @@
+/* ============================================================
+   TAT ARA — minimal, monospace, mobile-first
+   Negro sobre blanco. Color solo en los bloques de la agenda.
+   ============================================================ */
+
+:root {
+  /* Tipografía */
+  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  /* Wordmark "TAT ARA": pendiente la superstudioTrial; de momento usa la mono con tracking ancho */
+  --font-display: "Superstudio Trial", "Space Mono", ui-monospace, monospace;
+
+  /* Color */
+  --bg: #ffffff;
+  --ink: #111111;
+  --ink-soft: #9a9a9a;
+  --doodle: #cfcfcf;
+
+  /* Agenda */
+  --day-vh: 3dvh;          /* altura de 1 día */
+  --bar-h: 52px;           /* barra inferior */
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+
+/* Wordmark reutilizable */
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+
+/* ---------------- Agenda ---------------- */
+.agenda {
+  min-height: 100dvh;
+  padding-bottom: var(--bar-h);
+}
+.agenda__strip { display: flex; flex-direction: column; }
+.agenda__loading {
+  text-align: center; color: var(--ink-soft);
+  padding: 3rem 1rem; letter-spacing: 0.1em;
+}
+
+/* Huecos: un "TAT ARA" centrado */
+.seg--gap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(2 * var(--day-vh));
+}
+.seg--gap .tatara {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 6vw, 2rem);
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--ink);
+  user-select: none;
+  padding-left: 0.45em; /* compensa el tracking */
+}
+
+/* Bloques de evento */
+.seg--event {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  color: #fff;
+  overflow: hidden;
+  cursor: pointer;
+}
+.seg--event:focus-visible { outline: 2px solid var(--ink); outline-offset: -5px; }
+
+/* Etiqueta superior: título – artista  ···  fecha */
+.seg__label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1rem 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+.seg__label .seg__who { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.seg__label .seg__who b { font-weight: 700; }
+.seg__label .seg__when { flex: 0 0 auto; opacity: 0.92; }
+
+/* Imágenes dentro de la columna de color (bloques largos) */
+.seg__media {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.4rem 1rem 0;
+  width: 58%;
+  max-width: 320px;
+}
+.seg__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Fecha fin abajo del bloque largo */
+.seg__end {
+  position: absolute;
+  left: 1rem;
+  bottom: 0.7rem;
+  font-size: 0.8rem;
+  opacity: 0.92;
+}
+
+/* Bloque compacto (≤ 2 días): solo la etiqueta, centrada vertical */
+.seg--compact { display: flex; align-items: center; }
+.seg--compact .seg__label { width: 100%; padding-top: 0; padding-bottom: 0; }
+
+/* ---------------- Barra inferior ---------------- */
+.bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 30;
+  height: var(--bar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  background: var(--bg);
+  border-top: 1px solid var(--ink);
+  letter-spacing: 0.04em;
+}
+.bar__menu { letter-spacing: 0.04em; }
+.bar__menu:hover { text-decoration: underline; }
+
+/* ---------------- Menú overlay ---------------- */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--bg);
+  padding: 1.4rem 1.4rem var(--bar-h);
+  display: flex;
+  flex-direction: column;
+}
+.menu[hidden] { display: none; }
+.menu__head { display: flex; align-items: flex-start; justify-content: space-between; }
+.menu__title { letter-spacing: 0.04em; }
+.menu__close { line-height: 0; }
+
+.menu__list { list-style: none; margin: 2.2rem 0 0; padding: 0; }
+.menu__list li { margin: 0.55rem 0; }
+.menu__list a { font-size: 1.15rem; letter-spacing: 0.02em; }
+.menu__list a.is-active { font-weight: 700; }
+.menu__list a[data-soon] { color: var(--ink); }
+.menu__cart { display: flex; align-items: center; gap: 0.4rem; }
+.menu__squiggle { color: var(--ink); }
+
+.menu__cart-doodle { color: var(--ink); margin-top: auto; }
+
+.menu__langs { display: flex; gap: 2.4rem; margin-top: 1rem; }
+.menu__langs button { letter-spacing: 0.04em; }
+.menu__langs button.is-active { font-weight: 700; }
+
+/* ---------------- Modal de detalle ---------------- */
+.event-modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; }
+.event-modal[hidden] { display: none; }
+.event-modal__backdrop { position: absolute; inset: 0; background: rgba(255,255,255,0.85); }
+.event-modal__dialog {
+  position: relative; z-index: 1;
+  width: min(560px, 92vw);
+  max-height: 86dvh; overflow: auto;
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  padding: clamp(1.2rem, 5vw, 2rem);
+}
+.event-modal__close { position: absolute; top: 0.5rem; right: 0.6rem; line-height: 0; }
+.event-modal__body img { width: 100%; height: auto; margin-bottom: 1rem; }
+.event-modal__body .em-when { font-size: 0.82rem; color: var(--ink-soft); letter-spacing: 0.04em; }
+.event-modal__body .em-title { font-family: var(--font-display); font-size: clamp(1.4rem, 6vw, 2rem); letter-spacing: 0.05em; text-transform: uppercase; margin: 0.4rem 0 0.2rem; line-height: 1.1; }
+.event-modal__body .em-person { font-weight: 700; margin-bottom: 1rem; }
+.event-modal__body .em-desc { line-height: 1.6; text-align: justify; hyphens: auto; }
+.event-modal__body .em-demo { margin-top: 1rem; font-size: 0.75rem; color: var(--ink-soft); }
+
+/* ---------------- Desktop: la tira se centra en una columna ---------------- */
+@media (min-width: 720px) {
+  body { font-size: 16px; }
+  .agenda__strip { max-width: 430px; margin: 0 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAT ARA — Agenda</title>
+  <meta name="description" content="TAT ARA — espai galeria d'art, disseny i ecologia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main>
+    <section id="agenda" class="agenda" aria-label="Agenda">
+      <div class="agenda__strip" id="agenda-strip">
+        <p class="agenda__loading">carregant…</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Barra inferior fija -->
+  <footer class="bar">
+    <span class="bar__left">tatara studio</span>
+    <button class="bar__menu" id="open-menu" type="button" aria-haspopup="true" aria-expanded="false">menú</button>
+  </footer>
+
+  <!-- Menú overlay -->
+  <nav class="menu" id="menu" aria-label="Menú" hidden>
+    <div class="menu__head">
+      <span class="menu__title">tataramenú</span>
+      <button class="menu__close" id="close-menu" type="button" aria-label="Tancar">
+        <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+          <path d="M7 9 Q19 19 33 31 M33 8 Q20 20 8 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="menu__list">
+      <li><a href="#agenda" class="is-active" data-nav>agenda</a></li>
+      <li><a href="#" data-soon>nosaltres</a></li>
+      <li><a href="#" data-soon>artistas</a></li>
+      <li><a href="#" data-soon>diari</a></li>
+      <li><a href="#" data-soon>botiga</a></li>
+      <li><a href="#" data-soon>contacte</a></li>
+      <li class="menu__cart"><a href="#" data-soon>carrito</a>
+        <svg class="menu__squiggle" viewBox="0 0 30 40" width="22" height="30" aria-hidden="true">
+          <path d="M8 6 Q26 8 14 20 Q4 28 16 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </li>
+    </ul>
+    <svg class="menu__cart-doodle" viewBox="0 0 90 60" width="78" height="52" aria-hidden="true">
+      <path d="M4 12 H18 L26 40 H66 L74 18 H22 M30 40 Q36 40 36 46 M58 40 Q64 40 64 46"
+            fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="34" cy="52" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="60" cy="52" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+    <div class="menu__langs" role="group" aria-label="Idioma">
+      <button type="button" data-lang="en">en</button>
+      <button type="button" data-lang="es">es</button>
+      <button type="button" data-lang="ca" class="is-active">cat</button>
+    </div>
+  </nav>
+
+  <!-- Detall d'esdeveniment -->
+  <div class="event-modal" id="event-modal" hidden>
+    <div class="event-modal__backdrop" data-close></div>
+    <div class="event-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
+      <button class="event-modal__close" type="button" data-close aria-label="Tancar">
+        <svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true">
+          <path d="M7 9 Q19 19 33 31 M33 8 Q20 20 8 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="event-modal__body" id="event-modal-body"></div>
+    </div>
+  </div>
+
+  <script src="js/agenda.js" defer></script>
+</body>
+</html>

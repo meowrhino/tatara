@@ -1,0 +1,127 @@
+{
+  "_comment": "Modelo de datos de la AGENDA. title/description son objetos por idioma (i18n-ready); de momento solo 'ca'. start/end en YYYY-MM-DD (end opcional = mismo día). time opcional. color = franja del evento. demo:true = evento de relleno para ver la tira poblada, borrar cuando haya datos reales en ventana.",
+  "events": [
+    {
+      "id": "demo-solange",
+      "demo": true,
+      "kind": "exposicio",
+      "person": "Solange Dalannais",
+      "title": {
+        "ca": "Presència en la impermanència"
+      },
+      "start": "2026-07-02",
+      "end": "2026-07-19",
+      "color": "#8FE98F",
+      "image": "assets/img/agenda/solange.webp",
+      "description": {
+        "ca": "Exposició de Solange Dalannais."
+      }
+    },
+    {
+      "id": "demo-ines",
+      "demo": true,
+      "kind": "conversa",
+      "person": "Inés Sistiaga i Sol Prado",
+      "title": {
+        "ca": "Conversa: la fàbrica com a espai de coneixement"
+      },
+      "start": "2026-07-21",
+      "time": "18:00",
+      "color": "#E89BD9",
+      "image": "assets/img/agenda/ines-sistiaga.webp",
+      "description": {
+        "ca": "Conversa amb Inés Sistiaga i Sol Prado, organitzada conjuntament amb TMDC. La fàbrica com a espai de coneixement i de vincle amb el territori."
+      }
+    },
+    {
+      "id": "demo-annadot",
+      "demo": true,
+      "kind": "exposicio",
+      "person": "Anna Dot",
+      "title": {
+        "ca": "Pàteres de llet"
+      },
+      "start": "2026-07-23",
+      "end": "2026-07-28",
+      "color": "#F4E04D",
+      "image": "assets/img/agenda/annadot.webp",
+      "description": {
+        "ca": "Pàtera feta amb la llet materna residual: un element per a rituals quotidians. Un projecte que parla de la maternitat, la conciliació i les noves quotidianitats."
+      }
+    },
+    {
+      "id": "conversa-ines-sol",
+      "kind": "conversa",
+      "person": "Inés Sistiaga i Sol Prado",
+      "title": {
+        "ca": "Conversa amb Inés Sistiaga i Sol Prado"
+      },
+      "start": "2026-01-25",
+      "time": "12:00",
+      "color": "#E89BD9",
+      "image": "assets/img/agenda/ines-sistiaga.webp",
+      "description": {
+        "ca": "Esdeveniment organitzat conjuntament amb TMDC. La fàbrica com a espai de coneixement i de vincle amb el territori; més enllà d'una eina capitalista, una eina de resistència i cultura."
+      }
+    },
+    {
+      "id": "clausura-sostenir-la-terra",
+      "kind": "conversa",
+      "person": "Maria Roy Deulofeu",
+      "title": {
+        "ca": "Clausura: Sostenir la Terra"
+      },
+      "start": "2026-01-29",
+      "time": "17:00",
+      "color": "#FF9E80",
+      "image": "assets/img/agenda/mariaroy-clausura.webp",
+      "description": {
+        "ca": "Clausura i conversa de l'exposició Sostenir la Terra, amb Mati Cini (Salemi Ceramics). Sobre el concepte de territori, el valor de l'observació i la connexió amb la terra."
+      }
+    },
+    {
+      "id": "no-limits",
+      "kind": "exposicio",
+      "person": "Sara G. de Ubieta, Olatz Azcona i Joana Mallol",
+      "title": {
+        "ca": "No Limits"
+      },
+      "start": "2026-06-04",
+      "end": "2026-06-20",
+      "time": "16:00",
+      "color": "#8FE98F",
+      "description": {
+        "ca": "Inauguració 04/06 a les 16:00. Projecte amb el suport de CAP DEP i en col·laboració amb TEB Bellvitge i Solidança."
+      }
+    },
+    {
+      "id": "annadot-pateres",
+      "kind": "exposicio",
+      "person": "Anna Dot",
+      "title": {
+        "ca": "Pàteres"
+      },
+      "start": "2025-09-15",
+      "end": "2025-10-05",
+      "color": "#F4E04D",
+      "image": "assets/img/agenda/annadot.webp",
+      "description": {
+        "ca": "Coincidint amb la Barcelona Gallery Weekend (18–21 set) i l'equinocci de tardor."
+      }
+    },
+    {
+      "id": "tanatolab-duda",
+      "kind": "esdeveniment",
+      "person": "DU-DA",
+      "title": {
+        "ca": "Tanatolab"
+      },
+      "start": "2025-12-15",
+      "color": "#C3A6F0",
+      "image": "assets/img/agenda/duda-raquel-buj.webp",
+      "description": {
+        "ca": "Programa de trobades del projecte Tanatolab: la recerca Morir Guay. Eines per repensar la mort amb sobirania i des d'una mirada ecofeminista."
+      }
+    }
+  ]
+}
