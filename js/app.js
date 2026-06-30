@@ -172,11 +172,11 @@ function pageWrap(inner) {
 }
 
 function renderText(view, data) {
-  const blocks = (t(data.body) || []);
-  const body = (Array.isArray(blocks) ? blocks : [blocks]).map((b) => {
-    if (typeof b === 'string') return `<p>${esc(b)}</p>`;
+  const blocks = data.body || [];
+  const body = blocks.map((b) => {
     const heading = b.heading ? `<h2 class="prose__heading">${esc(t(b.heading))}</h2>` : '';
-    return `${heading}<p>${esc(b.text)}</p>`;
+    const text = t(b.text);
+    return text ? `${heading}<p>${esc(text)}</p>` : heading;
   }).join('');
   view.innerHTML = pageWrap(`<div class="prose">${body}</div>`);
 }
