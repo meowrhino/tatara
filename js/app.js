@@ -21,6 +21,7 @@ const CACHE = new Map();  // url -> parsed json
 const $ = (sel, root = document) => root.querySelector(sel);
 const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const wordmark = (s) => s.split('').map((c) => `<span>${c === ' ' ? '&nbsp;' : esc(c)}</span>`).join('');
 const t = (f) => f == null ? '' : (typeof f === 'string' ? f : (f[LANG] || f.ca || Object.values(f)[0] || ''));
 
 async function loadJSON(url) {
@@ -87,7 +88,7 @@ function renderAgenda(view, data) {
 function gapBlock(gapVh) {
   const gap = el('div', 'seg seg--gap');
   gap.style.minHeight = `${gapVh}dvh`;
-  gap.appendChild(el('span', 'tatara', 'TAT ARA'));
+  gap.appendChild(el('span', 'tatara', wordmark('TAT ARA')));
   return gap;
 }
 
@@ -165,9 +166,9 @@ function openEventModal(ev) {
    ============================================================ */
 function pageWrap(inner) {
   return `<div class="page">
-    <h1 class="page__wordmark wordmark">TAT ARA</h1>
+    <h1 class="page__wordmark wordmark">${wordmark('TAT ARA')}</h1>
     ${inner}
-    <p class="page__wordmark page__wordmark--foot wordmark">TAT ARA</p>
+    <p class="page__wordmark page__wordmark--foot wordmark">${wordmark('TAT ARA')}</p>
   </div>`;
 }
 

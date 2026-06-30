@@ -60,9 +60,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* Wordmark */
 .wordmark {
+  display: inline-flex;
+  gap: 0.4em;
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: 0.4em;
   text-transform: uppercase;
 }
 
@@ -78,13 +79,13 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   justify-content: center;
 }
 .seg--gap .tatara {
+  display: inline-flex;
+  gap: 0.45em;
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 6vw, 2rem);
-  letter-spacing: 0.45em;
   text-transform: uppercase;
   color: var(--ink);
   user-select: none;
-  padding-left: 0.45em;
 }
 
 /* Bloques de evento — pueden contener O.R. anidados (seg__children) */
