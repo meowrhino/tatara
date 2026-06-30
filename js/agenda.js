@@ -1,23 +1,30 @@
 /* ============================================================
    TAT ARA — AGENDA
    La sección central: un "strip" vertical donde cada exposición es un bloque
-   de color cuya altura es un eje temporal real (cada día = dayVh dvh). Dentro
-   de cada bloque, los O.R. (Open Research) se ubican en su día exacto.
+   de color cuya altura es un eje temporal real (cada día = --day = dayVh dvh).
 
-   Reto de layout: los O.R. van en position:absolute con el top calculado en
-   JS a partir de las alturas reales del contenido. Esas alturas no se conocen
-   hasta que cargan imágenes y fuentes, así que el posicionamiento se rehace
-   (relayoutAgenda) tras cada carga y al redimensionar; si no, los O.R. se
-   solaparían entre sí o se montarían sobre la imagen de la cabecera.
+   Modelo de layout (en FLUJO, sin position:absolute):
+   - El bloque es una columna flex con min-height = max(minVh, días·dayVh).
+   - Tras cabecera/imagen/descripción va la región temporal .seg__days. Dentro,
+     cada O.R. ocupa como mínimo los días que lo separan del siguiente, en
+     unidades de --day (min-height en dvh). Si su contenido excede ese mínimo,
+     empuja al siguiente hacia abajo (estirar para caber).
+   - Consecuencia: el solapamiento es imposible (nada se monta en flujo), el
+     crecimiento es automático (el contenido empuja la altura) y el resize lo
+     resuelve el CSS solo (todo en dvh). No hay relayout de O.R. en JS.
+
+   Lo único que aún se mide es la marca "avui": vive fuera del color, pegada al
+   borde de pantalla, y su Y depende de la altura real de la cabecera (que
+   cambia al cargar imágenes), así que se reposiciona en cada carga/resize.
    ============================================================ */
 
 import { el, esc, wordmark, t, KIND_CA, imagesOf } from './utils.js';
 import { SITE } from './state.js';
 import { parseDate, todayDate, sameDay, daysBetween, dMes, rangeSlash } from './dates.js';
 
-// events.json (renombrado a agenda.json) guarda claves de paleta ("menta",
-// "rosa"...); data.json -> palette es la fuente única de verdad. Si llega un
-// valor que no está en la paleta se usa tal cual (admite hex literal de respaldo).
+// agenda.json guarda claves de paleta ("menta", "rosa"...); data.json -> palette
+// es la fuente única de verdad. Si llega un valor que no está en la paleta se
+// usa tal cual (admite hex literal de respaldo).
 const resolveColor = (key) => (SITE && SITE.palette && SITE.palette[key]) || key || '#111';
 
 // Elige tinta negra o blanca según la luminancia del fondo.
@@ -30,10 +37,16 @@ function textOn(hex) {
 const ORKIND = new Set(['conversa', 'lectura', 'sessio', 'taller', 'esdeveniment']);
 const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (KIND_CA[ev.kind] || '');
 
+// Offset (en días, base 0) del día d dentro de un evento que empieza en s.
+const dayOffset = (s, d) => daysBetween(s, d) - 1;
+
 export function renderAgenda(view, data) {
   const cfg = (SITE && SITE.agenda) || {};
   const dayVh = cfg.dayVh || 3, minVh = cfg.minEventVh || 10, gapVh = cfg.gapVh || 13;
   const compactMax = cfg.compactMaxDays || 2, mediaMin = cfg.mediaMinDays || 6, endMin = cfg.endMinDays || 4;
+
+  // Unidad de día para el CSS: todo el espaciado temporal se expresa con var(--day).
+  view.style.setProperty('--day', `${dayVh}dvh`);
 
   const events = (data.events || []).slice()
     .sort((a, b) => parseDate(a.start) - parseDate(b.start));
@@ -56,15 +69,7 @@ export function renderAgenda(view, data) {
   });
   view.appendChild(strip);
 
-  // dayVh queda guardado para que relayoutAgenda (recolocación al cargar
-  // imágenes/fuentes y al redimensionar) pueda recalcular sin reconstruir.
   view.dataset.agendaDayVh = String(dayVh);
-
-  // Primer posicionamiento de los O.R. (children) en su día exacto dentro del
-  // bloque. Ojo: aquí las imágenes aún no han cargado (miden ~0), así que esto
-  // es solo una aproximación; relayoutAgenda lo rehace cuando cargan (ver
-  // scrollAgendaToToday) — si no, los O.R. quedarían montados sobre la imagen.
-  strip.querySelectorAll('.seg--event').forEach((block) => relayoutChildren(block, dayVh));
 
   const todayMark = placeTodayMark(view, dayVh);
   const todayHost = strip.querySelector('[data-today-days-in]');
@@ -75,37 +80,80 @@ export function renderAgenda(view, data) {
 
 // Marca "avui": vive fuera de los bloques de color (hija de #view, no del
 // bloque), pegada al borde real de la pantalla — así nunca compite con el
-// contenido centrado. Solo se muestra si hay hueco para ella (ver CSS).
-// Se reutiliza el mismo nodo en cada recálculo: solo se actualiza su top.
+// contenido centrado. Solo se muestra si hay hueco (ver CSS, desktop).
+// Es lo único medido: su Y = top del origen temporal del bloque de hoy (la
+// región .seg__days) + los días transcurridos. Se reutiliza el mismo nodo.
 function placeTodayMark(view, dayVh) {
   const strip = view.querySelector('.agenda__strip');
-  const todayHost = strip && strip.querySelector('[data-today-days-in]');
+  const host = strip && strip.querySelector('[data-today-days-in]');
   let mark = view.querySelector('.agenda__today-mark');
-  if (!todayHost) return mark || null;
-  const daysIn = Number(todayHost.dataset.todayDaysIn);
-  const baseH = blockContentBaseH(todayHost);
+  if (!host) return mark || null;
+
+  const days = host.querySelector(':scope > .seg__days');
+  // origen del eje temporal del bloque, relativo a #view (offsetParent común)
+  const originY = host.offsetTop + (days ? days.offsetTop : host.offsetHeight);
+  const daysIn = Number(host.dataset.todayDaysIn);
+
   if (!mark) { mark = el('div', 'agenda__today-mark', 'avui'); view.appendChild(mark); }
-  mark.style.top = `calc(${todayHost.offsetTop}px + ${baseH}px + ${daysIn * dayVh}dvh)`;
+  mark.style.top = `calc(${originY}px + ${daysIn * dayVh}dvh)`;
   return mark;
 }
 
-// Re-mide y recoloca toda la agenda: los O.R. de cada bloque (que se solapan
-// o se montan sobre la imagen mientras esta aún no ha cargado) y la marca
-// "avui". Hay que llamarlo cada vez que cambian las alturas reales: al cargar
-// imágenes/fuentes, al abrir/cerrar una descripción y al redimensionar.
+// Recoloca solo la marca "avui" (su Y mezcla px de offset con dvh, así que se
+// descuadra al cambiar alturas/viewport). Todo lo demás es CSS puro.
 export function relayoutAgenda(view) {
-  const dayVh = Number(view.dataset.agendaDayVh) || 3;
-  view.querySelectorAll('.seg--event').forEach((block) => relayoutChildren(block, dayVh));
-  placeTodayMark(view, dayVh);
+  placeTodayMark(view, Number(view.dataset.agendaDayVh) || 3);
 }
 
-// Tras cargar imágenes/fuentes hay que recolocar (sus alturas reales mueven
-// todo lo de abajo) y luego corregir el scroll hacia "avui".
+// Y absoluta de la línea "avui" (mismo cálculo que la marca, pero resuelto a px
+// para poder hacer scrollTo). Devuelve null si hoy no cae dentro de un bloque no
+// compacto (entonces se cae al bloque marcado como data-today-target).
+function todayScrollY(view) {
+  const strip = view.querySelector('.agenda__strip');
+  const host = strip && strip.querySelector('[data-today-days-in]');
+  if (!host) return null;
+  const dayVh = Number(view.dataset.agendaDayVh) || 3;
+  const days = host.querySelector(':scope > .seg__days');
+  const originY = host.offsetTop + (days ? days.offsetTop : host.offsetHeight);
+  const daysIn = Number(host.dataset.todayDaysIn) || 0;
+  const dayPx = (dayVh / 100) * window.innerHeight; // var(--day) en px, según el viewport actual
+  const topMargin = window.innerHeight * 0.18;      // deja algo de contexto encima de "avui"
+  return Math.max(0, originY + daysIn * dayPx - topMargin);
+}
+
+function scrollToToday(view) {
+  const y = todayScrollY(view);
+  if (y != null) { window.scrollTo(0, y); return; }
+  const tgt = view.querySelector('[data-today-target="1"]');
+  if (tgt) tgt.scrollIntoView({ block: 'start' });
+}
+
+// Tras cargar imágenes/fuentes hay que reubicar la marca (sus offsets px
+// cambian) y corregir el scroll hacia "avui". Pero en cuanto el usuario hace
+// scroll dejamos de recolocar: si no, cada imagen lazy que carga al bajar
+// dispararía scrollIntoView y le robaría el scroll (en iOS se sentía como que la
+// página se quedaba "pillada"). La ventana de auto-scroll también se cierra sola
+// a los 2,5 s para no pelearse con cargas muy tardías.
 export function scrollAgendaToToday(view) {
+  let autoScroll = true;
+  const opts = { passive: true };
+  const stop = () => {
+    autoScroll = false;
+    window.removeEventListener('wheel', stop, opts);
+    window.removeEventListener('touchmove', stop, opts);
+    window.removeEventListener('keydown', onKey);
+  };
+  const onKey = (e) => {
+    if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ', 'Spacebar'].includes(e.key)) stop();
+  };
+  window.addEventListener('wheel', stop, opts);
+  window.addEventListener('touchmove', stop, opts);
+  window.addEventListener('keydown', onKey);
+  setTimeout(stop, 2500);
+
   const settle = () => {
-    relayoutAgenda(view);
-    const tgt = view.querySelector('[data-today-target="1"]');
-    if (tgt) tgt.scrollIntoView({ block: 'start' });
+    relayoutAgenda(view);          // la marca se recoloca siempre
+    if (autoScroll) scrollToToday(view);
   };
   requestAnimationFrame(settle);
 
@@ -126,47 +174,6 @@ function gapBlock(gapVh) {
   return gap;
 }
 
-// Borde inferior del contenido "de cabecera" del bloque (título + imagen +
-// descripción, si la hay): los O.R. se posicionan a partir de ahí.
-function blockContentBaseH(block) {
-  const head = block.querySelector(':scope > .seg__head');
-  const media = block.querySelector(':scope > .seg__media');
-  const desc = block.querySelector(':scope > .seg__desc');
-  let baseH = head.offsetHeight;
-  if (media) baseH = Math.max(baseH, media.offsetTop + media.offsetHeight);
-  if (desc && !desc.hidden) baseH = Math.max(baseH, desc.offsetTop + desc.offsetHeight);
-  return baseH;
-}
-
-// Recoloca los O.R. de un bloque en su día ideal, evitando que se solapen (si
-// dos caen muy seguidos o una descripción los empuja) y haciendo crecer el
-// bloque si no caben en su altura por días. Depende de alturas reales, así que
-// se llama al renderizar y de nuevo cuando esas alturas cambian (ver cabecera).
-function relayoutChildren(block, dayVh) {
-  const vhPx = window.innerHeight / 100;
-  const CHILD_GAP_PX = 12;
-
-  block.style.minHeight = block.dataset.baseMinHeight; // altura "natural" por días, antes de medir
-  const baseH = blockContentBaseH(block);
-
-  const rows = Array.from(block.querySelectorAll(':scope > .seg__child[data-day-offset]'));
-  let prevBottomPx = null;
-  rows.forEach((row) => {
-    const off = Number(row.dataset.dayOffset);
-    const idealTopPx = baseH + off * dayVh * vhPx;
-    const topPx = prevBottomPx == null ? Math.max(idealTopPx, baseH) : Math.max(idealTopPx, prevBottomPx + CHILD_GAP_PX);
-    row.style.top = `${topPx}px`;
-    prevBottomPx = topPx + row.offsetHeight;
-  });
-
-  if (!rows.length) return;
-  const endEl = block.querySelector(':scope > .seg__end');
-  const neededPx = prevBottomPx + 16 + (endEl ? endEl.offsetHeight : 0);
-  if (neededPx > block.offsetHeight) {
-    block.style.minHeight = `${neededPx / vhPx}dvh`;
-  }
-}
-
 function eventBlock(ev, o, today) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
   const days = Math.max(1, daysBetween(s, e));
@@ -176,8 +183,7 @@ function eventBlock(ev, o, today) {
 
   const color = resolveColor(ev.color);
   const block = el('div', 'seg seg--event' + (compact ? ' seg--compact' : ''));
-  block.dataset.baseMinHeight = `max(${o.minVh}dvh, ${days * o.dayVh}dvh)`;
-  block.style.minHeight = block.dataset.baseMinHeight;
+  block.style.minHeight = `max(${o.minVh}dvh, ${days * o.dayVh}dvh)`;
   block.style.background = color;
   block.style.color = textOn(color);
   block.dataset.id = ev.id;
@@ -189,7 +195,7 @@ function eventBlock(ev, o, today) {
   block.appendChild(head);
 
   if (isToday && !compact) {
-    block.dataset.todayDaysIn = String(daysBetween(s, today) - 1);
+    block.dataset.todayDaysIn = String(dayOffset(s, today));
   }
 
   if (compact) return block; // sin imagen ni O.R.: la cabecera ya llena el bloque
@@ -207,11 +213,26 @@ function eventBlock(ev, o, today) {
     block.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
   }
 
-  children.forEach((c) => {
+  // Región temporal: su borde superior es el "día 0" desde el que se miden los
+  // O.R. (y la marca "avui"). Existe siempre en bloques no compactos —aunque
+  // esté vacía— para servir de origen del eje.
+  const daysRegion = el('div', 'seg__days');
+  block.appendChild(daysRegion);
+
+  children.forEach((c, idx) => {
     const cs = parseDate(c.start);
     const childIsToday = !!today && sameDay(today, cs);
+    const offset = dayOffset(s, cs);
+
     const row = el('div', 'seg__child' + (childIsToday ? ' seg__child--today' : ''));
-    row.dataset.dayOffset = String(daysBetween(s, cs) - 1);
+    // Cada O.R. reserva como mínimo los días que lo separan del siguiente; el
+    // último reserva el margen final. El espacio sobrante de cada fila ES el
+    // hueco temporal hasta el O.R. siguiente.
+    if (idx === 0 && offset > 0) row.style.marginTop = `calc(${offset} * var(--day))`;
+    const gapDays = idx < children.length - 1
+      ? dayOffset(s, parseDate(children[idx + 1].start)) - offset
+      : TRAILING_DAYS;
+    row.style.minHeight = `calc(${Math.max(0, gapDays)} * var(--day))`;
 
     const info = el('div', 'seg__child-info');
     info.innerHTML =
@@ -227,7 +248,7 @@ function eventBlock(ev, o, today) {
       row.appendChild(el('div', 'seg__child-desc', esc(t(c.description))));
     }
 
-    block.appendChild(row);
+    daysRegion.appendChild(row);
   });
 
   if (days >= o.endMin && ev.end && !sameDay(s, e)) {

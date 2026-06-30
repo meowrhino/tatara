@@ -19,6 +19,7 @@
 }
 
 :root {
+  color-scheme: light; /* el sitio es negro-sobre-blanco: evita que iOS/Safari lo oscurezca solo */
   --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --font-display: "Superstudio Trial", "Space Mono", ui-monospace, monospace;
 
@@ -151,11 +152,19 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__media--left { margin-right: auto; }
 .seg__media--right { margin-left: auto; }
 
-/* O.R. / esdeveniments anidados: cada uno se ubica en su día exacto dentro
-   del bloque (top calculado en JS, ver renderAgenda). */
+/* Región temporal del bloque: contiene los O.R. en flujo. Su borde superior
+   es el "día 0" del eje. La separación entre O.R. la da el min-height (en
+   var(--day)) de cada fila, calculado en JS al renderizar — ver eventBlock. */
+.seg__days {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* O.R. / esdeveniments anidados: cada uno reserva como mínimo los días que lo
+   separan del siguiente (min-height inline en var(--day)); si su contenido es
+   más alto, empuja al siguiente hacia abajo. */
 .seg__child {
-  position: absolute;
-  left: 0; right: 0;
   padding: 0 1rem;
 }
 .seg__child-info {

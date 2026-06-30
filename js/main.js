@@ -37,9 +37,15 @@ async function init() {
   });
 
   // Al redimensionar, los top de los O.R. (calculados en px a partir de dvh)
-  // se descuadran: recolocamos la agenda si es la sección visible.
+  // se descuadran: recolocamos la agenda si es la sección visible. Pero en iOS
+  // la barra de URL al hacer scroll dispara "resize" cambiando solo la altura;
+  // eso no toca el layout horizontal, así que ignoramos los cambios que no
+  // varían el ancho para no recolocar la marca en cada scroll.
+  let lastW = window.innerWidth;
   let resizeRAF = null;
   window.addEventListener('resize', () => {
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
     const view = $('#view');
     if (view.dataset.section !== 'agenda') return;
     if (resizeRAF) cancelAnimationFrame(resizeRAF);

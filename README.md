@@ -54,12 +54,18 @@ una secció nova = afegir una entrada a `sections[]` + el seu JSON + (si cal) un
 taller) que cauen dins del seu rang de dates van **anidats** dins del mateix bloc
 (`children[]` a `agenda.json`), cadascun ubicat al seu dia exacte dins del bloc,
 amb la seva descripció inline visible sota el títol/imatge. El que no cau dins de
-cap exposició queda com a bloc independent. Cada dia ocupa `dayVh` (a `data.json`
-→ `agenda`) com a eix temporal real; si el contingut (imatge + descripció + O.R.)
-no hi cap, el bloc s'allarga el necessari i la resta segueix amb el mateix
-format. La recol·locació es refà quan carreguen imatges/fonts i en redimensionar
-(`relayoutAgenda` a `js/agenda.js`), perquè abans de carregar les imatges mesuren ~0
-i els O.R. se solaparien.
+cap exposició queda com a bloc independent.
+
+El layout és **en flux** (sense `position:absolute`): cada dia val `--day`
+(= `dayVh` dvh, a `data.json` → `agenda`). El bloc té `min-height` proporcional
+a la seva durada; dins, la regió `.seg__days` posa cada O.R. amb un `min-height`
+en `var(--day)` igual als dies que el separen del següent. Si el contingut d'un
+O.R. excedeix el seu mínim, empeny el següent cap avall (estirar per cabre) i el
+darrer reserva 1 dia de marge final. Conseqüència: el solapament és impossible,
+el creixement és automàtic i el resize el resol el CSS sol — no hi ha relayout
+d'O.R. en JS. L'únic que es mesura és la marca **"avui"** (`placeTodayMark` a
+`js/agenda.js`), que viu fora del color i es reubica en carregar imatges i en
+redimensionar.
 
 ## Pendent
 
