@@ -94,7 +94,20 @@ function renderAgenda(view, data) {
   });
   view.appendChild(strip);
 
-  const target = strip.querySelector('.seg__today-line') || currentBlock || upcomingBlock || lastBlock;
+  // La línea de "avui" se inserta aquí (no en eventBlock) porque necesita
+  // medir la altura real ya renderizada de la cabecera (offsetHeight),
+  // y eso solo existe una vez el bloque está conectado al documento.
+  let todayLine = null;
+  const todayHost = strip.querySelector('[data-today-days-in]');
+  if (todayHost) {
+    const daysIn = Number(todayHost.dataset.todayDaysIn);
+    const head = todayHost.querySelector('.seg__head');
+    todayLine = el('div', 'seg__today-line', '<span>avui</span>');
+    todayLine.style.top = `calc(${head.offsetHeight}px + ${daysIn * dayVh}dvh)`;
+    todayHost.appendChild(todayLine);
+  }
+
+  const target = todayLine || currentBlock || upcomingBlock || lastBlock;
   if (target) target.dataset.todayTarget = '1';
 }
 
@@ -150,10 +163,7 @@ function eventBlock(ev, o, today) {
   block.appendChild(head);
 
   if (isToday && !compact) {
-    const daysIn = daysBetween(s, today) - 1;
-    const line = el('div', 'seg__today-line', '<span>avui</span>');
-    line.style.top = `${daysIn * o.dayVh}dvh`;
-    block.appendChild(line);
+    block.dataset.todayDaysIn = String(daysBetween(s, today) - 1);
   }
 
   if (!compact) {
