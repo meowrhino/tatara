@@ -237,9 +237,15 @@ function renderContact(view) {
   const addr = (c.address || []).map(esc).join('<br>');
   view.innerHTML = pageWrap(`
     <div class="contact">
-      ${addr ? `<p class="contact__addr">${addr}</p>` : ''}
-      ${c.email ? `<p class="contact__email"><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>` : ''}
-      ${c.instagram ? `<p class="contact__ig"><a href="${esc(c.instagram)}" target="_blank" rel="noopener">Instagram ↗</a></p>` : ''}
+      <svg class="contact__doodle" viewBox="0 0 390 600" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M -10 250 Q 18 233 48 244 Q 74 253 96 213 Q 138 152 200 140 Q 268 154 400 212"/>
+        <path d="M -10 470 Q 92 497 192 489 Q 292 481 400 448"/>
+      </svg>
+      <div class="contact__info">
+        ${addr ? `<p class="contact__addr">${addr}</p>` : ''}
+        ${c.email ? `<p class="contact__email"><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>` : ''}
+        ${c.instagram ? `<p class="contact__ig"><a href="${esc(c.instagram)}" target="_blank" rel="noopener">Instagram ↗</a></p>` : ''}
+      </div>
     </div>`);
 }
 
@@ -322,6 +328,8 @@ async function renderRoute() {
   view.dataset.section = id;
   view.scrollTop = 0;
   window.scrollTo(0, 0);
+  const label = t(section.label);
+  document.title = `${SITE.site.name} — ${label.charAt(0).toUpperCase()}${label.slice(1)}`;
 
   try {
     const data = section.data ? await loadJSON(section.data) : null;
