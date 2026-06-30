@@ -94,25 +94,37 @@ function renderAgenda(view, data) {
   });
   view.appendChild(strip);
 
-  // La línea de "avui" se inserta aquí (no en eventBlock) porque necesita
-  // medir la altura real ya renderizada de la cabecera (offsetHeight),
-  // y eso solo existe una vez el bloque está conectado al documento.
-  let todayLine = null;
+  // Posiciona los O.R. (children) en su día exacto dentro del bloque: hace
+  // falta medir la cabecera ya renderizada (offsetHeight), por eso se hace
+  // aquí y no en eventBlock (el bloque aún no está en el documento allí).
+  strip.querySelectorAll('.seg--event').forEach((block) => {
+    const headH = block.querySelector('.seg__head').offsetHeight;
+    block.querySelectorAll(':scope > .seg__child[data-day-offset]').forEach((row) => {
+      const off = Number(row.dataset.dayOffset);
+      row.style.top = `calc(${headH}px + ${off * dayVh}dvh)`;
+    });
+  });
+
+  // Marca "avui": vive fuera de los bloques de color (hijo de #view, no del
+  // bloque), pegada al borde real de la pantalla — así nunca compite con el
+  // contenido centrado. Solo se muestra si hay hueco para ella (ver CSS).
+  let todayMark = null;
   const todayHost = strip.querySelector('[data-today-days-in]');
   if (todayHost) {
     const daysIn = Number(todayHost.dataset.todayDaysIn);
-    const head = todayHost.querySelector('.seg__head');
-    todayLine = el('div', 'seg__today-line', '<span>avui</span>');
-    todayLine.style.top = `calc(${head.offsetHeight}px + ${daysIn * dayVh}dvh)`;
-    todayHost.appendChild(todayLine);
+    const headH = todayHost.querySelector('.seg__head').offsetHeight;
+    todayMark = el('div', 'agenda__today-mark', 'avui');
+    todayMark.style.top = `calc(${todayHost.offsetTop}px + ${headH}px + ${daysIn * dayVh}dvh)`;
+    view.appendChild(todayMark);
   }
 
-  const target = todayLine || currentBlock || upcomingBlock || lastBlock;
+  const isDesktop = window.matchMedia('(min-width: 720px)').matches;
+  const target = (isDesktop && todayMark) || todayHost || currentBlock || upcomingBlock || lastBlock;
   if (target) target.dataset.todayTarget = '1';
 }
 
 // Corrige el scroll tras cargar imágenes/fuentes: su carga asíncrona desplaza
-// los bloques (alturas no fijas del todo) y descuadraría la línea de "avui".
+// los bloques (alturas no fijas del todo) y descuadraría la marca de "avui".
 function scrollAgendaToToday(view) {
   const scrollNow = () => {
     const t = view.querySelector('[data-today-target="1"]');
@@ -143,7 +155,7 @@ const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (KIND_CA[ev.kind]
 function eventBlock(ev, o, today) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
   const days = Math.max(1, daysBetween(s, e));
-  const children = ev.children || [];
+  const children = (ev.children || []).slice().sort((a, b) => parseDate(a.start) - parseDate(b.start));
   const compact = days <= o.compactMax && !children.length;
   const isToday = !!today && today >= s && today <= e;
 
@@ -166,41 +178,70 @@ function eventBlock(ev, o, today) {
     block.dataset.todayDaysIn = String(daysBetween(s, today) - 1);
   }
 
-  if (!compact) {
-    const imgs = imagesOf(ev);
-    if (days >= o.mediaMin && imgs.length) {
-      const media = el('div', 'seg__media');
-      const img = el('img');
-      img.src = imgs[0]; img.alt = t(ev.title); img.loading = 'lazy';
-      media.appendChild(img);
-      block.appendChild(media);
-    }
+  if (compact) return block; // sin imagen ni O.R.: la cabecera ya llena el bloque
+
+  // Contador de imágenes del bloque (expo + O.R.), para alternar izq/dcha.
+  // Se reinicia en cada bloque, así la primera imagen del bloque va a la izq.
+  let imgCount = 0;
+
+  const imgs = imagesOf(ev);
+  if (days >= o.mediaMin && imgs.length) {
+    block.appendChild(mediaEl(imgs[0], t(ev.title), imgCount++));
   }
 
-  if (children.length) {
-    const list = el('ul', 'seg__children');
-    children.slice().sort((a, b) => parseDate(a.start) - parseDate(b.start)).forEach((c) => {
-      const cs = parseDate(c.start);
-      const childIsToday = !!today && sameDay(today, cs);
-      const li = el('li', childIsToday ? 'seg__child--today' : null);
-      const btn = el('button', 'seg__child');
-      btn.type = 'button';
-      btn.innerHTML =
-        `<span class="seg__child-name">${esc(orLabel(c))} · ${esc(t(c.title))}${c.person ? ' – <b>' + esc(c.person) + '</b>' : ''}</span>` +
-        (childIsToday ? '<span class="seg__today-badge">avui</span>' : '') +
-        `<span class="seg__child-when">${esc(rangeSlash(c))}</span>`;
-      btn.addEventListener('click', () => openEventModal(c));
-      li.appendChild(btn);
-      list.appendChild(li);
-    });
-    block.appendChild(list);
-  }
+  children.forEach((c) => {
+    const cs = parseDate(c.start);
+    const childIsToday = !!today && sameDay(today, cs);
+    const row = el('div', 'seg__child' + (childIsToday ? ' seg__child--today' : ''));
+    row.dataset.dayOffset = String(daysBetween(s, cs) - 1);
 
-  if (!compact && days >= o.endMin && ev.end && !sameDay(s, e)) {
+    const btn = el('button', 'seg__child-info');
+    btn.type = 'button';
+    btn.innerHTML =
+      `<span class="seg__child-when">${esc(rangeSlash(c))}</span>` +
+      `<span class="seg__child-name">${esc(orLabel(c))} · ${esc(t(c.title))}${c.person ? ' – <b>' + esc(c.person) + '</b>' : ''}</span>` +
+      (childIsToday ? '<span class="seg__today-badge">avui</span>' : '');
+    btn.addEventListener('click', () => openEventModal(c));
+    row.appendChild(btn);
+
+    const cImgs = imagesOf(c);
+    if (cImgs.length) row.appendChild(mediaEl(cImgs[0], t(c.title), imgCount++));
+
+    block.appendChild(row);
+  });
+
+  if (days >= o.endMin && ev.end && !sameDay(s, e)) {
     block.appendChild(el('span', 'seg__end', esc(dMes(e))));
   }
 
   return block;
+}
+
+function mediaEl(src, alt, idx) {
+  const media = el('div', 'seg__media ' + (idx % 2 === 0 ? 'seg__media--left' : 'seg__media--right'));
+  const img = el('img');
+  img.src = src; img.alt = alt; img.loading = 'lazy';
+  img.addEventListener('click', (ev) => { ev.stopPropagation(); openLightbox(src, alt); });
+  media.appendChild(img);
+  return media;
+}
+
+function openLightbox(src, alt) {
+  const overlay = el('div', 'lightbox');
+  const img = el('img');
+  img.src = src; img.alt = alt || '';
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+  document.body.classList.add('no-scroll');
+
+  const close = () => {
+    overlay.remove();
+    document.body.classList.remove('no-scroll');
+    document.removeEventListener('keydown', onKey);
+  };
+  const onKey = (ev) => { if (ev.key === 'Escape') close(); };
+  overlay.addEventListener('click', close);
+  document.addEventListener('keydown', onKey);
 }
 
 function openEventModal(ev) {
