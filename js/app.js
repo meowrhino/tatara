@@ -88,7 +88,7 @@ function renderAgenda(view, data) {
 function gapBlock(gapVh) {
   const gap = el('div', 'seg seg--gap');
   gap.style.minHeight = `${gapVh}dvh`;
-  gap.appendChild(el('span', 'tatara', wordmark('TAT ARA')));
+  gap.appendChild(el('span', 'wordmark wordmark--gap', wordmark('TAT ARA')));
   return gap;
 }
 
