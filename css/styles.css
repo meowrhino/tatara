@@ -116,6 +116,30 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__label .seg__who b { font-weight: 700; }
 .seg__label .seg__when { flex: 0 0 auto; opacity: 0.92; }
 
+/* Línea "avui": marca el día de hoy en su posición proporcional dentro del bloque (día = dayVh) */
+.seg__today-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 0;
+  border-top: 2px dashed currentColor;
+}
+.seg__today-line span {
+  position: absolute;
+  left: 1rem; bottom: 2px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.seg__today-badge {
+  flex: 0 0 auto;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.seg__child--today { outline: 1px solid currentColor; outline-offset: 2px; }
+
 .seg__media { padding: 1.2rem 1rem 0; width: 58%; max-width: 300px; }
 .seg__media img { width: 100%; height: auto; display: block; }
 

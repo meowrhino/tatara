@@ -36,6 +36,7 @@ async function loadJSON(url) {
 /* ---------- fechas ---------- */
 const parseDate = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
 const addDays = (date, n) => { const d = new Date(date); d.setDate(d.getDate() + n); return d; };
+const todayDate = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
 const sameDay = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 const daysBetween = (a, b) => Math.round((b - a) / 86400000) + 1;   // inclusivo
 const dm = (d) => `${d.getDate()}/${d.getMonth() + 1}`;             // 2/7
@@ -78,11 +79,42 @@ function renderAgenda(view, data) {
   const strip = el('div', 'agenda__strip');
   if (!events.length) { strip.appendChild(el('p', 'loading', 'sense esdeveniments')); view.appendChild(strip); return; }
 
+  const today = todayDate();
+  let currentBlock = null, upcomingBlock = null, lastBlock = null;
+
   events.forEach((ev, i) => {
     if (i > 0) strip.appendChild(gapBlock(gapVh));
-    strip.appendChild(eventBlock(ev, { dayVh, minVh, compactMax, mediaMin, endMin }));
+    const block = eventBlock(ev, { dayVh, minVh, compactMax, mediaMin, endMin }, today);
+    strip.appendChild(block);
+
+    const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
+    if (!currentBlock && today >= s && today <= e) currentBlock = block;
+    else if (!upcomingBlock && s > today) upcomingBlock = block;
+    lastBlock = block;
   });
   view.appendChild(strip);
+
+  const target = strip.querySelector('.seg__today-line') || currentBlock || upcomingBlock || lastBlock;
+  if (target) target.dataset.todayTarget = '1';
+}
+
+// Corrige el scroll tras cargar imágenes/fuentes: su carga asíncrona desplaza
+// los bloques (alturas no fijas del todo) y descuadraría la línea de "avui".
+function scrollAgendaToToday(view) {
+  const scrollNow = () => {
+    const t = view.querySelector('[data-today-target="1"]');
+    if (t) t.scrollIntoView({ block: 'start' });
+  };
+  requestAnimationFrame(scrollNow);
+
+  view.querySelectorAll('img').forEach((img) => {
+    if (img.complete) return;
+    const onDone = () => requestAnimationFrame(scrollNow);
+    img.addEventListener('load', onDone, { once: true });
+    img.addEventListener('error', onDone, { once: true });
+  });
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(scrollNow);
 }
 
 function gapBlock(gapVh) {
@@ -95,11 +127,12 @@ function gapBlock(gapVh) {
 const ORKIND = new Set(['conversa', 'lectura', 'sessio', 'taller', 'esdeveniment']);
 const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (KIND_CA[ev.kind] || '');
 
-function eventBlock(ev, o) {
+function eventBlock(ev, o, today) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
   const days = Math.max(1, daysBetween(s, e));
   const children = ev.children || [];
   const compact = days <= o.compactMax && !children.length;
+  const isToday = !!today && today >= s && today <= e;
 
   const color = resolveColor(ev.color);
   const block = el('div', 'seg seg--event' + (compact ? ' seg--compact' : ''));
@@ -116,6 +149,13 @@ function eventBlock(ev, o) {
   head.addEventListener('click', () => openEventModal(ev));
   block.appendChild(head);
 
+  if (isToday && !compact) {
+    const daysIn = daysBetween(s, today) - 1;
+    const line = el('div', 'seg__today-line', '<span>avui</span>');
+    line.style.top = `${daysIn * o.dayVh}dvh`;
+    block.appendChild(line);
+  }
+
   if (!compact) {
     const imgs = imagesOf(ev);
     if (days >= o.mediaMin && imgs.length) {
@@ -130,11 +170,14 @@ function eventBlock(ev, o) {
   if (children.length) {
     const list = el('ul', 'seg__children');
     children.slice().sort((a, b) => parseDate(a.start) - parseDate(b.start)).forEach((c) => {
-      const li = el('li');
+      const cs = parseDate(c.start);
+      const childIsToday = !!today && sameDay(today, cs);
+      const li = el('li', childIsToday ? 'seg__child--today' : null);
       const btn = el('button', 'seg__child');
       btn.type = 'button';
       btn.innerHTML =
         `<span class="seg__child-name">${esc(orLabel(c))} · ${esc(t(c.title))}${c.person ? ' – <b>' + esc(c.person) + '</b>' : ''}</span>` +
+        (childIsToday ? '<span class="seg__today-badge">avui</span>' : '') +
         `<span class="seg__child-when">${esc(rangeSlash(c))}</span>`;
       btn.addEventListener('click', () => openEventModal(c));
       li.appendChild(btn);
@@ -372,6 +415,8 @@ async function renderRoute() {
   view.scrollTop = 0;
   window.scrollTo(0, 0);
   syncActive();
+
+  if (section.type === 'agenda') scrollAgendaToToday(view);
 
   if (animate) {
     void view.offsetWidth; // fuerza reflow para que el navegador registre opacity:0 antes de quitar la clase
