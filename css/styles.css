@@ -101,10 +101,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   display: block;
   width: 100%;
   text-align: left;
-  cursor: default;
 }
-.seg__head--has-desc { cursor: pointer; }
-.seg__head:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; }
 
 .seg__desc {
   padding: 0.6rem 1rem 0;
@@ -172,7 +169,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   letter-spacing: 0.01em;
   opacity: 0.92;
 }
-.seg__child-info--has-desc { cursor: pointer; }
 .seg__child-info:hover, .seg__child-info:focus-visible { opacity: 1; }
 .seg__child-when { flex: 0 0 auto; }
 .seg__child-name { min-width: 0; }

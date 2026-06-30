@@ -8,10 +8,20 @@ Vanilla HTML/CSS/JS, sense dependències de build. Mobile-first, trilingüe (CAT
 ```
 index.html          Shell de la pàgina (#view + barra inferior + menú overlay + modal)
 css/styles.css       Estils (minimal, monospace, color només a l'agenda)
-js/app.js            Router per hash + renderitzat de cada secció
+js/                   Mòduls ES (sense build). Entrada: main.js
+  main.js              Arranc: carrega config, cabla listeners globals
+  state.js             Estat compartit (SITE, LANG) + CONFIG_URL
+  utils.js             Helpers: DOM ($, el), escapat, wordmark, i18n (t)
+  data.js              loadJSON amb caché
+  dates.js             Parseig i format de dates de l'agenda
+  agenda.js            Secció agenda (timeline, O.R., recol·locació, lightbox)
+  sections.js          Render de text/people/journal/shop/contact/cart
+  modal.js             Diàleg de detall (botiga)
+  menu.js              Menú overlay + canvi d'idioma
+  router.js            Navegació per hash + fundit entre vistes
 fonts/                SuperstudioTrialTT (Regular/Bold) — wordmark i títols
 data/data.json        Config general: paleta, idiomes, contacte, índex de seccions
-data/events.json      Agenda (exposicions amb O.R. anidats)
+data/agenda.json      Agenda (exposicions amb O.R. anidats)
 data/nosaltres.json   Text de la secció "nosaltres"
 data/persones.json    Artistes/dissenyadores/pensadores (bio + link)
 data/diari.json       Articles del journal
@@ -37,16 +47,19 @@ python3 -m http.server 8765     # i obre http://localhost:8765
 `#botiga`, `#contacte`, `#carret`). L'índex de seccions és `data/data.json` →
 `sections[]` (id, type, data, label) — el menú es construeix des d'aquí. Afegir
 una secció nova = afegir una entrada a `sections[]` + el seu JSON + (si cal) un
-`render*()` nou a `js/app.js`.
+`render*()` nou a `js/sections.js` i el seu `case` al switch de `js/router.js`.
 
 **Agenda**: mostra tota la temporada (no una finestra de N dies). Cada exposició
 és un bloc de color top-level; els O.R. (Open Research: conversa/lectura/sessió/
 taller) que cauen dins del seu rang de dates van **anidats** dins del mateix bloc
-(`children[]` a `events.json`), cadascun amb el seu propi botó que obre el seu
-modal. El que no cau dins de cap exposició queda com a bloc independent. L'alçada
-de cada bloc és `max(minEventVh, dies·dayVh)` però creix amb el contingut real
-(imatge + fills) — `dayVh` (a `data.json` → `agenda`) és només un terra, no el
-factor principal.
+(`children[]` a `agenda.json`), cadascun ubicat al seu dia exacte dins del bloc,
+amb la seva descripció inline visible sota el títol/imatge. El que no cau dins de
+cap exposició queda com a bloc independent. Cada dia ocupa `dayVh` (a `data.json`
+→ `agenda`) com a eix temporal real; si el contingut (imatge + descripció + O.R.)
+no hi cap, el bloc s'allarga el necessari i la resta segueix amb el mateix
+format. La recol·locació es refà quan carreguen imatges/fonts i en redimensionar
+(`relayoutAgenda` a `js/agenda.js`), perquè abans de carregar les imatges mesuren ~0
+i els O.R. se solaparien.
 
 ## Pendent
 

@@ -32,7 +32,7 @@
     "instagram": null
   },
   "sections": [
-    { "id": "agenda",    "type": "agenda",  "data": "data/events.json",    "label": { "ca": "agenda",    "es": "agenda",    "en": "agenda" } },
+    { "id": "agenda",    "type": "agenda",  "data": "data/agenda.json",    "label": { "ca": "agenda",    "es": "agenda",    "en": "agenda" } },
     { "id": "nosaltres", "type": "text",    "data": "data/nosaltres.json", "label": { "ca": "nosaltres", "es": "nosotras",  "en": "about" } },
     { "id": "artistes",  "type": "people",  "data": "data/persones.json",  "label": { "ca": "artistes",  "es": "artistas",  "en": "artists" } },
     { "id": "diari",     "type": "journal", "data": "data/diari.json",     "label": { "ca": "diari",     "es": "diario",    "en": "journal" } },
