@@ -24,12 +24,33 @@
       },
       {
         "heading": {
-          "ca": "Coneixement Obert"
+          "ca": "Investigacions Afables"
         },
-        "text": "I.A. Investigacions Afables · O.R. Open Research · I.O. Investigació Oberta · E.L. Expanded Learning · C.O. Coneixement Obert."
+        "text": ""
       },
       {
-        "text": "Com aprenem? Com ens arriba el coneixement que constantment ens envolta però sovint no ens travessa? Proposem explorar maneres de saber que també activin el cos: a través de tallers, lectures, converses, sessions d'escolta, debats, sessions transpersonals, grups de treball, consultoria o acompanyaments per trobar les eines a través de les quals el canvi és possible."
+        "heading": {
+          "ca": "Open Research"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "ca": "Investigació Oberta"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "ca": "Expanded Learning"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "ca": "Coneixement Obert"
+        },
+        "text": "Com aprenem, com ens arriba el coneixament que constantment ens envolta però sovint no ens atravesa? Proposem explorar maneres en de saber que també activin el cos. A través de tallers, lectures, converses, sessions d'escoletes, debats, sessions transpersonals, grups de treball, consultoria o acompanyaments per trobar les eines a través el canvi és possible."
       }
     ],
     "es": [
@@ -50,12 +71,33 @@
       },
       {
         "heading": {
-          "es": "Conocimiento Abierto"
+          "es": "Investigaciones Afables"
         },
-        "text": "I.A. Investigaciones Afables · O.R. Open Research · I.O. Investigación Abierta · E.L. Expanded Learning · C.O. Conocimiento Abierto."
+        "text": ""
       },
       {
-        "text": "¿Cómo aprendemos? ¿Cómo nos llega el conocimiento que constantemente nos rodea pero a menudo no nos atraviesa? Proponemos explorar maneras de saber que también activen el cuerpo: a través de talleres, lecturas, conversaciones, sesiones de escucha, debates, sesiones transpersonales, grupos de trabajo, consultoría o acompañamientos para encontrar las herramientas a través de las cuales el cambio es posible."
+        "heading": {
+          "es": "Open Research"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "es": "Investigación Abierta"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "es": "Expanded Learning"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "es": "Conocimiento Abierto"
+        },
+        "text": "Cómo aprendemos, cómo nos llega el conocimiento que constantemente nos envuelve pero a menudo no nos atraviesa. Proponemos explorar maneras de saber que también activen el cuerpo. A través de talleres, lecturas, conversaciones, sesiones de escoletes, debates, sesiones transpersonales, grupos de trabajo, consultoría o acompañamientos para encontrar las herramientas a través de las cuales el cambio es posible."
       }
     ],
     "en": [
@@ -76,12 +118,33 @@
       },
       {
         "heading": {
-          "en": "Open Knowledge"
+          "en": "Affable Research"
         },
-        "text": "I.A. Affable Research · O.R. Open Research · I.O. Open Inquiry · E.L. Expanded Learning · C.O. Open Knowledge."
+        "text": ""
       },
       {
-        "text": "How do we learn? How does the knowledge that constantly surrounds us reach us, when it so often fails to pass through us? We propose exploring ways of knowing that also engage the body: through workshops, readings, conversations, listening sessions, debates, transpersonal sessions, working groups, consultancy or accompaniment to find the tools through which change is possible."
+        "heading": {
+          "en": "Open Research"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "en": "Open Inquiry"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "en": "Expanded Learning"
+        },
+        "text": ""
+      },
+      {
+        "heading": {
+          "en": "Open Knowledge"
+        },
+        "text": "How do we learn, how does the knowledge that constantly surrounds us reach us, when it often doesn't pass through us. We propose exploring ways of knowing that also engage the body. Through workshops, readings, conversations, escoleta sessions, debates, transpersonal sessions, working groups, consultancy or accompaniment to find the tools through which change is possible."
       }
     ]
   }
