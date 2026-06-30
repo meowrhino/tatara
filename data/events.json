@@ -5,22 +5,33 @@
       "id": "ensayo-espontaneo",
       "kind": "exposicio",
       "person": "Tasio Ranz i Santiago Daza Santana",
-      "title": { "ca": "Ensayo de lo Espontáneo" },
+      "title": {
+        "ca": "Ensayo de lo Espontáneo"
+      },
       "start": "2025-09-15",
       "end": "2025-10-05",
-      "color": "#8FC6F7",
+      "color": "blau",
       "image": "assets/img/agenda/tasioranz.webp",
-      "images": ["assets/img/agenda/tasioranz.webp", "assets/img/agenda/tasioranz-1.webp"]
+      "images": [
+        "assets/img/agenda/tasioranz.webp",
+        "assets/img/agenda/tasioranz-1.webp"
+      ]
     },
     {
       "id": "pateres-de-llet",
       "kind": "exposicio",
       "person": "Anna Dot",
-      "title": { "ca": "Pàteres de llet" },
+      "title": {
+        "ca": "Pàteres de llet"
+      },
       "start": "2025-10-17",
       "end": "2025-11-30",
-      "color": "#A0EEDD",
-      "images": ["assets/img/agenda/annadot.webp", "assets/img/agenda/annadot-18.webp", "assets/img/agenda/annadot-24.webp"],
+      "color": "menta",
+      "images": [
+        "assets/img/agenda/annadot.webp",
+        "assets/img/agenda/annadot-18.webp",
+        "assets/img/agenda/annadot-24.webp"
+      ],
       "description": {
         "ca": "Exposició de l'objecte ritual, la maternitat, la conciliació i les noves quotidianitats vinculades al treball reproductiu i productiu."
       },
@@ -29,9 +40,15 @@
           "id": "lectura-ecologias-enraizadas",
           "kind": "lectura",
           "person": "Vinik Juré",
-          "title": { "ca": "Lectura del llibre Ecologías Enraizadas" },
+          "title": {
+            "ca": "Lectura del llibre Ecologías Enraizadas"
+          },
           "start": "2025-10-25",
-          "images": ["assets/img/agenda/vinik.webp", "assets/img/agenda/vinik-1.webp", "assets/img/agenda/vinik-2.webp"],
+          "images": [
+            "assets/img/agenda/vinik.webp",
+            "assets/img/agenda/vinik-1.webp",
+            "assets/img/agenda/vinik-2.webp"
+          ],
           "description": {
             "ca": "El primer número de la sèrie Ecologías Enraizadas, format per dos assaigs: «El origen del Dia de los Muertos» i la «Historia crítica de la taxonomía del maguey». Editat per Amistat Radical. Comparteix documents d'investigació etnogràfica, reflexions i converses amb el món camperol en diverses comunitats arrelades; ofereix una mirada que s'allunya de la lògica individualista i extractivista del món modern i recupera la del món camperol, on la relació amb la terra es fonamenta en el respecte, la reciprocitat i la cura."
           }
@@ -40,7 +57,9 @@
           "id": "tanatolab-duda",
           "kind": "conversa",
           "person": "DU-DA, amb Raquel Buj",
-          "title": { "ca": "Tanatolab" },
+          "title": {
+            "ca": "Tanatolab"
+          },
           "start": "2025-11-10",
           "image": "assets/img/agenda/duda-raquel-buj.webp",
           "description": {
@@ -51,9 +70,14 @@
           "id": "trazo-continuo",
           "kind": "conversa",
           "person": "Tornen les Esquelles",
-          "title": { "ca": "Trazo Continuo" },
+          "title": {
+            "ca": "Trazo Continuo"
+          },
           "start": "2025-11-14",
-          "images": ["assets/img/agenda/taller-tornen-les-esquelles.webp", "assets/img/agenda/post-trazo-continuo-1.webp"],
+          "images": [
+            "assets/img/agenda/taller-tornen-les-esquelles.webp",
+            "assets/img/agenda/post-trazo-continuo-1.webp"
+          ],
           "description": {
             "ca": "Conversa per compartir processos de creació tèxtil amb el col·lectiu xilè i el català."
           }
@@ -62,7 +86,9 @@
           "id": "pimienta-mansO",
           "kind": "sessio",
           "person": "Col·lectiu Pimienta",
-          "title": { "ca": "Sessió d'escolta atenta amb MansO" },
+          "title": {
+            "ca": "Sessió d'escolta atenta amb MansO"
+          },
           "start": "2025-11-15",
           "image": "assets/img/agenda/pimienta.webp",
           "description": {
@@ -75,17 +101,25 @@
       "id": "sostenir-la-terra",
       "kind": "exposicio",
       "person": "Maria Roy Deulofeu",
-      "title": { "ca": "Sostenir la Terra" },
+      "title": {
+        "ca": "Sostenir la Terra"
+      },
       "start": "2025-12-13",
       "end": "2026-01-28",
-      "color": "#F2A7CE",
-      "images": ["assets/img/agenda/mariaroy.webp", "assets/img/agenda/mariaroy-caminades-5.webp", "assets/img/agenda/mariaroy-ig1.webp"],
+      "color": "rosa",
+      "images": [
+        "assets/img/agenda/mariaroy.webp",
+        "assets/img/agenda/mariaroy-caminades-5.webp",
+        "assets/img/agenda/mariaroy-ig1.webp"
+      ],
       "children": [
         {
           "id": "tanatolab-duda-grup",
           "kind": "esdeveniment",
           "person": "DU-DA",
-          "title": { "ca": "Esdeveniment amb el grup del projecte Tanatolab" },
+          "title": {
+            "ca": "Esdeveniment amb el grup del projecte Tanatolab"
+          },
           "start": "2025-12-15",
           "description": {
             "ca": "DU-DA activa l'espai a través del projecte Tanatolab: un programa de trobades on es comparteix la recerca Morir Guay. Es desenvolupa en diàleg amb agents locals i ofereix eines per repensar la mort amb sobirania i des d'una mirada ecofeminista, mitjançant metodologies corporals, intuïtives i poètiques."
@@ -95,7 +129,9 @@
           "id": "conversa-ines-sol",
           "kind": "conversa",
           "person": "Inés Sistiaga i Sol Prado",
-          "title": { "ca": "Conversa amb Inés Sistiaga i Sol Prado" },
+          "title": {
+            "ca": "Conversa amb Inés Sistiaga i Sol Prado"
+          },
           "start": "2026-01-25",
           "time": "12:00",
           "image": "assets/img/agenda/ines-sistiaga.webp",
@@ -107,7 +143,9 @@
           "id": "clausura-sostenir-la-terra",
           "kind": "conversa",
           "person": "Maria Roy Deulofeu i Mati Cini",
-          "title": { "ca": "Clausura: territori, estètica i agència material" },
+          "title": {
+            "ca": "Clausura: territori, estètica i agència material"
+          },
           "start": "2026-01-28",
           "time": "18:30",
           "image": "assets/img/agenda/mariaroy-clausura.webp",
@@ -121,11 +159,17 @@
       "id": "if-publications",
       "kind": "exposicio",
       "person": "IF. Publications",
-      "title": { "ca": "Ritual de clausura de I.F Publications" },
+      "title": {
+        "ca": "Ritual de clausura de I.F Publications"
+      },
       "start": "2026-02-09",
       "end": "2026-02-22",
-      "color": "#CDB13C",
-      "images": ["assets/img/agenda/if.webp", "assets/img/agenda/if-1.webp", "assets/img/agenda/if-2.webp"],
+      "color": "mostassa",
+      "images": [
+        "assets/img/agenda/if.webp",
+        "assets/img/agenda/if-1.webp",
+        "assets/img/agenda/if-2.webp"
+      ],
       "description": {
         "ca": "Presentació del portfolio editorial d'Ariadna Serrahima i Guillem Serrahima, amb converses al voltant de llibres de pensament crític com Lxs Subcomunes, El Mensaje Mata, Fricción i Brujería Capitalista."
       }
@@ -134,17 +178,21 @@
       "id": "presencia-impermanencia",
       "kind": "exposicio",
       "person": "Solange Dalannais",
-      "title": { "ca": "Presència en la impermanència" },
+      "title": {
+        "ca": "Presència en la impermanència"
+      },
       "start": "2026-04-18",
       "end": "2026-05-30",
-      "color": "#8FC6F7",
+      "color": "blau",
       "image": "assets/img/agenda/solange.webp",
       "children": [
         {
           "id": "taller-investigacions-afables",
           "kind": "taller",
           "person": "O.R.",
-          "title": { "ca": "IA! Dins del programa Investigacions Afables" },
+          "title": {
+            "ca": "IA! Dins del programa Investigacions Afables"
+          },
           "start": "2026-05-23",
           "description": {
             "ca": "Taller de sis hores vinculat a tintes, pigments i materials botànics."
@@ -156,12 +204,18 @@
       "id": "no-limits",
       "kind": "exposicio",
       "person": "Sara G. de Ubieta, Olatz Azcona i Joana Mallol",
-      "title": { "ca": "No Limits" },
+      "title": {
+        "ca": "No Limits"
+      },
       "start": "2026-06-04",
       "end": "2026-06-20",
       "time": "16:00",
-      "color": "#A0EEDD",
-      "images": ["assets/img/edicions/18-05-2026-no-limits-0015.webp", "assets/img/edicions/18-05-2026-no-limits-0038.webp", "assets/img/edicions/18-05-2026-no-limits-0053.webp"],
+      "color": "menta",
+      "images": [
+        "assets/img/edicions/18-05-2026-no-limits-0015.webp",
+        "assets/img/edicions/18-05-2026-no-limits-0038.webp",
+        "assets/img/edicions/18-05-2026-no-limits-0053.webp"
+      ],
       "description": {
         "ca": "Amb el suport de Cap Dep i en col·laboració amb el centre ocupacional TEB Bellvitge i Solidança. Participants: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas i Ma Jesús Peiret."
       }
@@ -170,19 +224,27 @@
       "id": "reverberar-el-cos",
       "kind": "sessio",
       "person": "Ale Carrero",
-      "title": { "ca": "Reverberar el cos" },
+      "title": {
+        "ca": "Reverberar el cos"
+      },
       "start": "2025-12-10",
-      "color": "#CDB13C",
-      "images": ["assets/img/agenda/alecarrero.webp", "assets/img/agenda/alecarrero-1.webp", "assets/img/agenda/alecarrero-ig-3.webp"]
+      "color": "mostassa",
+      "images": [
+        "assets/img/agenda/alecarrero.webp",
+        "assets/img/agenda/alecarrero-1.webp",
+        "assets/img/agenda/alecarrero-ig-3.webp"
+      ]
     },
     {
       "id": "tocar-fusta",
       "kind": "exposicio",
       "person": "Emma Prats",
-      "title": { "ca": "Tocar Fusta" },
+      "title": {
+        "ca": "Tocar Fusta"
+      },
       "start": "2026-06-24",
       "end": "2026-09-03",
-      "color": "#F2A7CE",
+      "color": "rosa",
       "description": {
         "ca": "Tocar fusta parteix del gest, expressió i superstició popular homònima. A partir d'aquest fenomen, es pretén explorar la seva vigència en la contemporaneïtat mitjançant la construcció col·lectiva de relats de sentit i la ritualització del subjecte."
       }

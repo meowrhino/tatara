@@ -53,6 +53,10 @@ function rangeWords(ev) {
 }
 const imagesOf = (x) => x.images && x.images.length ? x.images : (x.image ? [x.image] : []);
 
+// events.json guarda claves de paleta ("menta", "rosa"...); data.json -> palette es la fuente única de verdad.
+// Si llega un valor que no está en la paleta, se usa tal cual (admite hex literal de respaldo).
+const resolveColor = (key) => (SITE && SITE.palette && SITE.palette[key]) || key || '#111';
+
 function textOn(hex) {
   const c = (hex || '#111').replace('#', '');
   const r = parseInt(c.slice(0, 2), 16), g = parseInt(c.slice(2, 4), 16), b = parseInt(c.slice(4, 6), 16);
@@ -96,10 +100,11 @@ function eventBlock(ev, o) {
   const children = ev.children || [];
   const compact = days <= o.compactMax && !children.length;
 
+  const color = resolveColor(ev.color);
   const block = el('div', 'seg seg--event' + (compact ? ' seg--compact' : ''));
   block.style.minHeight = `max(${o.minVh}dvh, ${days * o.dayVh}dvh)`;
-  block.style.background = ev.color || '#111';
-  block.style.color = textOn(ev.color);
+  block.style.background = color;
+  block.style.color = textOn(color);
   block.dataset.id = ev.id;
 
   const head = el('button', 'seg__head');
@@ -167,8 +172,12 @@ function pageWrap(inner) {
 }
 
 function renderText(view, data) {
-  const paras = (t(data.body) || []);
-  const body = (Array.isArray(paras) ? paras : [paras]).map((p) => `<p>${esc(p)}</p>`).join('');
+  const blocks = (t(data.body) || []);
+  const body = (Array.isArray(blocks) ? blocks : [blocks]).map((b) => {
+    if (typeof b === 'string') return `<p>${esc(b)}</p>`;
+    const heading = b.heading ? `<h2 class="prose__heading">${esc(t(b.heading))}</h2>` : '';
+    return `${heading}<p>${esc(b.text)}</p>`;
+  }).join('');
   view.innerHTML = pageWrap(`<div class="prose">${body}</div>`);
 }
 
@@ -321,13 +330,23 @@ function syncActive() {
     a.classList.toggle('is-active', a.dataset.id === id));
 }
 
+const FADE_MS = 180;
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
 async function renderRoute() {
   const id = currentId();
   const section = SITE.sections.find((s) => s.id === id);
   const view = $('#view');
+  const animate = !!view.dataset.section && !reducedMotion();
+
+  if (animate) {
+    view.classList.add('view--fade');
+    await wait(FADE_MS);
+  }
+
   view.dataset.section = id;
-  view.scrollTop = 0;
-  window.scrollTo(0, 0);
+  view.classList.toggle('view--journal', section.type === 'journal');
   const label = t(section.label);
   document.title = `${SITE.site.name} — ${label.charAt(0).toUpperCase()}${label.slice(1)}`;
 
@@ -348,7 +367,15 @@ async function renderRoute() {
     view.innerHTML = `<p class="loading">no s'ha pogut carregar<br><small>${esc(err.message)}</small></p>`;
     console.error(err);
   }
+
+  view.scrollTop = 0;
+  window.scrollTo(0, 0);
   syncActive();
+
+  if (animate) {
+    void view.offsetWidth; // fuerza reflow para que el navegador registre opacity:0 antes de quitar la clase
+    view.classList.remove('view--fade');
+  }
 }
 
 /* ============================================================
@@ -363,6 +390,10 @@ async function init() {
   }
   LANG = SITE.defaultLang || 'ca';
   if (SITE.site && SITE.site.studio) $('#bar-studio').textContent = SITE.site.studio;
+
+  // expone la paleta de data.json como custom properties --color-<clau>, por si el CSS necesita usarla
+  Object.entries(SITE.palette || {}).forEach(([key, hex]) =>
+    document.documentElement.style.setProperty(`--color-${key}`, hex));
 
   buildMenu();
 

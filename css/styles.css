@@ -47,7 +47,14 @@ body.no-scroll { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 
-#view { min-height: 100dvh; padding-bottom: var(--bar-h); }
+#view {
+  min-height: 100dvh;
+  padding-bottom: var(--bar-h);
+  opacity: 1;
+  transition: opacity 0.18s ease;
+}
+#view.view--fade { opacity: 0; }
+#view.view--journal { background: #cccccc; }
 
 .loading { text-align: center; color: var(--ink-soft); padding: 3rem 1rem; letter-spacing: 0.1em; }
 
@@ -161,6 +168,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 .prose { max-width: 34rem; margin: 0 auto; }
 .prose p { text-align: justify; hyphens: auto; margin: 0 0 1rem; }
+.prose__heading { text-align: center; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.02em; margin: 2rem 0 0.8rem; }
 
 /* Artistes */
 .people { list-style: none; margin: 0 auto; padding: 0; max-width: 34rem; }

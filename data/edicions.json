@@ -48,49 +48,13 @@
       "description": null
     },
     {
-      "id": "bolso-1",
-      "title": "Bolso Nº1",
+      "id": "bolsos",
+      "title": "Bolsos",
       "author": null,
       "editorial": null,
       "price": null,
       "images": [],
-      "description": null
-    },
-    {
-      "id": "bolso-2",
-      "title": "Bolso Nº2",
-      "author": null,
-      "editorial": null,
-      "price": null,
-      "images": [],
-      "description": null
-    },
-    {
-      "id": "bolso-3",
-      "title": "Bolso Nº3",
-      "author": null,
-      "editorial": null,
-      "price": null,
-      "images": [],
-      "description": null
-    },
-    {
-      "id": "bolso-4",
-      "title": "Bolso Nº4",
-      "author": null,
-      "editorial": null,
-      "price": null,
-      "images": [],
-      "description": null
-    },
-    {
-      "id": "bolso-5",
-      "title": "Bolso Nº5",
-      "author": null,
-      "editorial": null,
-      "price": null,
-      "images": [],
-      "description": null
+      "description": { "ca": "Disponibles en packs de 2 o 5 unitats." }
     }
   ]
 }
