@@ -47,12 +47,6 @@ function rangeSlash(ev) {
   if (sameDay(s, e)) return dm(s) + (ev.time ? ` · ${ev.time}` : '');
   return `${dm(s)} – ${dm(e)}`;
 }
-function rangeWords(ev) {
-  const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
-  let r = sameDay(s, e) ? dMes(s) : `${dMes(s)} – ${dMes(e)}`;
-  if (ev.time) r += ` · ${ev.time}`;
-  return r;
-}
 const imagesOf = (x) => x.images && x.images.length ? x.images : (x.image ? [x.image] : []);
 
 // events.json guarda claves de paleta ("menta", "rosa"...); data.json -> palette es la fuente única de verdad.
@@ -95,35 +89,9 @@ function renderAgenda(view, data) {
   view.appendChild(strip);
 
   // Posiciona los O.R. (children) en su día exacto dentro del bloque: hace
-  // falta medir la cabecera ya renderizada (offsetHeight), por eso se hace
+  // falta medir el contenido ya renderizado (offsetHeight), por eso se hace
   // aquí y no en eventBlock (el bloque aún no está en el documento allí).
-  // Si dos O.R. caen muy seguidos, su posición "ideal" por día no deja
-  // espacio para el texto real (ya no se trunca) y se solaparían: se
-  // empuja el siguiente hacia abajo lo justo, y si eso no cabe en la
-  // altura del bloque, el bloque crece para contenerlo.
-  const vhPx = window.innerHeight / 100;
-  const CHILD_GAP_PX = 12;
-
-  strip.querySelectorAll('.seg--event').forEach((block) => {
-    const headH = block.querySelector('.seg__head').offsetHeight;
-    const rows = Array.from(block.querySelectorAll(':scope > .seg__child[data-day-offset]'));
-    if (!rows.length) return;
-
-    let prevBottomPx = null;
-    rows.forEach((row) => {
-      const off = Number(row.dataset.dayOffset);
-      const idealTopPx = headH + off * dayVh * vhPx;
-      const topPx = prevBottomPx == null ? idealTopPx : Math.max(idealTopPx, prevBottomPx + CHILD_GAP_PX);
-      row.style.top = `${topPx}px`;
-      prevBottomPx = topPx + row.offsetHeight;
-    });
-
-    const endEl = block.querySelector(':scope > .seg__end');
-    const neededPx = prevBottomPx + 16 + (endEl ? endEl.offsetHeight : 0);
-    if (neededPx > block.offsetHeight) {
-      block.style.minHeight = `${neededPx / vhPx}dvh`;
-    }
-  });
+  strip.querySelectorAll('.seg--event').forEach((block) => relayoutChildren(block, dayVh));
 
   // Marca "avui": vive fuera de los bloques de color (hijo de #view, no del
   // bloque), pegada al borde real de la pantalla — así nunca compite con el
@@ -132,9 +100,9 @@ function renderAgenda(view, data) {
   const todayHost = strip.querySelector('[data-today-days-in]');
   if (todayHost) {
     const daysIn = Number(todayHost.dataset.todayDaysIn);
-    const headH = todayHost.querySelector('.seg__head').offsetHeight;
+    const baseH = blockContentBaseH(todayHost);
     todayMark = el('div', 'agenda__today-mark', 'avui');
-    todayMark.style.top = `calc(${todayHost.offsetTop}px + ${headH}px + ${daysIn * dayVh}dvh)`;
+    todayMark.style.top = `calc(${todayHost.offsetTop}px + ${baseH}px + ${daysIn * dayVh}dvh)`;
     view.appendChild(todayMark);
   }
 
@@ -172,6 +140,48 @@ function gapBlock(gapVh) {
 const ORKIND = new Set(['conversa', 'lectura', 'sessio', 'taller', 'esdeveniment']);
 const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (KIND_CA[ev.kind] || '');
 
+// Borde inferior del contenido "de cabecera" del bloque (título + imagen +
+// descripción desplegada, si la hay): los O.R. se posicionan a partir de ahí.
+function blockContentBaseH(block) {
+  const head = block.querySelector(':scope > .seg__head');
+  const media = block.querySelector(':scope > .seg__media');
+  const desc = block.querySelector(':scope > .seg__desc');
+  let baseH = head.offsetHeight;
+  if (media) baseH = Math.max(baseH, media.offsetTop + media.offsetHeight);
+  if (desc && !desc.hidden) baseH = Math.max(baseH, desc.offsetTop + desc.offsetHeight);
+  return baseH;
+}
+
+// Recoloca los O.R. de un bloque en su día ideal, evitando que se solapen
+// (si dos caen muy seguidos o una descripción desplegada los empuja) y
+// haciendo crecer el bloque si no caben en su altura por días. Se llama al
+// renderizar y de nuevo cada vez que se abre/cierra una descripción, porque
+// eso cambia las alturas de las que depende todo lo de abajo.
+function relayoutChildren(block, dayVh) {
+  const vhPx = window.innerHeight / 100;
+  const CHILD_GAP_PX = 12;
+
+  block.style.minHeight = block.dataset.baseMinHeight; // altura "natural" por días, antes de medir
+  const baseH = blockContentBaseH(block);
+
+  const rows = Array.from(block.querySelectorAll(':scope > .seg__child[data-day-offset]'));
+  let prevBottomPx = null;
+  rows.forEach((row) => {
+    const off = Number(row.dataset.dayOffset);
+    const idealTopPx = baseH + off * dayVh * vhPx;
+    const topPx = prevBottomPx == null ? Math.max(idealTopPx, baseH) : Math.max(idealTopPx, prevBottomPx + CHILD_GAP_PX);
+    row.style.top = `${topPx}px`;
+    prevBottomPx = topPx + row.offsetHeight;
+  });
+
+  if (!rows.length) return;
+  const endEl = block.querySelector(':scope > .seg__end');
+  const neededPx = prevBottomPx + 16 + (endEl ? endEl.offsetHeight : 0);
+  if (neededPx > block.offsetHeight) {
+    block.style.minHeight = `${neededPx / vhPx}dvh`;
+  }
+}
+
 function eventBlock(ev, o, today) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
   const days = Math.max(1, daysBetween(s, e));
@@ -181,7 +191,8 @@ function eventBlock(ev, o, today) {
 
   const color = resolveColor(ev.color);
   const block = el('div', 'seg seg--event' + (compact ? ' seg--compact' : ''));
-  block.style.minHeight = `max(${o.minVh}dvh, ${days * o.dayVh}dvh)`;
+  block.dataset.baseMinHeight = `max(${o.minVh}dvh, ${days * o.dayVh}dvh)`;
+  block.style.minHeight = block.dataset.baseMinHeight;
   block.style.background = color;
   block.style.color = textOn(color);
   block.dataset.id = ev.id;
@@ -191,7 +202,6 @@ function eventBlock(ev, o, today) {
   head.appendChild(el('div', 'seg__label',
     `<span class="seg__who">${esc(t(ev.title))}${ev.person ? ' – <b>' + esc(ev.person) + '</b>' : ''}</span>` +
     `<span class="seg__when">${esc(rangeSlash(ev))}</span>`));
-  head.addEventListener('click', () => openEventModal(ev));
   block.appendChild(head);
 
   if (isToday && !compact) {
@@ -209,6 +219,17 @@ function eventBlock(ev, o, today) {
     block.appendChild(mediaEl(imgs[0], t(ev.title), imgCount++));
   }
 
+  if (ev.description) {
+    const desc = el('div', 'seg__desc', esc(t(ev.description)));
+    desc.hidden = true;
+    block.appendChild(desc);
+    head.classList.add('seg__head--has-desc');
+    head.addEventListener('click', () => {
+      desc.hidden = !desc.hidden;
+      relayoutChildren(block, o.dayVh);
+    });
+  }
+
   children.forEach((c) => {
     const cs = parseDate(c.start);
     const childIsToday = !!today && sameDay(today, cs);
@@ -221,11 +242,21 @@ function eventBlock(ev, o, today) {
       `<span class="seg__child-when">${esc(rangeSlash(c))}</span>` +
       `<span class="seg__child-name">${esc(orLabel(c))} · ${esc(t(c.title))}${c.person ? ' – <b>' + esc(c.person) + '</b>' : ''}</span>` +
       (childIsToday ? '<span class="seg__today-badge">avui</span>' : '');
-    btn.addEventListener('click', () => openEventModal(c));
     row.appendChild(btn);
 
     const cImgs = imagesOf(c);
     if (cImgs.length) row.appendChild(mediaEl(cImgs[0], t(c.title), imgCount++));
+
+    if (c.description) {
+      const cDesc = el('div', 'seg__child-desc', esc(t(c.description)));
+      cDesc.hidden = true;
+      row.appendChild(cDesc);
+      btn.classList.add('seg__child-info--has-desc');
+      btn.addEventListener('click', () => {
+        cDesc.hidden = !cDesc.hidden;
+        relayoutChildren(block, o.dayVh);
+      });
+    }
 
     block.appendChild(row);
   });
@@ -262,17 +293,6 @@ function openLightbox(src, alt) {
   const onKey = (ev) => { if (ev.key === 'Escape') close(); };
   overlay.addEventListener('click', close);
   document.addEventListener('keydown', onKey);
-}
-
-function openEventModal(ev) {
-  const imgs = imagesOf(ev);
-  openModal(`
-    ${imgs[0] ? `<img src="${esc(imgs[0])}" alt="${esc(t(ev.title))}">` : ''}
-    <p class="m-when">${esc(rangeWords(ev))}${ev.kind ? ' · ' + esc(KIND_CA[ev.kind] || ev.kind) : ''}</p>
-    <h2 class="m-title" id="modal-title">${esc(t(ev.title))}</h2>
-    ${ev.person ? `<p class="m-person">${esc(ev.person)}</p>` : ''}
-    ${ev.description ? `<p class="m-desc">${esc(t(ev.description))}</p>` : ''}
-  `);
 }
 
 /* ============================================================
