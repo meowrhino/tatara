@@ -1,12 +1,88 @@
 {
   "_comment": "Texto statement de la sección Nosaltres. body = array de bloques por idioma; cada bloque es {heading?, text} — heading opcional, como en el mockup nosaltres.png (cabecera 'Exposicions' centrada sobre su párrafo). De momento solo 'ca' (texto real de la clienta).",
-  "title": { "ca": "Nosaltres", "es": "Nosotras", "en": "About" },
+  "title": {
+    "ca": "Nosaltres",
+    "es": "Nosotras",
+    "en": "About"
+  },
   "body": {
     "ca": [
-      { "text": "TAT ARA és una associació sense ànim de lucre, un espai galeria que visibilitza i connecta projectes d'art, disseny i ecologia. Acull propostes crítiques, experimentals i d'investigació. És un espai a recés del sistema per connectar, crear friccions i fer xarxa entre persones, comunitats i pràctiques. Un espai cultural obert al públic per a l'exposició, la producció, la lectura, el debat, l'escolta, la conversa i la investigació." },
-      { "heading": { "ca": "Exposicions" }, "text": "Un espai de mostra per assajar i trobar afinitats, similituds i friccions. Entorn al diàleg d'un pensament subtil i sensible d'imaginaris post-eficiència." },
-      { "heading": { "ca": "Edicions" }, "text": "Produccions amb artistes i col·laboradores per generar economia que permeti sostenir les pràctiques artístiques i crítiques." },
-      { "text": "Com aprenem? Com ens arriba el coneixement que constantment ens envolta però sovint no ens travessa? Proposem explorar maneres de saber que també activin el cos: a través de tallers, lectures, converses, sessions d'escolta, debats, sessions transpersonals, grups de treball, consultoria o acompanyaments per trobar les eines a través de les quals el canvi és possible." }
+      {
+        "text": "TAT ARA és una associació sense ànim de lucre, un espai galeria que visibilitza i connecta projectes d'art, disseny i ecologia. Acull propostes crítiques, experimentals i d'investigació. És un espai a recés del sistema per connectar, crear friccions i fer xarxa entre persones, comunitats i pràctiques. Un espai cultural obert al públic per a l'exposició, la producció, la lectura, el debat, l'escolta, la conversa i la investigació."
+      },
+      {
+        "heading": {
+          "ca": "Exposicions"
+        },
+        "text": "Un espai de mostra per assajar i trobar afinitats, similituds i friccions. Entorn al diàleg d'un pensament subtil i sensible d'imaginaris post-eficiència."
+      },
+      {
+        "heading": {
+          "ca": "Edicions"
+        },
+        "text": "Produccions amb artistes i col·laboradores per generar economia que permeti sostenir les pràctiques artístiques i crítiques."
+      },
+      {
+        "heading": {
+          "ca": "Coneixement Obert"
+        },
+        "text": "I.A. Investigacions Afables · O.R. Open Research · I.O. Investigació Oberta · E.L. Expanded Learning · C.O. Coneixement Obert."
+      },
+      {
+        "text": "Com aprenem? Com ens arriba el coneixement que constantment ens envolta però sovint no ens travessa? Proposem explorar maneres de saber que també activin el cos: a través de tallers, lectures, converses, sessions d'escolta, debats, sessions transpersonals, grups de treball, consultoria o acompanyaments per trobar les eines a través de les quals el canvi és possible."
+      }
+    ],
+    "es": [
+      {
+        "text": "TAT ARA es una asociación sin ánimo de lucro, un espacio galería que visibiliza y conecta proyectos de arte, diseño y ecología. Acoge propuestas críticas, experimentales y de investigación. Es un espacio al resguardo del sistema para conectar, crear fricciones y hacer red entre personas, comunidades y prácticas. Un espacio cultural abierto al público para la exposición, la producción, la lectura, el debate, la escucha, la conversación y la investigación."
+      },
+      {
+        "heading": {
+          "es": "Exposiciones"
+        },
+        "text": "Un espacio de muestra para ensayar y encontrar afinidades, similitudes y fricciones. En torno al diálogo de un pensamiento sutil y sensible de imaginarios post-eficiencia."
+      },
+      {
+        "heading": {
+          "es": "Ediciones"
+        },
+        "text": "Producciones con artistas y colaboradoras para generar economía que permita sostener las prácticas artísticas y críticas."
+      },
+      {
+        "heading": {
+          "es": "Conocimiento Abierto"
+        },
+        "text": "I.A. Investigaciones Afables · O.R. Open Research · I.O. Investigación Abierta · E.L. Expanded Learning · C.O. Conocimiento Abierto."
+      },
+      {
+        "text": "¿Cómo aprendemos? ¿Cómo nos llega el conocimiento que constantemente nos rodea pero a menudo no nos atraviesa? Proponemos explorar maneras de saber que también activen el cuerpo: a través de talleres, lecturas, conversaciones, sesiones de escucha, debates, sesiones transpersonales, grupos de trabajo, consultoría o acompañamientos para encontrar las herramientas a través de las cuales el cambio es posible."
+      }
+    ],
+    "en": [
+      {
+        "text": "TAT ARA is a non-profit association, a gallery space that gives visibility to and connects projects in art, design and ecology. It hosts critical, experimental and research proposals. It is a space sheltered from the system to connect, create frictions and build networks among people, communities and practices. A cultural space open to the public for exhibition, production, reading, debate, listening, conversation and research."
+      },
+      {
+        "heading": {
+          "en": "Exhibitions"
+        },
+        "text": "A space to test and find affinities, similarities and frictions. Around the dialogue of a subtle, sensitive thinking of post-efficiency imaginaries."
+      },
+      {
+        "heading": {
+          "en": "Editions"
+        },
+        "text": "Productions with artists and collaborators to generate an economy that sustains artistic and critical practices."
+      },
+      {
+        "heading": {
+          "en": "Open Knowledge"
+        },
+        "text": "I.A. Affable Research · O.R. Open Research · I.O. Open Inquiry · E.L. Expanded Learning · C.O. Open Knowledge."
+      },
+      {
+        "text": "How do we learn? How does the knowledge that constantly surrounds us reach us, when it so often fails to pass through us? We propose exploring ways of knowing that also engage the body: through workshops, readings, conversations, listening sessions, debates, transpersonal sessions, working groups, consultancy or accompaniment to find the tools through which change is possible."
+      }
     ]
   }
 }
