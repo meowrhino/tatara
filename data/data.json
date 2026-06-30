@@ -12,14 +12,14 @@
   "languages": ["ca", "es", "en"],
   "defaultLang": "ca",
   "palette": {
-    "verd": "#8FE98F",
-    "rosa": "#E89BD9",
-    "groc": "#F4E04D",
-    "corall": "#FF9E80",
-    "lila": "#C3A6F0"
+    "blau": "#8FC6F7",
+    "menta": "#A0EEDD",
+    "rosa": "#F2A7CE",
+    "mostassa": "#CDB13C"
   },
   "agenda": {
-    "dayVh": 3,
+    "_comment": "dayVh es solo un suelo para que los eventos largos se vean algo mas altos; el contenido real (imagen + O.R. anidados) es lo que decide la altura final del bloque.",
+    "dayVh": 0.6,
     "minEventVh": 10,
     "gapVh": 13,
     "compactMaxDays": 2,

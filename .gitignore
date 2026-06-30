@@ -16,6 +16,7 @@
 /referencias/
 /Recurso 2.png
 /web tatara-TEXT.pages
+/web tatara-TEXT.pdf
 
 # Config local del preview (ruta absoluta, específica de máquina)
 .claude/launch.json

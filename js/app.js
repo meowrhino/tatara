@@ -87,21 +87,28 @@ function gapBlock(gapVh) {
   return gap;
 }
 
+const ORKIND = new Set(['conversa', 'lectura', 'sessio', 'taller', 'esdeveniment']);
+const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (KIND_CA[ev.kind] || '');
+
 function eventBlock(ev, o) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
   const days = Math.max(1, daysBetween(s, e));
-  const compact = days <= o.compactMax;
+  const children = ev.children || [];
+  const compact = days <= o.compactMax && !children.length;
 
-  const block = el('button', 'seg seg--event' + (compact ? ' seg--compact' : ''));
-  block.type = 'button';
-  block.style.height = `max(${o.minVh}dvh, ${days * o.dayVh}dvh)`;
+  const block = el('div', 'seg seg--event' + (compact ? ' seg--compact' : ''));
+  block.style.minHeight = `max(${o.minVh}dvh, ${days * o.dayVh}dvh)`;
   block.style.background = ev.color || '#111';
   block.style.color = textOn(ev.color);
   block.dataset.id = ev.id;
 
-  block.appendChild(el('div', 'seg__label',
+  const head = el('button', 'seg__head');
+  head.type = 'button';
+  head.appendChild(el('div', 'seg__label',
     `<span class="seg__who">${esc(t(ev.title))}${ev.person ? ' – <b>' + esc(ev.person) + '</b>' : ''}</span>` +
     `<span class="seg__when">${esc(rangeSlash(ev))}</span>`));
+  head.addEventListener('click', () => openEventModal(ev));
+  block.appendChild(head);
 
   if (!compact) {
     const imgs = imagesOf(ev);
@@ -112,12 +119,28 @@ function eventBlock(ev, o) {
       media.appendChild(img);
       block.appendChild(media);
     }
-    if (days >= o.endMin && ev.end && !sameDay(s, e)) {
-      block.appendChild(el('span', 'seg__end', esc(dMes(e))));
-    }
   }
 
-  block.addEventListener('click', () => openEventModal(ev));
+  if (children.length) {
+    const list = el('ul', 'seg__children');
+    children.slice().sort((a, b) => parseDate(a.start) - parseDate(b.start)).forEach((c) => {
+      const li = el('li');
+      const btn = el('button', 'seg__child');
+      btn.type = 'button';
+      btn.innerHTML =
+        `<span class="seg__child-name">${esc(orLabel(c))} · ${esc(t(c.title))}${c.person ? ' – <b>' + esc(c.person) + '</b>' : ''}</span>` +
+        `<span class="seg__child-when">${esc(rangeSlash(c))}</span>`;
+      btn.addEventListener('click', () => openEventModal(c));
+      li.appendChild(btn);
+      list.appendChild(li);
+    });
+    block.appendChild(list);
+  }
+
+  if (!compact && days >= o.endMin && ev.end && !sameDay(s, e)) {
+    block.appendChild(el('span', 'seg__end', esc(dMes(e))));
+  }
+
   return block;
 }
 

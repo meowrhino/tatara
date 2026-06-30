@@ -105,6 +105,11 @@
       "link": null,
       "image": "assets/img/agenda/if.webp",
       "bio": { "ca": "International Friendship és l'editorial de pensament crític de la dissenyadora i investigadora Ariadna Serrahima i el filòsof Guillem Serrahima." }
+    },
+    {
+      "name": "Arnau Sala Saez",
+      "link": null,
+      "bio": { "ca": "Artista i investigador multidisciplinari; a la seva pràctica explora la intersecció entre el so, el treball gràfic i la investigació de sistemes. En la seva vessant més teòrica i metodològica, desenvolupa propostes com Resistance Degrowth for Artists, on reflexiona sobre el decreixement en la pràctica artística, i Good Praxis, centrada en l'ètica i els protocols de treball. El seu últim projecte és Catàleg de Fulles, des d'on vol explorar la subcultura del té i la possibilitat de treure'n coneixements vàlids per i amb el territori local." }
     }
   ]
 }
