@@ -97,12 +97,32 @@ function renderAgenda(view, data) {
   // Posiciona los O.R. (children) en su día exacto dentro del bloque: hace
   // falta medir la cabecera ya renderizada (offsetHeight), por eso se hace
   // aquí y no en eventBlock (el bloque aún no está en el documento allí).
+  // Si dos O.R. caen muy seguidos, su posición "ideal" por día no deja
+  // espacio para el texto real (ya no se trunca) y se solaparían: se
+  // empuja el siguiente hacia abajo lo justo, y si eso no cabe en la
+  // altura del bloque, el bloque crece para contenerlo.
+  const vhPx = window.innerHeight / 100;
+  const CHILD_GAP_PX = 12;
+
   strip.querySelectorAll('.seg--event').forEach((block) => {
     const headH = block.querySelector('.seg__head').offsetHeight;
-    block.querySelectorAll(':scope > .seg__child[data-day-offset]').forEach((row) => {
+    const rows = Array.from(block.querySelectorAll(':scope > .seg__child[data-day-offset]'));
+    if (!rows.length) return;
+
+    let prevBottomPx = null;
+    rows.forEach((row) => {
       const off = Number(row.dataset.dayOffset);
-      row.style.top = `calc(${headH}px + ${off * dayVh}dvh)`;
+      const idealTopPx = headH + off * dayVh * vhPx;
+      const topPx = prevBottomPx == null ? idealTopPx : Math.max(idealTopPx, prevBottomPx + CHILD_GAP_PX);
+      row.style.top = `${topPx}px`;
+      prevBottomPx = topPx + row.offsetHeight;
     });
+
+    const endEl = block.querySelector(':scope > .seg__end');
+    const neededPx = prevBottomPx + 16 + (endEl ? endEl.offsetHeight : 0);
+    if (neededPx > block.offsetHeight) {
+      block.style.minHeight = `${neededPx / vhPx}dvh`;
+    }
   });
 
   // Marca "avui": vive fuera de los bloques de color (hijo de #view, no del
