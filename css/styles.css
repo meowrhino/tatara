@@ -60,7 +60,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* Wordmark */
 .wordmark {
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
   gap: 0.4em;
   font-family: var(--font-display);
   font-weight: 400;
