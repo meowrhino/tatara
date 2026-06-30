@@ -1,0 +1,96 @@
+{
+  "_comment": "Sección Botiga / Edicions. price en € (number) o null si está PENDIENTE de la clienta. El checkout (Stripe) aún no existe: el botón 'afegir al carret' se muestra deshabilitado. video opcional (url).",
+  "currency": "€",
+  "products": [
+    {
+      "id": "friccion",
+      "title": "Fricción",
+      "author": "Anna L. Tsing",
+      "editorial": "Editorial IF",
+      "price": 25,
+      "images": ["assets/img/edicions/friccion.webp"],
+      "description": { "ca": "Una etnografia de la connectivitat global." }
+    },
+    {
+      "id": "lxs-subcomuns",
+      "title": "Lxs Subcomunes",
+      "author": "Fred Moten i Stefano Harney",
+      "editorial": "Editorial IF",
+      "price": null,
+      "images": [],
+      "description": { "ca": "Planear fugitivo y estudio negro." }
+    },
+    {
+      "id": "aacr",
+      "title": "AACR",
+      "author": null,
+      "editorial": null,
+      "price": null,
+      "images": ["assets/img/edicions/aarc.webp"],
+      "description": null
+    },
+    {
+      "id": "francesc-abat",
+      "title": "Francesc Abat",
+      "author": null,
+      "editorial": null,
+      "price": null,
+      "images": ["assets/img/edicions/francescabat.webp"],
+      "description": null
+    },
+    {
+      "id": "ceramica-maria-roy",
+      "title": "Peça de ceràmica",
+      "author": "Maria Roy Deulofeu",
+      "editorial": "Col·laboració amb TAT ARA",
+      "price": null,
+      "images": ["assets/img/mr/mrd-373.webp", "assets/img/mr/mrd-400.webp"],
+      "description": null
+    },
+    {
+      "id": "bolso-1",
+      "title": "Bolso Nº1",
+      "author": null,
+      "editorial": null,
+      "price": null,
+      "images": [],
+      "description": null
+    },
+    {
+      "id": "bolso-2",
+      "title": "Bolso Nº2",
+      "author": null,
+      "editorial": null,
+      "price": null,
+      "images": [],
+      "description": null
+    },
+    {
+      "id": "bolso-3",
+      "title": "Bolso Nº3",
+      "author": null,
+      "editorial": null,
+      "price": null,
+      "images": [],
+      "description": null
+    },
+    {
+      "id": "bolso-4",
+      "title": "Bolso Nº4",
+      "author": null,
+      "editorial": null,
+      "price": null,
+      "images": [],
+      "description": null
+    },
+    {
+      "id": "bolso-5",
+      "title": "Bolso Nº5",
+      "author": null,
+      "editorial": null,
+      "price": null,
+      "images": [],
+      "description": null
+    }
+  ]
+}

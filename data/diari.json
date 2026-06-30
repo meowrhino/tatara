@@ -1,0 +1,20 @@
+{
+  "_comment": "Sección Diari (journal/current research). articles[] con autor, títol, data (texto libre) i body (array de párrafos por idioma). De momento un artículo real (Solange Dalannais, del mockup diari.png).",
+  "articles": [
+    {
+      "id": "presencia-impermanencia",
+      "author": "Solange Dalannais",
+      "title": { "ca": "Presència en la impermanència" },
+      "date": "7 maig",
+      "image": "assets/img/agenda/solange.webp",
+      "body": {
+        "ca": [
+          "Presència en la impermanència és una exploració de llenguatges cartogràfics des d'on explorar el sòl, l'essència del territori, cercant la connexió i la relació entre codis transversals primaris. Dalannais explora el color de la flora silvestre a través d'una investigació d'alquímia.",
+          "La simbiosi entre bacteris, espores i plantes obre el camp de recerca de les ecologies de l'aparició i els processos d'activació, al mateix temps que obre la mirada per entrellaçar-se al territori en un procés d'acceptació i vincle. La cartografia va més enllà del territori per entrar al cos, acceptar l'error, la impuresa, la cosa fugitiva en el color; és entendre el potencial de l'inestable, del que canvia, allò que evidencia la seva impermanència i insisteix a estar present.",
+          "L'artista entén el color com una estratègia de supervivència per a les plantes, una tàctica relacional que interactua amb el sòl, el clima, l'estrès i la temporalitat. Per a Dalannais, tenyir i pintar amb plantes és dialogar amb el seu sistema de defensa, amb el llenguatge i els mecanismes d'adaptació a l'entorn.",
+          "Després de vint anys fora de la seva terra natal, Dalannais ha anat traçant un territori afectiu, biològic i poètic. Amb el gest primitiu i arcaic de la recol·lecta, observa amb cura, distància i respecte els entorns a través de les plantes silvestres, les quals, lentament, es van convertint en companyes de viatge. A través d'elles va unint terres que habita, reduint distàncies."
+        ]
+      }
+    }
+  ]
+}

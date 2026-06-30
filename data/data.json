@@ -1,0 +1,43 @@
+{
+  "_comment": "Configuración general de la web TAT ARA. El contenido de cada sección vive en su propio JSON (ver 'sections[].data'). Aquí solo van: identidad, paleta, idiomas, datos de contacto y el índice de secciones (que alimenta el menú y el router).",
+  "site": {
+    "name": "TAT ARA",
+    "studio": "tatara studio",
+    "tagline": {
+      "ca": "espai galeria d'art, disseny i ecologia",
+      "es": "espacio galería de arte, diseño y ecología",
+      "en": "art, design and ecology gallery space"
+    }
+  },
+  "languages": ["ca", "es", "en"],
+  "defaultLang": "ca",
+  "palette": {
+    "verd": "#8FE98F",
+    "rosa": "#E89BD9",
+    "groc": "#F4E04D",
+    "corall": "#FF9E80",
+    "lila": "#C3A6F0"
+  },
+  "agenda": {
+    "dayVh": 3,
+    "minEventVh": 10,
+    "gapVh": 13,
+    "compactMaxDays": 2,
+    "mediaMinDays": 6,
+    "endMinDays": 4
+  },
+  "contact": {
+    "address": ["Carrer Martí 59 B", "08024 Barcelona"],
+    "email": "admintatara@gmail.com",
+    "instagram": null
+  },
+  "sections": [
+    { "id": "agenda",    "type": "agenda",  "data": "data/events.json",    "label": { "ca": "agenda",    "es": "agenda",    "en": "agenda" } },
+    { "id": "nosaltres", "type": "text",    "data": "data/nosaltres.json", "label": { "ca": "nosaltres", "es": "nosotras",  "en": "about" } },
+    { "id": "artistes",  "type": "people",  "data": "data/persones.json",  "label": { "ca": "artistes",  "es": "artistas",  "en": "artists" } },
+    { "id": "diari",     "type": "journal", "data": "data/diari.json",     "label": { "ca": "diari",     "es": "diario",    "en": "journal" } },
+    { "id": "botiga",    "type": "shop",    "data": "data/edicions.json",  "label": { "ca": "botiga",    "es": "tienda",    "en": "shop" } },
+    { "id": "contacte",  "type": "contact",                                "label": { "ca": "contacte",  "es": "contacto",  "en": "contact" } },
+    { "id": "carret",    "type": "cart",                                   "label": { "ca": "carret",    "es": "carrito",   "en": "cart" } }
+  ]
+}

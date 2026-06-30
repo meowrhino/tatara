@@ -1,0 +1,12 @@
+{
+  "_comment": "Texto statement de la sección Nosaltres. body = array de párrafos por idioma. De momento solo 'ca' (texto real de la clienta, del .pages / mockup nosaltres.png).",
+  "title": { "ca": "Nosaltres", "es": "Nosotras", "en": "About" },
+  "body": {
+    "ca": [
+      "TAT ARA és una associació sense ànim de lucre, un espai galeria que visibilitza i connecta projectes d'art, disseny i ecologia. Acull propostes crítiques, experimentals i d'investigació. És un espai a recés del sistema per connectar, crear friccions i fer xarxa entre persones, comunitats i pràctiques. Un espai cultural obert al públic per a l'exposició, la producció, la lectura, el debat, l'escolta, la conversa i la investigació.",
+      "Exposicions: un espai de mostra per assajar i trobar afinitats, similituds i friccions. Entorn al diàleg d'un pensament subtil i sensible d'imaginaris post-eficiència.",
+      "Edicions: produccions amb artistes i col·laboradores per generar economia que permeti sostenir les pràctiques artístiques i crítiques.",
+      "Com aprenem? Com ens arriba el coneixement que constantment ens envolta però sovint no ens travessa? Proposem explorar maneres de saber que també activin el cos: a través de tallers, lectures, converses, sessions d'escolta, debats, sessions transpersonals, grups de treball, consultoria o acompanyaments per trobar les eines a través de les quals el canvi és possible."
+    ]
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "_comment": "Sección Artistes/Persones (artistes, dissenyadores i pensadores). bio por idioma (solo 'ca' de momento). link = web propia (PENDIENTE de la clienta para casi todas → null). image opcional.",
+  "people": [
+    {
+      "name": "Anna Dot",
+      "link": null,
+      "image": "assets/img/agenda/annadot.webp",
+      "bio": { "ca": "Amb formació artística i un doctorat en Traducció i Llengües Aplicades, desenvolupa la seva obra des d'una mirada interdisciplinària. El seu treball investiga com el llenguatge i la traducció configuren les nostres experiències, les relacions i la manera com habitem el món. Els seus projectes parteixen de preguntes que explora a partir de pràctiques d'investigació i processos artístics que formalitza en performances, vídeos i instal·lacions." }
+    },
+    {
+      "name": "Tasio Ranz",
+      "link": null,
+      "image": "assets/img/agenda/tasioranz.webp",
+      "bio": null
+    },
+    {
+      "name": "Maria Roy Deulofeu",
+      "link": null,
+      "image": "assets/img/agenda/mariaroy.webp",
+      "bio": { "ca": "Transita entre el disseny i la investigació, fent de la ceràmica un espai d'experimentació artesanal i sostenible. La seva principal àrea d'estudi és la terra, material viu que narra la història, la política i l'ecologia de la localitat. Utilitza la ceràmica com a mitjà arqueològic per recuperar les narratives que ens connecten amb el nostre entorn a través de l'objecte." }
+    },
+    {
+      "name": "Solange Dalannais",
+      "link": null,
+      "image": "assets/img/agenda/solange.webp",
+      "bio": null
+    },
+    {
+      "name": "Sara G. de Ubieta",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "Olatz Azcona",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "Joana Mallol",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "Emma Prats",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "Inés Sistiaga",
+      "link": null,
+      "image": "assets/img/agenda/ines-sistiaga.webp",
+      "bio": { "ca": "Dissenyadora i investigadora formada a la Design Academy Eindhoven (Design for Wellbeing) i a l'Escola Massana. La seva pràctica se situa en la intersecció entre l'artesania tradicional i la innovació tecnològica, i explora el llenguatge dels materials mitjançant el teixit. Ha desenvolupat projectes d'investigació en institucions com el TextielLab de Tilburg. Actualment impulsa el TextileLab de TMDC." }
+    },
+    {
+      "name": "Colectivo Pimienta",
+      "link": null,
+      "image": "assets/img/agenda/pimienta.webp",
+      "bio": null
+    },
+    {
+      "name": "Mireia López",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "Ale Carrero",
+      "link": null,
+      "image": "assets/img/agenda/alecarrero.webp",
+      "bio": { "ca": "Psicòloga especialitzada en consciència corporal." }
+    },
+    {
+      "name": "Sol Prado",
+      "link": null,
+      "bio": { "ca": "Llicenciada en disseny tèxtil per la Universitat de Buenos Aires i màster en Estudis de Gènere i Teoria Crítica pel PEI del MACBA-UAB. La seva recerca parteix de la pràctica del disseny, des de la qual analitza les relacions de producció capitalistes en l'eix nord-sud global, amb l'objectiu de proposar noves formes de creació tèxtil en col·laboració amb comunitats que fomentin vincles sostenibles entre les persones, el disseny i el territori." }
+    },
+    {
+      "name": "Mati Cini",
+      "link": null,
+      "bio": { "ca": "Ceramista i investigadora, cofundadora de Salemi Ceramics." }
+    },
+    {
+      "name": "Tornen les Esquelles",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "Vinik Juré",
+      "link": null,
+      "image": "assets/img/agenda/vinik.webp",
+      "bio": { "ca": "Treballa des de l'encreuament entre antropologia, agroecologia i escriptura, des d'on genera espais on acompanya i connecta persones, sabers i pràctiques. La reflexió no es queda en un pla especulatiu sinó que es tradueix en acció col·lectiva. Entén que els problemes ecològics no es poden deslligar dels factors socials, polítics i culturals que els configuren. Ho fa a partir del seu projecte Expresiones bioculturales." }
+    },
+    {
+      "name": "DU-DA",
+      "link": null,
+      "image": "assets/img/agenda/duda-raquel-buj.webp",
+      "bio": { "ca": "Col·lectiu format per Clara Piazuelo i Sarai Cumplido, dedicat a la mediació, la recerca, la creació artística, el comissariat i la producció cultural. Els seus projectes, sempre relacionals i col·lectius, apunten a qüestionar les estructures de poder hegemòniques." }
+    },
+    {
+      "name": "Raquel Buj",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "IF. Publications",
+      "link": null,
+      "image": "assets/img/agenda/if.webp",
+      "bio": { "ca": "International Friendship és l'editorial de pensament crític de la dissenyadora i investigadora Ariadna Serrahima i el filòsof Guillem Serrahima." }
+    }
+  ]
+}
