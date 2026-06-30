@@ -15,7 +15,7 @@ const CONFIG = {
 
 const MONTHS_CA = ['gener', 'febrer', 'març', 'abril', 'maig', 'juny',
                    'juliol', 'agost', 'setembre', 'octubre', 'novembre', 'desembre'];
-const KIND_CA = { exposicio: 'Exposició', conversa: 'Conversa', esdeveniment: 'Esdeveniment', taller: 'Taller' };
+const KIND_CA = { exposicio: 'Exposició', conversa: 'Conversa', esdeveniment: 'Esdeveniment', taller: 'Taller', lectura: 'Lectura', sessio: 'Sessió d’escolta' };
 
 let LANG = 'ca';
 
@@ -121,7 +121,7 @@ function eventBlock(ev, days) {
     if (days >= CONFIG.MEDIA_MIN_DAYS && imgs.length) {
       const media = document.createElement('div');
       media.className = 'seg__media';
-      imgs.slice(0, 3).forEach((src) => {
+      imgs.slice(0, 1).forEach((src) => {
         const img = document.createElement('img');
         img.src = src; img.alt = t(ev.title); img.loading = 'lazy';
         media.appendChild(img);

@@ -3,10 +3,24 @@
    Negro sobre blanco. Color solo en los bloques de la agenda.
    ============================================================ */
 
+@font-face {
+  font-family: "Superstudio Trial";
+  src: url("../fonts/SuperstudioTrialTT-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Superstudio Trial";
+  src: url("../fonts/SuperstudioTrialTT-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Tipografía */
   --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  /* Wordmark "TAT ARA": pendiente la superstudioTrial; de momento usa la mono con tracking ancho */
   --font-display: "Superstudio Trial", "Space Mono", ui-monospace, monospace;
 
   /* Color */
