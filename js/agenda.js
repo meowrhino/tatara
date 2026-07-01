@@ -1,24 +1,25 @@
 /* ============================================================
    TAT ARA — AGENDA
    La sección central: un "strip" vertical donde cada exposición es un bloque
-   de color cuya altura es un eje temporal real (cada día = --day = dayVh dvh).
+   de color cuya altura es un eje temporal real (cada día = --day = dayVh svh).
 
    Modelo de layout (en FLUJO, sin position:absolute):
    - El bloque es una columna flex con min-height = max(minVh, días·dayVh).
    - Tras cabecera/imagen/descripción va la región temporal .seg__days. Dentro,
      cada O.R. ocupa como mínimo los días que lo separan del siguiente, en
-     unidades de --day (min-height en dvh). Si su contenido excede ese mínimo,
+     unidades de --day (min-height en svh). Si su contenido excede ese mínimo,
      empuja al siguiente hacia abajo (estirar para caber).
    - Consecuencia: el solapamiento es imposible (nada se monta en flujo), el
      crecimiento es automático (el contenido empuja la altura) y el resize lo
-     resuelve el CSS solo (todo en dvh). No hay relayout de O.R. en JS.
+     resuelve el CSS solo (todo en svh, estable frente a la barra de iOS). No
+     hay relayout de O.R. en JS.
 
    Lo único que aún se mide es la marca "avui": vive fuera del color, pegada al
    borde de pantalla, y su Y depende de la altura real de la cabecera (que
    cambia al cargar imágenes), así que se reposiciona en cada carga/resize.
    ============================================================ */
 
-import { el, esc, wordmark, t, KIND_CA, imagesOf } from './utils.js';
+import { el, esc, wordmark, t, KIND_CA, imagesOf, captureFocus } from './utils.js';
 import { SITE } from './state.js';
 import { parseDate, todayDate, sameDay, daysBetween, dMes, rangeSlash } from './dates.js';
 
@@ -37,6 +38,15 @@ function textOn(hex) {
 const ORKIND = new Set(['conversa', 'lectura', 'sessio', 'taller', 'esdeveniment']);
 const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (KIND_CA[ev.kind] || '');
 
+// Días de margen que reserva el último O.R. de un bloque bajo su fila.
+const TRAILING_DAYS = 1;
+
+// Unidad de viewport del eje temporal. Usamos svh (small viewport height, la
+// altura con la barra del navegador desplegada) en vez de dvh: dvh recalcula
+// cuando iOS muestra/oculta la barra de URL al hacer scroll, y eso hacía que
+// toda la línea de tiempo "respirara". Con svh la geometría es estable.
+const VH = 'svh';
+
 // Offset (en días, base 0) del día d dentro de un evento que empieza en s.
 const dayOffset = (s, d) => daysBetween(s, d) - 1;
 
@@ -46,7 +56,7 @@ export function renderAgenda(view, data) {
   const compactMax = cfg.compactMaxDays || 2, mediaMin = cfg.mediaMinDays || 6, endMin = cfg.endMinDays || 4;
 
   // Unidad de día para el CSS: todo el espaciado temporal se expresa con var(--day).
-  view.style.setProperty('--day', `${dayVh}dvh`);
+  view.style.setProperty('--day', `${dayVh}${VH}`);
 
   const events = (data.events || []).slice()
     .sort((a, b) => parseDate(a.start) - parseDate(b.start));
@@ -71,11 +81,14 @@ export function renderAgenda(view, data) {
 
   view.dataset.agendaDayVh = String(dayVh);
 
+  // Si hoy cae dentro de un bloque, la marca "avui" fija el punto exacto y el
+  // scroll se hace sobre ella. Si no (hoy en un hueco, o antes/después de todo),
+  // marcamos el bloque más relevante para un scroll aproximado.
   const todayMark = placeTodayMark(view, dayVh);
-  const todayHost = strip.querySelector('[data-today-days-in]');
-  const isDesktop = window.matchMedia('(min-width: 720px)').matches;
-  const target = (isDesktop && todayMark) || todayHost || currentBlock || upcomingBlock || lastBlock;
-  if (target) target.dataset.todayTarget = '1';
+  if (!todayMark) {
+    const fallback = currentBlock || upcomingBlock || lastBlock;
+    if (fallback) fallback.dataset.todayTarget = '1';
+  }
 }
 
 // Marca "avui": vive fuera de los bloques de color (hija de #view, no del
@@ -95,35 +108,28 @@ function placeTodayMark(view, dayVh) {
   const daysIn = Number(host.dataset.todayDaysIn);
 
   if (!mark) { mark = el('div', 'agenda__today-mark', 'avui'); view.appendChild(mark); }
-  mark.style.top = `calc(${originY}px + ${daysIn * dayVh}dvh)`;
+  mark.style.top = `calc(${originY}px + ${daysIn * dayVh}${VH})`;
   return mark;
 }
 
-// Recoloca solo la marca "avui" (su Y mezcla px de offset con dvh, así que se
+// Recoloca solo la marca "avui" (su Y mezcla px de offset con svh, así que se
 // descuadra al cambiar alturas/viewport). Todo lo demás es CSS puro.
 export function relayoutAgenda(view) {
   placeTodayMark(view, Number(view.dataset.agendaDayVh) || 3);
 }
 
-// Y absoluta de la línea "avui" (mismo cálculo que la marca, pero resuelto a px
-// para poder hacer scrollTo). Devuelve null si hoy no cae dentro de un bloque no
-// compacto (entonces se cae al bloque marcado como data-today-target).
-function todayScrollY(view) {
-  const strip = view.querySelector('.agenda__strip');
-  const host = strip && strip.querySelector('[data-today-days-in]');
-  if (!host) return null;
-  const dayVh = Number(view.dataset.agendaDayVh) || 3;
-  const days = host.querySelector(':scope > .seg__days');
-  const originY = host.offsetTop + (days ? days.offsetTop : host.offsetHeight);
-  const daysIn = Number(host.dataset.todayDaysIn) || 0;
-  const dayPx = (dayVh / 100) * window.innerHeight; // var(--day) en px, según el viewport actual
-  const topMargin = window.innerHeight * 0.18;      // deja algo de contexto encima de "avui"
-  return Math.max(0, originY + daysIn * dayPx - topMargin);
-}
+// Deja algo de contexto por encima de "avui" al hacer scroll (fracción del alto).
+const TODAY_TOP_MARGIN = 0.18;
 
+// Lleva el scroll a "avui". Si existe la marca, su offsetTop ya es la Y exacta
+// (el navegador ha resuelto el calc px+svh por nosotros), así que no repetimos
+// la fórmula. Si no, caemos al bloque marcado como fallback.
 function scrollToToday(view) {
-  const y = todayScrollY(view);
-  if (y != null) { window.scrollTo(0, y); return; }
+  const mark = view.querySelector('.agenda__today-mark');
+  if (mark) {
+    window.scrollTo(0, Math.max(0, mark.offsetTop - window.innerHeight * TODAY_TOP_MARGIN));
+    return;
+  }
   const tgt = view.querySelector('[data-today-target="1"]');
   if (tgt) tgt.scrollIntoView({ block: 'start' });
 }
@@ -169,7 +175,7 @@ export function scrollAgendaToToday(view) {
 
 function gapBlock(gapVh) {
   const gap = el('div', 'seg seg--gap');
-  gap.style.minHeight = `${gapVh}dvh`;
+  gap.style.minHeight = `${gapVh}${VH}`;
   gap.appendChild(el('span', 'wordmark wordmark--gap', wordmark('TAT ARA')));
   return gap;
 }
@@ -183,7 +189,7 @@ function eventBlock(ev, o, today) {
 
   const color = resolveColor(ev.color);
   const block = el('div', 'seg seg--event' + (compact ? ' seg--compact' : ''));
-  block.style.minHeight = `max(${o.minVh}dvh, ${days * o.dayVh}dvh)`;
+  block.style.minHeight = `max(${o.minVh}${VH}, ${days * o.dayVh}${VH})`;
   block.style.background = color;
   block.style.color = textOn(color);
   block.dataset.id = ev.id;
@@ -258,27 +264,38 @@ function eventBlock(ev, o, today) {
   return block;
 }
 
+// La imagen es un <button> (no un <img> suelto) para que se pueda ampliar también
+// con teclado; alterna izquierda/derecha según su posición en el bloque.
 function mediaEl(src, alt, idx) {
-  const media = el('div', 'seg__media ' + (idx % 2 === 0 ? 'seg__media--left' : 'seg__media--right'));
+  const btn = el('button', 'seg__media ' + (idx % 2 === 0 ? 'seg__media--left' : 'seg__media--right'));
+  btn.type = 'button';
+  btn.setAttribute('aria-label', alt ? `Ampliar imatge: ${alt}` : 'Ampliar imatge');
   const img = el('img');
   img.src = src; img.alt = alt; img.loading = 'lazy';
-  img.addEventListener('click', (ev) => { ev.stopPropagation(); openLightbox(src, alt); });
-  media.appendChild(img);
-  return media;
+  btn.appendChild(img);
+  btn.addEventListener('click', (ev) => { ev.stopPropagation(); openLightbox(src, alt); });
+  return btn;
 }
 
 function openLightbox(src, alt) {
+  const restoreFocus = captureFocus();
   const overlay = el('div', 'lightbox');
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', alt || 'Imatge ampliada');
+  overlay.tabIndex = -1;
   const img = el('img');
   img.src = src; img.alt = alt || '';
   overlay.appendChild(img);
   document.body.appendChild(overlay);
   document.body.classList.add('no-scroll');
+  overlay.focus();
 
   const close = () => {
     overlay.remove();
     document.body.classList.remove('no-scroll');
     document.removeEventListener('keydown', onKey);
+    restoreFocus();
   };
   const onKey = (ev) => { if (ev.key === 'Escape') close(); };
   overlay.addEventListener('click', close);

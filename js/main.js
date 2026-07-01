@@ -5,7 +5,7 @@
    (type="module"); el resto de módulos se importan desde aquí.
    ============================================================ */
 
-import { CONFIG_URL, SITE, setSite, setLang } from './state.js';
+import { CONFIG_URL, SITE, setSite, setLang, storedLang } from './state.js';
 import { $, esc } from './utils.js';
 import { loadJSON } from './data.js';
 import { buildMenu, openMenu, closeMenu, isMenuOpen } from './menu.js';
@@ -20,7 +20,14 @@ async function init() {
     $('#view').innerHTML = `<p class="loading">no s'ha pogut carregar la configuració<br><small>${esc(err.message)}</small></p>`;
     return;
   }
-  setLang(SITE.defaultLang || 'ca');
+  // Idioma: el recordado de una visita anterior si sigue siendo válido, si no el
+  // por defecto de la config.
+  const langs = SITE.languages || ['ca'];
+  const remembered = storedLang();
+  const lang = langs.includes(remembered) ? remembered : (SITE.defaultLang || 'ca');
+  setLang(lang);
+  document.documentElement.lang = lang;
+
   if (SITE.site && SITE.site.studio) $('#bar-studio').textContent = SITE.site.studio;
 
   // expone la paleta de data.json como custom properties --color-<clau>, por si el CSS necesita usarla
@@ -36,8 +43,8 @@ async function init() {
     if (e.key === 'Escape') { if (!$('#modal').hidden) closeModal(); else if (isMenuOpen()) closeMenu(); }
   });
 
-  // Al redimensionar, los top de los O.R. (calculados en px a partir de dvh)
-  // se descuadran: recolocamos la agenda si es la sección visible. Pero en iOS
+  // Al redimensionar, la Y de la marca "avui" (px de offset + svh) se descuadra:
+  // recolocamos la agenda si es la sección visible. Pero en iOS
   // la barra de URL al hacer scroll dispara "resize" cambiando solo la altura;
   // eso no toca el layout horizontal, así que ignoramos los cambios que no
   // varían el ancho para no recolocar la marca en cada scroll.

@@ -4,17 +4,21 @@
    SITE.sections y los botones de idioma a partir de SITE.languages.
    ============================================================ */
 
-import { $, esc, t } from './utils.js';
+import { $, esc, t, captureFocus } from './utils.js';
 import { SITE, LANG, setLang } from './state.js';
-import { renderRoute, syncActive } from './router.js';
+import { renderRoute } from './router.js';
 
 export const isMenuOpen = () => $('#menu').classList.contains('is-open');
 
+let restoreMenuFocus = null;   // devuelve el foco a quien abrió el menú al cerrarlo
+
 export function openMenu() {
+  restoreMenuFocus = captureFocus();
   $('#menu').classList.add('is-open');
   $('#menu').setAttribute('aria-hidden', 'false');
   $('#open-menu').setAttribute('aria-expanded', 'true');
   document.body.classList.add('no-scroll');
+  $('#close-menu').focus();
 }
 
 export function closeMenu() {
@@ -22,6 +26,7 @@ export function closeMenu() {
   $('#menu').setAttribute('aria-hidden', 'true');
   $('#open-menu').setAttribute('aria-expanded', 'false');
   if ($('#modal').hidden) document.body.classList.remove('no-scroll');
+  if (restoreMenuFocus) { restoreMenuFocus(); restoreMenuFocus = null; }
 }
 
 export function buildMenu() {
@@ -41,11 +46,10 @@ export function buildMenu() {
 }
 
 // Cambia el idioma activo y re-renderiza: menú (etiquetas + estado activo) y la
-// sección actual del router.
+// sección actual. renderRoute ya llama a syncActive al terminar.
 function changeLang(lang) {
   setLang(lang);
   document.documentElement.lang = lang;
   buildMenu();
   renderRoute();
-  syncActive();
 }

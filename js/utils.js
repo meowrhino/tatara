@@ -18,6 +18,14 @@ export const KIND_CA = {
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
 
+// Guarda el elemento con foco y devuelve una función que lo restaura. Se usa al
+// abrir overlays (menú, modal, lightbox) para devolver el foco a quien los abrió
+// cuando se cierran — accesibilidad de teclado.
+export const captureFocus = () => {
+  const prev = document.activeElement;
+  return () => { if (prev && typeof prev.focus === 'function') prev.focus(); };
+};
+
 /* ---------- texto ---------- */
 export const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 export const wordmark = (s) => s.split('').map((c) => `<span>${c === ' ' ? '&nbsp;' : esc(c)}</span>`).join('');

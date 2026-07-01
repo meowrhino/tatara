@@ -29,6 +29,7 @@
   --doodle: #cfcfcf;
 
   --bar-h: 52px;
+  --fade: 180ms;   /* duración del fundido entre vistas; la lee también el router (JS) */
 }
 
 * { box-sizing: border-box; }
@@ -53,7 +54,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   min-height: 100dvh;
   padding-bottom: var(--bar-h);
   opacity: 1;
-  transition: opacity 0.18s ease;
+  transition: opacity var(--fade) ease;
 }
 #view.view--fade { opacity: 0; }
 #view.view--journal { background: #cccccc; }
@@ -129,7 +130,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    borde real de la pantalla. Solo cabe cuando el contenido centrado deja
    hueco a su izquierda — ver breakpoint DESKTOP. */
 .agenda__today-mark {
-  display: none;
+  /* Sigue en el layout (para poder medir su Y y hacer scroll a "avui"), pero
+     oculta salvo en desktop, donde hay hueco a la izquierda del contenido. */
+  visibility: hidden;
   position: absolute;
   left: 1rem;
   font-size: 0.7rem;
@@ -147,8 +150,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   text-transform: uppercase;
 }
 
-.seg__media { padding: 1.2rem 1rem 0; width: 58%; max-width: 300px; cursor: zoom-in; }
-.seg__media img { width: 100%; height: auto; display: block; }
+.seg__media { display: block; padding: 1.2rem 1rem 0; width: 58%; max-width: 300px; cursor: zoom-in; text-align: inherit; }
+/* aspect-ratio reserva hueco antes de que cargue la imagen (evita saltos de
+   layout); el 'auto' hace que, una vez cargada, mande su proporción real. */
+.seg__media img { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3 auto; background: rgba(0, 0, 0, 0.04); }
 .seg__media--left { margin-right: auto; }
 .seg__media--right { margin-left: auto; }
 
@@ -356,9 +361,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .agenda__strip { max-width: 480px; margin: 0 auto; }
 
   /* Solo hay hueco a la izquierda del contenido centrado a partir de aquí */
-  .agenda__today-mark { display: block; }
+  .agenda__today-mark { visibility: visible; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu { transition: none; }
+  .menu, #view { transition: none; }
 }

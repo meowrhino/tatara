@@ -24,7 +24,9 @@ export function syncActive() {
     a.classList.toggle('is-active', a.dataset.id === id));
 }
 
-const FADE_MS = 180;
+// Duración del fundido entre vistas. Fuente única: la custom property --fade del
+// CSS (así JS y la transición CSS nunca se desincronizan).
+const fadeMs = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fade')) || 180;
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -36,7 +38,7 @@ export async function renderRoute() {
 
   if (animate) {
     view.classList.add('view--fade');
-    await wait(FADE_MS);
+    await wait(fadeMs());
   }
 
   view.dataset.section = id;
@@ -62,8 +64,7 @@ export async function renderRoute() {
     console.error(err);
   }
 
-  view.scrollTop = 0;
-  window.scrollTo(0, 0);
+  window.scrollTo(0, 0);   // el scroll vive en el window; #view no tiene overflow
   syncActive();
 
   if (section.type === 'agenda') scrollAgendaToToday(view);

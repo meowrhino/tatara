@@ -57,7 +57,8 @@ amb la seva descripció inline visible sota el títol/imatge. El que no cau dins
 cap exposició queda com a bloc independent.
 
 El layout és **en flux** (sense `position:absolute`): cada dia val `--day`
-(= `dayVh` dvh, a `data.json` → `agenda`). El bloc té `min-height` proporcional
+(= `dayVh` svh — small viewport height, estable davant la barra d'URL d'iOS; a
+`data.json` → `agenda`). El bloc té `min-height` proporcional
 a la seva durada; dins, la regió `.seg__days` posa cada O.R. amb un `min-height`
 en `var(--day)` igual als dies que el separen del següent. Si el contingut d'un
 O.R. excedeix el seu mínim, empeny el següent cap avall (estirar per cabre) i el
