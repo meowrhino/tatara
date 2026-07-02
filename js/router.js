@@ -5,7 +5,7 @@
    toca, con un fundido entre vistas.
    ============================================================ */
 
-import { $, esc, t } from './utils.js';
+import { $, esc, t, ui } from './utils.js';
 import { SITE } from './state.js';
 import { loadJSON } from './data.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
@@ -57,10 +57,10 @@ export async function renderRoute() {
       case 'shop':    renderShop(view, data); break;
       case 'contact': renderContact(view); break;
       case 'cart':    renderCart(view); break;
-      default:        view.innerHTML = `<p class="loading">secció desconeguda</p>`;
+      default:        view.innerHTML = `<p class="loading">${ui('unknownSection')}</p>`;
     }
   } catch (err) {
-    view.innerHTML = `<p class="loading">no s'ha pogut carregar<br><small>${esc(err.message)}</small></p>`;
+    view.innerHTML = `<p class="loading">${ui('loadError')}<br><small>${esc(err.message)}</small></p>`;
     console.error(err);
   }
 

@@ -5,7 +5,7 @@
    Cada una recibe (view, data) y escribe view.innerHTML.
    ============================================================ */
 
-import { esc, t, wordmark, imagesOf } from './utils.js';
+import { esc, t, ui, wordmark, imagesOf } from './utils.js';
 import { SITE } from './state.js';
 import { openModal } from './modal.js';
 
@@ -76,7 +76,7 @@ export function renderShop(view, data) {
 
 function openProductModal(p, cur) {
   const img = imagesOf(p)[0];
-  const price = (p.price != null) ? `${p.price}${cur}` : 'preu a confirmar';
+  const price = (p.price != null) ? `${p.price}${cur}` : ui('priceTbc');
   openModal(`
     ${img ? `<img src="${esc(img)}" alt="${esc(p.title)}">` : ''}
     <h2 class="m-title" id="modal-title">${esc(p.title)}</h2>
@@ -84,7 +84,7 @@ function openProductModal(p, cur) {
     ${p.editorial ? `<p class="m-when">${esc(p.editorial)}</p>` : ''}
     ${p.description ? `<p class="m-desc">${esc(t(p.description))}</p>` : ''}
     <p class="m-price">${esc(price)}</p>
-    <button class="m-buy" type="button" disabled title="Pròximament">afegir al carret · pròximament</button>
+    <button class="m-buy" type="button" disabled title="${esc(ui('comingSoon'))}">${esc(ui('addToCartSoon'))}</button>
   `);
 }
 
@@ -106,5 +106,5 @@ export function renderContact(view) {
 }
 
 export function renderCart(view) {
-  view.innerHTML = pageWrap(`<div class="cart"><p class="cart__empty">el teu carret és buit</p></div>`);
+  view.innerHTML = pageWrap(`<div class="cart"><p class="cart__empty">${esc(ui('cartEmpty'))}</p></div>`);
 }

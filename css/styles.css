@@ -50,7 +50,6 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 
 #view {
-  position: relative; /* ancla la marca "avui" de la agenda (ver .agenda__today-mark) */
   min-height: 100dvh;
   padding-bottom: var(--bar-h);
   opacity: 1;
@@ -105,6 +104,14 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   text-align: left;
 }
 
+/* "Fila 0" del eje temporal: cabecera + imagen + descripción. Su min-height
+   (inline, en unidades --day) reserva los días que van del inicio del evento
+   al primer O.R., así la cabecera consume tiempo real en vez de sumarse. */
+.seg__lead {
+  display: flex;
+  flex-direction: column;
+}
+
 .seg__desc {
   padding: 0.6rem 1rem 0;
   font-size: 0.8rem;
@@ -126,15 +133,16 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__label .seg__who b { font-weight: 700; }
 .seg__label .seg__when { flex: 0 0 auto; opacity: 0.92; }
 
-/* Marca "avui": vive fuera del bloque de color (hija de #view), pegada al
-   borde real de la pantalla. Solo cabe cuando el contenido centrado deja
-   hueco a su izquierda — ver breakpoint DESKTOP. */
+/* Marca "avui": hija absoluta del bloque de hoy; su top (en unidades --day)
+   lo pone el JS al renderizar. El left negativo la saca del strip centrado
+   hasta el borde real de la pantalla. Solo cabe cuando el contenido centrado
+   deja hueco a su izquierda — ver breakpoint DESKTOP. */
 .agenda__today-mark {
-  /* Sigue en el layout (para poder medir su Y y hacer scroll a "avui"), pero
-     oculta salvo en desktop, donde hay hueco a la izquierda del contenido. */
+  /* Sigue en el layout (el scroll a "avui" la usa de ancla), pero oculta
+     salvo en desktop, donde hay hueco a la izquierda del contenido. */
   visibility: hidden;
   position: absolute;
-  left: 1rem;
+  left: calc(50% - 50vw + 1rem);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -157,20 +165,21 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__media--left { margin-right: auto; }
 .seg__media--right { margin-left: auto; }
 
-/* Región temporal del bloque: contiene los O.R. en flujo. Su borde superior
-   es el "día 0" del eje. La separación entre O.R. la da el min-height (en
-   var(--day)) de cada fila, calculado en JS al renderizar — ver eventBlock. */
+/* Región temporal del bloque: contiene los O.R. en flujo. La separación entre
+   O.R. la da el min-height (en var(--day)) de cada fila, calculado en JS al
+   renderizar — ver eventBlock. Sin gap: cualquier espacio extra fijo aquí
+   desviaría el eje temporal (el aire entre filas es padding de .seg__child,
+   que con border-box queda DENTRO de su min-height). */
 .seg__days {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
 /* O.R. / esdeveniments anidados: cada uno reserva como mínimo los días que lo
    separan del siguiente (min-height inline en var(--day)); si su contenido es
    más alto, empuja al siguiente hacia abajo. */
 .seg__child {
-  padding: 0 1rem;
+  padding: 0 1rem 0.5rem;
 }
 .seg__child-info {
   display: flex;

@@ -6,18 +6,17 @@
    ============================================================ */
 
 import { CONFIG_URL, SITE, setSite, setLang, storedLang } from './state.js';
-import { $, esc } from './utils.js';
+import { $, esc, ui } from './utils.js';
 import { loadJSON } from './data.js';
 import { buildMenu, openMenu, closeMenu, isMenuOpen } from './menu.js';
 import { closeModal } from './modal.js';
 import { renderRoute } from './router.js';
-import { relayoutAgenda } from './agenda.js';
 
 async function init() {
   try {
     setSite(await loadJSON(CONFIG_URL));
   } catch (err) {
-    $('#view').innerHTML = `<p class="loading">no s'ha pogut carregar la configuració<br><small>${esc(err.message)}</small></p>`;
+    $('#view').innerHTML = `<p class="loading">${ui('configError')}<br><small>${esc(err.message)}</small></p>`;
     return;
   }
   // Idioma: el recordado de una visita anterior si sigue siendo válido, si no el
@@ -41,22 +40,6 @@ async function init() {
   document.querySelectorAll('[data-close]').forEach((x) => x.addEventListener('click', closeModal));
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') { if (!$('#modal').hidden) closeModal(); else if (isMenuOpen()) closeMenu(); }
-  });
-
-  // Al redimensionar, la Y de la marca "avui" (px de offset + svh) se descuadra:
-  // recolocamos la agenda si es la sección visible. Pero en iOS
-  // la barra de URL al hacer scroll dispara "resize" cambiando solo la altura;
-  // eso no toca el layout horizontal, así que ignoramos los cambios que no
-  // varían el ancho para no recolocar la marca en cada scroll.
-  let lastW = window.innerWidth;
-  let resizeRAF = null;
-  window.addEventListener('resize', () => {
-    if (window.innerWidth === lastW) return;
-    lastW = window.innerWidth;
-    const view = $('#view');
-    if (view.dataset.section !== 'agenda') return;
-    if (resizeRAF) cancelAnimationFrame(resizeRAF);
-    resizeRAF = requestAnimationFrame(() => relayoutAgenda(view));
   });
 
   window.addEventListener('hashchange', renderRoute);

@@ -3,23 +3,28 @@
    La sección central: un "strip" vertical donde cada exposición es un bloque
    de color cuya altura es un eje temporal real (cada día = --day = dayVh svh).
 
-   Modelo de layout (en FLUJO, sin position:absolute):
+   Modelo de layout (en FLUJO, sin medir nada en JS):
    - El bloque es una columna flex con min-height = max(minVh, días·dayVh).
-   - Tras cabecera/imagen/descripción va la región temporal .seg__days. Dentro,
-     cada O.R. ocupa como mínimo los días que lo separan del siguiente, en
-     unidades de --day (min-height en svh). Si su contenido excede ese mínimo,
-     empuja al siguiente hacia abajo (estirar para caber).
-   - Consecuencia: el solapamiento es imposible (nada se monta en flujo), el
-     crecimiento es automático (el contenido empuja la altura) y el resize lo
-     resuelve el CSS solo (todo en svh, estable frente a la barra de iOS). No
-     hay relayout de O.R. en JS.
+   - La cabecera (título + imagen + descripción) es la "fila 0" del eje
+     (.seg__lead): su min-height reserva los días que van del inicio del
+     evento al primer O.R., de modo que CONSUME tiempo real en vez de
+     sumarse encima del eje.
+   - Después va la región temporal .seg__days. Dentro, cada O.R. ocupa como
+     mínimo los días que lo separan del siguiente, en unidades de --day
+     (min-height en svh). Si su contenido excede ese mínimo, empuja al
+     siguiente hacia abajo (estirar para caber).
+   - Consecuencia: el día N de un evento cae a N·--day del borde superior del
+     bloque (mientras nada desborde su mínimo), el solapamiento es imposible
+     (nada se monta en flujo) y el resize lo resuelve el CSS solo (todo en
+     svh, estable frente a la barra de iOS).
 
-   Lo único que aún se mide es la marca "avui": vive fuera del color, pegada al
-   borde de pantalla, y su Y depende de la altura real de la cabecera (que
-   cambia al cargar imágenes), así que se reposiciona en cada carga/resize.
+   La marca "avui" también es CSS puro: hija absoluta del bloque de hoy con
+   top = díasTranscurridos·--day (el CSS la saca al borde de pantalla con un
+   left negativo). No hay relayout en JS: solo se corrige el scroll inicial
+   mientras cargan imágenes/fuentes.
    ============================================================ */
 
-import { el, esc, wordmark, t, KIND_CA, imagesOf, captureFocus } from './utils.js';
+import { el, esc, wordmark, t, ui, kindLabel, imagesOf, captureFocus } from './utils.js';
 import { SITE } from './state.js';
 import { parseDate, todayDate, sameDay, daysBetween, dMes, rangeSlash } from './dates.js';
 
@@ -36,7 +41,7 @@ function textOn(hex) {
 }
 
 const ORKIND = new Set(['conversa', 'lectura', 'sessio', 'taller', 'esdeveniment']);
-const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (KIND_CA[ev.kind] || '');
+const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (kindLabel(ev.kind) || '');
 
 // Días de margen que reserva el último O.R. de un bloque bajo su fila.
 const TRAILING_DAYS = 1;
@@ -62,7 +67,7 @@ export function renderAgenda(view, data) {
     .sort((a, b) => parseDate(a.start) - parseDate(b.start));
 
   const strip = el('div', 'agenda__strip');
-  if (!events.length) { strip.appendChild(el('p', 'loading', 'sense esdeveniments')); view.appendChild(strip); return; }
+  if (!events.length) { strip.appendChild(el('p', 'loading', ui('noEvents'))); view.appendChild(strip); return; }
 
   const today = todayDate();
   let currentBlock = null, upcomingBlock = null, lastBlock = null;
@@ -79,67 +84,39 @@ export function renderAgenda(view, data) {
   });
   view.appendChild(strip);
 
-  view.dataset.agendaDayVh = String(dayVh);
-
-  // Si hoy cae dentro de un bloque, la marca "avui" fija el punto exacto y el
-  // scroll se hace sobre ella. Si no (hoy en un hueco, o antes/después de todo),
-  // marcamos el bloque más relevante para un scroll aproximado.
-  const todayMark = placeTodayMark(view, dayVh);
-  if (!todayMark) {
+  // Si hoy cae dentro de un bloque, eventBlock ya ha colocado la marca "avui"
+  // (posición CSS pura, sin medir nada). Si no (hoy en un hueco, o antes/después
+  // de todo), marcamos el bloque más relevante para un scroll aproximado.
+  if (!strip.querySelector('.agenda__today-mark')) {
     const fallback = currentBlock || upcomingBlock || lastBlock;
     if (fallback) fallback.dataset.todayTarget = '1';
   }
 }
 
-// Marca "avui": vive fuera de los bloques de color (hija de #view, no del
-// bloque), pegada al borde real de la pantalla — así nunca compite con el
-// contenido centrado. Solo se muestra si hay hueco (ver CSS, desktop).
-// Es lo único medido: su Y = top del origen temporal del bloque de hoy (la
-// región .seg__days) + los días transcurridos. Se reutiliza el mismo nodo.
-function placeTodayMark(view, dayVh) {
-  const strip = view.querySelector('.agenda__strip');
-  const host = strip && strip.querySelector('[data-today-days-in]');
-  let mark = view.querySelector('.agenda__today-mark');
-  if (!host) return mark || null;
-
-  const days = host.querySelector(':scope > .seg__days');
-  // origen del eje temporal del bloque, relativo a #view (offsetParent común)
-  const originY = host.offsetTop + (days ? days.offsetTop : host.offsetHeight);
-  const daysIn = Number(host.dataset.todayDaysIn);
-
-  if (!mark) { mark = el('div', 'agenda__today-mark', 'avui'); view.appendChild(mark); }
-  mark.style.top = `calc(${originY}px + ${daysIn * dayVh}${VH})`;
-  return mark;
-}
-
-// Recoloca solo la marca "avui" (su Y mezcla px de offset con svh, así que se
-// descuadra al cambiar alturas/viewport). Todo lo demás es CSS puro.
-export function relayoutAgenda(view) {
-  placeTodayMark(view, Number(view.dataset.agendaDayVh) || 3);
-}
-
 // Deja algo de contexto por encima de "avui" al hacer scroll (fracción del alto).
 const TODAY_TOP_MARGIN = 0.18;
 
-// Lleva el scroll a "avui". Si existe la marca, su offsetTop ya es la Y exacta
-// (el navegador ha resuelto el calc px+svh por nosotros), así que no repetimos
-// la fórmula. Si no, caemos al bloque marcado como fallback.
+// Lleva el scroll a "avui". La marca vive dentro del bloque de hoy y el CSS ya
+// ha resuelto su posición; solo leemos dónde ha quedado en el documento. Si no
+// hay marca, caemos al bloque marcado como fallback.
 function scrollToToday(view) {
   const mark = view.querySelector('.agenda__today-mark');
   if (mark) {
-    window.scrollTo(0, Math.max(0, mark.offsetTop - window.innerHeight * TODAY_TOP_MARGIN));
+    const y = mark.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, Math.max(0, y - window.innerHeight * TODAY_TOP_MARGIN));
     return;
   }
   const tgt = view.querySelector('[data-today-target="1"]');
   if (tgt) tgt.scrollIntoView({ block: 'start' });
 }
 
-// Tras cargar imágenes/fuentes hay que reubicar la marca (sus offsets px
-// cambian) y corregir el scroll hacia "avui". Pero en cuanto el usuario hace
-// scroll dejamos de recolocar: si no, cada imagen lazy que carga al bajar
-// dispararía scrollIntoView y le robaría el scroll (en iOS se sentía como que la
-// página se quedaba "pillada"). La ventana de auto-scroll también se cierra sola
-// a los 2,5 s para no pelearse con cargas muy tardías.
+// Al cargar imágenes/fuentes puede variar la altura de los bloques ANTERIORES
+// al de hoy (si su contenido desborda el mínimo en días), así que corregimos el
+// scroll hacia "avui" en cada carga. Pero en cuanto el usuario hace scroll
+// dejamos de corregir: si no, cada imagen lazy que carga al bajar dispararía
+// scrollIntoView y le robaría el scroll (en iOS se sentía como que la página se
+// quedaba "pillada"). La ventana de auto-scroll también se cierra sola a los
+// 2,5 s para no pelearse con cargas muy tardías.
 export function scrollAgendaToToday(view) {
   let autoScroll = true;
   const opts = { passive: true };
@@ -157,10 +134,7 @@ export function scrollAgendaToToday(view) {
   window.addEventListener('keydown', onKey);
   setTimeout(stop, 2500);
 
-  const settle = () => {
-    relayoutAgenda(view);          // la marca se recoloca siempre
-    if (autoScroll) scrollToToday(view);
-  };
+  const settle = () => { if (autoScroll) scrollToToday(view); };
   requestAnimationFrame(settle);
 
   view.querySelectorAll('img').forEach((img) => {
@@ -198,13 +172,15 @@ function eventBlock(ev, o, today) {
   head.appendChild(el('div', 'seg__label',
     `<span class="seg__who">${esc(t(ev.title))}${ev.person ? ' – <b>' + esc(ev.person) + '</b>' : ''}</span>` +
     `<span class="seg__when">${esc(rangeSlash(ev))}</span>`));
-  block.appendChild(head);
 
-  if (isToday && !compact) {
-    block.dataset.todayDaysIn = String(dayOffset(s, today));
-  }
+  if (compact) { block.appendChild(head); return block; } // la cabecera ya llena el bloque
 
-  if (compact) return block; // sin imagen ni O.R.: la cabecera ya llena el bloque
+  // "Fila 0" del eje: cabecera + imagen + descripción reservan (min-height)
+  // los días que van del inicio del evento al primer O.R., de modo que
+  // consumen tiempo real. Si su contenido es más alto, empuja al primer O.R.
+  // hacia abajo — se mantiene la garantía de separación mínima.
+  const lead = el('div', 'seg__lead');
+  lead.appendChild(head);
 
   // Contador de imágenes del bloque (expo + O.R.), para alternar izq/dcha.
   // Se reinicia en cada bloque, así la primera imagen del bloque va a la izq.
@@ -212,16 +188,27 @@ function eventBlock(ev, o, today) {
 
   const imgs = imagesOf(ev);
   if (days >= o.mediaMin && imgs.length) {
-    block.appendChild(mediaEl(imgs[0], t(ev.title), imgCount++));
+    lead.appendChild(mediaEl(imgs[0], t(ev.title), imgCount++));
   }
 
   if (ev.description) {
-    block.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
+    lead.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
   }
 
-  // Región temporal: su borde superior es el "día 0" desde el que se miden los
-  // O.R. (y la marca "avui"). Existe siempre en bloques no compactos —aunque
-  // esté vacía— para servir de origen del eje.
+  const firstOffset = children.length ? Math.max(0, dayOffset(s, parseDate(children[0].start))) : 0;
+  if (firstOffset > 0) lead.style.minHeight = `calc(${firstOffset} * var(--day))`;
+  block.appendChild(lead);
+
+  // Marca "avui": hija absoluta del bloque; su Y son los días transcurridos en
+  // unidades --day (el CSS la saca al borde de pantalla, ver styles).
+  if (isToday) {
+    const mark = el('div', 'agenda__today-mark', ui('today'));
+    mark.style.top = `calc(${dayOffset(s, today)} * var(--day))`;
+    block.appendChild(mark);
+  }
+
+  // Región temporal con los O.R. en flujo. Los días previos al primer O.R. ya
+  // los ha reservado la fila 0 (.seg__lead).
   const daysRegion = el('div', 'seg__days');
   block.appendChild(daysRegion);
 
@@ -234,7 +221,6 @@ function eventBlock(ev, o, today) {
     // Cada O.R. reserva como mínimo los días que lo separan del siguiente; el
     // último reserva el margen final. El espacio sobrante de cada fila ES el
     // hueco temporal hasta el O.R. siguiente.
-    if (idx === 0 && offset > 0) row.style.marginTop = `calc(${offset} * var(--day))`;
     const gapDays = idx < children.length - 1
       ? dayOffset(s, parseDate(children[idx + 1].start)) - offset
       : TRAILING_DAYS;
@@ -244,7 +230,7 @@ function eventBlock(ev, o, today) {
     info.innerHTML =
       `<span class="seg__child-when">${esc(rangeSlash(c))}</span>` +
       `<span class="seg__child-name">${esc(orLabel(c))} · ${esc(t(c.title))}${c.person ? ' – <b>' + esc(c.person) + '</b>' : ''}</span>` +
-      (childIsToday ? '<span class="seg__today-badge">avui</span>' : '');
+      (childIsToday ? `<span class="seg__today-badge">${esc(ui('today'))}</span>` : '');
     row.appendChild(info);
 
     const cImgs = imagesOf(c);
@@ -269,7 +255,7 @@ function eventBlock(ev, o, today) {
 function mediaEl(src, alt, idx) {
   const btn = el('button', 'seg__media ' + (idx % 2 === 0 ? 'seg__media--left' : 'seg__media--right'));
   btn.type = 'button';
-  btn.setAttribute('aria-label', alt ? `Ampliar imatge: ${alt}` : 'Ampliar imatge');
+  btn.setAttribute('aria-label', alt ? `${ui('enlargeImage')}: ${alt}` : ui('enlargeImage'));
   const img = el('img');
   img.src = src; img.alt = alt; img.loading = 'lazy';
   btn.appendChild(img);
@@ -282,7 +268,7 @@ function openLightbox(src, alt) {
   const overlay = el('div', 'lightbox');
   overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true');
-  overlay.setAttribute('aria-label', alt || 'Imatge ampliada');
+  overlay.setAttribute('aria-label', alt || ui('enlargedImage'));
   overlay.tabIndex = -1;
   const img = el('img');
   img.src = src; img.alt = alt || '';
