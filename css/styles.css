@@ -20,8 +20,8 @@
 
 :root {
   color-scheme: light; /* el sitio es negro-sobre-blanco: evita que iOS/Safari lo oscurezca solo */
-  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --font-display: "Superstudio Trial", "Space Mono", ui-monospace, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-display: "Superstudio Trial", "JetBrains Mono", ui-monospace, monospace;
 
   --bg: #ffffff;
   --ink: #111111;
