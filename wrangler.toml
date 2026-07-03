@@ -1,0 +1,27 @@
+name = "tatara"
+main = "src/index.js"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Static assets: Cloudflare sirve la raíz del repo (la web) automáticamente.
+# Lo que NO debe subirse (fotos fuente, docs, src…) se excluye en .assetsignore.
+# El Worker (main) solo atiende /api/*.
+[assets]
+directory = "."
+
+# D1 compartida `shop` (una base para todos los ecommerces en desarrollo).
+# tatara usa las tablas con prefijo tatara_* ; quienNoCorre las sin prefijo.
+[[d1_databases]]
+binding = "DB"
+database_name = "shop"
+database_id = "6c1c1e51-76d4-4ab3-a912-7e7ad2749eca"
+
+# Variables NO secretas. Vacío = el Worker usa el origen de la petición.
+[vars]
+FRONTEND_URL = ""
+
+# Secretos (por CLI, NO aquí) — ver DEPLOY.md:
+#   npx wrangler secret put STRIPE_SECRET_KEY
+#   npx wrangler secret put STRIPE_WEBHOOK_SECRET
+#   npx wrangler secret put ADMIN_TOKEN
+# En local van en .dev.vars.

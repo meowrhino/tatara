@@ -1,0 +1,5 @@
+# Copia a .dev.vars para desarrollo local (gitignored).
+# Sin claves de Stripe el checkout responde 503 pero el resto de la API funciona.
+STRIPE_SECRET_KEY = ""
+STRIPE_WEBHOOK_SECRET = ""
+ADMIN_TOKEN = "admin-de-juguete"
