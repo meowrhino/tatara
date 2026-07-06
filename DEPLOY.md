@@ -20,15 +20,21 @@ pero sin activar; el carrito del frontend aún no existe** (el botón dice
 ```sh
 npm install
 cp .dev.vars.example .dev.vars
-npx wrangler d1 execute shop --local --file=schema-tatara.sql   # tablas locales
+npx wrangler d1 execute shop --local --persist-to ../.tatara-wrangler-state --file=schema-tatara.sql
 npm run dev                                                      # :8787
 ```
+
+`npm run dev` usa `--persist-to ../.tatara-wrangler-state` (fuera del repo) porque aquí los
+assets son la raíz (`.`): si el estado local de wrangler (la D1 local escribe en cada request)
+viviera dentro, el watcher entraría en bucle infinito de reloads. Por eso el `d1 execute` local
+de arriba también lleva el flag.
 
 ## Desplegar
 
 ```sh
 npx wrangler login          # una vez
 npm run db:schema           # crea las tablas tatara_* en la shop remota (ya hecho 2026-07-03)
+npm run db:migrate          # ⚠ una vez: añade zona/envio/estado a tatara_pedidos (2026-07-07)
 npx wrangler secret put ADMIN_TOKEN   # token para el panel/API de admin
 npm run deploy
 ```
@@ -45,9 +51,15 @@ No hace falta mover la web a otro repo.
    `https://<dominio>/api/stripe-webhook` con el evento `checkout.session.completed`;
    copiar el signing secret → `npx wrangler secret put STRIPE_WEBHOOK_SECRET`
 4. Ya funciona `POST /api/crear-sesion` (sin claves responde 503 a propósito).
-5. Falta el **carrito en el frontend**: `js/sections.js` renderiza la botiga con el
+   Cupones, Bizum/wallets y recibos se activan en el **dashboard de Stripe**, sin tocar código.
+5. **Envíos**: decidir con la clienta. `data/envios.json` está vacío (`[]`) = no se pide
+   dirección ni se cobra envío. Para activarlos, rellenar zonas como en la semilla
+   (`{zona, nombre, precio|tramos, paises?, recogida?}`) — el Worker ya lo soporta.
+6. Falta el **carrito en el frontend**: `js/sections.js` renderiza la botiga con el
    botón deshabilitado ("pròximament") y `renderCart` es un placeholder. Hay que
    cablearlo contra `/api/stock` y `/api/crear-sesion` (mismo patrón que quienNoCorre).
+   Al volver de Stripe (`#shop?gracies=1&session_id=…`), confirmar con
+   `GET /api/session-status` antes de vaciar el carrito.
 
 ## API
 
@@ -55,12 +67,14 @@ No hace falta mover la web a otro repo.
 |---|---|
 | `GET /api/health` | ping + nº de productos |
 | `GET /api/stock` | stock vivo por producto |
-| `POST /api/crear-sesion` | checkout Stripe `{carrito:[{id,cantidad}]}` (503 sin claves) |
-| `POST /api/stripe-webhook` | descuenta stock + registra pedido |
+| `POST /api/crear-sesion` | checkout Stripe `{carrito:[{id,cantidad}], envio?:{zona}}` (503 sin claves; sesión caduca a 30 min; cupones activados) |
+| `GET /api/session-status?session_id=…` | estado de una sesión (para confirmar el pago al volver de Stripe) |
+| `POST /api/stripe-webhook` | descuenta stock + registra pedido (con zona, dirección y estado) |
 | `POST /api/newsletter` | alta `{email}` |
 | `POST /api/contacto` | mensaje `{texto, email?, nombre?}` |
 | `GET /api/admin/historial\|newsletter\|mensajes` | lecturas (Bearer ADMIN_TOKEN) |
-| `POST /api/admin/stock-bulk` | fija stock `{productos:[{id,cantidad}]}` |
+| `POST /api/admin/stock-bulk` | fija stock `{productos:[{id,cantidad}]}` o `{productos:[{id,stockByTalla}]}` |
+| `POST /api/admin/pedido-estado` | `{id, estado}` → pendiente / enviado / entregado / cancelado |
 
 Fijar stock (ejemplo):
 

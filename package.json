@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --persist-to ../.tatara-wrangler-state",
     "deploy": "wrangler deploy",
-    "db:schema": "wrangler d1 execute shop --remote --file=schema-tatara.sql"
+    "db:schema": "wrangler d1 execute shop --remote --file=schema-tatara.sql",
+    "db:migrate": "wrangler d1 execute shop --remote --file=./migrations/2026-07-07_tatara_pedidos_envio.sql",
+    "db:migrate:local": "wrangler d1 execute shop --local --file=./migrations/2026-07-07_tatara_pedidos_envio.sql"
   },
   "dependencies": {
     "hono": "^4.4.0",

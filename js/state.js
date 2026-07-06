@@ -9,7 +9,7 @@ export const CONFIG_URL = 'data/data.json';
 
 // Versión de assets: se añade como ?v= a los JSON (ver data.js) para forzar
 // frescura al publicar sin desactivar la caché del navegador. Súbela al publicar.
-export const VERSION = '2026-07-01';
+export const VERSION = '2026-07-07';
 
 const LANG_KEY = 'tatara:lang';   // clave de localStorage donde se recuerda el idioma
 

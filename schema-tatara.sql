@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS tatara_pedidos (
   amount_total       INTEGER,       -- céntimos
   currency           TEXT,
   items              TEXT NOT NULL, -- JSON: [{id, nombre, precio, cantidad}]
+  zona               TEXT,          -- zona de envío elegida (envios.json)
+  envio              TEXT,          -- JSON: {zona, nombre, direccion, telefono} (de Stripe)
+  estado             TEXT NOT NULL DEFAULT 'pendiente', -- pendiente | enviado | entregado | cancelado
   created_at         TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
