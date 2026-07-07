@@ -198,8 +198,10 @@ app.post("/crear-sesion", async (c) => {
       // La sesión caduca en 30 min (mínimo de Stripe): acorta la ventana de sobreventa
       // (el stock se descuenta en el webhook, al pagar).
       expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
-      success_url: `${frontend}/#shop?gracies=1&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${frontend}/#cart`,
+      // Secciones reales de la SPA: la vuelta aterriza en #carret (el router
+      // entiende los ?params del hash y renderCart procesa gracies+session_id).
+      success_url: `${frontend}/#carret?gracies=1&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${frontend}/#carret`,
       // Metadata mínima (límite Stripe: 500 chars/valor): solo id+cantidad.
       // El webhook re-enriquece título/precio desde edicions.json.
       metadata: {

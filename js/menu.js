@@ -7,6 +7,7 @@
 import { $, esc, t, captureFocus } from './utils.js';
 import { SITE, LANG, setLang } from './state.js';
 import { renderRoute } from './router.js';
+import { updateCartBadge } from './cart.js';
 
 export const isMenuOpen = () => $('#menu').classList.contains('is-open');
 
@@ -35,6 +36,7 @@ export function buildMenu() {
     `<li><a href="#${s.id}" data-id="${s.id}">${esc(t(s.label))}</a></li>`).join('');
   list.querySelectorAll('a').forEach((a) =>
     a.addEventListener('click', () => closeMenu()));
+  updateCartBadge();
 
   const langs = $('#menu-langs');
   langs.innerHTML = (SITE.languages || ['ca']).map((l) => {

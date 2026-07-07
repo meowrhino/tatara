@@ -289,6 +289,25 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* Carret */
 .cart { text-align: center; margin: auto 0; color: var(--ink-soft); letter-spacing: 0.06em; }
+.cart--full { text-align: left; color: var(--ink); max-width: 34rem; width: 100%; margin: 0 auto; }
+.cart-items { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.2rem; }
+.cart-item { display: grid; grid-template-columns: 3rem 1fr 4rem auto; gap: 0.7rem; align-items: center; }
+.cart-item__img { width: 3rem; height: 3rem; object-fit: cover; }
+.cart-item__title { font-weight: 700; }
+.cart-item__qty { width: 3.4rem; border: 1px solid var(--ink); background: none; padding: 0.25rem 0.3rem; text-align: center; font: inherit; }
+.cart-item__price { justify-self: end; white-space: nowrap; }
+.cart-item__remove { margin-left: 0.4rem; opacity: 0.6; }
+.cart-item__remove:hover { opacity: 1; }
+.cart__total { display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--ink); padding-top: 0.8rem; margin-bottom: 1.2rem; }
+.cart__zone { display: block; margin-bottom: 0.3rem; }
+.cart__zone select { font: inherit; border: 1px solid var(--ink); background: none; padding: 0.25rem 0.4rem; margin-left: 0.5rem; }
+.cart__zone-note { font-size: 0.82rem; color: var(--ink-soft); margin: 0 0 1rem; }
+.cart__pay { margin-top: 0.4rem; }
+.cart__feedback { color: var(--ink-soft); min-height: 1.2em; margin: 0.7rem 0 0; }
+.cart__back { margin-top: 1.6rem; }
+.cart__back a:hover, .cart--thanks a:hover { text-decoration: underline; }
+.cart--thanks { color: var(--ink); }
+.cart__thanks-title { font-family: var(--font-display); letter-spacing: 0.05em; text-transform: uppercase; }
 
 /* ============================================================
    BARRA INFERIOR  (sin línea superior)
@@ -360,7 +379,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .modal__body .m-person { font-weight: 700; margin: 0 0 1rem; }
 .modal__body .m-desc { line-height: 1.6; text-align: justify; hyphens: auto; }
 .modal__body .m-price { font-weight: 700; margin: 1rem 0 0.6rem; }
-.modal__body .m-buy { border: 1px solid var(--ink); padding: 0.6rem 1rem; width: 100%; opacity: 0.45; cursor: not-allowed; letter-spacing: 0.04em; }
+.m-buy { border: 1px solid var(--ink); padding: 0.6rem 1rem; width: 100%; letter-spacing: 0.04em; background: none; }
+.m-buy:not(:disabled):hover { background: var(--ink); color: var(--paper, #fff); }
+.m-buy:disabled { opacity: 0.45; cursor: not-allowed; }
 
 /* ============================================================
    DESKTOP

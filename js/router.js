@@ -12,9 +12,17 @@ import { renderAgenda, scrollAgendaToToday } from './agenda.js';
 import { renderText, renderPeople, renderJournal, renderShop, renderContact, renderCart } from './sections.js';
 
 // Id de sección del hash actual; cae a la primera sección si no es válido.
+// El hash admite parámetros (#carret?gracies=1&session_id=…, la vuelta de Stripe):
+// para resolver la sección solo cuenta lo anterior al '?'.
 export function currentId() {
-  const id = location.hash.replace(/^#/, '');
+  const id = location.hash.replace(/^#/, '').split('?')[0];
   return SITE.sections.some((s) => s.id === id) ? id : SITE.sections[0].id;
+}
+
+// Parámetros del hash (la parte tras '?'), p. ej. la vuelta de Stripe.
+export function hashQuery() {
+  const q = location.hash.split('?')[1] || '';
+  return new URLSearchParams(q);
 }
 
 // Marca el enlace activo en el menú.
