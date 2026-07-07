@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stock — Admin TAT ARA</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Stock</h1>
+      <p><a href="index.html">← volver</a></p>
+      <p class="soft">El catálogo (títulos, precios) se edita en <code>data/edicions.json</code> + push.
+        Aquí solo el stock vivo. Los productos sin precio no son comprables aunque tengan stock.</p>
+      <div id="lista"></div>
+      <button id="guardar">Guardar cambios</button>
+      <span id="feedback" class="soft"></span>
+    </main>
+
+    <script>
+      const token = localStorage.getItem("tatara:admin") || "";
+      let productos = [];
+
+      async function load() {
+        if (!token) return alert("Guarda el token en /admin primero");
+        const [edicions, stockRes] = await Promise.all([
+          fetch("../data/edicions.json").then((r) => r.json()),
+          fetch("/api/stock").then((r) => r.json()).catch(() => ({})),
+        ]);
+        productos = (edicions.products || []).map((p) => ({
+          id: p.id,
+          title: p.title,
+          sinPrecio: !(typeof p.price === "number" && p.price > 0),
+          cantidad: Number(stockRes[p.id]?._ ?? 0),
+        }));
+        render();
+      }
+
+      function render() {
+        document.getElementById("lista").innerHTML = productos
+          .map(
+            (p, i) => `
+            <fieldset>
+              <legend>${p.title} ${p.sinPrecio ? '<span class="soft">(sense preu — no comprable)</span>' : ""}</legend>
+              <label>stock:
+                <input type="number" min="0" value="${p.cantidad}" data-prod="${i}">
+              </label>
+            </fieldset>`
+          )
+          .join("");
+      }
+
+      document.getElementById("guardar").addEventListener("click", async () => {
+        const payload = [];
+        document.querySelectorAll("input[data-prod]").forEach((inp) => {
+          const p = productos[Number(inp.dataset.prod)];
+          payload.push({ id: p.id, cantidad: Number(inp.value) || 0 });
+        });
+        const res = await fetch(`/api/admin/stock-bulk`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ productos: payload }),
+        });
+        document.getElementById("feedback").textContent =
+          res.ok ? "guardado ✓" : "error " + res.status;
+      });
+
+      load();
+    </script>
+  </body>
+</html>

@@ -76,7 +76,13 @@ No hace falta mover la web a otro repo.
 | `POST /api/admin/stock-bulk` | fija stock `{productos:[{id,cantidad}]}` o `{productos:[{id,stockByTalla}]}` |
 | `POST /api/admin/pedido-estado` | `{id, estado}` → pendiente / enviado / entregado / cancelado |
 
-Fijar stock (ejemplo):
+### Panel de admin
+
+`/admin/` (guardar el `ADMIN_TOKEN` una vez): **stock** (fijar unidades por producto;
+el catálogo se sigue editando en `data/edicions.json` + push) y **pedidos** (email,
+items, dirección de envío y selector de estado pendiente/enviado/entregado/cancelado).
+
+También por curl, ejemplo de fijar stock:
 
 ```sh
 curl -X POST https://<dominio>/api/admin/stock-bulk \

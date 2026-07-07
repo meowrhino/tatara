@@ -1,0 +1,18 @@
+/* Admin interno de TAT ARA — autocontenido, no usa el CSS de la web. */
+* { box-sizing: border-box; }
+body { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 14px; margin: 0; padding: 2rem 1.2rem 4rem; color: #111; background: #fff; }
+main { max-width: 44rem; margin: 0 auto; }
+h1 { font-size: 1.1rem; letter-spacing: 0.12em; text-transform: uppercase; }
+a { color: inherit; }
+nav { display: flex; gap: 1.2rem; margin-top: 1.4rem; }
+section { margin: 1.4rem 0; }
+label { display: inline-flex; gap: 0.5rem; align-items: center; }
+input, select, button { font: inherit; border: 1px solid #111; background: none; padding: 0.35rem 0.6rem; }
+button { cursor: pointer; }
+button:hover { background: #111; color: #fff; }
+fieldset { border: 1px solid #111; margin: 0 0 1rem; padding: 0.8rem 1rem; }
+legend { padding: 0 0.4rem; font-weight: 700; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border-bottom: 1px solid #ccc; text-align: left; padding: 0.5rem 0.6rem; vertical-align: top; }
+th { border-bottom-color: #111; }
+.soft { color: #777; }

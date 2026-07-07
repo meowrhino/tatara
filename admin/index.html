@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin — TAT ARA</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <main>
+      <h1>TAT ARA — admin</h1>
+
+      <section>
+        <label>token
+          <input id="token" type="password" placeholder="ADMIN_TOKEN" />
+        </label>
+        <button id="save">guardar</button>
+        <span id="feedback" class="soft"></span>
+      </section>
+
+      <nav>
+        <a href="stock.html">stock</a>
+        <a href="tickets.html">pedidos</a>
+      </nav>
+    </main>
+
+    <script>
+      const input = document.getElementById("token");
+      input.value = localStorage.getItem("tatara:admin") || "";
+      document.getElementById("save").addEventListener("click", () => {
+        localStorage.setItem("tatara:admin", input.value.trim());
+        document.getElementById("feedback").textContent = "guardado ✓";
+      });
+    </script>
+  </body>
+</html>
