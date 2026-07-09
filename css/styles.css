@@ -126,12 +126,19 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   text-transform: uppercase;
 }
 
-/* Marcador de estado del bloque: passat / avui / proximament (abajo-derecha).
-   Hereda la tinta del bloque (negra o blanca según el fondo). */
+/* Fila inferior del bloque: fecha de cierre (izq) + estado (der) en una línea,
+   igual que la cabecera. Hereda la tinta del bloque (negra o blanca). */
+.seg__foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding: 1rem 1rem 0;
+}
 .seg__status {
-  position: absolute;
-  right: 1rem;
-  bottom: 0.5rem;
+  flex: 0 0 auto;
+  margin-left: auto;   /* siempre a la derecha, aunque no haya fecha de cierre */
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -191,13 +198,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 .seg__end {
-  margin-top: auto;
-  padding: 1rem 1rem 0;
+  flex: 0 1 auto;
   font-size: 0.8rem; opacity: 0.92;
 }
-
-.seg--compact .seg__head { display: flex; align-items: center; min-height: 100%; }
-.seg--compact .seg__label { width: 100%; padding-top: 0; padding-bottom: 0; }
 
 /* Lightbox: clic en una imagen de la agenda la abre a pantalla completa.
    La imagen se limita a vw/svh para caber ENTERA (alto y ancho) en cualquier

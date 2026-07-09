@@ -127,17 +127,20 @@ function eventBlock(ev, o, today) {
   block.style.color = textOn(color);
   block.dataset.id = ev.id;
 
-  // Estado del bloque, abajo a la derecha, en negrita: passat / ara / vinent.
+  // Fila inferior (misma línea): fecha de cierre (izq) + estado (der), como la
+  // cabecera con título (izq) + fechas (der). El estado va en negrita.
   const stKey = today > e ? 'statusPast' : (today < s ? 'statusNext' : 'statusNow');
   const stClass = today > e ? 'past' : (today < s ? 'next' : 'now');
-  block.appendChild(el('span', 'seg__status seg__status--' + stClass, esc(ui(stKey))));
+  const foot = el('div', 'seg__foot');
+  if (ev.end && !sameDay(s, e)) foot.appendChild(el('span', 'seg__end', esc(dMes(e))));
+  foot.appendChild(el('span', 'seg__status seg__status--' + stClass, esc(ui(stKey))));
 
   const head = el('div', 'seg__head');
   head.appendChild(el('div', 'seg__label',
     `<span class="seg__who">${esc(t(ev.title))}${ev.person ? ' – <b>' + esc(ev.person) + '</b>' : ''}</span>` +
     `<span class="seg__when">${esc(rangeSlash(ev))}</span>`));
 
-  if (compact) { block.appendChild(head); return block; }
+  if (compact) { block.appendChild(head); block.appendChild(foot); return block; }
 
   // Cabecera + imagen + descripción en flujo natural.
   const lead = el('div', 'seg__lead');
@@ -167,10 +170,7 @@ function eventBlock(ev, o, today) {
     });
   }
 
-  // Fecha de fin para eventos de varios días.
-  if (ev.end && !sameDay(s, e)) {
-    block.appendChild(el('span', 'seg__end', esc(dMes(e))));
-  }
+  block.appendChild(foot);
 
   return block;
 }
