@@ -3,6 +3,7 @@
 Web de **TAT ARA**, espai galeria d'art, disseny i ecologia (Barcelona).
 Vanilla HTML/CSS/JS, sense dependències de build. Mobile-first, trilingüe (CAT/CAST/ENG).
 
+
 ## Estructura
 
 ```
