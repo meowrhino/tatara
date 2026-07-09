@@ -7,6 +7,7 @@
     { "id": "diari",     "type": "people",  "data": "data/recerca.json",   "label": { "ca": "recerca",    "es": "investigación", "en": "research" } },
     { "id": "botiga",    "type": "shop",    "data": "data/edicions.json",  "label": { "ca": "edicions",   "es": "ediciones",    "en": "editions" } },
     { "id": "contacte",  "type": "contact",                                "label": { "ca": "contacte",   "es": "contacto",     "en": "contact" } },
+    { "id": "newsletter","type": "newsletter",                             "label": { "ca": "newsletter",  "es": "newsletter",   "en": "newsletter" } },
     { "id": "carret",    "type": "cart",                                   "label": { "ca": "carret",     "es": "carrito",      "en": "cart" }, "hidden": true }
   ]
 }

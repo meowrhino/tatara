@@ -9,7 +9,7 @@ import { $, esc, t, ui } from './utils.js';
 import { SITE } from './state.js';
 import { loadJSON } from './data.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
-import { renderText, renderPeople, renderJournal, renderShop, renderContact, renderCart } from './sections.js';
+import { renderText, renderPeople, renderJournal, renderShop, renderContact, renderCart, renderNewsletter } from './sections.js';
 
 // Id de sección del hash actual; cae a la primera sección si no es válido.
 // El hash admite parámetros (#carret?gracies=1&session_id=…, la vuelta de Stripe):
@@ -66,6 +66,7 @@ export async function renderRoute() {
       case 'journal': renderJournal(view, data); break;
       case 'shop':    renderShop(view, data); break;
       case 'contact': renderContact(view); break;
+      case 'newsletter': renderNewsletter(view); break;
       case 'cart':    renderCart(view); break;
       default:        view.innerHTML = `<p class="loading">${ui('unknownSection')}</p>`;
     }

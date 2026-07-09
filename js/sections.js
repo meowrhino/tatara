@@ -175,9 +175,46 @@ export function renderContact(view) {
       <div class="contact__info">
         ${addr ? `<p class="contact__addr">${addr}</p>` : ''}
         ${c.email ? `<p class="contact__email"><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>` : ''}
-        <p class="contact__links">${link(c.instagram, 'IG')} ${link(c.newsletter, 'Newsletter')} ${link(c.medium, 'Medium')}</p>
+        <p class="contact__links">${link(c.instagram, 'IG')} <a href="#newsletter">Newsletter</a> ${link(c.medium, 'Medium')}</p>
       </div>
     </div>`);
+}
+
+// Newsletter: secció pròpia amb el formulari d'alta (POST /api/newsletter).
+export function renderNewsletter(view) {
+  view.innerHTML = pageWrap(`
+    <div class="newsletter">
+      <p class="newsletter__intro">${esc(ui('newsletterIntro'))}</p>
+      <form class="newsletter__form" novalidate>
+        <input class="newsletter__input" id="nl-email" type="email" inputmode="email" autocomplete="email"
+               placeholder="${esc(ui('newsletterPh'))}" aria-label="${esc(ui('newsletterPh'))}" required>
+        <button class="newsletter__btn" type="submit">${esc(ui('newsletterCta'))}</button>
+      </form>
+      <p class="newsletter__feedback" data-nl-feedback aria-live="polite"></p>
+    </div>`);
+
+  const form = view.querySelector('.newsletter__form');
+  const feedback = view.querySelector('[data-nl-feedback]');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = view.querySelector('#nl-email');
+    const btn = form.querySelector('.newsletter__btn');
+    feedback.textContent = '';
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: input.value.trim() }),
+      });
+      if (res.ok) { feedback.textContent = ui('newsletterOk'); form.reset(); }
+      else { feedback.textContent = ui('newsletterBad'); }
+    } catch {
+      feedback.textContent = ui('genericError');
+    } finally {
+      btn.disabled = false;
+    }
+  });
 }
 
 export async function renderCart(view) {

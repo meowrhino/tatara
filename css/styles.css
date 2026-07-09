@@ -282,15 +282,26 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* Contacte: texto de intro arriba, axonometría del local en medio, dirección
    + los 3 links (IG · Newsletter · Medium) abajo. */
-.contact { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; flex: 1; gap: 2rem; }
-.contact__intro { max-width: 34rem; margin: 0; text-align: center; hyphens: auto; }
-.contact__axo { width: 100%; max-width: 30rem; height: auto; display: block; }
-.contact__info { margin: 0; }
+.contact { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; flex: 1; gap: 2rem; }
+.contact__intro { position: relative; z-index: 1; max-width: 34rem; margin: 0; text-align: center; hyphens: auto; }
+/* Axonometria de fons: absoluta i centrada, DARRERE del text (no ocupa scroll). */
+.contact__axo { position: absolute; inset: 0; margin: auto; max-width: 21rem; max-height: 50svh; width: auto; height: auto; z-index: 0; pointer-events: none; }
+.contact__info { position: relative; z-index: 1; margin: 0; width: 100%; }
 .contact__addr { margin: 0 0 0.4rem; }
 .contact__email { margin: 0 0 1.4rem; }
 .contact__email a:hover { text-decoration: underline; }
 .contact__links { margin: 0; display: flex; gap: 1.6rem; justify-content: center; }
 .contact__links a:hover { text-decoration: underline; }
+
+/* Newsletter (secció pròpia): intro + alta al butlletí */
+.newsletter { text-align: center; margin: auto 0; display: flex; flex-direction: column; align-items: center; gap: 1.4rem; }
+.newsletter__intro { max-width: 30rem; margin: 0; }
+.newsletter__form { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+.newsletter__input { font: inherit; border: 1px solid var(--ink); background: none; padding: 0.45rem 0.7rem; min-width: 13rem; text-align: center; }
+.newsletter__btn { border: 1px solid var(--ink); padding: 0.45rem 1rem; letter-spacing: 0.04em; }
+.newsletter__btn:not(:disabled):hover { background: var(--ink); color: var(--bg); }
+.newsletter__btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.newsletter__feedback { min-height: 1.2em; margin: 0; color: var(--ink-soft); letter-spacing: 0.04em; }
 
 /* Carret */
 .cart { text-align: center; margin: auto 0; color: var(--ink-soft); letter-spacing: 0.06em; }
