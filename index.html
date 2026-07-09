@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- El sitio es negro-sobre-blanco: opt-out del modo oscuro forzado del navegador -->
+  <meta name="color-scheme" content="light">
   <title>TAT ARA</title>
   <meta name="description" content="TAT ARA — espai galeria d'art, disseny i ecologia.">
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
@@ -27,12 +29,23 @@
     <p class="loading">carregant…</p>
   </main>
 
-  <!-- Barra inferior fija: secció · ARA · idiomes -->
+  <!-- Barra inferior fija: secció · ARA · idioma (mòbil: actiu→modal; escriptori: cat es en) -->
   <footer class="bar bar--bottom">
     <button class="bar__section" id="bar-section" type="button" aria-haspopup="true" aria-controls="menu"></button>
     <span class="bar__brand bar__brand--foot">ARA</span>
-    <div class="bar__langs" role="group" aria-label="Idioma" id="menu-langs"><!-- la rellena el router --></div>
+    <div class="bar__langbox">
+      <div class="bar__langs" role="group" aria-label="Idioma" id="footer-langs"><!-- escriptori: la rellena el router --></div>
+      <button class="bar__lang" id="lang-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="lang-modal" aria-label="Idioma"></button>
+    </div>
   </footer>
+
+  <!-- Modal d'idioma -->
+  <div class="langmodal" id="lang-modal" aria-hidden="true">
+    <div class="langmodal__backdrop" data-lang-close></div>
+    <div class="langmodal__dialog" role="dialog" aria-modal="true" aria-label="Idioma">
+      <div class="langmodal__list" id="lang-list"><!-- la rellena el router --></div>
+    </div>
+  </div>
 
   <!-- Menú overlay -->
   <nav class="menu" id="menu" aria-label="Menú" aria-hidden="true">
@@ -46,6 +59,8 @@
     </div>
 
     <ul class="menu__list" id="menu-list"><!-- la rellena el router --></ul>
+
+    <div class="menu__langs" role="group" aria-label="Idioma" id="menu-langs"><!-- la rellena el router --></div>
   </nav>
 
   <!-- Modal de detalle (eventos / productos) -->

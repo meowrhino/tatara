@@ -30,6 +30,8 @@ export function closeMenu() {
   if (restoreMenuFocus) { restoreMenuFocus(); restoreMenuFocus = null; }
 }
 
+const langLabel = (l) => (l === 'ca' ? 'cat' : l);
+
 export function buildMenu() {
   const list = $('#menu-list');
   list.innerHTML = SITE.sections.filter((s) => !s.hidden).map((s) =>
@@ -37,14 +39,45 @@ export function buildMenu() {
   list.querySelectorAll('a').forEach((a) =>
     a.addEventListener('click', () => closeMenu()));
   updateCartBadge();
+  buildLangs();
+}
 
-  const langs = $('#menu-langs');
-  langs.innerHTML = (SITE.languages || ['ca']).map((l) => {
-    const lbl = l === 'ca' ? 'cat' : l;
-    return `<button type="button" data-lang="${l}"${l === LANG ? ' class="is-active"' : ''}>${lbl}</button>`;
-  }).join('');
-  langs.querySelectorAll('button').forEach((b) =>
-    b.addEventListener('click', () => changeLang(b.dataset.lang)));
+// Idioma en tres sitios: el botón del footer (solo el activo → abre modal), el
+// modal (todas las opciones) y el selector dentro del menú (todas, abajo-izq).
+function buildLangs() {
+  const langs = SITE.languages || ['ca'];
+  const toggle = $('#lang-toggle');
+  if (toggle) toggle.textContent = langLabel(LANG);
+
+  // Modal del footer (móvil): elegir cierra el modal.
+  fillLangGroup($('#lang-list'), langs, (l) => { changeLang(l); closeLangModal(); });
+  // Selector completo del footer (escritorio) y del menú: solo cambian idioma.
+  fillLangGroup($('#footer-langs'), langs, (l) => changeLang(l));
+  fillLangGroup($('#menu-langs'), langs, (l) => changeLang(l));
+}
+
+function fillLangGroup(el, langs, onPick) {
+  if (!el) return;
+  el.innerHTML = langs.map((l) =>
+    `<button type="button" data-lang="${l}"${l === LANG ? ' class="is-active"' : ''}>${langLabel(l)}</button>`).join('');
+  el.querySelectorAll('button').forEach((b) =>
+    b.addEventListener('click', () => onPick(b.dataset.lang)));
+}
+
+export const isLangModalOpen = () => $('#lang-modal').classList.contains('is-open');
+
+export function openLangModal() {
+  $('#lang-modal').classList.add('is-open');
+  $('#lang-modal').setAttribute('aria-hidden', 'false');
+  $('#lang-toggle').setAttribute('aria-expanded', 'true');
+  document.body.classList.add('no-scroll');
+}
+
+export function closeLangModal() {
+  $('#lang-modal').classList.remove('is-open');
+  $('#lang-modal').setAttribute('aria-hidden', 'true');
+  $('#lang-toggle').setAttribute('aria-expanded', 'false');
+  if ($('#modal').hidden && !isMenuOpen()) document.body.classList.remove('no-scroll');
 }
 
 // Cambia el idioma activo y re-renderiza: menú (etiquetas + estado activo) y la

@@ -19,7 +19,7 @@
 }
 
 :root {
-  color-scheme: light; /* el sitio es negro-sobre-blanco: evita que iOS/Safari lo oscurezca solo */
+  color-scheme: only light; /* negro-sobre-blanco: opt-out del auto-oscurecido del navegador (iOS/Chrome force-dark) */
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --font-display: "Superstudio Trial", "JetBrains Mono", ui-monospace, monospace;
 
@@ -285,7 +285,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .contact { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; flex: 1; gap: 2rem; }
 .contact__intro { position: relative; z-index: 1; max-width: 34rem; margin: 0; text-align: center; hyphens: auto; }
 /* Axonometria de fons: absoluta i centrada, DARRERE del text (no ocupa scroll). */
-.contact__axo { position: absolute; inset: 0; margin: auto; max-width: 21rem; max-height: 50svh; width: auto; height: auto; z-index: 0; pointer-events: none; }
+.contact__axo { position: absolute; inset: 0; margin: auto; max-width: 16rem; max-height: 40svh; width: auto; height: auto; z-index: 0; pointer-events: none; }
 .contact__info { position: relative; z-index: 1; margin: 0; width: 100%; }
 .contact__addr { margin: 0 0 0.4rem; }
 .contact__email { margin: 0 0 1.4rem; }
@@ -358,23 +358,31 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* Carrito: única acción del extremo derecho del header. */
 .bar__cart { justify-self: end; display: inline-flex; align-items: center; gap: 0.15rem; color: var(--ink); }
-.bar__cart-icon { width: 34px; height: auto; display: block; }
+.bar__cart-icon { height: 34px; width: auto; display: block; }
 .bar__cart-count { font-size: 0.75rem; font-weight: 700; }
 
-/* Footer: sección actual (izq, discreta, abre el menú) e idiomas (der). */
+/* Footer: sección actual (izq, discreta, abre el menú) e idioma activo (der,
+   un botón que abre el modal de idioma). */
 .bar__section { justify-self: start; color: var(--ink-soft); font-size: 0.85rem; letter-spacing: 0.04em; }
 .bar__section:hover { color: var(--ink); text-decoration: underline; }
-.bar__langs { justify-self: end; display: flex; gap: 0.55rem; }
-.bar__langs button { letter-spacing: 0.04em; font-size: 0.85rem; color: var(--ink-soft); }
+/* Móvil: solo el idioma activo (botón → modal). Escritorio: cat es en inline. */
+.bar__langbox { justify-self: end; }
+.bar__lang { font-size: 0.85rem; letter-spacing: 0.04em; }
+.bar__lang:hover { text-decoration: underline; }
+.bar__langs { display: none; gap: 0.7rem; }
+.bar__langs button { font-size: 0.85rem; letter-spacing: 0.04em; color: var(--ink-soft); }
 .bar__langs button.is-active { color: var(--ink); font-weight: 700; }
+@media (min-width: 560px) {
+  .bar__langbox .bar__lang { display: none; }
+  .bar__langbox .bar__langs { display: flex; }
+}
 
 /* En pantallas estrechas los extremos se aprietan para no invadir la marca
    centrada (TAT / ARA). */
 @media (max-width: 430px) {
   .bar { padding: 0 0.8rem; }
   .bar__section { font-size: 0.78rem; }
-  .bar__langs { gap: 0.4rem; }
-  .bar__langs button { font-size: 0.78rem; }
+  .bar__lang { font-size: 0.78rem; }
   .bar__brand { font-size: 1.05rem; letter-spacing: 0.1em; }
 }
 
@@ -415,6 +423,11 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .menu__list a { font-size: 1.15rem; letter-spacing: 0.02em; }
 .menu__list a.is-active { font-weight: 700; }
 
+/* Selector d'idioma dins del menú: baix-esquerra, actiu en negreta */
+.menu__langs { margin-top: auto; display: flex; gap: 1.4rem; }
+.menu__langs button { font-size: 1rem; letter-spacing: 0.04em; color: var(--ink-soft); }
+.menu__langs button.is-active { color: var(--ink); font-weight: 700; }
+
 /* ============================================================
    MODAL (eventos / productos)
    ============================================================ */
@@ -439,6 +452,18 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .m-buy { border: 1px solid var(--ink); padding: 0.6rem 1rem; width: 100%; letter-spacing: 0.04em; background: none; }
 .m-buy:not(:disabled):hover { background: var(--ink); color: var(--paper, #fff); }
 .m-buy:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ============================================================
+   MODAL D'IDIOMA  (des del botó del footer)
+   ============================================================ */
+.langmodal { position: fixed; inset: 0; z-index: 70; display: none; place-items: center; }
+.langmodal.is-open { display: grid; }
+.langmodal__backdrop { position: absolute; inset: 0; background: rgba(255, 255, 255, 0.85); }
+.langmodal__dialog { position: relative; z-index: 1; background: var(--bg); border: 1px solid var(--ink); padding: 1.6rem 2.4rem; }
+.langmodal__list { display: flex; flex-direction: column; gap: 0.9rem; }
+.langmodal__list button { font-size: 1.15rem; letter-spacing: 0.04em; text-align: center; }
+.langmodal__list button.is-active { font-weight: 700; }
+.langmodal__list button:hover { text-decoration: underline; }
 
 /* ============================================================
    DESKTOP

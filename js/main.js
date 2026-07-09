@@ -8,7 +8,7 @@
 import { CONFIG_URL, SITE, setSite, setLang, storedLang } from './state.js';
 import { $, esc, ui } from './utils.js';
 import { loadJSON } from './data.js';
-import { buildMenu, openMenu, closeMenu, isMenuOpen } from './menu.js';
+import { buildMenu, openMenu, closeMenu, isMenuOpen, openLangModal, closeLangModal, isLangModalOpen } from './menu.js';
 import { closeModal } from './modal.js';
 import { renderRoute } from './router.js';
 
@@ -41,9 +41,14 @@ async function init() {
   $('#open-menu').addEventListener('click', openMenu);
   $('#bar-section').addEventListener('click', openMenu);   // la categoría del footer también abre el menú
   $('#close-menu').addEventListener('click', closeMenu);
+  $('#lang-toggle').addEventListener('click', openLangModal);
   document.querySelectorAll('[data-close]').forEach((x) => x.addEventListener('click', closeModal));
+  document.querySelectorAll('[data-lang-close]').forEach((x) => x.addEventListener('click', closeLangModal));
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { if (!$('#modal').hidden) closeModal(); else if (isMenuOpen()) closeMenu(); }
+    if (e.key !== 'Escape') return;
+    if (!$('#modal').hidden) closeModal();
+    else if (isLangModalOpen()) closeLangModal();
+    else if (isMenuOpen()) closeMenu();
   });
 
   window.addEventListener('hashchange', renderRoute);
