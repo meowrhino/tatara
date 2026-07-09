@@ -1,6 +1,6 @@
 /* ============================================================
    TAT ARA — utilidades genéricas
-   Helpers de DOM, escapado, wordmark, i18n y extracción de imágenes.
+   Helpers de DOM, escapado, i18n y extracción de imágenes.
    Sin estado propio salvo la lectura de LANG (binding vivo de state.js).
    ============================================================ */
 
@@ -31,9 +31,14 @@ export const kindLabel = (k) => t(KINDS[k]);
 // Mismo formato {ca, es, en} que resuelve t() con el idioma activo.
 const STR = {
   today:          { ca: 'avui', es: 'hoy', en: 'today' },
+  statusNow:      { ca: 'ara', es: 'ahora', en: 'now' },
+  statusPast:     { ca: 'passat', es: 'pasado', en: 'past' },
+  statusNext:     { ca: 'vinent', es: 'próximo', en: 'upcoming' },
+  roomSheet:      { ca: 'full de sala (PDF)', es: 'hoja de sala (PDF)', en: 'room sheet (PDF)' },
   noEvents:       { ca: 'sense esdeveniments', es: 'sin eventos', en: 'no events' },
   enlargeImage:   { ca: 'Ampliar imatge', es: 'Ampliar imagen', en: 'Enlarge image' },
   enlargedImage:  { ca: 'Imatge ampliada', es: 'Imagen ampliada', en: 'Enlarged image' },
+  close:          { ca: 'Tancar', es: 'Cerrar', en: 'Close' },
   cartEmpty:      { ca: 'el teu carret és buit', es: 'tu carrito está vacío', en: 'your cart is empty' },
   priceTbc:       { ca: 'preu a confirmar', es: 'precio a confirmar', en: 'price to be confirmed' },
   comingSoon:     { ca: 'Pròximament', es: 'Próximamente', en: 'Coming soon' },
@@ -73,7 +78,6 @@ export const captureFocus = () => {
 
 /* ---------- texto ---------- */
 export const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-export const wordmark = (s) => s.split('').map((c) => `<span>${c === ' ' ? '&nbsp;' : esc(c)}</span>`).join('');
 
 // Resuelve un campo traducible: string suelto, o objeto {ca, es, en}. Cae al
 // idioma activo, luego a 'ca', luego al primer valor disponible.

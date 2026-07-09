@@ -1,5 +1,5 @@
 {
-  "_comment": "Sección Artistes/Persones (artistes, dissenyadores i pensadores). bio por idioma (solo 'ca' de momento). link = web propia (PENDIENTE de la clienta para casi todas → null). image opcional.",
+  "_comment": "Sección Exposicions (antes 'artistes'). Cada entrada abre un modal si tiene bio, images[] (o image), pdf o link. bio por idioma (solo 'ca' de momento). link = web propia (null si no hay). Para separar grupos, intercala un item { \"spacer\": true } donde quieras aire.",
   "people": [
     {
       "name": "Anna Dot",
@@ -23,6 +23,7 @@
         "ca": "Transita entre el disseny i la investigació, fent de la ceràmica un espai d'experimentació artesanal i sostenible. La seva principal àrea d'estudi és la terra, material viu que narra la història, la política i l'ecologia de la localitat. Utilitza la ceràmica com a mitjà arqueològic per recuperar les narratives que ens connecten amb el nostre entorn a través de l'objecte."
       }
     },
+    { "spacer": true },
     {
       "name": "Solange Dalannais",
       "link": null,

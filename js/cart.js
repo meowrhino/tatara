@@ -38,14 +38,20 @@ export function setQty(id, n) {
 export const removeItem = (id) => setCart(getCart().filter((it) => it.id !== id));
 export const clearCart = () => setCart([]);
 
-/** Contador "(n)" junto a la entrada "carret" del menú. El menú lo llama al
- *  reconstruirse y este módulo lo refresca en cada cambio de carrito. */
+/** Contador del carrito. El principal es el número junto al icono del header;
+ *  si además existe la entrada "carret" en el menú, le añade el "(n)". Se llama
+ *  al construir el menú y en cada cambio de carrito. */
 export function updateCartBadge() {
-  const link = document.querySelector('#menu-list a[data-id="carret"]');
-  if (!link) return;
   const n = cartCount();
-  const base = link.textContent.replace(/\s*\(\d+\)$/, '');
-  link.textContent = n > 0 ? `${base} (${n})` : base;
+
+  const countEl = document.querySelector('#cart-count');
+  if (countEl) countEl.textContent = n > 0 ? String(n) : '';
+
+  const link = document.querySelector('#menu-list a[data-id="carret"]');
+  if (link) {
+    const base = link.textContent.replace(/\s*\(\d+\)$/, '');
+    link.textContent = n > 0 ? `${base} (${n})` : base;
+  }
 }
 
 document.addEventListener('tatara:cart', updateCartBadge);

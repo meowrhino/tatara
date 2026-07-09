@@ -15,6 +15,8 @@ import { renderRoute } from './router.js';
 async function init() {
   try {
     setSite(await loadJSON(CONFIG_URL));
+    // El índice de secciones (menú + router) vive en su propio JSON (JAMSTACK).
+    SITE.sections = (await loadJSON('data/menu.json')).sections;
   } catch (err) {
     $('#view').innerHTML = `<p class="loading">${ui('configError')}<br><small>${esc(err.message)}</small></p>`;
     return;
@@ -27,7 +29,8 @@ async function init() {
   setLang(lang);
   document.documentElement.lang = lang;
 
-  if (SITE.site && SITE.site.studio) $('#bar-studio').textContent = SITE.site.studio;
+  // La marca "TAT" del header lleva a la primera sección (home).
+  $('#brand-home').setAttribute('href', '#' + SITE.sections[0].id);
 
   // expone la paleta de data.json como custom properties --color-<clau>, por si el CSS necesita usarla
   Object.entries(SITE.palette || {}).forEach(([key, hex]) =>
@@ -36,6 +39,7 @@ async function init() {
   buildMenu();
 
   $('#open-menu').addEventListener('click', openMenu);
+  $('#bar-section').addEventListener('click', openMenu);   // la categoría del footer también abre el menú
   $('#close-menu').addEventListener('click', closeMenu);
   document.querySelectorAll('[data-close]').forEach((x) => x.addEventListener('click', closeModal));
   document.addEventListener('keydown', (e) => {

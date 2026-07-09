@@ -32,7 +32,7 @@ export function closeMenu() {
 
 export function buildMenu() {
   const list = $('#menu-list');
-  list.innerHTML = SITE.sections.map((s) =>
+  list.innerHTML = SITE.sections.filter((s) => !s.hidden).map((s) =>
     `<li><a href="#${s.id}" data-id="${s.id}">${esc(t(s.label))}</a></li>`).join('');
   list.querySelectorAll('a').forEach((a) =>
     a.addEventListener('click', () => closeMenu()));

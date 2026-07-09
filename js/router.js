@@ -50,9 +50,11 @@ export async function renderRoute() {
   }
 
   view.dataset.section = id;
-  view.classList.toggle('view--journal', section.type === 'journal');
+  view.classList.toggle('view--paper', section.type === 'people');
   const label = t(section.label);
   document.title = `${SITE.site.name} — ${label.charAt(0).toUpperCase()}${label.slice(1)}`;
+  const sectionEl = $('#bar-section');
+  if (sectionEl) sectionEl.textContent = label;   // "on ets" del footer
 
   try {
     const data = section.data ? await loadJSON(section.data) : null;

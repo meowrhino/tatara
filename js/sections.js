@@ -5,7 +5,7 @@
    Cada una recibe (view, data) y escribe view.innerHTML.
    ============================================================ */
 
-import { esc, t, ui, wordmark, imagesOf } from './utils.js';
+import { esc, t, ui, imagesOf } from './utils.js';
 import { SITE } from './state.js';
 import { openModal, closeModal } from './modal.js';
 import { loadJSON } from './data.js';
@@ -33,13 +33,10 @@ async function fetchStockMap() {
   }
 }
 
-// Envoltorio común: wordmark "TAT ARA" arriba y abajo con el contenido en medio.
+// Envoltorio común de las páginas de contenido. La marca ya no se repite aquí:
+// vive en el marco fijo TAT (header) · ARA (footer).
 function pageWrap(inner) {
-  return `<div class="page">
-    <h1 class="page__wordmark wordmark">${wordmark('TAT ARA')}</h1>
-    ${inner}
-    <p class="page__wordmark page__wordmark--foot wordmark">${wordmark('TAT ARA')}</p>
-  </div>`;
+  return `<div class="page">${inner}</div>`;
 }
 
 export function renderText(view, data) {
@@ -52,14 +49,45 @@ export function renderText(view, data) {
   view.innerHTML = pageWrap(`<div class="prose">${body}</div>`);
 }
 
+// Un artista es "ampliable" (abre modal) si tiene algo que enseñar: bio, fotos,
+// hoja de sala (PDF) o web. Si no, se lista como nombre a secas.
+const personHasDetail = (p) => !!(p.bio || imagesOf(p).length || p.pdf || p.link);
+
 export function renderPeople(view, data) {
-  const items = (data.people || []).map((p) => `
-    <li class="person">
-      <h2 class="person__name">${esc(p.name)}</h2>
-      ${p.bio ? `<p class="person__bio">${esc(t(p.bio))}</p>` : ''}
-      ${p.link ? `<a class="person__link" href="${esc(p.link)}" target="_blank" rel="noopener">web ↗</a>` : ''}
-    </li>`).join('');
+  const items = (data.people || []).map((p, i) => {
+    // Separación entre grupos: un item { "spacer": true } en el JSON deja aire.
+    if (p && p.spacer) return `<li class="person-spacer" aria-hidden="true"></li>`;
+    if (!personHasDetail(p)) {
+      return `<li class="person"><span class="person__name">${esc(p.name)}</span></li>`;
+    }
+    return `<li class="person person--clickable">
+      <button class="person__open" type="button" data-i="${i}">
+        <span class="person__name">${esc(p.name)}</span>
+      </button>
+    </li>`;
+  }).join('');
   view.innerHTML = pageWrap(`<ul class="people">${items}</ul>`);
+
+  view.querySelectorAll('.person__open').forEach((b) =>
+    b.addEventListener('click', () => openPersonModal(data.people[+b.dataset.i])));
+}
+
+function openPersonModal(p) {
+  const gallery = imagesOf(p).map((src) => `<img src="${esc(src)}" alt="${esc(p.name)}" loading="lazy">`).join('');
+  // pdf admite un string, un objeto {url, label} o un array de cualquiera de ambos.
+  const pdfs = Array.isArray(p.pdf) ? p.pdf : (p.pdf ? [p.pdf] : []);
+  const pdfLinks = pdfs.map((pdf) => {
+    const url = typeof pdf === 'string' ? pdf : pdf.url;
+    const label = (pdf && pdf.label) ? t(pdf.label) : ui('roomSheet');
+    return url ? `<p class="m-pdf"><a href="${esc(url)}" target="_blank" rel="noopener" download>${esc(label)} ↓</a></p>` : '';
+  }).join('');
+  openModal(`
+    ${gallery}
+    <h2 class="m-title" id="modal-title">${esc(p.name)}</h2>
+    ${p.bio ? `<p class="m-desc">${esc(t(p.bio))}</p>` : ''}
+    ${p.link ? `<p class="m-person"><a href="${esc(p.link)}" target="_blank" rel="noopener">web ↗</a></p>` : ''}
+    ${pdfLinks}
+  `);
 }
 
 export function renderJournal(view, data) {
@@ -136,16 +164,18 @@ function openProductModal(p, cur, stockMap) {
 export function renderContact(view) {
   const c = (SITE && SITE.contact) || {};
   const addr = (c.address || []).map(esc).join('<br>');
+  // Los 3 links de la última línea. Si aún no hay URL, se pintan igual (href="#")
+  // — "ya llegarán". Cuando estén, se rellenan en data.json (instagram/newsletter/medium).
+  const link = (url, label) =>
+    `<a href="${esc(url || '#')}"${url ? ' target="_blank" rel="noopener"' : ''}>${label}</a>`;
   view.innerHTML = pageWrap(`
     <div class="contact">
-      <svg class="contact__doodle" viewBox="0 0 390 600" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M -10 250 Q 18 233 48 244 Q 74 253 96 213 Q 138 152 200 140 Q 268 154 400 212"/>
-        <path d="M -10 470 Q 92 497 192 489 Q 292 481 400 448"/>
-      </svg>
+      ${c.intro ? `<p class="contact__intro">${esc(t(c.intro))}</p>` : ''}
+      <img class="contact__axo" src="assets/img/axo_tatara.svg" alt="" aria-hidden="true">
       <div class="contact__info">
         ${addr ? `<p class="contact__addr">${addr}</p>` : ''}
         ${c.email ? `<p class="contact__email"><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>` : ''}
-        ${c.instagram ? `<p class="contact__ig"><a href="${esc(c.instagram)}" target="_blank" rel="noopener">Instagram ↗</a></p>` : ''}
+        <p class="contact__links">${link(c.instagram, 'IG')} ${link(c.newsletter, 'Newsletter')} ${link(c.medium, 'Medium')}</p>
       </div>
     </div>`);
 }

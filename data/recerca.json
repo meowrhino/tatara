@@ -1,0 +1,4 @@
+{
+  "_comment": "Sección Recerca (antes 'diari'). Mismo formato que Exposicions/artistes: una lista de entradas; cada una con contenido (bio/text, images[], pdf) abre un modal. De momento vacía.",
+  "people": []
+}

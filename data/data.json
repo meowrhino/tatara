@@ -1,5 +1,5 @@
 {
-  "_comment": "Configuración general de la web TAT ARA. El contenido de cada sección vive en su propio JSON (ver 'sections[].data'). Aquí solo van: identidad, paleta, idiomas, datos de contacto y el índice de secciones (que alimenta el menú y el router).",
+  "_comment": "Configuración general de la web TAT ARA: identidad, paleta, idiomas y datos de contacto. El índice de secciones (menú + router) vive en data/menu.json. El contenido de cada sección vive en su propio JSON (ver menu.json → sections[].data).",
   "site": {
     "name": "TAT ARA",
     "studio": "tatara studio",
@@ -12,32 +12,28 @@
   "languages": ["ca", "es", "en"],
   "defaultLang": "ca",
   "palette": {
-    "blau": "#8FC6F7",
-    "menta": "#A0EEDD",
-    "rosa": "#F2A7CE",
-    "mostassa": "#CDB13C"
+    "blau": "#AEC6CD",
+    "menta": "#CBDAC3",
+    "rosa": "#E3A57E",
+    "mostassa": "#CFC1AB"
   },
   "agenda": {
     "_comment": "dayVh es un eje temporal real: cada día de un evento ocupa exactamente dayVh dvh (no es solo un suelo). Así el scroll puede ubicar 'hoy' con precisión y mostrar ~33 días por pantalla. El contenido (imagen + O.R. anidados) se acomoda dentro de esa altura; minEventVh solo actúa de suelo para eventos cortos (modo compacto).",
     "dayVh": 3,
     "minEventVh": 10,
-    "gapVh": 13,
+    "gapVh": 6,
     "compactMaxDays": 2,
     "mediaMinDays": 6,
     "endMinDays": 4
   },
   "contact": {
-    "address": ["Carrer Martí 59 B", "08024 Barcelona"],
-    "email": "admintatara@gmail.com",
-    "instagram": null
-  },
-  "sections": [
-    { "id": "agenda",    "type": "agenda",  "data": "data/agenda.json",    "label": { "ca": "agenda",    "es": "agenda",    "en": "agenda" } },
-    { "id": "nosaltres", "type": "text",    "data": "data/nosaltres.json", "label": { "ca": "nosaltres", "es": "nosotras",  "en": "about" } },
-    { "id": "artistes",  "type": "people",  "data": "data/persones.json",  "label": { "ca": "artistes",  "es": "artistas",  "en": "artists" } },
-    { "id": "diari",     "type": "journal", "data": "data/diari.json",     "label": { "ca": "diari",     "es": "diario",    "en": "journal" } },
-    { "id": "botiga",    "type": "shop",    "data": "data/edicions.json",  "label": { "ca": "botiga",    "es": "tienda",    "en": "shop" } },
-    { "id": "contacte",  "type": "contact",                                "label": { "ca": "contacte",  "es": "contacto",  "en": "contact" } },
-    { "id": "carret",    "type": "cart",                                   "label": { "ca": "carret",    "es": "carrito",   "en": "cart" } }
-  ]
+    "intro": {
+      "ca": "Si creus que la teva feina, investigació, peces o interessos encaixen amb TAT ARA envie’ns un correu, estarem encantades de llegir-te i de conèixer’ns."
+    },
+    "address": ["Carrer Martí, 59B", "08024 Barcelona"],
+    "email": "associaciotatara@gmail.com",
+    "instagram": null,
+    "newsletter": null,
+    "medium": null
+  }
 }

@@ -1,0 +1,12 @@
+{
+  "_comment": "Índice de secciones (JAMSTACK): alimenta el menú (js/menu.js) y el router (js/router.js). El orden aquí es el orden del menú. 'hidden': la ruta existe pero NO se lista en el menú — p. ej. 'carret', que se abre desde el icono del carrito arriba a la derecha.",
+  "sections": [
+    { "id": "agenda",    "type": "agenda",  "data": "data/agenda.json",    "label": { "ca": "agenda",     "es": "agenda",       "en": "agenda" } },
+    { "id": "nosaltres", "type": "text",    "data": "data/nosaltres.json", "label": { "ca": "nosaltres",  "es": "nosotres",     "en": "about" } },
+    { "id": "artistes",  "type": "people",  "data": "data/persones.json",  "label": { "ca": "exposicions", "es": "exposiciones", "en": "exhibitions" } },
+    { "id": "diari",     "type": "people",  "data": "data/recerca.json",   "label": { "ca": "recerca",    "es": "investigación", "en": "research" } },
+    { "id": "botiga",    "type": "shop",    "data": "data/edicions.json",  "label": { "ca": "edicions",   "es": "ediciones",    "en": "editions" } },
+    { "id": "contacte",  "type": "contact",                                "label": { "ca": "contacte",   "es": "contacto",     "en": "contact" } },
+    { "id": "carret",    "type": "cart",                                   "label": { "ca": "carret",     "es": "carrito",      "en": "cart" }, "hidden": true }
+  ]
+}
