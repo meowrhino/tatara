@@ -9,7 +9,7 @@ import { $, esc, t, ui } from './utils.js';
 import { SITE } from './state.js';
 import { loadJSON } from './data.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
-import { renderText, renderPeople, renderJournal, renderShop, renderContact, renderCart, renderNewsletter } from './sections.js';
+import { renderText, renderPeople, renderShop, renderContact, renderCart, renderNewsletter } from './sections.js';
 
 // Id de sección del hash actual; cae a la primera sección si no es válido.
 // El hash admite parámetros (#carret?gracies=1&session_id=…, la vuelta de Stripe):
@@ -50,7 +50,6 @@ export async function renderRoute() {
   }
 
   view.dataset.section = id;
-  view.classList.toggle('view--paper', section.type === 'people');
   const label = t(section.label);
   document.title = `${SITE.site.name} — ${label.charAt(0).toUpperCase()}${label.slice(1)}`;
   const sectionEl = $('#bar-section');
@@ -63,7 +62,6 @@ export async function renderRoute() {
       case 'agenda':  renderAgenda(view, data); break;
       case 'text':    renderText(view, data); break;
       case 'people':  renderPeople(view, data); break;
-      case 'journal': renderJournal(view, data); break;
       case 'shop':    renderShop(view, data); break;
       case 'contact': renderContact(view); break;
       case 'newsletter': renderNewsletter(view); break;

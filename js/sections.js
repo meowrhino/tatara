@@ -90,20 +90,6 @@ function openPersonModal(p) {
   `);
 }
 
-export function renderJournal(view, data) {
-  const arts = (data.articles || []).map((a) => {
-    const paras = (t(a.body) || []);
-    const body = (Array.isArray(paras) ? paras : [paras]).map((p) => `<p>${esc(p)}</p>`).join('');
-    return `<article class="article">
-      <p class="article__meta">${esc(a.author || '')}</p>
-      <h2 class="article__title">${esc(t(a.title))}</h2>
-      ${a.date ? `<p class="article__date">${esc(a.date)}</p>` : ''}
-      <div class="prose">${body}</div>
-    </article>`;
-  }).join('');
-  view.innerHTML = pageWrap(`<div class="journal">${arts}</div>`);
-}
-
 export function renderShop(view, data) {
   const cur = data.currency || '€';
   const cards = (data.products || []).map((p, i) => {

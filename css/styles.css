@@ -120,13 +120,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__label .seg__who b { font-weight: 700; }
 .seg__label .seg__when { flex: 0 0 auto; opacity: 0.92; }
 
-.seg__today-badge {
-  flex: 0 0 auto;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 /* Fila inferior del bloque: fecha de cierre (izq) + estado (der) en una línea,
    igual que la cabecera. Hereda la tinta del bloque (negra o blanca). */
 .seg__foot {
@@ -262,13 +255,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .person--clickable:hover .person__open::after { color: var(--ink); }
 .m-pdf { margin: 0.8rem 0 0; }
 .m-pdf a:hover { text-decoration: underline; }
-
-/* Diari */
-.journal { max-width: var(--col); margin: 0 auto; }
-.article { margin: 0 0 3rem; }
-.article__meta { text-transform: uppercase; letter-spacing: 0.08em; margin: 0; }
-.article__title { font-weight: 700; font-size: 1.05rem; margin: 0.2rem 0 0; }
-.article__date { font-weight: 700; margin: 0.8rem 0 1.2rem; }
 
 /* Botiga */
 .shop {

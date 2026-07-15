@@ -18,13 +18,9 @@
     "mostassa": "#CFC1AB"
   },
   "agenda": {
-    "_comment": "dayVh es un eje temporal real: cada día de un evento ocupa exactamente dayVh dvh (no es solo un suelo). Así el scroll puede ubicar 'hoy' con precisión y mostrar ~33 días por pantalla. El contenido (imagen + O.R. anidados) se acomoda dentro de esa altura; minEventVh solo actúa de suelo para eventos cortos (modo compacto).",
-    "dayVh": 3,
+    "_comment": "Los bloques miden por contenido. minEventVh = altura mínima (svh) de cada bloque; gapVh = hueco (svh) entre bloques.",
     "minEventVh": 10,
-    "gapVh": 6,
-    "compactMaxDays": 2,
-    "mediaMinDays": 6,
-    "endMinDays": 4
+    "gapVh": 6
   },
   "contact": {
     "intro": {
