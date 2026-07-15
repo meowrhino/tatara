@@ -8,14 +8,14 @@
   src: url("../fonts/SuperstudioTrialTT-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: "Superstudio Trial";
   src: url("../fonts/SuperstudioTrialTT-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 :root {
@@ -245,7 +245,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   padding: 2.5rem 1.4rem 1rem;
 }
 
-.prose { max-width: 34rem; margin: 0 auto; }
+.prose { max-width: var(--col); margin: 0 auto; }
 .prose p { text-align: justify; hyphens: auto; margin: 0 0 1rem; }
 .prose__heading { text-align: center; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.02em; margin: 2rem 0 0.8rem; }
 
@@ -264,7 +264,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .m-pdf a:hover { text-decoration: underline; }
 
 /* Diari */
-.journal { max-width: 34rem; margin: 0 auto; }
+.journal { max-width: var(--col); margin: 0 auto; }
 .article { margin: 0 0 3rem; }
 .article__meta { text-transform: uppercase; letter-spacing: 0.08em; margin: 0; }
 .article__title { font-weight: 700; font-size: 1.05rem; margin: 0.2rem 0 0; }
@@ -272,7 +272,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* Botiga */
 .shop {
-  max-width: 34rem; margin: 0 auto; width: 100%;
+  max-width: var(--col); margin: 0 auto; width: 100%;
   display: grid; grid-template-columns: 1fr; gap: 2.4rem;
 }
 .product { display: block; width: 100%; text-align: left; }
@@ -289,7 +289,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 /* Contacte: texto de intro arriba, axonometría del local en medio, dirección
    + los 3 links (IG · Newsletter · Medium) abajo. */
 .contact { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; flex: 1; gap: 2rem; }
-.contact__intro { position: relative; z-index: 1; max-width: 34rem; margin: 0; text-align: center; hyphens: auto; }
+.contact__intro { position: relative; z-index: 1; max-width: var(--col); margin: 0; text-align: center; hyphens: auto; }
 /* Axonometria de fons: absoluta i centrada, DARRERE del text (no ocupa scroll). */
 .contact__axo { position: absolute; inset: 0; margin: auto; max-width: 16rem; max-height: 40svh; width: auto; height: auto; z-index: 0; pointer-events: none; }
 .contact__info { position: relative; z-index: 1; margin: 0; width: 100%; }
@@ -311,7 +311,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* Carret */
 .cart { text-align: center; margin: auto 0; color: var(--ink-soft); letter-spacing: 0.06em; }
-.cart--full { text-align: left; color: var(--ink); max-width: 34rem; width: 100%; margin: 0 auto; }
+.cart--full { text-align: left; color: var(--ink); max-width: var(--col); width: 100%; margin: 0 auto; }
 .cart-items { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.2rem; }
 .cart-item { display: grid; grid-template-columns: 3rem 1fr 4rem auto; gap: 0.7rem; align-items: center; }
 .cart-item__img { width: 3rem; height: 3rem; object-fit: cover; }
@@ -329,7 +329,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .cart__back { margin-top: 1.6rem; }
 .cart__back a:hover, .cart--thanks a:hover { text-decoration: underline; }
 .cart--thanks { color: var(--ink); }
-.cart__thanks-title { font-family: var(--font-display); letter-spacing: 0.05em; text-transform: uppercase; }
+.cart__thanks-title { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 
 /* ============================================================
    BARRAS FIJAS  —  marco de marca: TAT arriba · ARA abajo
@@ -357,6 +357,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .bar__brand {
   justify-self: center;
   font-family: var(--font-display);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 1.15rem;
@@ -451,7 +452,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .modal__close { position: absolute; top: 0.5rem; right: 0.6rem; line-height: 0; }
 .modal__body img { width: 100%; height: auto; margin-bottom: 1rem; }
 .modal__body .m-when { font-size: 0.82rem; color: var(--ink-soft); letter-spacing: 0.04em; margin: 0; }
-.modal__body .m-title { font-family: var(--font-display); font-size: clamp(1.4rem, 6vw, 2rem); letter-spacing: 0.05em; text-transform: uppercase; margin: 0.4rem 0 0.2rem; line-height: 1.1; }
+.modal__body .m-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 6vw, 2rem); letter-spacing: 0.05em; text-transform: uppercase; margin: 0.4rem 0 0.2rem; line-height: 1.1; }
 .modal__body .m-person { font-weight: 700; margin: 0 0 1rem; }
 .modal__body .m-desc { line-height: 1.6; text-align: justify; hyphens: auto; }
 .modal__body .m-price { font-weight: 700; margin: 1rem 0 0.6rem; }
