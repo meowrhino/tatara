@@ -30,6 +30,7 @@
   --grey-soft: #EAE7E0;   /* fondo cálido claro para exposicions / recerca */
 
   --bar-h: 52px;
+  --col: 480px;    /* ancho de la columna central (agenda); TAT/ARA lo igualan en desktop */
   --fade: 180ms;   /* duración del fundido entre vistas; la lee también el router (JS) */
 }
 
@@ -58,7 +59,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   transition: opacity var(--fade) ease;
 }
 #view.view--fade { opacity: 0; }
-#view.view--paper { background: var(--grey-soft); }
+/* El gris de exposicions/recerca vive en su columna (.people), no a sangre. */
 
 .loading { text-align: center; color: var(--ink-soft); padding: 3rem 1rem; letter-spacing: 0.1em; }
 
@@ -248,8 +249,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .prose p { text-align: justify; hyphens: auto; margin: 0 0 1rem; }
 .prose__heading { text-align: center; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.02em; margin: 2rem 0 0.8rem; }
 
-/* Artistes: lista de nombres; cada uno abre un modal con bio + fotos + PDF. */
-.people { list-style: none; margin: 0 auto; padding: 0; max-width: 34rem; }
+/* Exposicions/Recerca: lista de nombres (cada uno abre un modal con bio + fotos
+   + PDF). Columna de color como la agenda: --col de ancho, centrada, fondo gris,
+   nombres a la izquierda con el mismo margen interno que los bloques. */
+.people { list-style: none; margin: 0 auto; padding: 1.6rem 1rem; width: var(--col); max-width: 100%; background: var(--grey-soft); }
 .person { margin: 0 0 0.9rem; }
 .person-spacer { height: 2.4rem; }
 .person__name { font-weight: 700; font-size: 1rem; letter-spacing: 0.02em; }
@@ -473,7 +476,11 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    ============================================================ */
 @media (min-width: 720px) {
   body { font-size: 16px; }
-  .agenda__strip { max-width: 480px; margin: 0 auto; }
+  .agenda__strip { max-width: var(--col); margin: 0 auto; }
+
+  /* TAT / ARA reparten sus letras al ancho de la columna central: las dos
+     letras de los extremos quedan alineadas con los bordes de la columna. */
+  .bar__brand { width: var(--col); display: flex; justify-content: space-between; letter-spacing: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
