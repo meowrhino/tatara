@@ -6,7 +6,7 @@
    eventos cortos no queden como una tira fina. Entre bloques, un hueco modesto.
 
    Cada bloque lleva abajo a la derecha un marcador de estado en negrita
-   (passat / ara / vinent) calculado por fecha. Ya no hay eje temporal a escala
+   (passat / ara / proximament) calculado por fecha. Ya no hay eje temporal a escala
    ni auto-scroll a "hoy": el estado se comunica con ese marcador.
    ============================================================ */
 

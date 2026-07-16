@@ -6,7 +6,7 @@
       "link": null,
       "image": "assets/img/agenda/annadot.webp",
       "bio": {
-        "ca": "Amb formació artística i un doctorat en Traducció i Llengües Aplicades, desenvolupa la seva obra des d'una mirada interdisciplinària. El seu treball investiga com el llenguatge i la traducció configuren les nostres experiències, les relacions i la manera com habitem el món. Els seus projectes parteixen de preguntes que explora a partir de pràctiques d'investigació i processos artístics que formalitza en performances, vídeos i instal·lacions."
+        "ca": "Amb formació artística i un doctorat en Traducció i Llengües Aplicades, Anna desenvolupa la seva obra des d’una mirada interdisciplinària. El seu treball investiga com el llenguatge i la traducció configuren les nostres experiències, les relacions i la manera com habitem el món. Els seus projectes parteixen de preguntes, que explora a partir de pràctiques d’investigació i processos artístics que formalitza en performances, vídeos i instal·lacions. Aquestes preguntes inicials no donen una resposta directa, sinó que li donen una nova perspectiva que obre preguntes noves."
       }
     },
     {
@@ -20,10 +20,12 @@
       "link": null,
       "image": "assets/img/agenda/mariaroy.webp",
       "bio": {
-        "ca": "Transita entre el disseny i la investigació, fent de la ceràmica un espai d'experimentació artesanal i sostenible. La seva principal àrea d'estudi és la terra, material viu que narra la història, la política i l'ecologia de la localitat. Utilitza la ceràmica com a mitjà arqueològic per recuperar les narratives que ens connecten amb el nostre entorn a través de l'objecte."
+        "ca": "transita entre el disseny i la investigació, fent de la ceràmica un espai d’experimentació artesanal i sostenible. La seva principal àrea d’estudi és la terra, material viu, que narra la història, la política i l’ecologia de la localitat. La seva obra es troba a mig camí entre la tradició artesanal i l'exploració del paisatge urbà contemporani. Utilitza la ceràmica com a mig arqueològic per recuperar les narratives que ens connecten amb el nostre entorn a través de l’objecte"
       }
     },
-    { "spacer": true },
+    {
+      "spacer": true
+    },
     {
       "name": "Solange Dalannais",
       "link": null,
@@ -55,7 +57,7 @@
       "link": null,
       "image": "assets/img/agenda/ines-sistiaga.webp",
       "bio": {
-        "ca": "Dissenyadora i investigadora formada a la Design Academy Eindhoven (Design for Wellbeing) i a l'Escola Massana. La seva pràctica se situa en la intersecció entre l'artesania tradicional i la innovació tecnològica, i explora el llenguatge dels materials mitjançant el teixit. Ha desenvolupat projectes d'investigació en institucions com el TextielLab de Tilburg. Actualment impulsa el TextileLab de TMDC."
+        "ca": "és dissenyadora i investigadora formada a la Design Academy Eindhoven, on va cursar el grau de Design for Wellbeing, i anteriorment a l’Escola Massana. La seva pràctica es situa en la intersecció entre l'artesania tradicional i la innovació tecnològica, i explora el llenguatge dels materials mitjançant el teixit. Ha desenvolupat projectes d'investigació en institucions com el TextielLab de Tilburg, amb iniciatives com Tailored Bond i Wool4Life, orientades a redescobrir les capacitats estructurals, tèrmiques i funcionals de les fibres naturals i sintètiques. Actualment, impulsa el TextileLab de TMCD"
       }
     },
     {
@@ -74,21 +76,21 @@
       "link": null,
       "image": "assets/img/agenda/alecarrero.webp",
       "bio": {
-        "ca": "Psicòloga especialitzada en consciència corporal."
+        "ca": "psicòloga especialitzada en consciència corporal"
       }
     },
     {
       "name": "Sol Prado",
       "link": null,
       "bio": {
-        "ca": "Llicenciada en disseny tèxtil per la Universitat de Buenos Aires i màster en Estudis de Gènere i Teoria Crítica pel PEI del MACBA-UAB. La seva recerca parteix de la pràctica del disseny, des de la qual analitza les relacions de producció capitalistes en l'eix nord-sud global, amb l'objectiu de proposar noves formes de creació tèxtil en col·laboració amb comunitats que fomentin vincles sostenibles entre les persones, el disseny i el territori."
+        "ca": "Sol Prado és llicenciada en disseny tèxtil per la Universitat de Buenos Aires i compta amb un màster en Estudis de Gènere i Teoria Crítica pel Programa d'Estudis Independents del MACBA-UAB. La seva recerca parteix de la pràctica del disseny, des de la qual analitza les relacions de producció capitalistes en l'eix nord-sud global, amb l'objectiu de proposar noves formes de creació tèxtil en col·laboració amb comunitats que fomentin vincles sostenibles entre les persones, el disseny i el territori."
       }
     },
     {
       "name": "Mati Cini",
       "link": null,
       "bio": {
-        "ca": "Ceramista i investigadora, cofundadora de Salemi Ceramics."
+        "ca": "ceramista i investigadora cofundadora de Salemi Ceramics"
       }
     },
     {
@@ -101,7 +103,7 @@
       "link": null,
       "image": "assets/img/agenda/vinik.webp",
       "bio": {
-        "ca": "Treballa des de l'encreuament entre antropologia, agroecologia i escriptura, des d'on genera espais on acompanya i connecta persones, sabers i pràctiques. La reflexió no es queda en un pla especulatiu sinó que es tradueix en acció col·lectiva. Entén que els problemes ecològics no es poden deslligar dels factors socials, polítics i culturals que els configuren. Ho fa a partir del seu projecte Expresiones bioculturales."
+        "ca": "treballa des de l’encreuament entre antropologia, agroecologia i escriptura, des d’on genera espais on acompanya i conecta: persones, sabers i pràctiques. La reflexió no es queda en un pla especulatiu sinó que es tradueix en acció i pren forma concreta a través d’espais on el pensar i el fe des d’una dimensió col·lectiva. Vinik, entén que els problemes ecològics no es poden deslligar dels factors socials, polítics i cultural, que els configuren. Tot això, ho fa a partir del seu projecte; Expresiones bioculturales, des d’on impulsa, d’una banda, pràctiques editorials que li permeten documentar i comunicar aquests espais i processos; i de l’altra, promou i implimenta sistemes alimentaris alternatius, la interculturalitat i l’ecologia."
       }
     },
     {
@@ -109,7 +111,7 @@
       "link": null,
       "image": "assets/img/agenda/duda-raquel-buj.webp",
       "bio": {
-        "ca": "Col·lectiu format per Clara Piazuelo i Sarai Cumplido, dedicat a la mediació, la recerca, la creació artística, el comissariat i la producció cultural. Els seus projectes, sempre relacionals i col·lectius, apunten a qüestionar les estructures de poder hegemòniques."
+        "ca": "és un col·lectiu format per Clara Piazuelo i Sarai Cumplido, dedicat a la mediació, la recerca, la creació artística, el comissariat i la producció cultural. Els seus projectes, sempre relacionals i col·lectius, apunten a qüestionar les estructures de poder hegemòniques."
       }
     },
     {
@@ -122,14 +124,14 @@
       "link": null,
       "image": "assets/img/agenda/if.webp",
       "bio": {
-        "ca": "International Friendship és l'editorial de pensament crític de la dissenyadora i investigadora Ariadna Serrahima i el filòsof Guillem Serrahima."
+        "ca": "International Friendship és l’editorial de pensament crític de la dissenyadora i investigadora Ariadna Serrahima i el filòsof Guillem Serrahima."
       }
     },
     {
       "name": "Arnau Sala Saez",
       "link": null,
       "bio": {
-        "ca": "Artista i investigador multidisciplinari; a la seva pràctica explora la intersecció entre el so, el treball gràfic i la investigació de sistemes. En la seva vessant més teòrica i metodològica, desenvolupa propostes com Resistance Degrowth for Artists, on reflexiona sobre el decreixement en la pràctica artística, i Good Praxis, centrada en l'ètica i els protocols de treball. El seu últim projecte és Catàleg de Fulles, des d'on vol explorar la subcultura del té i la possibilitat de treure'n coneixements vàlids per i amb el territori local."
+        "ca": "és un artista i investigador multidisciplinari a la seva pràctica explora la intersecció entre el so, el treball gràfic i la investigació de sistemes. En la seva vessant més teòrica i metodològica, desenvolupa propostes com Resistance Degrowth for Artists, on reflexiona sobre el decreixement en la pràctica artística, i Good Praxis, centrada en l'ètica i els protocols de treball. El seu últim project és Catàleg de Fulles des d’on vol explorar la subcultura del té i explorar la possibilitat de treure’n coneixaments vàlids per i amb el territori local."
       }
     }
   ]

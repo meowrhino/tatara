@@ -1,5 +1,5 @@
 {
-  "_comment": "Texto statement de la sección Nosaltres. body = array de bloques; cada bloque es {heading?, text}, ambos objetos multi-idioma {ca, es, en}. heading opcional, como en el mockup nosaltres.png (cabecera centrada sobre su párrafo).",
+  "_comment": "Statement de Nosaltres. Texto literal del documento de la clienta (web tatara-TEXT-july, ~160 paraules): 4 párrafos seguidos, sin títulos. Se respeta la redacción original en catalán tal cual. PENDIENTE: traducciones es/en — mientras no estén, t() cae al catalán.",
   "title": {
     "ca": "Nosaltres",
     "es": "Nosotras",
@@ -8,75 +8,22 @@
   "body": [
     {
       "text": {
-        "ca": "TAT ARA és una associació sense ànim de lucre, un espai galeria que visibilitza i connecta projectes d'art, disseny i ecologia. Acull propostes crítiques, experimentals i d'investigació. És un espai a recés del sistema per connectar, crear friccions i fer xarxa entre persones, comunitats i pràctiques. Un espai cultural obert al públic per a l'exposició, la producció, la lectura, el debat, l'escolta, la conversa i la investigació.",
-        "es": "TAT ARA es una asociación sin ánimo de lucro, un espacio galería que visibiliza y conecta proyectos de arte, diseño y ecología. Acoge propuestas críticas, experimentales y de investigación. Es un espacio al resguardo del sistema para conectar, crear fricciones y hacer red entre personas, comunidades y prácticas. Un espacio cultural abierto al público para la exposición, la producción, la lectura, el debate, la escucha, la conversación y la investigación.",
-        "en": "TAT ARA is a non-profit association, a gallery space that gives visibility to and connects projects in art, design and ecology. It hosts critical, experimental and research proposals. It is a space sheltered from the system to connect, create frictions and build networks among people, communities and practices. A cultural space open to the public for exhibition, production, reading, debate, listening, conversation and research."
-      }
-    },
-    {
-      "heading": {
-        "ca": "Exposicions",
-        "es": "Exposiciones",
-        "en": "Exhibitions"
-      },
-      "text": {
-        "ca": "Un espai de mostra per assajar i trobar afinitats, similituds i friccions. Entorn al diàleg d'un pensament subtil i sensible d'imaginaris post-eficiència.",
-        "es": "Un espacio de muestra para ensayar y encontrar afinidades, similitudes y fricciones. En torno al diálogo de un pensamiento sutil y sensible de imaginarios post-eficiencia.",
-        "en": "A space to test and find affinities, similarities and frictions. Around the dialogue of a subtle, sensitive thinking of post-efficiency imaginaries."
-      }
-    },
-    {
-      "heading": {
-        "ca": "Edicions",
-        "es": "Ediciones",
-        "en": "Editions"
-      },
-      "text": {
-        "ca": "Produccions amb artistes i col·laboradores per generar economia que permeti sostenir les pràctiques artístiques i crítiques.",
-        "es": "Producciones con artistas y colaboradoras para generar economía que permita sostener las prácticas artísticas y críticas.",
-        "en": "Productions with artists and collaborators to generate an economy that sustains artistic and critical practices."
-      }
-    },
-    {
-      "heading": {
-        "ca": "Investigacions Afables",
-        "es": "Investigaciones Afables",
-        "en": "Affable Research"
-      }
-    },
-    {
-      "heading": {
-        "ca": "Open Research",
-        "es": "Open Research",
-        "en": "Open Research"
-      }
-    },
-    {
-      "heading": {
-        "ca": "Investigació Oberta",
-        "es": "Investigación Abierta",
-        "en": "Open Inquiry"
-      }
-    },
-    {
-      "heading": {
-        "ca": "Expanded Learning",
-        "es": "Expanded Learning",
-        "en": "Expanded Learning"
-      }
-    },
-    {
-      "heading": {
-        "ca": "Coneixement Obert",
-        "es": "Conocimiento Abierto",
-        "en": "Open Knowledge"
+        "ca": "TAT ARA és una associació sense ànims de lucrE. Un espai galeria que visibiliza i connecta projectes d'art, disseny i ecologia. Acull propostes crítiques, experimentals i d'investigació. És un espai a recés del sistema per connectar, crear friccions i fer xarxa entre persones, comunitats i pràctiques. Un espai cultural obert al públic per exposició, producció, lectura, debat, escolta, conversa, i investigació.."
       }
     },
     {
       "text": {
-        "ca": "Com aprenem, com ens arriba el coneixament que constantment ens envolta però sovint no ens atravesa? Proposem explorar maneres en de saber que també activin el cos. A través de tallers, lectures, converses, sessions d'escoletes, debats, sessions transpersonals, grups de treball, consultoria o acompanyaments per trobar les eines a través el canvi és possible.",
-        "es": "Cómo aprendemos, cómo nos llega el conocimiento que constantemente nos envuelve pero a menudo no nos atraviesa. Proponemos explorar maneras de saber que también activen el cuerpo. A través de talleres, lecturas, conversaciones, sesiones de escoletes, debates, sesiones transpersonales, grupos de trabajo, consultoría o acompañamientos para encontrar las herramientas a través de las cuales el cambio es posible.",
-        "en": "How do we learn, how does the knowledge that constantly surrounds us reach us, when it often doesn't pass through us. We propose exploring ways of knowing that also engage the body. Through workshops, readings, conversations, escoleta sessions, debates, transpersonal sessions, working groups, consultancy or accompaniment to find the tools through which change is possible."
+        "ca": "Un espai de mostra per assajar i trobar afinitats, similituds i friccions. Un espai on buscar mirades complices des d'on es generen diàlegs de pensament sensible i crític. La galeria com a espai d'investigació, com a espai de ficció on es creuent plaer i crítica. Un espai en constant transformació."
+      }
+    },
+    {
+      "text": {
+        "ca": "Com aprenem? com ens arriba el coneixament que constantment ens envolta però sovint no ens atravesa? Proposem explorar maneres d'aprendre i compartir coneixaments. A través de tallers, lectures, converses, sessions d'escoletes, debats, sessions transpersonals, grups de treball, consultoria i acompanyaments per trobar les eines de reflexió, transformació i connexió afectives."
+      }
+    },
+    {
+      "text": {
+        "ca": "Produccions amb artistes i col·laboradores per generar economia que permeti sostenir les pràctiques artístiques i crítiques. Artefactes i publicacions que definieixen un territori des d'on pensar i estar."
       }
     }
   ]

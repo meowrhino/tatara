@@ -33,7 +33,7 @@ const STR = {
   today:          { ca: 'avui', es: 'hoy', en: 'today' },
   statusNow:      { ca: 'ara', es: 'ahora', en: 'now' },
   statusPast:     { ca: 'passat', es: 'pasado', en: 'past' },
-  statusNext:     { ca: 'vinent', es: 'próximo', en: 'upcoming' },
+  statusNext:     { ca: 'proximament', es: 'próximamente', en: 'upcoming' },
   roomSheet:      { ca: 'full de sala (PDF)', es: 'hoja de sala (PDF)', en: 'room sheet (PDF)' },
   noEvents:       { ca: 'sense esdeveniments', es: 'sin eventos', en: 'no events' },
   enlargeImage:   { ca: 'Ampliar imatge', es: 'Ampliar imagen', en: 'Enlarge image' },
