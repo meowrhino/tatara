@@ -249,6 +249,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .person { margin: 0 0 0.9rem; }
 .person-spacer { height: 2.4rem; }
 .person__name { font-weight: 700; font-size: 1rem; letter-spacing: 0.02em; }
+.person__role { margin-left: 0.5rem; color: var(--ink-soft); font-weight: 400; font-size: 0.85rem; }
 .person__open { display: inline-flex; align-items: baseline; gap: 0.5rem; text-align: left; padding: 0; }
 .person--clickable .person__open::after { content: "+"; color: var(--ink-soft); font-weight: 400; }
 .person--clickable:hover .person__name { text-decoration: underline; }

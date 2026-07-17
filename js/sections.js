@@ -57,13 +57,14 @@ export function renderPeople(view, data) {
   const items = (data.people || []).map((p, i) => {
     // Separación entre grupos: un item { "spacer": true } en el JSON deja aire.
     if (p && p.spacer) return `<li class="person-spacer" aria-hidden="true"></li>`;
+    // 'role' (formato: conversa, taller…) opcional, para las fichas de recerca.
+    const name = `<span class="person__name">${esc(p.name)}</span>` +
+      (p.role ? `<span class="person__role">${esc(p.role)}</span>` : '');
     if (!personHasDetail(p)) {
-      return `<li class="person"><span class="person__name">${esc(p.name)}</span></li>`;
+      return `<li class="person">${name}</li>`;
     }
     return `<li class="person person--clickable">
-      <button class="person__open" type="button" data-i="${i}">
-        <span class="person__name">${esc(p.name)}</span>
-      </button>
+      <button class="person__open" type="button" data-i="${i}">${name}</button>
     </li>`;
   }).join('');
   view.innerHTML = pageWrap(`<ul class="people">${items}</ul>`);

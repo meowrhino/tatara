@@ -1,4 +1,91 @@
 {
-  "_comment": "Sección Recerca (antes 'diari'). Mismo formato que Exposicions/artistes: una lista de entradas; cada una con contenido (bio/text, images[], pdf) abre un modal. De momento vacía.",
-  "people": []
+  "_comment": "Recerca (secció #diari): les 11 trobades del document de la clienta (juliol). role = format. bio i imatge reutilitzades d'exposicions quan n'hi ha. PENDENT de la clienta: text propi de cada trobada, fotos (màx 4) i PDF.",
+  "people": [
+    {
+      "name": "Inés Sistiaga",
+      "role": "conversa",
+      "link": null,
+      "image": "assets/img/agenda/ines-sistiaga.webp",
+      "bio": {
+        "ca": "és dissenyadora i investigadora formada a la Design Academy Eindhoven, on va cursar el grau de Design for Wellbeing, i anteriorment a l’Escola Massana. La seva pràctica es situa en la intersecció entre l'artesania tradicional i la innovació tecnològica, i explora el llenguatge dels materials mitjançant el teixit. Ha desenvolupat projectes d'investigació en institucions com el TextielLab de Tilburg, amb iniciatives com Tailored Bond i Wool4Life, orientades a redescobrir les capacitats estructurals, tèrmiques i funcionals de les fibres naturals i sintètiques. Actualment, impulsa el TextileLab de TMCD"
+      }
+    },
+    {
+      "name": "Colectivo Pimienta",
+      "role": "sessió d'escolta",
+      "link": null,
+      "image": "assets/img/agenda/pimienta.webp",
+      "bio": null
+    },
+    {
+      "name": "Mireia López",
+      "role": "conversa",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "Ale Carrero",
+      "role": "sessió de reverberació corporal",
+      "link": null,
+      "image": "assets/img/agenda/alecarrero.webp",
+      "bio": {
+        "ca": "psicòloga especialitzada en consciència corporal"
+      }
+    },
+    {
+      "name": "Sol Prado",
+      "role": "conversa",
+      "link": null,
+      "bio": {
+        "ca": "Sol Prado és llicenciada en disseny tèxtil per la Universitat de Buenos Aires i compta amb un màster en Estudis de Gènere i Teoria Crítica pel Programa d'Estudis Independents del MACBA-UAB. La seva recerca parteix de la pràctica del disseny, des de la qual analitza les relacions de producció capitalistes en l'eix nord-sud global, amb l'objectiu de proposar noves formes de creació tèxtil en col·laboració amb comunitats que fomentin vincles sostenibles entre les persones, el disseny i el territori."
+      }
+    },
+    {
+      "name": "Mati Cini",
+      "role": "conversa",
+      "link": null,
+      "bio": {
+        "ca": "ceramista i investigadora cofundadora de Salemi Ceramics"
+      }
+    },
+    {
+      "name": "Tornen les Esquelles",
+      "role": "taller",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "Vinik Juré",
+      "role": "lectura",
+      "link": null,
+      "image": "assets/img/agenda/vinik.webp",
+      "bio": {
+        "ca": "treballa des de l’encreuament entre antropologia, agroecologia i escriptura, des d’on genera espais on acompanya i conecta: persones, sabers i pràctiques. La reflexió no es queda en un pla especulatiu sinó que es tradueix en acció i pren forma concreta a través d’espais on el pensar i el fe des d’una dimensió col·lectiva. Vinik, entén que els problemes ecològics no es poden deslligar dels factors socials, polítics i cultural, que els configuren. Tot això, ho fa a partir del seu projecte; Expresiones bioculturales, des d’on impulsa, d’una banda, pràctiques editorials que li permeten documentar i comunicar aquests espais i processos; i de l’altra, promou i implimenta sistemes alimentaris alternatius, la interculturalitat i l’ecologia."
+      }
+    },
+    {
+      "name": "DU-DA",
+      "role": "conversa",
+      "link": null,
+      "image": "assets/img/agenda/duda-raquel-buj.webp",
+      "bio": {
+        "ca": "és un col·lectiu format per Clara Piazuelo i Sarai Cumplido, dedicat a la mediació, la recerca, la creació artística, el comissariat i la producció cultural. Els seus projectes, sempre relacionals i col·lectius, apunten a qüestionar les estructures de poder hegemòniques."
+      }
+    },
+    {
+      "name": "Raquel Buj",
+      "role": "conversa",
+      "link": null,
+      "bio": null
+    },
+    {
+      "name": "IF. Publications",
+      "role": "presentació",
+      "link": null,
+      "image": "assets/img/agenda/if.webp",
+      "bio": {
+        "ca": "International Friendship és l’editorial de pensament crític de la dissenyadora i investigadora Ariadna Serrahima i el filòsof Guillem Serrahima."
+      }
+    }
+  ]
 }
