@@ -3,6 +3,14 @@ main = "src/index.js"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
 
+# Publicar en tatara.cat: ver TODO_DOMINIO.md. El dominio se engancha desde el
+# panel (Worker → Settings → Domains & Routes → Add Custom Domain: tatara.cat),
+# que crea el DNS y el SSL solos. Si se prefiere dejarlo en código, descomentar:
+#   [[routes]]
+#   pattern = "tatara.cat"
+#   custom_domain = true
+# (requiere que tatara.cat ya esté activo en la MISMA cuenta de Cloudflare).
+
 # Static assets: Cloudflare sirve la raíz del repo (la web) automáticamente.
 # Lo que NO debe subirse (fotos fuente, docs, src…) se excluye en .assetsignore.
 # El Worker (main) solo atiende /api/*.
@@ -11,6 +19,9 @@ directory = "."
 
 # D1 compartida `shop` (una base para todos los ecommerces en desarrollo).
 # tatara usa las tablas con prefijo tatara_* ; quienNoCorre las sin prefijo.
+# OJO: este database_id es de la cuenta actual. Al desplegar en OTRA cuenta
+# (p. ej. la de la clienta) hay que crear una D1 nueva y poner aquí su id —
+# ver TODO_DOMINIO.md, paso 3.
 [[d1_databases]]
 binding = "DB"
 database_name = "shop"
