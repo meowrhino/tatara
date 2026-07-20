@@ -1,9 +1,10 @@
 # TAT ARA — deploy y ecommerce
 
 La web (estática, vanilla) + un Worker de Cloudflare que atiende `/api/*`.
-Backend calcado de quienNoCorre. **Estado: cimientos listos; Stripe preparado
-pero sin activar; el carrito del frontend aún no existe** (el botón dice
-"pròximament").
+Backend calcado de quienNoCorre. **Estado: web y alta a la newsletter en marcha;
+carrito y checkout de Stripe implementados en el frontend, pendientes de activar
+las claves reales de Stripe.** Para publicar en dominio propio (`tatara.cat`),
+ver [TODO_DOMINIO.md](TODO_DOMINIO.md).
 
 ## Arquitectura
 

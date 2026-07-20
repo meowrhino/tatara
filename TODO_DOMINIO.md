@@ -42,6 +42,16 @@ Registrarse en https://dash.cloudflare.com (plan **Free**).
 - Autorizar GitHub y elegir el repo **`meowrhino/tatara`**, rama `main`.
 - A partir de ahí, **cada push a `main` despliega solo**.
 
+> ⚠️ **El repo es de la cuenta de GitHub de Manu (`meowrhino`).** Para que la
+> Cloudflare de la clienta pueda desplegarlo, hay dos vías:
+> - **(a)** Manu autoriza la *Cloudflare GitHub app* sobre ese repo para la
+>   cuenta de la clienta (da acceso de lectura al repo), o
+> - **(b)** se hace un **fork** del repo a la cuenta de GitHub de la asociación
+>   y se conecta ese fork (entonces los cambios futuros se harían allí).
+>
+> El **frontend no necesita ningún cambio**: llama a la API con rutas relativas
+> (`/api/...`), así que funciona igual en cualquier cuenta y dominio.
+
 ### 3. Base de datos D1 (necesaria para newsletter y carrito)
 🖥️ En una terminal, dentro del repo:
 ```bash
