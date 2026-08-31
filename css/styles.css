@@ -23,11 +23,9 @@
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --font-display: "Superstudio Trial", "JetBrains Mono", ui-monospace, monospace;
 
-  --bg: #ffffff;
-  --ink: #111111;
-  --ink-soft: #9a9a9a;
-  --doodle: #cfcfcf;
-  --grey-soft: #EAE7E0;   /* fondo cálido claro para exposicions / recerca */
+  /* Los COLORES no viven aquí: están todos en data/data.json → "theme"
+     (--bg, --ink, --ink-soft, --doodle, --grey-soft, --media-bg, --overlay-ink)
+     y los inyecta js/main.js al arrancar. Los de la agenda, en "palette". */
 
   --bar-h: 52px;
   --col: 480px;    /* ancho de la columna central (agenda); TAT/ARA lo igualan en desktop */
@@ -39,8 +37,8 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--bg, #ffffff);   /* el fallback solo se ve el instante */
+  color: var(--ink, #111111);      /* previo a que cargue data.json */
   font-family: var(--font-mono);
   font-size: 15px;
   line-height: 1.5;
@@ -80,7 +78,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   gap: 1.3rem;               /* aire entre cabecera/imagen, descripció i O.R. */
   width: 100%;
   text-align: left;
-  color: #fff;
+  /* el color del texto lo pone agenda.js inline (textOn: blanco o negro según el fondo) */
   padding-bottom: 1.6rem;
 }
 
@@ -145,7 +143,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__media { display: block; padding: 1.2rem 1rem 0; width: 58%; max-width: 300px; cursor: zoom-in; text-align: inherit; }
 /* aspect-ratio reserva hueco antes de que cargue la imagen (evita saltos de
    layout); el 'auto' hace que, una vez cargada, mande su proporción real. */
-.seg__media img { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3 auto; background: rgba(0, 0, 0, 0.04); }
+.seg__media img { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3 auto; background: var(--img-placeholder); }
 .seg__media--left { margin-right: auto; }
 .seg__media--right { margin-left: auto; }
 
@@ -203,7 +201,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   position: fixed;
   inset: 0;
   z-index: 80;
-  background: rgba(0, 0, 0, 0.92);
+  background: var(--lightbox-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -224,7 +222,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   z-index: 1;
   line-height: 0;
   padding: 0.3rem;
-  color: #fff;
+  color: var(--overlay-ink);
 }
 .lightbox__close:hover { opacity: 0.6; }
 
@@ -263,7 +261,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   display: grid; grid-template-columns: 1fr; gap: 2.4rem;
 }
 .product { display: block; width: 100%; text-align: left; }
-.product__media { background: #f3f3f3; aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden; }
+.product__media { background: var(--media-bg); aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden; }
 .product__media img { width: 100%; height: 100%; object-fit: cover; }
 .product__row { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.6rem; align-items: baseline; }
 .product__info { display: flex; flex-direction: column; line-height: 1.35; }
@@ -338,29 +336,39 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .bar--top { top: 0; }
 .bar--bottom { bottom: 0; }
 
-.bar__menu { justify-self: start; }
+.bar__menu { grid-column: 1; justify-self: start; }
 .bar__menu:hover { text-decoration: underline; }
 
 .bar__brand {
+  grid-column: 2;
   justify-self: center;
+  display: inline-flex;
+  gap: 0.55em;                 /* el aire entre TAT y ARA cuando van juntos (móvil) */
   font-family: var(--font-display);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 1.15rem;
 }
+.bar__word { display: inline-flex; }
+
+/* MÓVIL (< 720px): la marca entera "TAT ARA" vive en el header; el centro del
+   footer queda vacío. El "ARA" del footer sigue en el DOM pero no se muestra. */
+.bar__brand--foot { display: none; }
 
 /* Carrito: única acción del extremo derecho del header. */
-.bar__cart { justify-self: end; display: inline-flex; align-items: center; gap: 0.15rem; color: var(--ink); }
+.bar__cart { grid-column: 3; justify-self: end; display: inline-flex; align-items: center; gap: 0.15rem; color: var(--ink); }
 .bar__cart-icon { height: 34px; width: auto; display: block; }
 .bar__cart-count { font-size: 0.75rem; font-weight: 700; }
 
 /* Footer: sección actual (izq, discreta, abre el menú) e idioma activo (der,
    un botón que abre el modal de idioma). */
-.bar__section { justify-self: start; color: var(--ink-soft); font-size: 0.85rem; letter-spacing: 0.04em; }
+.bar__section { grid-column: 1; justify-self: start; color: var(--ink-soft); font-size: 0.85rem; letter-spacing: 0.04em; }
 .bar__section:hover { color: var(--ink); text-decoration: underline; }
 /* Móvil: solo el idioma activo (botón → modal). Escritorio: cat es en inline. */
-.bar__langbox { justify-self: end; }
+/* Columna fija: si el ARA del centro se oculta (móvil) el idioma NO debe
+   deslizarse a la columna central. */
+.bar__langbox { grid-column: 3; justify-self: end; }
 .bar__lang { font-size: 0.85rem; letter-spacing: 0.04em; }
 .bar__lang:hover { text-decoration: underline; }
 .bar__langs { display: none; gap: 0.7rem; }
@@ -377,7 +385,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .bar { padding: 0 0.8rem; }
   .bar__section { font-size: 0.78rem; }
   .bar__lang { font-size: 0.78rem; }
-  .bar__brand { font-size: 1.05rem; letter-spacing: 0.1em; }
+  .bar__brand { font-size: 1.05rem; letter-spacing: 0.1em; gap: 0.45em; }
 }
 
 /* ============================================================
@@ -427,7 +435,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    ============================================================ */
 .modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; }
 .modal[hidden] { display: none; }
-.modal__backdrop { position: absolute; inset: 0; background: rgba(255,255,255,0.85); }
+.modal__backdrop { position: absolute; inset: 0; background: var(--backdrop); }
 .modal__dialog {
   position: relative; z-index: 1;
   width: min(560px, 92vw);
@@ -444,7 +452,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .modal__body .m-desc { line-height: 1.6; text-align: justify; hyphens: auto; }
 .modal__body .m-price { font-weight: 700; margin: 1rem 0 0.6rem; }
 .m-buy { border: 1px solid var(--ink); padding: 0.6rem 1rem; width: 100%; letter-spacing: 0.04em; background: none; }
-.m-buy:not(:disabled):hover { background: var(--ink); color: var(--paper, #fff); }
+.m-buy:not(:disabled):hover { background: var(--ink); color: var(--bg); }
 .m-buy:disabled { opacity: 0.45; cursor: not-allowed; }
 
 /* ============================================================
@@ -452,7 +460,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    ============================================================ */
 .langmodal { position: fixed; inset: 0; z-index: 70; display: none; place-items: center; }
 .langmodal.is-open { display: grid; }
-.langmodal__backdrop { position: absolute; inset: 0; background: rgba(255, 255, 255, 0.85); }
+.langmodal__backdrop { position: absolute; inset: 0; background: var(--backdrop); }
 .langmodal__dialog { position: relative; z-index: 1; background: var(--bg); border: 1px solid var(--ink); padding: 1.6rem 2.4rem; }
 .langmodal__list { display: flex; flex-direction: column; gap: 0.9rem; }
 .langmodal__list button { font-size: 1.15rem; letter-spacing: 0.04em; text-align: center; }
@@ -466,9 +474,12 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   body { font-size: 16px; }
   .agenda__strip { max-width: var(--col); margin: 0 auto; }
 
-  /* TAT / ARA reparten sus letras al ancho de la columna central: las dos
-     letras de los extremos quedan alineadas con los bordes de la columna. */
-  .bar__brand { width: var(--col); display: flex; justify-content: space-between; letter-spacing: 0; }
+  /* ESCRITORIO: vuelve el marco — TAT arriba, ARA abajo — y cada palabra
+     reparte sus letras al ancho de la columna central, así las de los extremos
+     quedan alineadas con los bordes de la columna. */
+  .bar__word { width: var(--col); display: flex; justify-content: space-between; letter-spacing: 0; }
+  .bar__brand .bar__word--mobile { display: none; }   /* el ARA de arriba solo es de móvil */
+  .bar__brand--foot { display: block; }
 }
 
 @media (prefers-reduced-motion: reduce) {

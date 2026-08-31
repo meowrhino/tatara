@@ -32,9 +32,18 @@ async function init() {
   // La marca "TAT" del header lleva a la primera sección (home).
   $('#brand-home').setAttribute('href', '#' + SITE.sections[0].id);
 
-  // expone la paleta de data.json como custom properties --color-<clau>, por si el CSS necesita usarla
-  Object.entries(SITE.palette || {}).forEach(([key, hex]) =>
-    document.documentElement.style.setProperty(`--color-${key}`, hex));
+  // Colores: TODOS viven en data.json (fuente única).
+  //   theme   → --<clau>        (--bg, --ink, --grey-soft…): los que usa el CSS.
+  //   palette → --color-<clau>  (--color-blau…): los de la agenda, que además se
+  //             eligen por nombre desde agenda.json ("color": "blau").
+  // Las claves con '_' (comentarios del JSON) se ignoran.
+  const setVars = (obj, prefix) =>
+    Object.entries(obj || {}).forEach(([key, hex]) => {
+      if (key.startsWith('_') || typeof hex !== 'string') return;
+      document.documentElement.style.setProperty(`--${prefix}${key}`, hex);
+    });
+  setVars(SITE.theme, '');
+  setVars(SITE.palette, 'color-');
 
   buildMenu();
 

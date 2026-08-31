@@ -17,6 +17,19 @@
     "rosa": "#E3A57E",
     "mostassa": "#CFC1AB"
   },
+  "theme": {
+    "_comment": "Colores de la interfaz (antes hardcodeados en css/styles.css). Cada clave se publica como custom property CSS --<clave>; la paleta de arriba se publica como --color-<clave>. Ver js/main.js.",
+    "bg": "#ffffff",
+    "ink": "#111111",
+    "ink-soft": "#9a9a9a",
+    "doodle": "#cfcfcf",
+    "grey-soft": "#EAE7E0",
+    "media-bg": "#f3f3f3",
+    "overlay-ink": "#ffffff",
+    "img-placeholder": "rgba(0, 0, 0, 0.04)",
+    "lightbox-bg": "rgba(0, 0, 0, 0.92)",
+    "backdrop": "rgba(255, 255, 255, 0.85)"
+  },
   "agenda": {
     "_comment": "Los bloques miden por contenido. minEventVh = altura mínima (svh) de cada bloque; gapVh = hueco (svh) entre bloques.",
     "minEventVh": 10,
