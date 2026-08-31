@@ -5,7 +5,7 @@
     { "id": "nosaltres", "type": "text",    "data": "data/nosaltres.json", "label": { "ca": "nosaltres",  "es": "nosotres",     "en": "about" } },
     { "id": "artistes",  "type": "people",  "data": "data/persones.json",  "label": { "ca": "exposicions", "es": "exposiciones", "en": "exhibitions" } },
     { "id": "diari",     "type": "people",  "data": "data/recerca.json",   "label": { "ca": "recerca",    "es": "investigación", "en": "research" } },
-    { "id": "botiga",    "type": "shop",    "data": "data/edicions.json",  "label": { "ca": "edicions",   "es": "ediciones",    "en": "editions" } },
+    { "id": "botiga",    "type": "shop",    "data": "data/edicions.json",  "label": { "ca": "botiga",     "es": "tienda",       "en": "shop" } },
     { "id": "contacte",  "type": "contact",                                "label": { "ca": "contacte",   "es": "contacto",     "en": "contact" } },
     { "id": "newsletter","type": "newsletter",                             "label": { "ca": "newsletter",  "es": "newsletter",   "en": "newsletter" } },
     { "id": "carret",    "type": "cart",                                   "label": { "ca": "carret",     "es": "carrito",      "en": "cart" }, "hidden": true }

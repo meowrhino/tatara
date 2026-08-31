@@ -9,7 +9,7 @@
       "editorial": "Editorial IF",
       "price": 25,
       "images": ["assets/img/edicions/friccion.webp"],
-      "description": { "ca": "Una etnografia de la connectivitat global." }
+      "description": { "ca": "Una etnografia de la connectivitat global.", "es": "Una etnografía de la conectividad global.", "en": "An ethnography of global connection." }
     },
     {
       "id": "lxs-subcomuns",
@@ -18,7 +18,7 @@
       "editorial": "Editorial IF",
       "price": null,
       "images": [],
-      "description": { "ca": "Planear fugitivo y estudio negro." }
+      "description": { "ca": "Planear fugitivo y estudio negro.", "es": "Planeación fugitiva y estudio negro.", "en": "Fugitive planning and black study." }
     },
     {
       "id": "aacr",
@@ -54,7 +54,7 @@
       "editorial": null,
       "price": null,
       "images": [],
-      "description": { "ca": "Disponibles en packs de 2 o 5 unitats." }
+      "description": { "ca": "Disponibles en packs de 2 o 5 unitats.", "es": "Disponibles en packs de 2 o 5 unidades.", "en": "Available in packs of 2 or 5 units." }
     }
   ]
 }

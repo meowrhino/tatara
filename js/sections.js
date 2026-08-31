@@ -6,6 +6,7 @@
    ============================================================ */
 
 import { esc, t, ui, imagesOf } from './utils.js';
+import { parseDate, dMes, sameDay } from './dates.js';
 import { SITE } from './state.js';
 import { openModal, closeModal } from './modal.js';
 import { loadJSON } from './data.js';
@@ -51,7 +52,14 @@ export function renderText(view, data) {
 
 // Un artista es "ampliable" (abre modal) si tiene algo que enseñar: bio, fotos,
 // hoja de sala (PDF) o web. Si no, se lista como nombre a secas.
-const personHasDetail = (p) => !!(p.bio || imagesOf(p).length || p.pdf || p.link);
+const personHasDetail = (p) => !!(t(p.bio) || t(p.expo) || t(p.text) || imagesOf(p).length || p.pdf || p.link);
+
+// "17 octubre – 30 novembre" a partir de date {start, end}. Si no hay fechas, cadena vacía.
+function rangoExpo(d) {
+  if (!d || !d.start) return '';
+  const s = parseDate(d.start), e = d.end ? parseDate(d.end) : s;
+  return sameDay(s, e) ? dMes(s) : `${dMes(s)} – ${dMes(e)}`;
+}
 
 export function renderPeople(view, data) {
   const items = (data.people || []).map((p, i) => {
@@ -73,8 +81,10 @@ export function renderPeople(view, data) {
     b.addEventListener('click', () => openPersonModal(data.people[+b.dataset.i])));
 }
 
+// Bloque de exposición, en este orden: nombre + expo · fecha · texto de la expo ·
+// fotos (apiladas, scroll simple hacia abajo) · bio · web/PDF.
 function openPersonModal(p) {
-  const gallery = imagesOf(p).map((src) => `<img src="${esc(src)}" alt="${esc(p.name)}" loading="lazy">`).join('');
+  const gallery = imagesOf(p).map((src) => `<img src="${esc(src)}" alt="${esc(t(p.expo) || p.name)}" loading="lazy">`).join('');
   // pdf admite un string, un objeto {url, label} o un array de cualquiera de ambos.
   const pdfs = Array.isArray(p.pdf) ? p.pdf : (p.pdf ? [p.pdf] : []);
   const pdfLinks = pdfs.map((pdf) => {
@@ -82,11 +92,15 @@ function openPersonModal(p) {
     const label = (pdf && pdf.label) ? t(pdf.label) : ui('roomSheet');
     return url ? `<p class="m-pdf"><a href="${esc(url)}" target="_blank" rel="noopener" download>${esc(label)} ↓</a></p>` : '';
   }).join('');
+  const expo = t(p.expo), texto = t(p.text), bio = t(p.bio), fecha = rangoExpo(p.date);
   openModal(`
-    ${gallery}
     <h2 class="m-title" id="modal-title">${esc(p.name)}</h2>
-    ${p.bio ? `<p class="m-desc">${esc(t(p.bio))}</p>` : ''}
-    ${p.link ? `<p class="m-person"><a href="${esc(p.link)}" target="_blank" rel="noopener">web ↗</a></p>` : ''}
+    ${expo ? `<p class="m-person">${esc(expo)}</p>` : ''}
+    ${fecha ? `<p class="m-when">${esc(fecha)}</p>` : ''}
+    ${texto ? `<p class="m-desc">${esc(texto)}</p>` : ''}
+    ${gallery}
+    ${bio ? `<p class="m-desc m-bio">${esc(bio)}</p>` : ''}
+    ${p.link ? `<p class="m-link"><a href="${esc(p.link)}" target="_blank" rel="noopener">web ↗</a></p>` : ''}
     ${pdfLinks}
   `);
 }

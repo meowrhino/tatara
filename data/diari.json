@@ -4,7 +4,7 @@
     {
       "id": "presencia-impermanencia",
       "author": "Solange Dalannais",
-      "title": { "ca": "Presència en la impermanència" },
+      "title": { "ca": "Presència en la impermanència", "es": "Presència en la impermanència", "en": "Presència en la impermanència" },
       "date": "7 maig",
       "image": "assets/img/agenda/solange.webp",
       "body": {
@@ -13,6 +13,18 @@
           "La simbiosi entre bacteris, espores i plantes obre el camp de recerca de les ecologies de l'aparició i els processos d'activació, al mateix temps que obre la mirada per entrellaçar-se al territori en un procés d'acceptació i vincle. La cartografia va més enllà del territori per entrar al cos, acceptar l'error, la impuresa, la cosa fugitiva en el color; és entendre el potencial de l'inestable, del que canvia, allò que evidencia la seva impermanència i insisteix a estar present.",
           "L'artista entén el color com una estratègia de supervivència per a les plantes, una tàctica relacional que interactua amb el sòl, el clima, l'estrès i la temporalitat. Per a Dalannais, tenyir i pintar amb plantes és dialogar amb el seu sistema de defensa, amb el llenguatge i els mecanismes d'adaptació a l'entorn.",
           "Després de vint anys fora de la seva terra natal, Dalannais ha anat traçant un territori afectiu, biològic i poètic. Amb el gest primitiu i arcaic de la recol·lecta, observa amb cura, distància i respecte els entorns a través de les plantes silvestres, les quals, lentament, es van convertint en companyes de viatge. A través d'elles va unint terres que habita, reduint distàncies."
+        ],
+        "es": [
+          "Presència en la impermanència es una exploración de lenguajes cartográficos desde donde explorar el suelo, la esencia del territorio, buscando la conexión y la relación entre códigos transversales primarios. Dalannais explora el color de la flora silvestre a través de una investigación de alquimia.",
+          "La simbiosis entre bacterias, esporas y plantas abre el campo de investigación de las ecologías de la aparición y los procesos de activación, al mismo tiempo que abre la mirada para entrelazarse con el territorio en un proceso de aceptación y vínculo. La cartografía va más allá del territorio para entrar en el cuerpo, aceptar el error, la impureza, lo fugitivo en el color; es entender el potencial de lo inestable, de lo que cambia, aquello que evidencia su impermanencia e insiste en estar presente.",
+          "La artista entiende el color como una estrategia de supervivencia para las plantas, una táctica relacional que interactúa con el suelo, el clima, el estrés y la temporalidad. Para Dalannais, teñir y pintar con plantas es dialogar con su sistema de defensa, con el lenguaje y los mecanismos de adaptación al entorno.",
+          "Después de veinte años fuera de su tierra natal, Dalannais ha ido trazando un territorio afectivo, biológico y poético. Con el gesto primitivo y arcaico de la recolección, observa con cuidado, distancia y respeto los entornos a través de las plantas silvestres, las cuales, lentamente, se van convirtiendo en compañeras de viaje. A través de ellas va uniendo tierras que habita, reduciendo distancias."
+        ],
+        "en": [
+          "Presència en la impermanència is an exploration of cartographic languages from which to explore the soil, the essence of the territory, seeking the connection and relationship between primary transversal codes. Dalannais explores the colour of wild flora through an investigation into alchemy.",
+          "The symbiosis between bacteria, spores and plants opens up the field of research into the ecologies of emergence and processes of activation, while also opening the gaze to interweave with the territory in a process of acceptance and bonding. Cartography goes beyond territory to enter the body, to accept error, impurity, the fugitive thing within colour; it is about understanding the potential of the unstable, of that which changes, that which evidences its own impermanence and insists on being present.",
+          "The artist understands colour as a survival strategy for plants, a relational tactic that interacts with soil, climate, stress and temporality. For Dalannais, dyeing and painting with plants means engaging in dialogue with their defence system, with the language and mechanisms of adaptation to their environment.",
+          "After twenty years away from her native land, Dalannais has been tracing an affective, biological and poetic territory. With the primitive, archaic gesture of gathering, she observes environments with care, distance and respect through wild plants, which slowly become travelling companions. Through them she joins together the lands she inhabits, closing distances."
         ]
       }
     }
