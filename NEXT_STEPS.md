@@ -22,6 +22,34 @@ en orden. Casi todo son decisiones de la clienta.
 - [ ] Compra de prueba en modo test (`4242 4242 4242 4242`) → pedido visible en
       `/admin/tickets.html` → clave live.
 
+## 2bis. Avisos por email (pendiente de portar — bloqueado por el dominio)
+Tal como está, **nadie se entera de que ha entrado un pedido** ni de que alguien ha escrito:
+hay que acordarse de mirar `/admin/tickets.html`. En quienNoCorre y en semillaEcommerce ya
+está resuelto con un módulo `src/notify.js` (cuatro avisos: pedido nuevo y mensaje de contacto
+a la tienda; confirmación y "pedido enviado" al cliente). **Aquí no se ha portado a propósito.**
+
+**Por qué está bloqueado:** el Worker corre en `tatara.manuellatourf.workers.dev` y un
+`.workers.dev` **no sirve como remitente**. Hasta que `tatara.cat` esté en Cloudflare
+(ver `TODO_DOMINIO.md`) no se puede enviar desde el dominio propio.
+
+Cuando se retome, en este orden:
+- [ ] **Decidir a quién llegan los avisos**: `associaciotatara@gmail.com` (el contacto de la
+      asociación, ya está en `data/data.json`), Manu, o los dos durante el rodaje.
+- [ ] **Decidir el remitente**, según en qué punto esté el dominio:
+      - `tatara.cat` ya en Cloudflare → `noreply@tatara.cat`. Es la buena.
+      - Todavía no → usar un dominio de la cuenta de Manu como remitente provisional. Feo,
+        pero el aviso solo lo leen ellas y se cambia con una var el día del traspaso.
+- [ ] **Portar el módulo**: copiar `src/notify.js` de semillaEcommerce (es idéntico en los tres
+      repos, no hay que adaptarlo — recibe objetos ya construidos) y enganchar los cuatro
+      avisos en `src/index.js`. Ojo: aquí las tablas llevan prefijo `tatara_`.
+- [ ] **Vars en `wrangler.toml`**: `EMAIL_FROM`, `EMAIL_TIENDA`, `EMAIL_RESPUESTA`,
+      `TIENDA_NOMBRE` + descomentar `[[send_email]]`.
+- [ ] ⚠️ **Al dar de alta el dominio en Email Sending** se añaden SPF y DKIM. Si `tatara.cat`
+      ya tiene SPF, hay que **fusionarlos**. Y no confundir con Email **Routing**, que añade
+      **MX** y rompería el correo entrante — es el mismo aviso del paso 5 de `TODO_DOMINIO.md`.
+- [ ] Los avisos **a la tienda** son gratis en plan free (destino verificado). Los avisos **al
+      cliente** requieren Workers Paid o Resend; se pueden dejar apagados sin afectar al resto.
+
 ## 3. Pendiente de la sesión de revisión de la web (no ecommerce)
 - [ ] **Página legal** (LSSI/RGPD/desistimiento) — copiar la plantilla `legal.html` de
       semillaEcommerce y añadirla como sección/página de la SPA.
