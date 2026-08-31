@@ -10,7 +10,7 @@
    ni auto-scroll a "hoy": el estado se comunica con ese marcador.
    ============================================================ */
 
-import { el, esc, t, ui, kindLabel, imagesOf, captureFocus } from './utils.js';
+import { el, esc, t, ui, captureFocus } from './utils.js';
 import { SITE } from './state.js';
 import { parseDate, todayDate, sameDay, rangeSlash, dMes } from './dates.js';
 
@@ -26,8 +26,9 @@ function textOn(hex) {
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.62 ? '#111' : '#fff';
 }
 
-const ORKIND = new Set(['conversa', 'lectura', 'sessio', 'taller', 'esdeveniment']);
-const orLabel = (ev) => (ORKIND.has(ev.kind) ? 'O.R. ' : '') + (kindLabel(ev.kind) || '');
+// Todo lo que va anidado dentro de una exposición es Open Research, así que la
+// etiqueta es fija: ya no hay campo 'kind' en agenda.json.
+const OR = 'O.R.';
 
 // Unidad de viewport para el hueco entre bloques y el suelo mínimo. svh (small
 // viewport height) es estable frente a la barra de iOS (no "respira" al hacer
@@ -115,17 +116,16 @@ function gapBlock(gapVh) {
 
 function eventBlock(ev, o, today) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
-  const children = (ev.children || []).slice().sort((a, b) => parseDate(a.start) - parseDate(b.start));
-  const imgs = imagesOf(ev);
+  const children = (ev.eventos || []).slice().sort((a, b) => parseDate(a.start) - parseDate(b.start));
   // "Compacto": sin O.R., ni descripción, ni imagen → solo la cabecera, centrada.
-  const compact = !children.length && !ev.description && !imgs.length;
+  const compact = !children.length && !ev.description && !ev.image;
 
   const color = resolveColor(ev.color);
   const block = el('div', 'seg seg--event' + (compact ? ' seg--compact' : ''));
   block.style.minHeight = `${o.minVh}${VH}`;   // solo suelo; el contenido manda
   block.style.background = color;
   block.style.color = textOn(color);
-  block.dataset.id = ev.id;
+  block.dataset.slug = ev.slug;
 
   // Fila inferior (misma línea): fecha de cierre (izq) + estado (der), como la
   // cabecera con título (izq) + fechas (der). El estado va en negrita.
@@ -137,7 +137,7 @@ function eventBlock(ev, o, today) {
 
   const head = el('div', 'seg__head');
   head.appendChild(el('div', 'seg__label',
-    `<span class="seg__who">${esc(t(ev.title))}${ev.person ? ' – <b>' + esc(ev.person) + '</b>' : ''}</span>` +
+    `<span class="seg__who">${esc(t(ev.title))}${ev.artist ? ' – <b>' + esc(ev.artist) + '</b>' : ''}</span>` +
     `<span class="seg__when">${esc(rangeSlash(ev))}</span>`));
 
   if (compact) { block.appendChild(head); block.appendChild(foot); return block; }
@@ -148,7 +148,7 @@ function eventBlock(ev, o, today) {
 
   // Contador de imágenes del bloque (expo + O.R.), para alternar izq/dcha.
   let imgCount = 0;
-  if (imgs.length) lead.appendChild(mediaEl(imgs[0], t(ev.title), imgCount++));
+  if (ev.image) lead.appendChild(mediaEl(ev.image, t(ev.title), imgCount++));
   if (ev.description) lead.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
   block.appendChild(lead);
 
@@ -161,10 +161,9 @@ function eventBlock(ev, o, today) {
       const info = el('div', 'seg__child-info');
       info.innerHTML =
         `<span class="seg__child-when">${esc(rangeSlash(c))}</span>` +
-        `<span class="seg__child-name">${esc(orLabel(c))} · ${esc(t(c.title))}${c.person ? ' – <b>' + esc(c.person) + '</b>' : ''}</span>`;
+        `<span class="seg__child-name">${OR} · ${esc(t(c.title))}${c.artist ? ' – <b>' + esc(c.artist) + '</b>' : ''}</span>`;
       row.appendChild(info);
-      const cImgs = imagesOf(c);
-      if (cImgs.length) row.appendChild(mediaEl(cImgs[0], t(c.title), imgCount++));
+      if (c.image) row.appendChild(mediaEl(c.image, t(c.title), imgCount++));
       if (c.description) row.appendChild(el('div', 'seg__child-desc', esc(t(c.description))));
       daysRegion.appendChild(row);
     });

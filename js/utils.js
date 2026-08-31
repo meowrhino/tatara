@@ -17,16 +17,6 @@ const MONTHS = {
 };
 export const monthName = (i) => (MONTHS[LANG] || MONTHS.ca)[i];
 
-const KINDS = {
-  exposicio:    { ca: 'Exposició', es: 'Exposición', en: 'Exhibition' },
-  conversa:     { ca: 'Conversa', es: 'Conversación', en: 'Conversation' },
-  esdeveniment: { ca: 'Esdeveniment', es: 'Evento', en: 'Event' },
-  taller:       { ca: 'Taller', es: 'Taller', en: 'Workshop' },
-  lectura:      { ca: 'Lectura', es: 'Lectura', en: 'Reading' },
-  sessio:       { ca: 'Sessió d’escolta', es: 'Sesión de escucha', en: 'Listening session' },
-};
-export const kindLabel = (k) => t(KINDS[k]);
-
 // Cadenas de interfaz (todo lo que no viene de los JSON de contenido).
 // Mismo formato {ca, es, en} que resuelve t() con el idioma activo.
 const STR = {

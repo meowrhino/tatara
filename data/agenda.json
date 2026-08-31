@@ -1,252 +1,261 @@
 {
-  "_comment": "Agenda TAT ARA. Cada exposició (bloc top-level) pot portar dins seu un array 'children' amb els O.R. (Open Research) o esdeveniments que cauen dins del seu rang de dates — es renderitzen DINS del bloc de color, cadascun clicable pel seu compte. Els esdeveniments que no cauen dins de cap exposició són blocs top-level independents (ex: reverberar-el-cos). Dades creuades entre la taula 'AGENDA' del .pages i el text narratiu numerat (I.-VIII.) del mateix document; verificades fila a fila a finals de juny 2026.",
+  "_comment": "Agenda TAT ARA. Esquema de cada entrada, en este orden: slug (identificador), color (clave de data.json -> palette; solo en las exposiciones), title {ca,es,en}, artist, image (UNA sola), start, end, time, description {ca,es,en} y eventos[] (los O.R. que caen dentro del rango de la exposicion, con el MISMO esquema). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. Datos cruzados con la tabla AGENDA del .pages, verificados a finales de junio 2026.",
   "events": [
     {
-      "id": "ensayo-espontaneo",
-      "kind": "exposicio",
-      "person": "Tasio Ranz i Santiago Daza Santana",
-      "title": {
-        "ca": "Ensayo de lo Espontáneo"
-      },
-      "start": "2025-09-15",
-      "end": "2025-10-05",
+      "slug": "ensayo-espontaneo",
       "color": "blau",
+      "title": {
+        "ca": "Ensayo de lo Espontáneo",
+        "es": "Ensayo de lo Espontáneo",
+        "en": "Ensayo de lo Espontáneo"
+      },
+      "artist": "Tasio Ranz i Santiago Daza Santana",
       "image": "assets/img/agenda/tasioranz.webp",
-      "images": [
-        "assets/img/agenda/tasioranz.webp",
-        "assets/img/agenda/tasioranz-1.webp"
-      ]
+      "start": "2025-09-15",
+      "end": "2025-10-05"
     },
     {
-      "id": "pateres-de-llet",
-      "kind": "exposicio",
-      "person": "Anna Dot",
+      "slug": "pateres-de-llet",
+      "color": "menta",
       "title": {
-        "ca": "Pàteres de llet"
+        "ca": "Pàteres de llet",
+        "es": "Pàteres de llet",
+        "en": "Pàteres de llet"
       },
+      "artist": "Anna Dot",
+      "image": "assets/img/agenda/annadot.webp",
       "start": "2025-10-17",
       "end": "2025-11-30",
-      "color": "menta",
-      "images": [
-        "assets/img/agenda/annadot.webp",
-        "assets/img/agenda/annadot-18.webp",
-        "assets/img/agenda/annadot-24.webp"
-      ],
       "description": {
-        "ca": "El 2022 Anna Dot va treballar entorn l'objecte: Pàtera. Les pàteres eren uns objectes que en l'antiga Grècia es feien servir per fer libacions, és a dir, rituals quotidians en què es vessava una mica d'aigua o vi a terra o sobre un altar en memòria dels que ja no hi són. A Tatara s'exposarà una pàtera feta per la llet materna residual que la seva filla no es menja, un element per fer rituals quotidians i enviar aquesta llet on més es necessita. Un projecte que parla de la maternitat, de la conciliació i de les noves quotidianitats que la mare treballadora adquireix per mantenir-se dins del mercat productiu."
+        "ca": "El 2022 Anna Dot va treballar entorn l'objecte: Pàtera. Les pàteres eren uns objectes que en l'antiga Grècia es feien servir per fer libacions, és a dir, rituals quotidians en què es vessava una mica d'aigua o vi a terra o sobre un altar en memòria dels que ja no hi són. A Tatara s'exposarà una pàtera feta per la llet materna residual que la seva filla no es menja, un element per fer rituals quotidians i enviar aquesta llet on més es necessita. Un projecte que parla de la maternitat, de la conciliació i de les noves quotidianitats que la mare treballadora adquireix per mantenir-se dins del mercat productiu.",
+        "es": "En 2022 Anna Dot trabajó en torno al objeto: Pátera. Las pateras eran unos objetos que en la antigua Grecia se usaban para hacer libaciones, es decir, rituales cotidianos en los que se vertía un poco de agua o vino en la tierra o sobre un altar en memoria de quienes ya no están. En Tatara se expondrá una pátera hecha con la leche materna residual que su hija no se toma, un elemento para hacer rituales cotidianos y enviar esa leche allí donde más se necesita. Un proyecto que habla de la maternidad, de la conciliación y de las nuevas cotidianidades que la madre trabajadora adquiere para mantenerse dentro del mercado productivo.",
+        "en": "In 2022 Anna Dot worked around the object: Pátera (libation bowl). Pateras were objects used in ancient Greece to perform libations — everyday rituals in which a little water or wine was poured onto the ground or over an altar in memory of those no longer present. At Tatara, a patera made from the residual breast milk her daughter doesn't drink will be exhibited, an object for everyday rituals and for sending that milk to where it is most needed. A project about motherhood, conciliation, and the new everyday routines that working mothers adopt in order to remain within the productive market."
       },
-      "children": [
+      "eventos": [
         {
-          "id": "lectura-ecologias-enraizadas",
-          "kind": "lectura",
-          "person": "Vinik Juré",
+          "slug": "lectura-ecologias-enraizadas",
           "title": {
-            "ca": "Lectura del llibre Ecologías Enraizadas"
+            "ca": "Lectura del llibre Ecologías Enraizadas",
+            "es": "Lectura del libro Ecologías Enraizadas",
+            "en": "Reading of the book Ecologías Enraizadas"
           },
+          "artist": "Vinik Juré",
+          "image": "assets/img/agenda/vinik.webp",
           "start": "2025-10-25",
-          "images": [
-            "assets/img/agenda/vinik.webp",
-            "assets/img/agenda/vinik-1.webp",
-            "assets/img/agenda/vinik-2.webp"
-          ],
           "description": {
-            "ca": "El primer número de la sèrie Ecologías Enraizadas, format per dos assaigs: «El origen del Dia de los Muertos» i la «Historia crítica de la taxonomía del maguey». Editat per Amistat Radical. Comparteix documents d'investigació etnogràfica, reflexions i converses amb el món camperol en diverses comunitats arrelades; ofereix una mirada que s'allunya de la lògica individualista i extractivista del món modern i recupera la del món camperol, on la relació amb la terra es fonamenta en el respecte, la reciprocitat i la cura."
+            "ca": "El primer número de la sèrie Ecologías Enraizadas, format per dos assaigs: «El origen del Dia de los Muertos» i la «Historia crítica de la taxonomía del maguey». Editat per Amistat Radical. Comparteix documents d'investigació etnogràfica, reflexions i converses amb el món camperol en diverses comunitats arrelades; ofereix una mirada que s'allunya de la lògica individualista i extractivista del món modern i recupera la del món camperol, on la relació amb la terra es fonamenta en el respecte, la reciprocitat i la cura.",
+            "es": "El primer número de la serie Ecologías Enraizadas, formado por dos ensayos: «El origen del Día de los Muertos» y la «Historia crítica de la taxonomía del maguey». Editado por Amistat Radical. Comparte documentos de investigación etnográfica, reflexiones y conversaciones con el mundo campesino en diversas comunidades arraigadas; ofrece una mirada que se aleja de la lógica individualista y extractivista del mundo moderno y recupera la del mundo campesino, donde la relación con la tierra se fundamenta en el respeto, la reciprocidad y el cuidado.",
+            "en": "The first issue of the Ecologías Enraizadas series, made up of two essays: «El origen del Día de los Muertos» and «Historia crítica de la taxonomía del maguey». Published by Amistat Radical. It shares ethnographic research documents, reflections and conversations with the peasant world in various rooted communities; it offers a perspective that moves away from the individualistic, extractivist logic of the modern world and recovers that of the peasant world, where the relationship with the land is grounded in respect, reciprocity and care."
           }
         },
         {
-          "id": "tanatolab-duda",
-          "kind": "conversa",
-          "person": "DU-DA, amb Raquel Buj",
+          "slug": "tanatolab-duda",
           "title": {
-            "ca": "Tanatolab"
+            "ca": "Tanatolab",
+            "es": "Tanatolab",
+            "en": "Tanatolab"
           },
-          "start": "2025-11-10",
+          "artist": "DU-DA, amb Raquel Buj",
           "image": "assets/img/agenda/duda-raquel-buj.webp",
+          "start": "2025-11-10",
           "description": {
-            "ca": "Trobada i activació de l'espai al voltant de la mort, l'ecofeminisme, les metodologies corporals, intuïtives i poètiques, la regeneració d'ecosistemes i els biomaterials."
+            "ca": "Trobada i activació de l'espai al voltant de la mort, l'ecofeminisme, les metodologies corporals, intuïtives i poètiques, la regeneració d'ecosistemes i els biomaterials.",
+            "es": "Encuentro y activación del espacio en torno a la muerte, el ecofeminismo, las metodologías corporales, intuitivas y poéticas, la regeneración de ecosistemas y los biomateriales.",
+            "en": "A gathering and activation of the space around death, ecofeminism, bodily, intuitive and poetic methodologies, ecosystem regeneration and biomaterials."
           }
         },
         {
-          "id": "trazo-continuo",
-          "kind": "conversa",
-          "person": "Tornen les Esquelles",
+          "slug": "trazo-continuo",
           "title": {
-            "ca": "Trazo Continuo"
+            "ca": "Trazo Continuo",
+            "es": "Trazo Continuo",
+            "en": "Trazo Continuo"
           },
+          "artist": "Tornen les Esquelles",
+          "image": "assets/img/agenda/taller-tornen-les-esquelles.webp",
           "start": "2025-11-14",
-          "images": [
-            "assets/img/agenda/taller-tornen-les-esquelles.webp",
-            "assets/img/agenda/post-trazo-continuo-1.webp"
-          ],
           "description": {
-            "ca": "Conversa per compartir processos de creació tèxtil amb el col·lectiu xilè i el català."
+            "ca": "Conversa per compartir processos de creació tèxtil amb el col·lectiu xilè i el català.",
+            "es": "Conversación para compartir procesos de creación textil con el colectivo chileno y el catalán.",
+            "en": "A conversation to share textile creation processes with the Chilean and Catalan collectives."
           }
         },
         {
-          "id": "pimienta-mansO",
-          "kind": "sessio",
-          "person": "Col·lectiu Pimienta",
+          "slug": "pimienta-mansO",
           "title": {
-            "ca": "Sessió d'escolta atenta amb MansO"
+            "ca": "Sessió d'escolta atenta amb MansO",
+            "es": "Sesión de escucha atenta con MansO",
+            "en": "Deep-listening session with MansO"
           },
-          "start": "2025-11-15",
+          "artist": "Col·lectiu Pimienta",
           "image": "assets/img/agenda/pimienta.webp",
+          "start": "2025-11-15",
           "description": {
-            "ca": "Sessió d'escolta atenta amb MansO amb el soundsistem fet i dissenyat per Pimienta."
+            "ca": "Sessió d'escolta atenta amb MansO amb el soundsistem fet i dissenyat per Pimienta.",
+            "es": "Sesión de escucha atenta con MansO con el soundsystem hecho y diseñado por Pimienta.",
+            "en": "A deep-listening session with MansO, with the soundsystem built and designed by Pimienta."
           }
         }
       ]
     },
     {
-      "id": "sostenir-la-terra",
-      "kind": "exposicio",
-      "person": "Maria Roy Deulofeu",
+      "slug": "sostenir-la-terra",
+      "color": "rosa",
       "title": {
-        "ca": "Sostenir la Terra"
+        "ca": "Sostenir la Terra",
+        "es": "Sostenir la Terra",
+        "en": "Sostenir la Terra"
       },
+      "artist": "Maria Roy Deulofeu",
+      "image": "assets/img/agenda/mariaroy.webp",
       "start": "2025-12-13",
       "end": "2026-01-29",
-      "color": "rosa",
-      "images": [
-        "assets/img/agenda/mariaroy.webp",
-        "assets/img/agenda/mariaroy-caminades-5.webp",
-        "assets/img/agenda/mariaroy-ig1.webp"
-      ],
-      "children": [
+      "eventos": [
         {
-          "id": "tanatolab-duda-grup",
-          "kind": "esdeveniment",
-          "person": "DU-DA",
+          "slug": "tanatolab-duda-grup",
           "title": {
-            "ca": "Esdeveniment amb el grup del projecte Tanatolab"
+            "ca": "Esdeveniment amb el grup del projecte Tanatolab",
+            "es": "Evento con el grupo del proyecto Tanatolab",
+            "en": "Event with the group from the Tanatolab project"
           },
+          "artist": "DU-DA",
           "start": "2025-12-15",
           "description": {
-            "ca": "DU-DA activa l'espai a través del projecte Tanatolab: un programa de trobades on es comparteix la recerca Morir Guay. Es desenvolupa en diàleg amb agents locals i ofereix eines per repensar la mort amb sobirania i des d'una mirada ecofeminista, mitjançant metodologies corporals, intuïtives i poètiques."
+            "ca": "DU-DA activa l'espai a través del projecte Tanatolab: un programa de trobades on es comparteix la recerca Morir Guay. Es desenvolupa en diàleg amb agents locals i ofereix eines per repensar la mort amb sobirania i des d'una mirada ecofeminista, mitjançant metodologies corporals, intuïtives i poètiques.",
+            "es": "DU-DA activa el espacio a través del proyecto Tanatolab: un programa de encuentros donde se comparte la investigación Morir Guay. Se desarrolla en diálogo con agentes locales y ofrece herramientas para repensar la muerte con soberanía y desde una mirada ecofeminista, mediante metodologías corporales, intuitivas y poéticas.",
+            "en": "DU-DA activates the space through the Tanatolab project: a programme of gatherings sharing the research Morir Guay. It is developed in dialogue with local agents and offers tools to rethink death with sovereignty and from an ecofeminist perspective, through bodily, intuitive and poetic methodologies."
           }
         },
         {
-          "id": "conversa-ines-sol",
-          "kind": "conversa",
-          "person": "Inés Sistiaga i Sol Prado",
+          "slug": "conversa-ines-sol",
           "title": {
-            "ca": "Conversa amb Inés Sistiaga i Sol Prado"
+            "ca": "Conversa amb Inés Sistiaga i Sol Prado",
+            "es": "Conversación con Inés Sistiaga y Sol Prado",
+            "en": "Conversation with Inés Sistiaga and Sol Prado"
           },
+          "artist": "Inés Sistiaga i Sol Prado",
+          "image": "assets/img/agenda/ines-sistiaga.webp",
           "start": "2026-01-25",
           "time": "12:00",
-          "image": "assets/img/agenda/ines-sistiaga.webp",
           "description": {
-            "ca": "Organitzat amb Textile Lab de TMDC. Sistemes de producció globals d'objectes tèxtils i la seva relació amb els sistemes d'experimentació locals. La fàbrica com a centre del debat: espai de coneixement i de vincle amb el territori; més enllà d'una eina capitalista, una eina de resistència i cultura."
+            "ca": "Organitzat amb Textile Lab de TMDC. Sistemes de producció globals d'objectes tèxtils i la seva relació amb els sistemes d'experimentació locals. La fàbrica com a centre del debat: espai de coneixement i de vincle amb el territori; més enllà d'una eina capitalista, una eina de resistència i cultura.",
+            "es": "Organizado con Textile Lab de TMDC. Sistemas de producción globales de objetos textiles y su relación con los sistemas de experimentación locales. La fábrica como centro del debate: espacio de conocimiento y de vínculo con el territorio; más allá de una herramienta capitalista, una herramienta de resistencia y cultura.",
+            "en": "Organised with Textile Lab at TMDC. Global production systems for textile objects and their relationship with local systems of experimentation. The factory as the centre of the debate: a space of knowledge and connection to the territory; beyond a capitalist tool, a tool of resistance and culture."
           }
         },
         {
-          "id": "clausura-sostenir-la-terra",
-          "kind": "conversa",
-          "person": "Maria Roy Deulofeu i Mati Cini",
+          "slug": "clausura-sostenir-la-terra",
           "title": {
-            "ca": "Clausura: territori, estètica i agència material"
+            "ca": "Clausura: territori, estètica i agència material",
+            "es": "Clausura: territorio, estética y agencia material",
+            "en": "Closing event: territory, aesthetics and material agency"
           },
+          "artist": "Maria Roy Deulofeu i Mati Cini",
+          "image": "assets/img/agenda/mariaroy-clausura.webp",
           "start": "2026-01-29",
           "time": "17:00",
-          "image": "assets/img/agenda/mariaroy-clausura.webp",
           "description": {
-            "ca": "Conversa amb Mati Cini, ceramista i investigadora cofundadora de Salemi Ceramics — residència artística siciliana on Maria Roy Deulofeu ha creat part de l'exposició. Centrada en territori, observació, investigació i connexió amb la terra. Coincideix amb el darrer dia de l'exposició."
+            "ca": "Conversa amb Mati Cini, ceramista i investigadora cofundadora de Salemi Ceramics — residència artística siciliana on Maria Roy Deulofeu ha creat part de l'exposició. Centrada en territori, observació, investigació i connexió amb la terra. Coincideix amb el darrer dia de l'exposició.",
+            "es": "Conversación con Mati Cini, ceramista e investigadora cofundadora de Salemi Ceramics — residencia artística siciliana donde Maria Roy Deulofeu ha creado parte de la exposición. Centrada en territorio, observación, investigación y conexión con la tierra. Coincide con el último día de la exposición.",
+            "en": "A conversation with Mati Cini, ceramicist and researcher, co-founder of Salemi Ceramics — a Sicilian artist residency where Maria Roy Deulofeu created part of the exhibition. Focused on territory, observation, research and connection with the land. It coincides with the exhibition's last day."
           }
         }
       ]
     },
     {
-      "id": "if-publications",
-      "kind": "exposicio",
-      "person": "IF. Publications",
+      "slug": "if-publications",
+      "color": "mostassa",
       "title": {
-        "ca": "Ritual de clausura de I.F Publications"
+        "ca": "Ritual de clausura de I.F Publications",
+        "es": "Ritual de clausura de I.F Publications",
+        "en": "Closing ritual of I.F Publications"
       },
+      "artist": "IF. Publications",
+      "image": "assets/img/agenda/if.webp",
       "start": "2026-02-09",
       "end": "2026-02-22",
-      "color": "mostassa",
-      "images": [
-        "assets/img/agenda/if.webp",
-        "assets/img/agenda/if-1.webp",
-        "assets/img/agenda/if-2.webp"
-      ],
       "description": {
-        "ca": "Presentació del portfolio editorial d'Ariadna Serrahima i Guillem Serrahima, amb converses al voltant de llibres de pensament crític com Lxs Subcomunes, El Mensaje Mata, Fricción i Brujería Capitalista."
+        "ca": "Presentació del portfolio editorial d'Ariadna Serrahima i Guillem Serrahima, amb converses al voltant de llibres de pensament crític com Lxs Subcomunes, El Mensaje Mata, Fricción i Brujería Capitalista.",
+        "es": "Presentación del portafolio editorial de Ariadna Serrahima y Guillem Serrahima, con conversaciones en torno a libros de pensamiento crítico como Lxs Subcomunes, El Mensaje Mata, Fricción y Brujería Capitalista.",
+        "en": "Presentation of the editorial portfolio of Ariadna Serrahima and Guillem Serrahima, with conversations around critical-thought books such as Lxs Subcomunes, El Mensaje Mata, Fricción and Brujería Capitalista."
       }
     },
     {
-      "id": "presencia-impermanencia",
-      "kind": "exposicio",
-      "person": "Solange Dalannais",
+      "slug": "presencia-impermanencia",
+      "color": "blau",
       "title": {
-        "ca": "Presència en la impermanència"
+        "ca": "Presència en la impermanència",
+        "es": "Presència en la impermanència",
+        "en": "Presència en la impermanència"
       },
+      "artist": "Solange Dalannais",
+      "image": "assets/img/agenda/solange.webp",
       "start": "2026-04-18",
       "end": "2026-05-30",
-      "color": "blau",
-      "image": "assets/img/agenda/solange.webp",
-      "children": [
+      "eventos": [
         {
-          "id": "taller-investigacions-afables",
-          "kind": "taller",
-          "person": "O.R.",
+          "slug": "taller-investigacions-afables",
           "title": {
-            "ca": "IA! Dins del programa Investigacions Afables"
+            "ca": "IA! Dins del programa Investigacions Afables",
+            "es": "IA! Dentro del programa Investigacions Afables",
+            "en": "IA! Within the Investigacions Afables programme"
           },
+          "artist": "O.R.",
           "start": "2026-05-23",
           "description": {
-            "ca": "Taller de sis hores vinculat a tintes, pigments i materials botànics."
+            "ca": "Taller de sis hores vinculat a tintes, pigments i materials botànics.",
+            "es": "Taller de seis horas vinculado a tintes, pigmentos y materiales botánicos.",
+            "en": "Six-hour workshop related to dyes, pigments and botanical materials."
           }
         }
       ]
     },
     {
-      "id": "no-limits",
-      "kind": "exposicio",
-      "person": "Sara G. de Ubieta, Olatz Azcona i Joana Mallol",
+      "slug": "no-limits",
+      "color": "menta",
       "title": {
-        "ca": "No Limits"
+        "ca": "No Limits",
+        "es": "No Limits",
+        "en": "No Limits"
       },
+      "artist": "Sara G. de Ubieta, Olatz Azcona i Joana Mallol",
+      "image": "assets/img/edicions/18-05-2026-no-limits-0015.webp",
       "start": "2026-06-04",
       "end": "2026-06-20",
       "time": "16:00",
-      "color": "menta",
-      "images": [
-        "assets/img/edicions/18-05-2026-no-limits-0015.webp",
-        "assets/img/edicions/18-05-2026-no-limits-0038.webp",
-        "assets/img/edicions/18-05-2026-no-limits-0053.webp"
-      ],
       "description": {
-        "ca": "Amb el suport de Cap Dep i en col·laboració amb el centre ocupacional TEB Bellvitge i Solidança. Participants: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas i Ma Jesús Peiret."
+        "ca": "Amb el suport de Cap Dep i en col·laboració amb el centre ocupacional TEB Bellvitge i Solidança. Participants: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas i Ma Jesús Peiret.",
+        "es": "Con el apoyo de Cap Dep y en colaboración con el centro ocupacional TEB Bellvitge y Solidança. Participantes: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas y Ma Jesús Peiret.",
+        "en": "With the support of Cap Dep and in collaboration with the occupational centre TEB Bellvitge and Solidança. Participants: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas and Ma Jesús Peiret."
       }
     },
     {
-      "id": "reverberar-el-cos",
-      "kind": "sessio",
-      "person": "Ale Carrero",
-      "title": {
-        "ca": "Reverberar el cos"
-      },
-      "start": "2025-12-10",
+      "slug": "reverberar-el-cos",
       "color": "mostassa",
-      "images": [
-        "assets/img/agenda/alecarrero.webp",
-        "assets/img/agenda/alecarrero-1.webp",
-        "assets/img/agenda/alecarrero-ig-3.webp"
-      ]
+      "title": {
+        "ca": "Reverberar el cos",
+        "es": "Reverberar el cos",
+        "en": "Reverberar el cos"
+      },
+      "artist": "Ale Carrero",
+      "image": "assets/img/agenda/alecarrero.webp",
+      "start": "2025-12-10"
     },
     {
-      "id": "tocar-fusta",
-      "kind": "exposicio",
-      "person": "Emma Prats",
+      "slug": "tocar-fusta",
+      "color": "rosa",
       "title": {
-        "ca": "Tocar Fusta"
+        "ca": "Tocar Fusta",
+        "es": "Tocar Fusta",
+        "en": "Tocar Fusta"
       },
+      "artist": "Emma Prats",
       "start": "2026-06-24",
       "end": "2026-09-03",
-      "color": "rosa",
       "description": {
-        "ca": "Tocar fusta parteix del gest, expressió i superstició popular homònima. A partir d'aquest fenomen, es pretén explorar la seva vigència en la contemporaneïtat mitjançant la construcció col·lectiva de relats de sentit i la ritualització del subjecte."
+        "ca": "Tocar fusta parteix del gest, expressió i superstició popular homònima. A partir d'aquest fenomen, es pretén explorar la seva vigència en la contemporaneïtat mitjançant la construcció col·lectiva de relats de sentit i la ritualització del subjecte.",
+        "es": "Tocar fusta parte del gesto, expresión y superstición popular homónima. A partir de este fenómeno, se pretende explorar su vigencia en la contemporaneidad mediante la construcción colectiva de relatos de sentido y la ritualización del sujeto.",
+        "en": "Tocar Fusta takes as its starting point the gesture, expression and popular superstition of the same name ('touch wood'). Building on this phenomenon, the project explores its relevance today through the collective construction of narratives of meaning and the ritualisation of the subject."
       }
     }
   ]
