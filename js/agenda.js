@@ -3,7 +3,8 @@
    Un "strip" vertical de bloques de color, uno por exposición, en orden
    cronológico. Cada bloque mide POR CONTENIDO (título + imagen + descripción +
    O.R. anidados), con una altura mínima de suelo (minEventVh) para que los
-   eventos cortos no queden como una tira fina. Entre bloques, un hueco modesto.
+   eventos cortos no queden como una tira fina. Los bloques van pegados: el
+   cambio de color es el que separa una exposición de la siguiente.
 
    Cada bloque lleva abajo a la derecha un marcador de estado en negrita
    (passat / ara / proximament) calculado por fecha. Ya no hay eje temporal a escala
@@ -37,7 +38,7 @@ const VH = 'svh';
 
 export function renderAgenda(view, data) {
   const cfg = (SITE && SITE.agenda) || {};
-  const minVh = cfg.minEventVh || 10, gapVh = cfg.gapVh || 6;
+  const minVh = cfg.minEventVh || 10;
 
   const events = (data.events || []).slice()
     .sort((a, b) => parseDate(a.start) - parseDate(b.start));
@@ -47,8 +48,7 @@ export function renderAgenda(view, data) {
 
   const today = todayDate();
   let currentBlock = null, upcomingBlock = null, lastBlock = null;
-  events.forEach((ev, i) => {
-    if (i > 0) strip.appendChild(gapBlock(gapVh));
+  events.forEach((ev) => {
     const block = eventBlock(ev, { minVh }, today);
     strip.appendChild(block);
     const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
@@ -105,13 +105,6 @@ export function scrollAgendaToToday(view) {
   });
 
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(settle);
-}
-
-// Hueco modesto entre bloques (aire limpio; la marca vive en el marco TAT·ARA).
-function gapBlock(gapVh) {
-  const gap = el('div', 'seg seg--gap');
-  gap.style.minHeight = `${gapVh}${VH}`;
-  return gap;
 }
 
 function eventBlock(ev, o, today) {

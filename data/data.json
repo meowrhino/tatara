@@ -31,9 +31,8 @@
     "backdrop": "rgba(255, 255, 255, 0.85)"
   },
   "agenda": {
-    "_comment": "Los bloques miden por contenido. minEventVh = altura mínima (svh) de cada bloque; gapVh = hueco (svh) entre bloques.",
-    "minEventVh": 10,
-    "gapVh": 6
+    "_comment": "Los bloques miden por contenido y van pegados unos a otros: el cambio de color es lo que separa una exposición de la siguiente. minEventVh = altura mínima (svh) de cada bloque.",
+    "minEventVh": 10
   },
   "contact": {
     "intro": {

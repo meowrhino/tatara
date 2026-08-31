@@ -67,9 +67,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 /* Aire al principio y al final del scroll para que entre/salga más natural. */
 .agenda__strip { display: flex; flex-direction: column; padding-block: 30dvh; }
 
-/* Huecos entre bloques: aire limpio (la marca vive ya en el marco TAT·ARA) */
-.seg--gap { display: block; }
-
 /* Bloques de evento — pueden contener O.R. anidados (seg__children) */
 .seg--event {
   position: relative;
