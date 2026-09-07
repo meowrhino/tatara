@@ -32,6 +32,11 @@
 
 * { box-sizing: border-box; }
 
+/* El navegador amaga els elements amb [hidden] posant-los display:none, però
+   qualsevol regla nostra amb display (.accions és flex, per exemple) hi guanya
+   per especificitat i els torna a ensenyar. Amb això, hidden vol dir hidden. */
+[hidden] { display: none !important; }
+
 body {
   font-family: var(--font-mono);
   font-size: 14px;
