@@ -25,6 +25,7 @@ const STR = {
   statusPast:     { ca: 'passat', es: 'pasado', en: 'past' },
   statusNext:     { ca: 'proximament', es: 'próximamente', en: 'upcoming' },
   roomSheet:      { ca: 'full de sala (PDF)', es: 'hoja de sala (PDF)', en: 'room sheet (PDF)' },
+  websiteLink:    { ca: 'web', es: 'web', en: 'website' },
   noEvents:       { ca: 'sense esdeveniments', es: 'sin eventos', en: 'no events' },
   enlargeImage:   { ca: 'Ampliar imatge', es: 'Ampliar imagen', en: 'Enlarge image' },
   enlargedImage:  { ca: 'Imatge ampliada', es: 'Imagen ampliada', en: 'Enlarged image' },

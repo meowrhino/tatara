@@ -133,7 +133,7 @@ function openPersonModal(p) {
     ${texto ? `<p class="m-desc">${esc(texto)}</p>` : ''}
     ${gallery}
     ${bio ? `<p class="m-desc m-bio">${esc(bio)}</p>` : ''}
-    ${p.link ? `<p class="m-link"><a href="${esc(p.link)}" target="_blank" rel="noopener">web ↗</a></p>` : ''}
+    ${p.link ? `<p class="m-link"><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(ui('websiteLink'))} ↗</a></p>` : ''}
     ${pdfLinks}
   `);
 }
@@ -198,10 +198,14 @@ function openProductModal(p, cur, stockMap) {
 export function renderContact(view) {
   const c = (SITE && SITE.contact) || {};
   const addr = (c.address || []).map(esc).join('<br>');
-  // Los 3 links de la última línea. Si aún no hay URL, se pintan igual (href="#")
-  // — "ya llegarán". Cuando estén, se rellenan en data.json (instagram/newsletter/medium).
-  const link = (url, label) =>
-    `<a href="${esc(url || '#')}"${url ? ' target="_blank" rel="noopener"' : ''}>${label}</a>`;
+  // La línea de enlaces del pie sale de data.json → contact.links, para que
+  // añadir uno (o poner por fin la URL del Instagram) no obligue a tocar código.
+  // Un enlace interno ("#newsletter") se queda en la pestaña; uno externo la abre
+  // aparte; y sin url se pinta igual pero inerte.
+  const link = ({ label, url }) => {
+    const interno = typeof url === 'string' && url.startsWith('#');
+    return `<a href="${esc(url || '#')}"${url && !interno ? ' target="_blank" rel="noopener"' : ''}>${esc(t(label))}</a>`;
+  };
   view.innerHTML = pageWrap(`
     <div class="contact">
       ${c.intro ? `<p class="contact__intro">${esc(t(c.intro))}</p>` : ''}
@@ -209,7 +213,7 @@ export function renderContact(view) {
       <div class="contact__info">
         ${addr ? `<p class="contact__addr">${addr}</p>` : ''}
         ${c.email ? `<p class="contact__email"><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>` : ''}
-        <p class="contact__links">${link(c.instagram, 'IG')} <a href="#newsletter">Newsletter</a> ${link(c.medium, 'Medium')}</p>
+        <p class="contact__links">${(c.links || []).map(link).join(' ')}</p>
       </div>
     </div>`);
 }

@@ -9,7 +9,11 @@
       "en": "art, design and ecology gallery space"
     }
   },
-  "languages": ["ca", "es", "en"],
+  "languages": [
+    "ca",
+    "es",
+    "en"
+  ],
   "defaultLang": "ca",
   "palette": {
     "blau": "#AEC6CD",
@@ -21,7 +25,8 @@
     "_comment": "Colores de la interfaz (antes hardcodeados en css/styles.css). Cada clave se publica como custom property CSS --<clave>; la paleta de arriba se publica como --color-<clave>. Ver js/main.js.",
     "bg": "#ffffff",
     "ink": "#111111",
-    "ink-soft": "#9a9a9a", "ink-mid": "#6f6f6f",
+    "ink-soft": "#9a9a9a",
+    "ink-mid": "#6f6f6f",
     "doodle": "#cfcfcf",
     "grey-soft": "#EAE7E0",
     "media-bg": "#f3f3f3",
@@ -36,12 +41,29 @@
   },
   "contact": {
     "intro": {
-      "ca": "Si creus que la teva feina, investigació, peces o interessos encaixen amb TAT ARA envie’ns un correu, estarem encantades de llegir-te i de conèixer’ns."
+      "ca": "Si creus que la teva feina, investigació, peces o interessos encaixen amb TAT ARA envia’ns un correu, estarem encantades de llegir-te i de conèixer-nos.",
+      "es": "Si crees que tu trabajo, investigación, piezas o intereses encajan con TAT ARA escríbenos un correo, estaremos encantadas de leerte y de conocernos.",
+      "en": "If you feel your work, research, pieces or interests fit with TAT ARA, send us an email — we would love to read you and to get to know each other."
     },
-    "address": ["Carrer Martí, 59B", "08024 Barcelona"],
+    "address": [
+      "Carrer Martí, 59B",
+      "08024 Barcelona"
+    ],
     "email": "associaciotatara@gmail.com",
-    "instagram": null,
-    "newsletter": null,
-    "medium": null
+    "_links": "Enlaces del pie de la pagina de contacto, en el orden en que se pintan. 'url' puede ser una direccion externa (se abre en otra pestana) o un '#seccion' de la propia web. Si 'url' es null el enlace se pinta igual pero no lleva a ningun sitio: es el sitio donde poner el Instagram cuando lo haya.",
+    "links": [
+      {
+        "label": "IG",
+        "url": null
+      },
+      {
+        "label": "Newsletter",
+        "url": "#newsletter"
+      },
+      {
+        "label": "Medium",
+        "url": null
+      }
+    ]
   }
 }
