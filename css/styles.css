@@ -151,7 +151,11 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__media { display: block; padding: 1.2rem 1rem 0; width: 58%; max-width: 300px; cursor: zoom-in; text-align: inherit; }
 /* aspect-ratio reserva hueco antes de que cargue la imagen (evita saltos de
    layout); el 'auto' hace que, una vez cargada, mande su proporción real. */
-.seg__media img { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3 auto; background: var(--img-placeholder); }
+/* aspect-ratio con 'auto' delante: manda la proporción real de la imagen en
+   cuanto se conoce, y mientras tanto se reserva 4/5, que es el formato de
+   cartel que usa casi toda la agenda. Reservar de más o de menos hace que la
+   página crezca bajo el dedo al ir hacia atrás en el historial. */
+.seg__media img { width: 100%; height: auto; display: block; aspect-ratio: 4 / 5 auto; background: var(--img-placeholder); }
 .seg__media--left { margin-right: auto; }
 .seg__media--right { margin-left: auto; }
 

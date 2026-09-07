@@ -19,9 +19,9 @@
       "start": "2025-09-21",
       "end": "2025-10-10",
       "description": {
-        "ca": "El 2022 Anna Dot va treballar entorn l'objecte: Pàtera. Les pàteres eren uns objectes que en l'antiga Grècia es feien servir per fer libacions, és a dir, rituals quotidians en què es vessava una mica d'aigua o vi a terra o sobre un altar en memòria dels que ja no hi són. A Tatara s'exposarà una pàtera feta per la llet materna residual que la seva filla no es menja, un element per fer rituals quotidians i enviar aquesta llet on més es necessita. Un projecte que parla de l'objecte ritual, de la maternitat, de la conciliació i de les noves quotidianitats vinculades al treball reproductiu i productiu.",
-        "es": "En 2022 Anna Dot trabajó en torno al objeto: Pátera. Las páteras eran unos objetos que en la antigua Grecia se usaban para hacer libaciones, es decir, rituales cotidianos en los que se vertía un poco de agua o vino en la tierra o sobre un altar en memoria de quienes ya no están. En Tatara se expondrá una pátera hecha con la leche materna residual que su hija no se toma, un elemento para hacer rituales cotidianos y enviar esa leche allí donde más se necesita. Un proyecto que habla del objeto ritual, de la maternidad, de la conciliación y de las nuevas cotidianidades vinculadas al trabajo reproductivo y productivo.",
-        "en": "In 2022 Anna Dot worked around the object: Pátera (libation bowl). Pateras were objects used in ancient Greece to perform libations — everyday rituals in which a little water or wine was poured onto the ground or over an altar in memory of those no longer present. At Tatara, a patera made from the residual breast milk her daughter doesn't drink will be exhibited, an object for everyday rituals and for sending that milk to where it is most needed. A project about ritual objects, motherhood, work–life balance, and new forms of everyday life linked to reproductive and productive labour."
+        "ca": "Exposició de l’objecte ritual, la maternitat, la conciliació i les noves quotidianitats vinculades al treball reproductiu i productiu.",
+        "es": "Exposició de l’objecte ritual, la maternitat, la conciliació i les noves quotidianitats vinculades al treball reproductiu i productiu.",
+        "en": "An exhibition exploring ritual objects, motherhood, work–life balance, and new forms of everyday life linked to reproductive and productive labour."
       }
     },
     {
@@ -63,9 +63,9 @@
           "image": "assets/img/agenda/03-vinik-jure.webp",
           "start": "2025-10-25",
           "description": {
-            "ca": "Lectura del primer número de la sèrie Ecologías Enraizadas, format per dos assaigs: “El origen del Dia de los Muertos” i la “Historia crítica de la taxonomía del maguey”. En aquest volum, comparteix pràctiques ancestrals transmeses de persona a persona dins la comunitat, i on el bé comú és intrínsec al benestar individual i no a l’inrevés. Comparteix documents d'investigació etnogràfica, reflexions i converses amb el món camperol en diverses comunitats arrelades; una mirada que s'allunya de la lògica individualista i extractivista del món modern i recupera aquella on la relació amb la terra es fonamenta en el respecte, la reciprocitat i la cura.",
-            "es": "Lectura del primer número de la serie Ecologías Enraizadas, formado por dos ensayos: “El origen del Día de los Muertos” y la “Historia crítica de la taxonomía del maguey”. En este volumen, comparte prácticas ancestrales transmitidas de persona a persona dentro de la comunidad, y donde el bien común es intrínseco al bienestar individual y no al revés. Comparte documentos de investigación etnográfica, reflexiones y conversaciones con el mundo campesino en diversas comunidades arraigadas; una mirada que se aleja de la lógica individualista y extractivista del mundo moderno y recupera aquella donde la relación con la tierra se fundamenta en el respeto, la reciprocidad y el cuidado.",
-            "en": "A reading of the first issue in the Rooted Ecologies series, comprising two essays: “The Origin of the Day of the Dead” and “A Critical History of Maguey Taxonomy.” The volume presents ancestral practices passed down from person to person within the community, where the common good is understood as intrinsic to individual well-being, rather than the other way around. It shares ethnographic research documents, reflections and conversations with the peasant world in various rooted communities: a perspective that moves away from the individualistic, extractivist logic of the modern world and recovers one in which the relationship with the land is grounded in respect, reciprocity and care."
+            "ca": "Lectura del primer número de la sèrie Ecologías Enraizadas, format per dos assaigs: “El origen del Dia de los Muertos” i la “Historia crítica de la taxonomía del maguey”. En aquest volum, comparteix pràctiques ancestrals transmeses de persona a persona dins la comunitat, i on el bé comú és intrínsec al benestar individual i no a l’inrevés.",
+            "es": "Lectura del primer número de la serie Ecologías Enraizadas, formado por dos ensayos: “El origen del Día de los Muertos” y la “Historia crítica de la taxonomía del maguey”. En este volumen, comparte prácticas ancestrales transmitidas de persona a persona dentro de la comunidad, y donde el bien común es intrínseco al bienestar individual y no al revés.",
+            "en": "A reading of the first issue in the Rooted Ecologies series, comprising two essays: “The Origin of the Day of the Dead” and “A Critical History of Maguey Taxonomy.” The volume presents ancestral practices passed down from person to person within the community, where the common good is understood as intrinsic to individual well-being, rather than the other way around."
           }
         },
         {
@@ -257,18 +257,18 @@
             "en": "Conversation"
           },
           "title": {
-            "ca": "Conversa amb Inés Sistiaga i Sol Prado",
-            "es": "Conversación con Inés Sistiaga y Sol Prado",
-            "en": "A conversation with Inés Sistiaga and Sol Prado"
+            "ca": "Conversa",
+            "es": "Conversación",
+            "en": "Conversation"
           },
-          "artist": "Amb el Textile Lab de TMDC",
+          "artist": "Inés Sistiaga i Sol Prado",
           "image": "assets/img/agenda/10-ines-sistiaga-sol-prado.webp",
           "start": "2026-01-25",
           "time": "12:00",
           "description": {
-            "ca": "Sistemes de producció globals d’objectes tèxtils i la seva relació amb els sistemes d’experimentació locals. Organitzat amb Textile Lab de TMDC La fàbrica com a centre del debat: espai de coneixement i de vincle amb el territori; més enllà d'una eina capitalista, una eina de resistència i cultura.",
-            "es": "Sistemas de producción globales de objetos textiles y su relación con los sistemas de experimentación locales. Organizado con Textile Lab de TMDC La fábrica como centro del debate: espacio de conocimiento y de vínculo con el territorio; más allá de una herramienta capitalista, una herramienta de resistencia y cultura.",
-            "en": "Global systems of textile production and their relationship to local forms of experimentation. Organised in collaboration with TMDC’s Textile Lab. The factory as the centre of the debate: a space of knowledge and connection to the territory; beyond a capitalist tool, a tool of resistance and culture."
+            "ca": "Sistemes de producció globals d’objectes tèxtils i la seva relació amb els sistemes d’experimentació locals. Organitzat amb Textile Lab de TMDC",
+            "es": "Sistemas de producción globales de objetos textiles y su relación con los sistemas de experimentación locales. Organizado con Textile Lab de TMDC",
+            "en": "Global systems of textile production and their relationship to local forms of experimentation. Organised in collaboration with TMDC’s Textile Lab."
           }
         },
         {
@@ -288,9 +288,9 @@
           "start": "2026-01-28",
           "time": "18:30",
           "description": {
-            "ca": "Conversa amb Mati Cini, ceramista i investigadora cofundadora de Salemi Ceramics, sobre territori, observació, investigació i connexió amb la terra. Salemi Ceramics és la residència artística siciliana on Maria Roy Deulofeu ha creat part de l'exposició. Coincideix amb el darrer dia.",
-            "es": "Conversación con Mati Cini, ceramista e investigadora cofundadora de Salemi Ceramics, sobre territorio, observación, investigación y conexión con la tierra. Salemi Ceramics es la residencia artística siciliana donde Maria Roy Deulofeu ha creado parte de la exposición. Coincide con el último día.",
-            "en": "A conversation with Mati Cini, ceramicist, researcher, and co-founder of Salemi Ceramics, about territory, observation, research, and connection to the land. Salemi Ceramics is the Sicilian artist residency where Maria Roy Deulofeu created part of the exhibition. It coincides with the exhibition's last day."
+            "ca": "Conversa amb Mati Cini, ceramista i investigadora cofundadora de Salemi Ceramics, sobre territori, observació, investigació i connexió amb la terra.",
+            "es": "Conversación con Mati Cini, ceramista e investigadora cofundadora de Salemi Ceramics, sobre territorio, observación, investigación y conexión con la tierra.",
+            "en": "A conversation with Mati Cini, ceramicist, researcher, and co-founder of Salemi Ceramics, about territory, observation, research, and connection to the land."
           }
         }
       ]
@@ -313,9 +313,9 @@
       "start": "2026-02-09",
       "end": "2026-02-28",
       "description": {
-        "ca": "Retrospectiva on es podrà consultat tot el catàleg de l’artista, entre converses al voltant de llibres de pensament crític com Lxs Subcomunes, El Mensaje Mata, Fricción i Brujería Capitalista. El portfolio editorial és d'Ariadna Serrahima i Guillem Serrahima.",
-        "es": "Retrospectiva donde se podrá consultado todo el catálogo del artista, entre conversaciones alrededor de libros de pensamiento crítico como Lxs Subcomunes, El Mensaje Mata, Fricción y Brujería Capitalista. El portafolio editorial es de Ariadna Serrahima y Guillem Serrahima.",
-        "en": "A retrospective offering access to the artist’s complete catalogue. The editorial portfolio is by Ariadna Serrahima and Guillem Serrahima."
+        "ca": "Retrospectiva on es podrà consultat tot el catàleg de l’artista, entre converses al voltant de llibres de pensament crític com Lxs Subcomunes, El Mensaje Mata, Fricción i Brujería Capitalista.",
+        "es": "Retrospectiva donde se podrá consultado todo el catálogo del artista, entre conversaciones alrededor de libros de pensamiento crítico como Lxs Subcomunes, El Mensaje Mata, Fricción y Brujería Capitalista.",
+        "en": "A retrospective offering access to the artist’s complete catalogue."
       },
       "eventos": [
         {
@@ -379,9 +379,9 @@
           "image": "assets/img/agenda/15-taller-recerca-local.webp",
           "start": "2026-05-23",
           "description": {
-            "ca": "Aprendre amb el cos, un taller de sis hores de recol·lecta local d’elements botànics, manipulació per a tintes, pigments i procés de tenyit. Dins del programa Investigacions Afables.",
-            "es": "Aprender con el cuerpo, un taller de seis horas de recoleta local de elementos botánicos, manipulación para tintas, pigmentos y proceso de teñido. Dentro del programa Investigacions Afables.",
-            "en": "Learning through the body: a six-hour workshop involving the local gathering of botanical materials, their preparation for inks and pigments, and the dyeing process. Part of the Investigacions Afables programme."
+            "ca": "Aprendre amb el cos, un taller de sis hores de recol·lecta local d’elements botànics, manipulació per a tintes, pigments i procés de tenyit.",
+            "es": "Aprender con el cuerpo, un taller de seis horas de recoleta local de elementos botánicos, manipulación para tintas, pigmentos y proceso de teñido.",
+            "en": "Learning through the body: a six-hour workshop involving the local gathering of botanical materials, their preparation for inks and pigments, and the dyeing process."
           }
         }
       ]
@@ -405,9 +405,9 @@
       "time": "16:00",
       "end": "2026-06-20",
       "description": {
-        "ca": "Projecte de la cocreació que aspira a una societat inclusiva on la cultura és plural i els agents creatius també ho són. En aquets projecte Un grup d’artistes i creadores diverses en les seves subjectivitats i en la cultura que les travessa ha desenvolupat el que li ha semblat més ad hoc, més il·lusionant o més confortable. Projecte de Joana Mallol, Olatz Azcona i Sara G. De Ubieta. Col·laboració amb TEB Bellvitge, Solidança i Engrunes Amb el suport de Cap Dep. Participants: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas i Ma Jesús Peiret.",
-        "es": "Proyecto de la cocreación que aspira a una sociedad inclusiva donde la cultura es plural y los agentes creativos también lo son. En estos proyecto Un grupo de artistas y creadoras diversas en sus subjetividades y en la cultura que las atraviesa ha desarrollado el que le ha parecido más ad hoc más ilusionante o más confortable.Proyecto de Joana Mallol, Olatz Azcona y Sara G. De Ubieta. Colaboración con TEB Bellvitge, Solidança Con el apoyo de Cap Dep. Participantes: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas y Ma Jesús Peiret.",
-        "en": "A co-creation project that aspires to an inclusive society in which culture is diverse, as are the people who shape it. A group of artists and creators, diverse in their subjectivities and in the cultures that shape them, each developed whatever felt most fitting, inspiring, or comfortable. A project by Joana Mallol, Olatz Azcona, and Sara G. de Ubieta. In collaboration with TEB Bellvitge and Solidança. With the support of Cap Dep. Participants: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas and Ma Jesús Peiret."
+        "ca": "Projecte de la cocreació que aspira a una societat inclusiva on la cultura és plural i els agents creatius també ho són. En aquets projecte Un grup d’artistes i creadores diverses en les seves subjectivitats i en la cultura que les travessa ha desenvolupat el que li ha semblat més ad hoc, més il·lusionant o més confortable. Projecte de Joana Mallol, Olatz Azcona i Sara G. De Ubieta. Col·laboració amb TEB Bellvitge, Solidança i Engrunes",
+        "es": "Proyecto de la cocreación que aspira a una sociedad inclusiva donde la cultura es plural y los agentes creativos también lo son. En estos proyecto Un grupo de artistas y creadoras diversas en sus subjetividades y en la cultura que las atraviesa ha desarrollado el que le ha parecido más ad hoc más ilusionante o más confortable.Proyecto de Joana Mallol, Olatz Azcona y Sara G. De Ubieta. Colaboración con TEB Bellvitge, Solidança",
+        "en": "A co-creation project that aspires to an inclusive society in which culture is diverse, as are the people who shape it. A group of artists and creators, diverse in their subjectivities and in the cultures that shape them, each developed whatever felt most fitting, inspiring, or comfortable. A project by Joana Mallol, Olatz Azcona, and Sara G. de Ubieta. In collaboration with TEB Bellvitge and Solidança."
       }
     },
     {
@@ -619,9 +619,7 @@
       "start": "2027-01-01",
       "end": "2027-01-31",
       "description": {
-        "ca": "Taller de V7.3 (A.1057)Studio compartida per Open Structures.",
-        "es": "Taller de V7.3 (A.1057)Studio compartida per Open Structures.",
-        "en": "Taller de V7.3 (A.1057)Studio compartida per Open Structures."
+        "ca": "Taller de V7.3 (A.1057)Studio compartida per Open Structures."
       }
     }
   ]
