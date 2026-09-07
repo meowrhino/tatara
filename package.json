@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "wrangler dev --persist-to ../.tatara-wrangler-state",
+    "check": "node tools/check-data.mjs",
+    "webp": "tools/to-webp.sh",
     "deploy": "wrangler deploy",
     "db:schema": "wrangler d1 execute shop --remote --file=schema-tatara.sql",
     "db:migrate": "wrangler d1 execute shop --remote --file=./migrations/2026-07-07_tatara_pedidos_envio.sql",
