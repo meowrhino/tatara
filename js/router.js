@@ -14,7 +14,7 @@ import { renderText, renderPeople, renderShop, renderContact, renderCart, render
 // Id de sección del hash actual; cae a la primera sección si no es válido.
 // El hash admite parámetros (#carret?gracies=1&session_id=…, la vuelta de Stripe):
 // para resolver la sección solo cuenta lo anterior al '?'.
-export function currentId() {
+function currentId() {
   const id = location.hash.replace(/^#/, '').split('?')[0];
   return SITE.sections.some((s) => s.id === id) ? id : SITE.sections[0].id;
 }

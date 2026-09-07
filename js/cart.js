@@ -18,7 +18,7 @@ function setCart(items) {
   document.dispatchEvent(new CustomEvent('tatara:cart'));
 }
 
-export const cartCount = () =>
+const cartCount = () =>
   getCart().reduce((n, it) => n + (Number(it.cantidad) || 0), 0);
 
 export function addToCart(id, cantidad = 1) {
