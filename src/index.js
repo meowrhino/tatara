@@ -31,6 +31,13 @@ const toCents = (eur) => Math.round(Number(eur) * 100);
 
 const comprable = (p) => p && p.activo !== false && typeof p.price === "number" && p.price > 0;
 
+// El titulo de un producto puede ser un texto suelto o {ca, es, en} (asi lo
+// escribe data/botiga.json desde que la botiga esta traducida). Aqui, fuera del
+// navegador, no hay idioma activo: para Stripe y para el registro del pedido se
+// usa el catalan, que es el idioma por defecto de la web.
+const tituloDe = (p) => !p ? '' : (typeof p.title === 'string' ? p.title
+  : (p.title && (p.title.ca || Object.values(p.title)[0])) || '');
+
 function findProducto(id) {
   return productos.find((p) => String(p.id) === String(id));
 }
@@ -141,7 +148,7 @@ app.post("/crear-sesion", async (c) => {
     ).bind(p.id).first();
     const disponible = row ? Number(row.cantidad) : 0;
     if (disponible < cantidad)
-      return c.json({ error: `sin stock para ${p.title}`, disponible }, 409);
+      return c.json({ error: `sin stock para ${tituloDe(p)}`, disponible }, 409);
 
     pesoTotal += (Number(p.peso) || 0) * cantidad;
     resolved.push({ p, cantidad });
@@ -165,7 +172,7 @@ app.post("/crear-sesion", async (c) => {
     quantity: cantidad,
     price_data: {
       currency: "eur",
-      product_data: { name: p.title, metadata: { id: String(p.id) } },
+      product_data: { name: tituloDe(p), metadata: { id: String(p.id) } },
       unit_amount: toCents(p.price),
     },
   }));
@@ -261,7 +268,7 @@ app.post("/stripe-webhook", async (c) => {
         const p = findProducto(it.id);
         return {
           id: it.id,
-          nombre: p ? p.title : String(it.id),
+          nombre: p ? tituloDe(p) : String(it.id),
           precio: p ? p.price : null,
           cantidad: Number(it.cantidad),
         };

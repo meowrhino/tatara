@@ -144,11 +144,11 @@ export function renderShop(view, data) {
     const img = imagesOf(p)[0];
     const price = (p.price != null) ? `${p.price}${cur}` : '—';
     return `<button class="product" type="button" data-i="${i}">
-      <div class="product__media">${img ? `<img src="${esc(img)}" alt="${esc(p.title)}" loading="lazy">` : ''}</div>
+      <div class="product__media">${img ? `<img src="${esc(img)}" alt="${esc(t(p.title))}" loading="lazy">` : ''}</div>
       <div class="product__row">
         <div class="product__info">
           ${p.editorial ? `<span class="product__editorial">${esc(p.editorial)}</span>` : ''}
-          <span class="product__title">${esc(p.title)}</span>
+          <span class="product__title">${esc(t(p.title))}</span>
           ${p.author ? `<span class="product__author">${esc(p.author)}</span>` : ''}
         </div>
         <span class="product__price">${esc(price)}</span>
@@ -178,8 +178,8 @@ function openProductModal(p, cur, stockMap) {
   }
 
   openModal(`
-    ${img ? `<img src="${esc(img)}" alt="${esc(p.title)}">` : ''}
-    <h2 class="m-title" id="modal-title">${esc(p.title)}</h2>
+    ${img ? `<img src="${esc(img)}" alt="${esc(t(p.title))}">` : ''}
+    <h2 class="m-title" id="modal-title">${esc(t(p.title))}</h2>
     ${p.author ? `<p class="m-person">${esc(p.author)}</p>` : ''}
     ${p.editorial ? `<p class="m-when">${esc(p.editorial)}</p>` : ''}
     ${p.description ? `<p class="m-desc">${esc(t(p.description))}</p>` : ''}
@@ -296,7 +296,7 @@ export async function renderCart(view) {
     const img = imagesOf(it.p)[0];
     return `<div class="cart-item" data-id="${esc(it.id)}">
       ${img ? `<img class="cart-item__img" src="${esc(img)}" alt="">` : '<span></span>'}
-      <span class="cart-item__title">${esc(it.p.title)}</span>
+      <span class="cart-item__title">${esc(t(it.p.title))}</span>
       <input class="cart-item__qty" type="number" min="0" step="1" value="${it.cantidad}"
         aria-label="${esc(ui('quantity'))}" data-qty>
       <span class="cart-item__price">${esc(String(it.p.price * it.cantidad))}${esc(cur)}

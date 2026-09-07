@@ -1,60 +1,231 @@
 {
-  "_comment": "Sección Botiga / Edicions. price en € (number) o null si está PENDIENTE de la clienta. El checkout (Stripe) aún no existe: el botón 'afegir al carret' se muestra deshabilitado. video opcional (url).",
+  "_comment": "Seccion Botiga. price en euros (number) o null si esta PENDIENTE de precio: sin precio el producto sale como 'proximament' y no es comprable. 'id' es la clave con la que el Worker guarda el stock y los pedidos en la D1 (tabla tatara_stock): cambiarlo desvincula el stock ya contado. 'title' y 'description' admiten {ca,es,en}. Fuente: apartados BOTIGA / TIENDA / SHOP de 'web tatara-TEXT-SETEMBRE.docx'.",
   "currency": "€",
   "products": [
     {
       "id": "friccion",
-      "title": "Fricción",
-      "author": "Anna L. Tsing",
-      "editorial": "Editorial IF",
+      "title": {
+        "ca": "Fricción. Una etnografía de la conexión global",
+        "es": "Fricción. Una etnografía de la conexión global",
+        "en": "Fricción. Una etnografía de la conexión global"
+      },
+      "author": "Anna Tsing",
+      "editorial": null,
       "price": 25,
-      "images": ["assets/img/edicions/friccion.webp"],
-      "description": { "ca": "Una etnografia de la connectivitat global.", "es": "Una etnografía de la conectividad global.", "en": "An ethnography of global connection." }
+      "images": [
+        "assets/img/edicions/friccion.webp"
+      ],
+      "description": {
+        "ca": "Traducció: Alba Pagán. Idioma: castellà.",
+        "es": "Traducción: Alba Pagán. Idioma: castellano.",
+        "en": "Translation: Alba Pagán. Language: Spanish."
+      }
     },
     {
       "id": "lxs-subcomuns",
-      "title": "Lxs Subcomunes",
+      "title": {
+        "ca": "Los Subcommunes. Planear fugitivo y estudio negro",
+        "es": "Los Subcommunes. Planear fugitivo y estudio negro",
+        "en": "Los Subcommunes. Planear fugitivo y estudio negro"
+      },
       "author": "Fred Moten i Stefano Harney",
-      "editorial": "Editorial IF",
-      "price": null,
-      "images": [],
-      "description": { "ca": "Planear fugitivo y estudio negro.", "es": "Planeación fugitiva y estudio negro.", "en": "Fugitive planning and black study." }
+      "editorial": null,
+      "price": 21,
+      "images": [
+        "assets/img/edicions/lxs-subcomuns.webp"
+      ],
+      "description": {
+        "ca": "Traducció: Santi Rivas i Alba Pagán. Idioma: castellà.",
+        "es": "Traducción: Santi Rivas y Alba Pagán. Idioma: castellano.",
+        "en": "Translation: Santi Rivas and Alba Pagán. Language: Spanish."
+      }
     },
     {
-      "id": "aacr",
-      "title": "AACR",
-      "author": null,
-      "editorial": null,
-      "price": null,
-      "images": ["assets/img/edicions/aarc.webp"],
-      "description": null
+      "id": "aarc",
+      "title": {
+        "ca": "AARC",
+        "es": "AARC",
+        "en": "AARC"
+      },
+      "author": "Alter Architecture Research Collective (ed.)",
+      "editorial": "Editor: George Jepson",
+      "price": 8,
+      "images": [
+        "assets/img/edicions/aarc.webp"
+      ],
+      "description": {
+        "ca": "Amb contribucions de: Andreas Rumpfhuber, Tiqqun, Mariapaola Michelotto, Giorgio Agamben and Julian Siravo. Impressió òfset, dues tintes — L’Automàtica. Idioma: anglès.",
+        "es": "Con contribuciones de: Andreas Rumpfhuber, Tiqqun, Mariapaola Michelotto, Giorgio Agamben and Julian Siravo. Impresión offset, dos tintas — L’Automàtica. Idioma: inglés.",
+        "en": "Contributions from: Andreas Rumpfhuber, Tiqqun, Mariapaola Michelotto, Giorgio Agamben and Julian Siravo. Offset printing, two inks — printed at L’Automàtica. Language: English."
+      }
     },
     {
-      "id": "francesc-abat",
-      "title": "Francesc Abat",
+      "id": "footnotes-cra",
+      "title": {
+        "ca": "Footnotes from the CRA",
+        "es": "Footnotes from the CRA",
+        "en": "Footnotes from the CRA"
+      },
       "author": null,
       "editorial": null,
-      "price": null,
-      "images": ["assets/img/edicions/francescabat.webp"],
-      "description": null
+      "price": 8,
+      "images": [
+        "assets/img/edicions/footnotes-cra.webp"
+      ],
+      "description": {
+        "ca": "Amb la contribució de: Susan Schuppli (Director and Reader at the CRA), Eyal Weizman (Professor of Spatial and Visual Cultures), Lorenzo Pezzani (Lecturer Forensic Architecture), Louis Moreno (Lecturer in Visual Cultures), Irit Rogoff (Professor of Visual Cultures), Ifor Duncan (PhD Candidate in CRA), Esra Abdelrahman, Faiza Ahmad Khan, Riccardo Badano, Nelson Beer, Gui De Vore, Halima Haruna, Patrick Harvey, Rebecca Huxley, Anna Sofie Hvid, Naiza Khan, Robert Krawczyk, Enrico Murtula, Hanna Rullmann, Ariadna Serrahima, Ido Tsarfati, Clive Vella, Sarah Vowden, Liza Walling. Impressió òfset, dues tintes — L’Automàtica. Idioma: anglès.",
+        "es": "Contribuciones: Susan Schuppli (Director and Reader at the CRA), Eyal Weizman (Professor of Spatial and Visual Cultures), Lorenzo Pezzani (Lecturer Forensic Architecture), Louis Moreno (Lecturer in Visual Cultures), Irit Rogoff (Professor of Visual Cultures), Ifor Duncan (PhD Candidate in CRA), Esra Abdelrahman, Faiza Ahmad Khan, Riccardo Badano, Nelson Beer, Gui De Vore, Halima Haruna, Patrick Harvey, Rebecca Huxley, Anna Sofie Hvid, Naiza Khan, Robert Krawczyk, Enrico Murtula, Hanna Rullmann, Ariadna Serrahima, Ido Tsarfati, Clive Vella, Sarah Vowden, Liza Walling. Impresión offset, dos tintas — L’Automàtica. Idioma: inglés.",
+        "en": "Contributors: Susan Schuppli (Director and Reader at the CRA), Eyal Weizman (Professor of Spatial and Visual Cultures), Lorenzo Pezzani (Lecturer Forensic Architecture), Louis Moreno (Lecturer in Visual Cultures), Irit Rogoff (Professor of Visual Cultures), Ifor Duncan (PhD Candidate in CRA), Esra Abdelrahman, Faiza Ahmad Khan, Riccardo Badano, Nelson Beer, Gui De Vore, Halima Haruna, Patrick Harvey, Rebecca Huxley, Anna Sofie Hvid, Naiza Khan, Robert Krawczyk, Enrico Murtula, Hanna Rullmann, Ariadna Serrahima, Ido Tsarfati, Clive Vella, Sarah Vowden, Liza Walling. Offset printing, two inks — printed at L’Automàtica. Language: English."
+      }
+    },
+    {
+      "id": "panormana",
+      "title": {
+        "ca": "Panormana",
+        "es": "Panormana",
+        "en": "Panormana"
+      },
+      "author": "Francesc Abad",
+      "editorial": "Editor: Ariadna Serrahima i Guillem Serrahima",
+      "price": 16,
+      "images": [
+        "assets/img/edicions/panormana.webp"
+      ],
+      "description": {
+        "ca": "Impressió òfset, dues tintes — L’Automàtica. 250 exemplars numerats. Idioma: català.",
+        "es": "Impresión offset, dos tintas — L’Automàtica. 250 ejemplares numerados. Idioma: catalán.",
+        "en": "Offset printing, two inks — printed at L’Automàtica. 250 numbered copies. Language: Catalan."
+      }
+    },
+    {
+      "id": "ecologias-enraizadas",
+      "title": {
+        "ca": "Ecologías Enraizadas",
+        "es": "Ecologías Enraizadas",
+        "en": "Ecologías Enraizadas"
+      },
+      "author": "Vinik Juré",
+      "editorial": "Ed. Amistats Radicals",
+      "price": 12,
+      "images": [
+        "assets/img/edicions/ecologias-enraizadas.webp"
+      ],
+      "description": {
+        "ca": "Nº 1. Entendimiento relacional de vidas campesinas: “El origen ecológico del día de muertos” i “Historia crítica de la taxonomía del maguey”. Idioma: castellà.",
+        "es": "Nº 1. Entendimiento relacional de vidas campesinas: «El origen ecológico del día de muertos» e «Historia crítica de la taxonomía del maguey». Idioma: castellano.",
+        "en": "Nº 1. Entendimiento relacional de vidas campesinas: “El origen ecológico del día de muertos” and “Historia crítica de la taxonomía del maguey”. Language: Spanish."
+      }
+    },
+    {
+      "id": "bossa-1",
+      "title": {
+        "ca": "Bossa Nº1",
+        "es": "Bolso Nº1",
+        "en": "Bag Nº1"
+      },
+      "author": "No Limits",
+      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "price": 260,
+      "images": [
+        "assets/img/edicions/bossa-1.webp"
+      ],
+      "description": {
+        "ca": "Bosses úniques fetes a mà amb tela reutilitzada. Les artistes han creat un sistema perquè el procés de cocreació amb les usuàries del centre social fos possible i divertit per totes.",
+        "es": "Bolsos hechos a mano con tejidos reutilizados, creados en colaboración con un centro social. Nos enorgullece haber desarrollado un sistema que permitió a todas las participantes disfrutar del proceso, aprender y compartir a lo largo de cuatro meses.",
+        "en": "Handmade bags with reused fabrics, done in co-creation with a social centre. We are very proud to have created a system where all the users enjoyed the process, learned and shared during a four-month process."
+      }
+    },
+    {
+      "id": "bossa-2",
+      "title": {
+        "ca": "Bossa Nº2",
+        "es": "Bolso Nº2",
+        "en": "Bag Nº2"
+      },
+      "author": "No Limits",
+      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "price": 260,
+      "images": [
+        "assets/img/edicions/bossa-2.webp"
+      ],
+      "description": {
+        "ca": "Bosses úniques fetes a mà amb tela reutilitzada. Les artistes han creat un sistema perquè el procés de cocreació amb les usuàries del centre social fos possible i divertit per totes.",
+        "es": "Bolsos hechos a mano con tejidos reutilizados, creados en colaboración con un centro social. Nos enorgullece haber desarrollado un sistema que permitió a todas las participantes disfrutar del proceso, aprender y compartir a lo largo de cuatro meses.",
+        "en": "Handmade bags with reused fabrics, done in co-creation with a social centre. We are very proud to have created a system where all the users enjoyed the process, learned and shared during a four-month process."
+      }
+    },
+    {
+      "id": "bossa-3",
+      "title": {
+        "ca": "Bossa Nº3",
+        "es": "Bolso Nº3",
+        "en": "Bag Nº3"
+      },
+      "author": "No Limits",
+      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "price": 260,
+      "images": [
+        "assets/img/edicions/bossa-3.webp"
+      ],
+      "description": {
+        "ca": "Bosses úniques fetes a mà amb tela reutilitzada. Les artistes han creat un sistema perquè el procés de cocreació amb les usuàries del centre social fos possible i divertit per totes.",
+        "es": "Bolsos hechos a mano con tejidos reutilizados, creados en colaboración con un centro social. Nos enorgullece haber desarrollado un sistema que permitió a todas las participantes disfrutar del proceso, aprender y compartir a lo largo de cuatro meses.",
+        "en": "Handmade bags with reused fabrics, done in co-creation with a social centre. We are very proud to have created a system where all the users enjoyed the process, learned and shared during a four-month process."
+      }
+    },
+    {
+      "id": "bossa-4",
+      "title": {
+        "ca": "Bossa Nº4",
+        "es": "Bolso Nº4",
+        "en": "Bag Nº4"
+      },
+      "author": "No Limits",
+      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "price": 260,
+      "images": [
+        "assets/img/edicions/bossa-4.webp"
+      ],
+      "description": {
+        "ca": "Bosses úniques fetes a mà amb tela reutilitzada. Les artistes han creat un sistema perquè el procés de cocreació amb les usuàries del centre social fos possible i divertit per totes.",
+        "es": "Bolsos hechos a mano con tejidos reutilizados, creados en colaboración con un centro social. Nos enorgullece haber desarrollado un sistema que permitió a todas las participantes disfrutar del proceso, aprender y compartir a lo largo de cuatro meses.",
+        "en": "Handmade bags with reused fabrics, done in co-creation with a social centre. We are very proud to have created a system where all the users enjoyed the process, learned and shared during a four-month process."
+      }
+    },
+    {
+      "id": "bossa-5",
+      "title": {
+        "ca": "Bossa Nº5",
+        "es": "Bolso Nº5",
+        "en": "Bag Nº5"
+      },
+      "author": "No Limits",
+      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "price": 260,
+      "images": [
+        "assets/img/edicions/bossa-5.webp"
+      ],
+      "description": {
+        "ca": "Bosses úniques fetes a mà amb tela reutilitzada. Les artistes han creat un sistema perquè el procés de cocreació amb les usuàries del centre social fos possible i divertit per totes.",
+        "es": "Bolsos hechos a mano con tejidos reutilizados, creados en colaboración con un centro social. Nos enorgullece haber desarrollado un sistema que permitió a todas las participantes disfrutar del proceso, aprender y compartir a lo largo de cuatro meses.",
+        "en": "Handmade bags with reused fabrics, done in co-creation with a social centre. We are very proud to have created a system where all the users enjoyed the process, learned and shared during a four-month process."
+      }
     },
     {
       "id": "ceramica-maria-roy",
-      "title": "Peça de ceràmica",
+      "title": {
+        "ca": "Peça de ceràmica",
+        "es": "Pieza de cerámica",
+        "en": "Ceramic piece"
+      },
       "author": "Maria Roy Deulofeu",
       "editorial": "Col·laboració amb TAT ARA",
       "price": null,
-      "images": ["assets/img/mr/mrd-373.webp", "assets/img/mr/mrd-400.webp"],
+      "images": [
+        "assets/img/mr/mrd-373.webp",
+        "assets/img/mr/mrd-400.webp"
+      ],
       "description": null
-    },
-    {
-      "id": "bolsos",
-      "title": "Bolsos",
-      "author": null,
-      "editorial": null,
-      "price": null,
-      "images": [],
-      "description": { "ca": "Disponibles en packs de 2 o 5 unitats.", "es": "Disponibles en packs de 2 o 5 unidades.", "en": "Available in packs of 2 or 5 units." }
     }
   ]
 }

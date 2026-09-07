@@ -29,7 +29,7 @@
         ]);
         productos = (edicions.products || []).map((p) => ({
           id: p.id,
-          title: p.title,
+          title: (typeof p.title === "string" ? p.title : (p.title?.ca ?? Object.values(p.title ?? {})[0] ?? "")),
           sinPrecio: !(typeof p.price === "number" && p.price > 0),
           cantidad: Number(stockRes[p.id]?._ ?? 0),
         }));
