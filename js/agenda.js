@@ -11,8 +11,9 @@
    ni auto-scroll a "hoy": el estado se comunica con ese marcador.
    ============================================================ */
 
-import { el, esc, t, ui, captureFocus } from './utils.js';
+import { el, esc, t, ui } from './utils.js';
 import { SITE } from './state.js';
+import { openLightbox } from './modal.js';
 import { parseDate, todayDate, sameDay, rangeSlash, dMes } from './dates.js';
 
 // agenda.json guarda claves de paleta ("menta", "rosa"...); data.json -> palette
@@ -182,40 +183,4 @@ function mediaEl(src, alt, idx) {
   btn.appendChild(img);
   btn.addEventListener('click', (ev) => { ev.stopPropagation(); openLightbox(src, alt); });
   return btn;
-}
-
-function openLightbox(src, alt) {
-  const restoreFocus = captureFocus();
-  const overlay = el('div', 'lightbox');
-  overlay.setAttribute('role', 'dialog');
-  overlay.setAttribute('aria-modal', 'true');
-  overlay.setAttribute('aria-label', alt || ui('enlargedImage'));
-  overlay.tabIndex = -1;
-
-  const close = () => {
-    overlay.remove();
-    document.body.classList.remove('no-scroll');
-    document.removeEventListener('keydown', onKey);
-    restoreFocus();
-  };
-  const onKey = (ev) => { if (ev.key === 'Escape') close(); };
-
-  const btn = el('button', 'lightbox__close');
-  btn.type = 'button';
-  btn.setAttribute('aria-label', ui('close'));
-  btn.innerHTML = '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><path d="M7 9 Q19 19 33 31 M33 8 Q20 20 8 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
-  btn.addEventListener('click', close);
-
-  const img = el('img', 'lightbox__img');
-  img.src = src; img.alt = alt || '';
-  // Clic en la imagen NO cierra (para poder mirarla); clic fuera sí.
-  img.addEventListener('click', (ev) => ev.stopPropagation());
-
-  overlay.appendChild(btn);
-  overlay.appendChild(img);
-  overlay.addEventListener('click', close);
-  document.body.appendChild(overlay);
-  document.body.classList.add('no-scroll');
-  document.addEventListener('keydown', onKey);
-  btn.focus();
 }

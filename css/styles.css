@@ -265,6 +265,16 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .prose .prose__img { margin: 0.4rem 0 1rem; text-align: center; }
 .prose__img img { width: 190px; max-width: 60%; height: auto; }
 
+/* "Amb: nom, nom, nom." — la lista de personas de recerca. Centrada, para que
+   no se lea como un párrafo más. */
+.prose__people { text-align: center; margin: 1.4rem 0 0; }
+
+/* Galería de una página de texto (recerca): fotos apiladas, ancho de columna,
+   ampliables al hacer clic como las de la agenda. */
+.prose__gallery { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.4rem 0 0; }
+.prose__shot { display: block; width: 100%; padding: 0; cursor: zoom-in; }
+.prose__shot img { width: 100%; height: auto; display: block; aspect-ratio: 3 / 2 auto; background: var(--img-placeholder); }
+
 /* Exposicions/Recerca: lista de nombres (cada uno abre un modal con bio + fotos
    + PDF). Columna de color como la agenda: --col de ancho, centrada, fondo gris,
    nombres a la izquierda con el mismo margen interno que los bloques. */

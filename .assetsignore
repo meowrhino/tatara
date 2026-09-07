@@ -1,4 +1,8 @@
 # Lo que NO se sube como asset estático al Worker (fotos fuente, docs, código del server).
+# OJO: aquí NO puede haber un "*.pdf" a secas. Los fulls de sala de las
+# exposiciones viven en assets/pdf/ y son parte de la web: si se ignoran, los
+# enlaces del modal devuelven 404. Los PDF de origen se excluyen por carpeta
+# (FULLS DE SALA) o por nombre.
 .git
 .gitignore
 .claude
@@ -15,7 +19,6 @@ FOTOS AGENDA
 FOTOS_MR
 FULLS DE SALA
 *.pages
-*.pdf
 *.md
 *.sql
 *.toml

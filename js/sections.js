@@ -8,7 +8,7 @@
 import { esc, t, ui, imagesOf, richText } from './utils.js';
 import { parseDate, dMes, sameDay } from './dates.js';
 import { SITE } from './state.js';
-import { openModal, closeModal } from './modal.js';
+import { openModal, closeModal, openLightbox } from './modal.js';
 import { loadJSON } from './data.js';
 import { hashQuery } from './router.js';
 import { getCart, addToCart, setQty, removeItem, clearCart } from './cart.js';
@@ -62,9 +62,25 @@ export function renderText(view, data) {
     const img = b.image
       ? `<p class="prose__img"><img src="${esc(b.image)}" alt="${esc(t(b.alt) || '')}" loading="lazy"></p>`
       : '';
-    return heading + para + img;
+    // 'people': una lista de nombres en línea, enlazados cuando tienen 'link'.
+    // La usa recerca para el "Amb: …" del final del texto.
+    const gente = (b.people || []).length
+      ? `<p class="prose__people">` + b.people.map((p) => p.link
+          ? `<a class="link-inline" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.name)}</a>`
+          : esc(p.name)).join(', ') + `.</p>`
+      : '';
+    // 'images' (varias) se apilan como galería y se amplían al hacer clic.
+    const gal = (b.images || []).length
+      ? `<div class="prose__gallery">` + b.images.map((src) =>
+          `<button class="prose__shot" type="button" data-src="${esc(src)}" aria-label="${esc(ui('enlargeImage'))}">` +
+          `<img src="${esc(src)}" alt="${esc(t(b.alt) || '')}" loading="lazy"></button>`).join('') + `</div>`
+      : '';
+    return heading + para + gente + img + gal;
   }).join('');
   view.innerHTML = pageWrap(`<div class="prose">${body}</div>`);
+
+  view.querySelectorAll('.prose__shot').forEach((b) =>
+    b.addEventListener('click', () => openLightbox(b.dataset.src, b.querySelector('img').alt)));
 }
 
 // Un artista es "ampliable" (abre modal) si tiene algo que enseñar: bio, fotos,

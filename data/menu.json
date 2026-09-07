@@ -1,13 +1,13 @@
 {
-  "_comment": "Índice de secciones (JAMSTACK): alimenta el menú (js/menu.js) y el router (js/router.js). El orden aquí es el orden del menú. 'hidden': la ruta existe pero NO se lista en el menú — p. ej. 'carret', que se abre desde el icono del carrito arriba a la derecha.",
+  "_comment": "Índice de secciones (JAMSTACK): alimenta el menú (js/menu.js) y el router (js/router.js). El orden aquí es el orden del menú. Cada archivo de datos se llama como su etiqueta en catalán. 'hidden': la ruta existe pero NO se lista en el menú — p. ej. 'carret', que se abre desde el icono del carrito arriba a la derecha.",
   "sections": [
-    { "id": "agenda",    "type": "agenda",  "data": "data/agenda.json",    "label": { "ca": "agenda",     "es": "agenda",       "en": "agenda" } },
-    { "id": "nosaltres", "type": "text",    "data": "data/nosaltres.json", "label": { "ca": "nosaltres",  "es": "nosotres",     "en": "us" } },
-    { "id": "exposicions",  "type": "people",  "data": "data/exposicions.json",  "label": { "ca": "exposicions", "es": "exposiciones", "en": "exhibitions" } },
-    { "id": "recerca",     "type": "people",  "data": "data/recerca.json",   "label": { "ca": "recerca",    "es": "investigación", "en": "research" } },
-    { "id": "botiga",    "type": "shop",    "data": "data/botiga.json",  "label": { "ca": "botiga",     "es": "tienda",       "en": "shop" } },
-    { "id": "contacte",  "type": "contact",                                "label": { "ca": "contacte",   "es": "contacto",     "en": "contact" } },
-    { "id": "newsletter","type": "newsletter",                             "label": { "ca": "newsletter",  "es": "newsletter",   "en": "newsletter" } },
-    { "id": "carret",    "type": "cart",                                   "label": { "ca": "carret",     "es": "carrito",      "en": "cart" }, "hidden": true }
+    { "id": "agenda",      "type": "agenda",     "data": "data/agenda.json",      "label": { "ca": "agenda",      "es": "agenda",        "en": "agenda" } },
+    { "id": "nosaltres",   "type": "text",       "data": "data/nosaltres.json",   "label": { "ca": "nosaltres",   "es": "nosotres",      "en": "us" } },
+    { "id": "exposicions", "type": "people",     "data": "data/exposicions.json", "label": { "ca": "exposicions", "es": "exposiciones",  "en": "exhibitions" } },
+    { "id": "recerca",     "type": "text",       "data": "data/recerca.json",     "label": { "ca": "recerca",     "es": "investigación", "en": "research" } },
+    { "id": "botiga",      "type": "shop",       "data": "data/botiga.json",      "label": { "ca": "botiga",      "es": "tienda",        "en": "shop" } },
+    { "id": "contacte",    "type": "contact",                                     "label": { "ca": "contacte",    "es": "contacto",      "en": "contact" } },
+    { "id": "newsletter",  "type": "newsletter",                                  "label": { "ca": "newsletter",  "es": "newsletter",    "en": "newsletter" } },
+    { "id": "carret",      "type": "cart",                                        "label": { "ca": "carret",      "es": "carrito",       "en": "cart" }, "hidden": true }
   ]
 }

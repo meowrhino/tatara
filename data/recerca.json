@@ -1,104 +1,119 @@
 {
-  "_comment": "Recerca (secció #diari): les 11 trobades del document de la clienta (juliol). role = format. bio i imatge reutilitzades d'exposicions quan n'hi ha. PENDENT de la clienta: text propi de cada trobada, fotos (màx 4) i PDF.",
-  "people": [
+  "_comment": "Seccion Recerca. Misma estructura que nosaltres.json (type 'text' en menu.json): 'body' es una lista de bloques y cada uno admite heading, link (id de seccion), text (con enlaces [etiqueta](id-de-seccion)), image (una), images[] (varias, se pintan como galeria y se amplian al hacer clic) o people[] (una lista de {name, link} que se pinta en linea separada por comas; el nombre se enlaza cuando 'link' no es null). Fuente: apartado RECERCA de 'web tatara-TEXT-SETEMBRE.docx'. Las fichas con bio de cada persona vivian aqui antes; ahora la seccion es texto + noms + fotos, tal como el documento.",
+  "title": {
+    "ca": "Recerca",
+    "es": "Investigación",
+    "en": "Research"
+  },
+  "body": [
     {
-      "name": "Inés Sistiaga",
-      "role": "conversa",
-      "link": null,
-      "image": "assets/img/agenda/ines-sistiaga.webp",
-      "bio": {
-        "ca": "és dissenyadora i investigadora formada a la Design Academy Eindhoven, on va cursar el grau de Design for Wellbeing, i anteriorment a l’Escola Massana. La seva pràctica es situa en la intersecció entre l'artesania tradicional i la innovació tecnològica, i explora el llenguatge dels materials mitjançant el teixit. Ha desenvolupat projectes d'investigació en institucions com el TextielLab de Tilburg, amb iniciatives com Tailored Bond i Wool4Life, orientades a redescobrir les capacitats estructurals, tèrmiques i funcionals de les fibres naturals i sintètiques. Actualment, impulsa el TextileLab de TMCD",
-        "es": "es diseñadora e investigadora formada en la Design Academy Eindhoven, donde cursó el grado de Design for Wellbeing, y anteriormente en la Escola Massana. Su práctica se sitúa en la intersección entre la artesanía tradicional y la innovación tecnológica, y explora el lenguaje de los materiales a través del tejido. Ha desarrollado proyectos de investigación en instituciones como el TextielLab de Tilburg, con iniciativas como Tailored Bond y Wool4Life, orientadas a redescubrir las capacidades estructurales, térmicas y funcionales de las fibras naturales y sintéticas. Actualmente, impulsa el TextileLab de TMCD",
-        "en": "is a designer and researcher trained at the Design Academy Eindhoven, where she took the Design for Wellbeing degree, and previously at the Escola Massana. Her practice sits at the intersection of traditional craft and technological innovation, exploring the language of materials through weaving. She has developed research projects at institutions such as the TextielLab in Tilburg, with initiatives like Tailored Bond and Wool4Life, aimed at rediscovering the structural, thermal and functional capacities of natural and synthetic fibres. She currently runs the TextileLab at TMCD"
+      "text": {
+        "ca": "Com aprenem? Com ens arriba el coneixement que constantment ens envolta, però sovint no ens travessa?",
+        "es": "¿Cómo aprendemos? ¿Cómo nos llega el conocimiento que nos rodea constantemente, pero que a menudo no nos atraviesa?",
+        "en": "How do we learn? How does the knowledge that constantly surrounds us reach us, yet so often fail to permeate us?"
       }
     },
     {
-      "name": "Colectivo Pimienta",
-      "role": "sessió d'escolta",
-      "link": null,
-      "image": "assets/img/agenda/pimienta.webp",
-      "bio": null
-    },
-    {
-      "name": "Mireia López",
-      "role": "conversa",
-      "link": null,
-      "bio": null
-    },
-    {
-      "name": "Ale Carrero",
-      "role": "sessió de reverberació corporal",
-      "link": null,
-      "image": "assets/img/agenda/alecarrero.webp",
-      "bio": {
-        "ca": "psicòloga especialitzada en consciència corporal",
-        "es": "psicóloga especializada en conciencia corporal",
-        "en": "psychologist specialising in body awareness"
+      "text": {
+        "ca": "Des de TAT ARA explorem com la intersecció de les pràctiques de l’art, el disseny i l’ecologia creen coneixement a través de l’experimentació i la recerca. Algunes de les eines que explorem són recerca de camp, recol·lecta, converses, la intuïció, l’activació del cos, sessions d’escolta, debats, sessions energètiques, lectures i grups de treball. Així d’una manera orgànica i col·lectiva explorem com s’obren espais de pensament i reflexió que es transformen amb connexions de coneixement efectives.",
+        "es": "Desde TAT ARA exploramos cómo la intersección entre las prácticas del arte, el diseño y la ecología genera conocimiento mediante la experimentación y la investigación. Algunas de las herramientas que exploramos son la investigación de campo, la recolección, las conversaciones, la intuición, la activación corporal, las sesiones de escucha, los debates, las sesiones energéticas, las lecturas y los grupos de trabajo. De este modo, de forma orgánica y colectiva, exploramos cómo se abren espacios de pensamiento y reflexión que se transforman mediante conexiones efectivas entre distintos saberes.",
+        "en": "At TAT ARA, we explore how the intersection of practices in art, design, and ecology generates knowledge through experimentation and research. The tools we explore include field research, gathering, conversations, intuition, bodily activation, listening sessions, debates, energy sessions, readings, and working groups. In this organic and collective process, we explore how spaces for thought and reflection emerge and are transformed through meaningful connections between different forms of knowledge."
       }
     },
     {
-      "name": "Sol Prado",
-      "role": "conversa",
-      "link": null,
-      "bio": {
-        "ca": "Sol Prado és llicenciada en disseny tèxtil per la Universitat de Buenos Aires i compta amb un màster en Estudis de Gènere i Teoria Crítica pel Programa d'Estudis Independents del MACBA-UAB. La seva recerca parteix de la pràctica del disseny, des de la qual analitza les relacions de producció capitalistes en l'eix nord-sud global, amb l'objectiu de proposar noves formes de creació tèxtil en col·laboració amb comunitats que fomentin vincles sostenibles entre les persones, el disseny i el territori.",
-        "es": "Sol Prado es licenciada en diseño textil por la Universidad de Buenos Aires y cuenta con un máster en Estudios de Género y Teoría Crítica por el Programa de Estudios Independientes del MACBA-UAB. Su investigación parte de la práctica del diseño, desde la cual analiza las relaciones de producción capitalistas en el eje norte-sur global, con el objetivo de proponer nuevas formas de creación textil en colaboración con comunidades que fomenten vínculos sostenibles entre las personas, el diseño y el territorio.",
-        "en": "Sol Prado holds a degree in textile design from the Universidad de Buenos Aires and a master's in Gender Studies and Critical Theory from the MACBA-UAB Independent Studies Programme. Her research starts from design practice, from which she analyses capitalist production relations along the global north-south axis, with the aim of proposing new forms of textile creation in collaboration with communities that foster sustainable ties between people, design and territory."
+      "text": {
+        "ca": "Periòdicament anirem fent publicacions sobre els resultats.",
+        "es": "Periódicamente iremos publicando los resultados.",
+        "en": "We will periodically publish the outcomes."
       }
     },
     {
-      "name": "Mati Cini",
-      "role": "conversa",
-      "link": null,
-      "bio": {
-        "ca": "ceramista i investigadora cofundadora de Salemi Ceramics",
-        "es": "ceramista e investigadora cofundadora de Salemi Ceramics",
-        "en": "ceramicist and researcher, co-founder of Salemi Ceramics"
-      }
+      "text": {
+        "ca": "Amb:",
+        "es": "Con:",
+        "en": "With:"
+      },
+      "people": [
+        {
+          "name": "Inés Sistiaga",
+          "link": null
+        },
+        {
+          "name": "Mireia López",
+          "link": null
+        },
+        {
+          "name": "Ale Carrero",
+          "link": null
+        },
+        {
+          "name": "Sol Prado",
+          "link": null
+        },
+        {
+          "name": "Mati Cini",
+          "link": null
+        },
+        {
+          "name": "Tornen les Esquelles",
+          "link": null
+        },
+        {
+          "name": "Vinik Juré",
+          "link": null
+        },
+        {
+          "name": "DU-DA",
+          "link": null
+        },
+        {
+          "name": "Raquel Buj",
+          "link": null
+        },
+        {
+          "name": "Maria Roy Deulofeu",
+          "link": null
+        },
+        {
+          "name": "Solange Dalannais",
+          "link": "http://www.solangedalannais.com/"
+        },
+        {
+          "name": "Tasio Ranz",
+          "link": null
+        },
+        {
+          "name": "Trazo Continuo",
+          "link": null
+        }
+      ]
     },
     {
-      "name": "Tornen les Esquelles",
-      "role": "taller",
-      "link": null,
-      "bio": null
-    },
-    {
-      "name": "Vinik Juré",
-      "role": "lectura",
-      "link": null,
-      "image": "assets/img/agenda/vinik.webp",
-      "bio": {
-        "ca": "treballa des de l’encreuament entre antropologia, agroecologia i escriptura, des d’on genera espais on acompanya i conecta: persones, sabers i pràctiques. La reflexió no es queda en un pla especulatiu sinó que es tradueix en acció i pren forma concreta a través d’espais on el pensar i el fe des d’una dimensió col·lectiva. Vinik, entén que els problemes ecològics no es poden deslligar dels factors socials, polítics i cultural, que els configuren. Tot això, ho fa a partir del seu projecte; Expresiones bioculturales, des d’on impulsa, d’una banda, pràctiques editorials que li permeten documentar i comunicar aquests espais i processos; i de l’altra, promou i implimenta sistemes alimentaris alternatius, la interculturalitat i l’ecologia.",
-        "es": "trabaja desde el cruce entre antropología, agroecología y escritura, desde donde genera espacios de acompañamiento y conexión entre personas, saberes y prácticas. La reflexión no se queda en un plano especulativo, sino que se traduce en acción y toma forma concreta a través de espacios donde el pensar y el hacer se dan desde una dimensión colectiva. Vinik entiende que los problemas ecológicos no pueden desligarse de los factores sociales, políticos y culturales que los configuran. Todo esto lo hace a partir de su proyecto Expresiones bioculturales, desde donde impulsa, por un lado, prácticas editoriales que permiten documentar y comunicar estos espacios y procesos; y, por otro, promueve e implementa sistemas alimentarios alternativos, la interculturalidad y la ecología.",
-        "en": "works at the crossing of anthropology, agroecology and writing, generating spaces that accompany and connect people, knowledges and practices. Reflection does not remain on a speculative plane but translates into action and takes concrete form through spaces where thinking and doing happen from a collective dimension. Vinik understands that ecological problems cannot be separated from the social, political and cultural factors that shape them. All of this stems from the project Expresiones bioculturales, through which, on one hand, editorial practices are used to document and communicate these spaces and processes; and, on the other, alternative food systems, interculturality and ecology are promoted and put into practice."
-      }
-    },
-    {
-      "name": "DU-DA",
-      "role": "conversa",
-      "link": null,
-      "image": "assets/img/agenda/duda-raquel-buj.webp",
-      "bio": {
-        "ca": "és un col·lectiu format per Clara Piazuelo i Sarai Cumplido, dedicat a la mediació, la recerca, la creació artística, el comissariat i la producció cultural. Els seus projectes, sempre relacionals i col·lectius, apunten a qüestionar les estructures de poder hegemòniques.",
-        "es": "es un colectivo formado por Clara Piazuelo y Sarai Cumplido, dedicado a la mediación, la investigación, la creación artística, el comisariado y la producción cultural. Sus proyectos, siempre relacionales y colectivos, apuntan a cuestionar las estructuras de poder hegemónicas.",
-        "en": "is a collective formed by Clara Piazuelo and Sarai Cumplido, dedicated to mediation, research, artistic creation, curatorship and cultural production. Their projects, always relational and collective, aim to question hegemonic power structures."
-      }
-    },
-    {
-      "name": "Raquel Buj",
-      "role": "conversa",
-      "link": null,
-      "bio": null
-    },
-    {
-      "name": "IF. Publications",
-      "role": "presentació",
-      "link": null,
-      "image": "assets/img/agenda/if.webp",
-      "bio": {
-        "ca": "International Friendship és l’editorial de pensament crític de la dissenyadora i investigadora Ariadna Serrahima i el filòsof Guillem Serrahima.",
-        "es": "International Friendship es la editorial de pensamiento crítico de la diseñadora e investigadora Ariadna Serrahima y el filósofo Guillem Serrahima.",
-        "en": "International Friendship is the critical thought publishing house of designer and researcher Ariadna Serrahima and philosopher Guillem Serrahima."
+      "images": [
+        "assets/img/recerca/00-tatara-research.webp",
+        "assets/img/recerca/01-tatara-research.webp",
+        "assets/img/recerca/02-tatara-research-sd.webp",
+        "assets/img/recerca/03-tatara-research.webp",
+        "assets/img/recerca/04-tatara-research.webp",
+        "assets/img/recerca/05-tatara-research.webp",
+        "assets/img/recerca/07-tatara-research-nataliasourdis55.webp",
+        "assets/img/recerca/08-tatara-research-nataliasourdis58.webp",
+        "assets/img/recerca/09-tatara-research-nataliasourdis74.webp",
+        "assets/img/recerca/10-tatara-research-nataliasourdis96.webp",
+        "assets/img/recerca/11-tatara-research-jpg.webp",
+        "assets/img/recerca/11-tatara-research.webp",
+        "assets/img/recerca/12-tatara-research-mrd.webp",
+        "assets/img/recerca/13-tatara-research.webp",
+        "assets/img/recerca/14-tatara-research-tle.webp",
+        "assets/img/recerca/15-tatara-research-tle.webp",
+        "assets/img/recerca/16-tatara-research-tornenlesesquelles.webp",
+        "assets/img/recerca/17-tatara-vinikjure-research.webp",
+        "assets/img/recerca/18-tatara-reserach-alecarrero.webp"
+      ],
+      "alt": {
+        "ca": "Sessió de recerca a TAT ARA",
+        "es": "Sesión de investigación en TAT ARA",
+        "en": "Research session at TAT ARA"
       }
     }
   ]
