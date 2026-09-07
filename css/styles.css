@@ -160,35 +160,36 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__media--right { margin-left: auto; }
 
 /* Región temporal del bloque: contiene los O.R. en flujo. La separación entre
-   O.R. la da el min-height (en var(--day)) de cada fila, calculado en JS al
-   renderizar — ver eventBlock. Sin gap: cualquier espacio extra fijo aquí
-   desviaría el eje temporal (el aire entre filas es padding de .seg__child,
-   que con border-box queda DENTRO de su min-height). */
+   O.R. la marca el gap: los bloques miden por contenido, no por días. */
 .seg__days {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;               /* separación clara entre O.R. */
 }
 
-/* O.R. / esdeveniments anidados: cada uno reserva como mínimo los días que lo
-   separan del siguiente (min-height inline en var(--day)); si su contenido es
-   más alto, empuja al siguiente hacia abajo. */
+/* O.R. / esdeveniments anidados dentro de una exposición. */
 .seg__child {
   padding: 0 1rem;
 }
+/* Fecha y nombre en un solo flujo de texto, NO en flex. Con flex, la fecha
+   ocupaba un ancho fijo y el nombre empezaba a su derecha; al partirse el
+   nombre, la segunda línea volvía a ese borde en vez de al margen del bloque, y
+   con dos palabras cortas quedaba justo en medio, como si estuviera centrada.
+   Así el texto se parte y sigue donde debe: a la izquierda. */
 .seg__child-info {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
+  display: block;
   width: 100%;
   text-align: left;
   cursor: default;
   font-size: 0.76rem;
   letter-spacing: 0.01em;
+  line-height: 1.45;
   opacity: 0.92;
 }
 .seg__child-info:hover, .seg__child-info:focus-visible { opacity: 1; }
-.seg__child-when { flex: 0 0 auto; }
+/* La fecha no se parte nunca por dentro: "12/9 – 13/9 · 10:00 – 13:00" es una
+   unidad, y partirla a media hora se lee fatal. */
+.seg__child-when { white-space: nowrap; margin-right: 0.6rem; }
 .seg__child-name { min-width: 0; }
 .seg__child-name b { font-weight: 700; }
 

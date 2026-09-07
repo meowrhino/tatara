@@ -157,8 +157,11 @@ function eventBlock(ev, o, today) {
     children.forEach((c) => {
       const row = el('div', 'seg__child');
       const info = el('div', 'seg__child-info');
+      // El espacio entre los dos <span> es literal, no solo el margen del CSS:
+      // sin él, copiar la línea o leerla con un lector de pantalla da
+      // "13:00O.R." todo junto.
       info.innerHTML =
-        `<span class="seg__child-when">${esc(rangeSlash(c))}</span>` +
+        `<span class="seg__child-when">${esc(rangeSlash(c))}</span> ` +
         `<span class="seg__child-name">${esc(kindOf(c, OR))} · ${esc(t(c.title))}${c.artist ? ' – <b>' + esc(c.artist) + '</b>' : ''}</span>`;
       row.appendChild(info);
       if (c.image) row.appendChild(mediaEl(c.image, t(c.title), imgCount++));
