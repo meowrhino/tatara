@@ -70,13 +70,23 @@ d'O.R. en JS. L'únic que es mesura és la marca **"avui"** (`placeTodayMark` a
 `js/agenda.js`), que viu fora del color i es reubica en carregar imatges i en
 redimensionar.
 
+## Documentació
+
+| | |
+|---|---|
+| [NEXT_STEPS.md](NEXT_STEPS.md)   | El que queda de l'encàrrec, en ordre |
+| [TODO_CLIENTE.md](TODO_CLIENTE.md) | Tot el que cal fer i revisar el dia del traspàs |
+| [TODO_DOMINIO.md](TODO_DOMINIO.md) | Apuntar `tatara.cat` a Cloudflare |
+| [DEPLOY.md](DEPLOY.md)           | Arquitectura, API i panell d'admin |
+| [FUTURO.md](FUTURO.md)           | Idees plantejades i **no pressupostades** |
+
 ## Pendent
 
-- **Links** de cada artista a la seva web (cap encara).
-- **Preus** de la botiga (només "Fricción" confirmat) + decisió/compte de **Stripe**.
-- **Traduccions** CAST/ENG (estructura i18n llesta, contingut només en català).
+- **Links** de cada artista a la seva web: n'hi ha vuit; falten les de nou
+  persones de recerca.
+- **Stock** de la botiga: neix a 0 i sense estoc res és comprable.
+- Decisió/compte de **Stripe** i **enviaments** (`data/envios.json` és buit).
 - **Instagram** per a contacte.
-- Data de l'esdeveniment d'Arnau Sala Saez (Catàleg de Fulles) — sense agenda fins que arribi.
 - Confirmar amb la clienta si HOLON, Alicia Monreal i el col·lectiu Alba Yruela
   (del pòster antic `Recurso 2.png`) segueixen vigents.
 - Doodles a mà definitius (de moment SVG aproximats meus).

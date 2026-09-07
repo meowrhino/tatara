@@ -210,22 +210,6 @@
         "es": "Bolsos hechos a mano con tejidos reutilizados, creados en colaboración con un centro social. Nos enorgullece haber desarrollado un sistema que permitió a todas las participantes disfrutar del proceso, aprender y compartir a lo largo de cuatro meses.",
         "en": "Handmade bags with reused fabrics, done in co-creation with a social centre. We are very proud to have created a system where all the users enjoyed the process, learned and shared during a four-month process."
       }
-    },
-    {
-      "id": "ceramica-maria-roy",
-      "title": {
-        "ca": "Peça de ceràmica",
-        "es": "Pieza de cerámica",
-        "en": "Ceramic piece"
-      },
-      "author": "Maria Roy Deulofeu",
-      "editorial": "Col·laboració amb TAT ARA",
-      "price": null,
-      "images": [
-        "assets/img/mr/mrd-373.webp",
-        "assets/img/mr/mrd-400.webp"
-      ],
-      "description": null
     }
   ]
 }

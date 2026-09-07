@@ -55,10 +55,7 @@ Cuando se retome, en este orden:
       semillaEcommerce y añadirla como sección/página de la SPA.
 - [ ] Dominio propio.
 
-## 4. Traspaso a la clienta (documentado en DEPLOY.md)
-- [ ] Su cuenta de Cloudflare + D1 propia (ahora comparte la base `shop` con quienNoCorre:
-      el backup semanal del repo de quienNoCorre cubre a ambas mientras tanto).
-- [ ] Transferir el repo de GitHub y reconectar Workers Builds.
-- [ ] Al separarse: añadir su propio workflow de backup
-      (plantilla en semillaEcommerce, `.github/workflows/backup-d1.yml` + secret
-      `CLOUDFLARE_API_TOKEN` de SU cuenta).
+## 4. Traspaso a la clienta
+Toda la lista —cuentas, D1 propia, secretos, Stripe, backups, qué se rompe si se olvida
+cada cosa— está en **[TODO_CLIENTE.md](TODO_CLIENTE.md)**. El dominio, en
+[TODO_DOMINIO.md](TODO_DOMINIO.md).
