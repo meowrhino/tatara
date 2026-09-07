@@ -124,7 +124,7 @@ function revisaAgenda(menu) {
   // Imágenes en assets/img/agenda que ya no usa nadie: no rompen nada, solo
   // ocupan sitio en el repo.
   const usadas = new Set();
-  for (const rel of ['data/agenda.json', 'data/persones.json', 'data/recerca.json', 'data/diari.json', 'data/edicions.json']) {
+  for (const rel of ['data/agenda.json', 'data/persones.json', 'data/recerca.json', 'data/edicions.json']) {
     if (!existsSync(join(ROOT, rel))) continue;
     for (const m of readFileSync(join(ROOT, rel), 'utf8').matchAll(/assets\/img\/[^"]+/g)) usadas.add(m[0]);
   }

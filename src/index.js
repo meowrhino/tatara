@@ -2,7 +2,7 @@
  * src/index.js — backend de TAT ARA en un Cloudflare Worker (Hono).
  *
  * Calcado del backend de quienNoCorre (la plantilla de ecommerce):
- *   - CATÁLOGO → data/edicions.json (source of truth; se edita y se hace push).
+ *   - CATÁLOGO → data/botiga.json (source of truth; se edita y se hace push).
  *   - D1 solo guarda lo MUTABLE: stock vivo, pedidos, newsletter y mensajes.
  *   - El precio/nombre es SIEMPRE el del JSON desplegado; el cliente no puede manipularlo.
  *
@@ -19,7 +19,7 @@
 import { Hono } from "hono";
 import Stripe from "stripe";
 
-import edicions from "../data/edicions.json";
+import edicions from "../data/botiga.json";
 import envios from "../data/envios.json";
 
 const productos = edicions.products || [];
@@ -203,7 +203,7 @@ app.post("/crear-sesion", async (c) => {
       success_url: `${frontend}/#carret?gracies=1&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${frontend}/#carret`,
       // Metadata mínima (límite Stripe: 500 chars/valor): solo id+cantidad.
-      // El webhook re-enriquece título/precio desde edicions.json.
+      // El webhook re-enriquece título/precio desde botiga.json.
       metadata: {
         carrito: JSON.stringify(resolved.map(({ p, cantidad }) => ({ id: p.id, cantidad }))),
         zona: envioResolved?.zona || "",

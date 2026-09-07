@@ -465,10 +465,11 @@
         "en": "Exhibition in transformation"
       },
       "title": {
-        "ca": "Arnau Sala Saez",
-        "es": "Arnau Sala Saez",
-        "en": "Arnau Sala Saez"
+        "ca": "Catàleg de Fulles",
+        "es": "Catàleg de Fulles",
+        "en": "Catàleg de Fulles"
       },
+      "artist": "Arnau Sala Saez",
       "image": "assets/img/agenda/20-arnau-sala-saez.webp",
       "start": "2026-09-05",
       "end": "2026-09-30",
@@ -535,9 +536,9 @@
         "en": "Exhibition and fair"
       },
       "title": {
-        "ca": "Inventory at Swab",
-        "es": "Inventory at Swab",
-        "en": "Inventory at Swab"
+        "ca": "Inventory",
+        "es": "Inventory",
+        "en": "Inventory"
       },
       "artist": "Guus Vandeweerd",
       "image": "assets/img/agenda/23-guus-vandeweerd.webp",

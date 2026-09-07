@@ -8,7 +8,7 @@ ver [TODO_DOMINIO.md](TODO_DOMINIO.md).
 
 ## Arquitectura
 
-- **Catálogo** → `data/edicions.json` (source of truth; editar + push).
+- **Catálogo** → `data/botiga.json` (source of truth; editar + push).
   Productos con `price: null` = pendientes → no comprables.
 - **D1 compartida `shop`** (una base para todos los ecommerces en desarrollo,
   id `6c1c1e51-76d4-4ab3-a912-7e7ad2749eca`). Cada tienda usa su prefijo:
@@ -80,7 +80,7 @@ No hace falta mover la web a otro repo.
 ### Panel de admin
 
 `/admin/` (guardar el `ADMIN_TOKEN` una vez): **stock** (fijar unidades por producto;
-el catálogo se sigue editando en `data/edicions.json` + push) y **pedidos** (email,
+el catálogo se sigue editando en `data/botiga.json` + push) y **pedidos** (email,
 items, dirección de envío y selector de estado pendiente/enviado/entregado/cancelado).
 
 También por curl, ejemplo de fijar stock:

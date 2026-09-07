@@ -259,7 +259,7 @@ export async function renderCart(view) {
   }
 
   const [data, envios] = await Promise.all([
-    loadJSON('data/edicions.json'),
+    loadJSON('data/botiga.json'),
     loadJSON('data/envios.json').catch(() => []),
   ]);
   const cur = data.currency || '€';

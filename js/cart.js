@@ -1,7 +1,7 @@
 /* ============================================================
    TAT ARA — carret
    Carrito en localStorage ('tatara:cart'). Guarda solo [{id, cantidad}]:
-   título y precio se resuelven SIEMPRE contra data/edicions.json al pintar
+   título y precio se resuelven SIEMPRE contra data/botiga.json al pintar
    (y el backend los revalida contra su copia — el cliente nunca manda precios).
    Emite 'tatara:cart' en cada cambio; el menú actualiza su contador.
    ============================================================ */

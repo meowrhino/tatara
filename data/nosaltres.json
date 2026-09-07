@@ -19,11 +19,11 @@
         "es": "Exposiciones",
         "en": "Exhibitions"
       },
-      "link": "artistes",
+      "link": "exposicions",
       "text": {
-        "ca": "Un espai de mostra per assajar i trobar afinitats, similituds i friccions. Un espai on buscar mirades còmplices des d'on es generen diàlegs de pensament sensible i crític. La galeria com a espai d'investigació on es creuen desig i crítica. Un espai en constant transformació. Podeu consultar totes les artistes, dissenyadores i pensadores que s'han vinculat amb l'espai a [exposicions](artistes).",
-        "es": "Un espacio de muestra para ensayar y encontrar afinidades, similitudes y fricciones. Un espacio donde buscar miradas cómplices desde donde se generan diálogos de pensamiento sensible y crítico. La galería como espacio de investigación donde se cruzan deseo y crítica. Un espacio en constante transformación. Podéis consultar todas las artistas, diseñadoras y pensadoras que se han vinculado con el espacio en [exposiciones](artistes).",
-        "en": "A space in which to experiment and discover affinities, similarities, and frictions. A place to seek out kindred perspectives from which sensitive and critical dialogues can emerge. The gallery as a space for research where desire and critique intersect. A space in constant transformation. You can discover all the artists, designers, and thinkers who have been involved with the space in the [Exhibitions](artistes) section."
+        "ca": "Un espai de mostra per assajar i trobar afinitats, similituds i friccions. Un espai on buscar mirades còmplices des d'on es generen diàlegs de pensament sensible i crític. La galeria com a espai d'investigació on es creuen desig i crítica. Un espai en constant transformació. Podeu consultar totes les artistes, dissenyadores i pensadores que s'han vinculat amb l'espai a [exposicions](exposicions).",
+        "es": "Un espacio de muestra para ensayar y encontrar afinidades, similitudes y fricciones. Un espacio donde buscar miradas cómplices desde donde se generan diálogos de pensamiento sensible y crítico. La galería como espacio de investigación donde se cruzan deseo y crítica. Un espacio en constante transformación. Podéis consultar todas las artistas, diseñadoras y pensadoras que se han vinculado con el espacio en [exposiciones](exposicions).",
+        "en": "A space in which to experiment and discover affinities, similarities, and frictions. A place to seek out kindred perspectives from which sensitive and critical dialogues can emerge. The gallery as a space for research where desire and critique intersect. A space in constant transformation. You can discover all the artists, designers, and thinkers who have been involved with the space in the [Exhibitions](exposicions) section."
       }
     },
     {
@@ -32,11 +32,11 @@
         "es": "Investigación",
         "en": "Research"
       },
-      "link": "diari",
+      "link": "recerca",
       "text": {
-        "ca": "Com aprenem? Com ens arriba el coneixement que constantment ens envolta, però sovint no ens travessa? Proposem explorar maneres d'aprendre i compartir coneixements. A través de tallers, lectures, converses, sessions d'escoltes, debats, sessions energètiques, grups de treball, consultoria i acompanyaments per trobar les eines de reflexió, transformació i connexió afectives. Podeu consultar les persones implicades i els temes explorats a l'apartat [recerca](diari).",
-        "es": "¿Cómo aprendemos? ¿Cómo nos llega el conocimiento que constantemente nos rodea, pero a menudo no nos atraviesa? Proponemos explorar maneras de aprender y compartir conocimientos. A través de talleres, lecturas, conversaciones, sesiones de escucha, debates, sesiones energéticas, grupos de trabajo, consultoría y acompañamientos para encontrar las herramientas de reflexión, transformación y conexión afectivas. Podéis consultar las personas implicadas y los temas explorados en el apartado [investigación](diari).",
-        "en": "How do we learn? How does the knowledge that constantly surrounds us reach us, yet so often fail to affect us? We explore different ways of learning and sharing knowledge. Through workshops, readings, conversations, listening sessions, debates, energy sessions, working groups, consultancy, and mentoring, we seek tools for reflection, transformation, and affective connection. You can discover the people involved and the subjects explored in the [Research](diari) section."
+        "ca": "Com aprenem? Com ens arriba el coneixement que constantment ens envolta, però sovint no ens travessa? Proposem explorar maneres d'aprendre i compartir coneixements. A través de tallers, lectures, converses, sessions d'escoltes, debats, sessions energètiques, grups de treball, consultoria i acompanyaments per trobar les eines de reflexió, transformació i connexió afectives. Podeu consultar les persones implicades i els temes explorats a l'apartat [recerca](recerca).",
+        "es": "¿Cómo aprendemos? ¿Cómo nos llega el conocimiento que constantemente nos rodea, pero a menudo no nos atraviesa? Proponemos explorar maneras de aprender y compartir conocimientos. A través de talleres, lecturas, conversaciones, sesiones de escucha, debates, sesiones energéticas, grupos de trabajo, consultoría y acompañamientos para encontrar las herramientas de reflexión, transformación y conexión afectivas. Podéis consultar las personas implicadas y los temas explorados en el apartado [investigación](recerca).",
+        "en": "How do we learn? How does the knowledge that constantly surrounds us reach us, yet so often fail to affect us? We explore different ways of learning and sharing knowledge. Through workshops, readings, conversations, listening sessions, debates, energy sessions, working groups, consultancy, and mentoring, we seek tools for reflection, transformation, and affective connection. You can discover the people involved and the subjects explored in the [Research](recerca) section."
       }
     },
     {

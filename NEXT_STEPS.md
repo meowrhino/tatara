@@ -5,7 +5,7 @@ checkout Stripe (dormido hasta poner claves), admin en `/admin/`. Esto es lo que
 en orden. Casi todo son decisiones de la clienta.
 
 ## 1. Decisiones de la clienta
-- [ ] **Precios** de las 5 ediciones que están a `price: null` en `data/edicions.json`
+- [ ] **Precios** de las 5 ediciones que están a `price: null` en `data/botiga.json`
       (solo Fricción tiene precio). Con precio puesto, pasan solas de "pròximament" a comprables.
 - [ ] **Envíos**: ¿solo recogida en galería o también envío? `data/envios.json` está vacío
       (`[]` = no se pide dirección ni se cobra). Para activarlos, rellenar zonas

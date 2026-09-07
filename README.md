@@ -24,12 +24,13 @@ fonts/                SuperstudioTrialTT (Regular/Bold) — wordmark i títols
 data/data.json        Config general: paleta, idiomes, contacte, índex de seccions
 data/agenda.json      Agenda (exposicions amb O.R. anidats)
 data/nosaltres.json   Text de la secció "nosaltres"
-data/persones.json    Artistes/dissenyadores/pensadores (bio + link)
-data/diari.json       Articles del journal
-data/edicions.json    Catàleg de la botiga
-assets/img/           Imatges optimitzades (.webp): agenda/ · edicions/ · mr/
+data/exposicions.json Exposicions: text, fotos, bio, full de sala (PDF)
+data/recerca.json     Recerca: converses, lectures i tallers
+data/botiga.json      Catàleg de la botiga
+assets/img/           Imatges optimitzades (.webp): agenda/ · expos/ · edicions/ · mr/
+assets/pdf/           Fulls de sala de les exposicions
 assets/icons/         Favicon
-tools/                Scripts: to-webp.sh, serve.py
+tools/                Scripts: check-data.mjs, to-webp.sh, serve.py
 ```
 
 > El material **font** (fotos originals, PDFs, `.pages`, mockups de `referencias/`)

@@ -1,0 +1,263 @@
+{
+  "_comment": "Seccion Exposicions. Una entrada por exposicion, en este orden: name (artista o artistas), expo {ca,es,en} (titulo de la muestra), date {start,end} en ISO, text {ca,es,en} (texto de la exposicion), images[] (fotos, se muestran apiladas en el modal), bio {ca,es,en}, link (web de la artista, null si no hay) y pdf (full de sala; admite un string, un objeto {url,label} o un array). Para separar grupos, intercala un item { \"spacer\": true }. Fuente: apartado EXPOSICIONS de 'web tatara-TEXT-SETEMBRE.docx'. Las personas que pasaron por el espacio sin exponer (converses, lectures, tallers) van en data/recerca.json.",
+  "people": [
+    {
+      "name": "Anna Dot",
+      "expo": {
+        "ca": "Pàteres de llet",
+        "es": "Pàteres de llet",
+        "en": "Pàteres de llet"
+      },
+      "date": {
+        "start": "2025-09-21",
+        "end": "2025-10-10"
+      },
+      "text": {
+        "ca": "Pàteres de llet és un diàleg obert sobre la maternitat i la conciliació a través d’un objecte íntim i ritualista vinculat a la lactància, un agraïment a la vida.",
+        "es": "Pàteres de llet es un diálogo abierto sobre la maternidad y la conciliación a través de un objeto íntimo y ritualista vinculado a la lactancia, un agradecimiento en la vida.",
+        "en": "Pàteres de llet is an open dialogue about motherhood and conciliation through an intimate and ritualistic object linked to breastfeeding, a gratitude to life."
+      },
+      "images": [
+        "assets/img/expos/anna-dot-1.webp",
+        "assets/img/expos/anna-dot-2.webp",
+        "assets/img/expos/anna-dot-3.webp",
+        "assets/img/expos/anna-dot-4.webp"
+      ],
+      "bio": {
+        "ca": "Anna Dot (Barcelona, 1991) té formació artística i un doctorat en Traducció i Llengües Aplicades, Anna desenvolupa la seva obra des d’una mirada interdisciplinària. El seu treball investiga com el llenguatge i la traducció configuren les nostres experiències, les relacions i la manera com habitem el món. Els seus projectes parteixen de preguntes, que explora a partir de pràctiques d’investigació i processos artístics que formalitza en performances, vídeos i instal·lacions. Aquestes preguntes inicials no donen una resposta directa, sinó que li donen una nova perspectiva que obre preguntes noves.",
+        "es": "Anna Dot (Barcelona, 1991) tiene formación artística y un doctorado en Traducción y Lenguas Aplicadas, Anna desarrolla su obra desde una mirada interdisciplinaria. Su trabajo investiga como el lenguaje y la traducción configuran nuestras experiencias, las relaciones y la manera como habitamos el mundo. Sus proyectos parten de preguntas, que explora a partir de prácticas de investigación y procesos artísticos que formaliza en performances, videos e instalaciones. Estas preguntas iniciales no dan una respuesta directa, sino que le dan una nueva perspectiva que abre preguntas nuevas.",
+        "en": "Anna Dot (Barcelona, 1991) has an artistic background and a PhD in Translation and Applied Languages, Anna develops her work from an interdisciplinary perspective. Her work investigates how language and translation shape our experiences, relationships and the way we inhabit the world. Her projects are based on questions, which she explores through research practices and artistic processes that she formalizes in performances, videos and installations. These initial questions do not give a direct answer, but give it a new perspective that opens up new questions."
+      },
+      "link": "https://www.annadot.net"
+    },
+    {
+      "name": "Tasio Ranz",
+      "expo": {
+        "ca": "Ensayo de lo Espontáneo",
+        "es": "Ensayo de lo Espontáneo",
+        "en": "Ensayo de lo Espontáneo"
+      },
+      "date": {
+        "start": "2025-10-17",
+        "end": "2025-11-30"
+      },
+      "text": {
+        "ca": "Ensayo de lo Espontáneo és una sèrie de tres tapissos confeccionats a mà amb llana 100% de raça castellana. Poden presentar-se de forma independent o unir-se per generar una composició triple. La mostra s’acompanya de “jauja.archive”, una composició polièdrica en format llibre que recull la creació multidisciplinària amb una perspectiva holística del disseny, una peça autoreproduïda per Santiago Daza Santana.",
+        "es": "Ensayo de lo Espontáneo es una série de tres tapices ha sido confeccionado a mano con lana 100% raza castellana. Pueden presentarse de forma independiente o unirse para componer un tríptico. Acompaña a la muestra “jauja.archive”, composición poliédrica en forma de libro, recoge un archivo de creación multidisciplinar desde una perspectiva holística del diseño, autoproducido por Santiago Daza Santana.",
+        "en": "Ensayo de lo Espontáneo is a series of three tapices has been made by hand with a 100% Castilian strip. They can be presented independently or united to compose a triptych. Accompanies the exhibition “jauja.archive”, polyhedral composition in the form of a book, covers a multidisciplinary creation archive from a holistic perspective of design, self-produced by Santiago Daza Santana."
+      },
+      "images": [
+        "assets/img/expos/tasio-ranz-1.webp",
+        "assets/img/expos/tasio-ranz-2.webp"
+      ],
+      "bio": {
+        "ca": "Tasio Ranz (Burgos, 1998) és dissenyador de producte i artista, centrat en el desenvolupament d’objectes i espais en diàleg amb pràctiques sostenibles que sorgeixen en contextos suburbans. El seu treball es basa en la investigació, l’experimentació material i l’articulació conceptual per materialitzar peces de mobiliari, il·luminació, creacions tèxtils i escenografies. Impulsa Laboratorio de Rumiantes, un projecte orientat a reactivar la llana local de Barcelona.",
+        "es": "Tasio Ranz (Burgos, 1998) es diseñador de producto y artista, centrado en el desarrollo de objetos y espacios en diálogo con prácticas sostenibles que emanan de contextos periurbanos. Su trabajo se asienta en la investigación, la experimentación material y la articulación conceptual para materializar piezas de mobiliario, luminarias, creaciones textiles y escenografías. Impulsa Laboratorio de Rumiantes, un proyecto orientado a reactivar la lana local en Barcelona.",
+        "en": "Tasio Ranz (Burgos, 1998) is a product and artist designer, focused on the development of objects and spaces in dialogue with sustainable practices that emanate from peri-urban contexts. His work is based on research, material experimentation and conceptual articulation to materialize pieces of furniture, luminaries, textile creations and set design. Promotes Laboratorio de Rumiantes, a project aimed at reactivating the local lana in Barcelona."
+      },
+      "link": null,
+      "pdf": "assets/pdf/tasio-ranz-full-de-sala.pdf"
+    },
+    {
+      "name": "Maria Roy Deulofeu",
+      "expo": {
+        "ca": "Sostenir la Terra",
+        "es": "Sostenir la Terra",
+        "en": "Sostenir la Terra"
+      },
+      "date": {
+        "start": "2025-12-13",
+        "end": "2026-01-28"
+      },
+      "text": {
+        "ca": "Sostenir la Terra és una exploració material a través del llenguatge de la ceràmica investiga històries i narratives de la terra del Montseny i de Salemi. Les peces despleguen la seva capacitat de crear espais de culte atemporals i pagans. L’artista s’apropia de la litúrgia de l’Antiga Grècia i la fusiona amb una cosmovisió que celebra la divinitat als estrats de la terra.",
+        "es": "Sostenir la Terra es una exploración material a través del lenguaje de la cerámica investiga historias y narrativas de la tierra del Montseny y de Salemi. Las piezas despliegan su capacidad de crear espacios de culto atemporales y paganos. El artista se apropia de la liturgia de la Antigua Grecia y la fusiona con una cosmovisión que celebra la divinidad en los estratos de la tierra.",
+        "en": "“Sostenir la Terra” is a material exploration through the language of ceramics, she investigates the histories and narratives of the soil from here and there. The pieces unfold their capacity to create timeless and pagan spaces of worship. The artist appropriates the liturgy of Ancient Greece and fuses it with a cosmovision that celebrates divinity within the earth’s strata."
+      },
+      "images": [
+        "assets/img/expos/maria-roy-1.webp",
+        "assets/img/expos/maria-roy-2.webp",
+        "assets/img/expos/maria-roy-3.webp",
+        "assets/img/expos/maria-roy-4.webp",
+        "assets/img/expos/maria-roy-5.webp"
+      ],
+      "bio": {
+        "ca": "Maria Roy Deulofeu (Barcelona, 1993) transita entre el disseny i la investigació, fent de la ceràmica un espai d’experimentació artesanal i sostenible. La seva principal àrea d’estudi és la terra, material viu, que narra la història, la política i l’ecologia de la localitat. La seva obra es troba a mig camí entre la tradició artesanal i l'exploració del paisatge urbà contemporani. Utilitza la ceràmica com a mig arqueològic per recuperar les narratives que ens connecten amb el nostre entorn a través de l’objecte.",
+        "es": "Maria Roy Deulofeu (Barcelona, 1993) transita entre el diseño y la investigación, haciendo de la cerámica un espacio de experimentación artesanal y sostenible. Su principal área de estudio es la tierra, material vivo, que narra la historia, la política y la ecología de la localidad. Su obra se encuentra a medio camino entre la tradición artesanal y la exploración del paisaje urbano contemporáneo. Utiliza la cerámica como medio arqueológico para recuperar las narrativas que nos conectan con nuestro entorno a través del objeto.",
+        "en": "Maria Roy Deulofeu (Barcelona, 1993) moves between design and research, making ceramics a space for artisanal and sustainable experimentation. Her main area of study is the land, living material, which tells the history, politics and ecology of the town. Her work is halfway between the artisan tradition and the exploration of the contemporary urban landscape. It uses ceramics as an archaeological medium to recover the narratives that connect us with our environment through the object."
+      },
+      "link": null,
+      "pdf": "assets/pdf/maria-roy-full-de-sala.pdf"
+    },
+    {
+      "name": "Ariadna Serrahima",
+      "expo": {
+        "ca": "Exercicis Tipogràfics i I.F Publications",
+        "es": "Exercicis Tipogràfics e I.F Publications",
+        "en": "Exercicis Tipogràfics and I.F Publications"
+      },
+      "date": {
+        "start": "2026-02-09",
+        "end": "2026-02-28"
+      },
+      "text": {
+        "ca": "Exposició retrospectiva del treball editorial d'Ariadna Serrahima. Tatara es converteix en espai de consulta, diàleg, venda i connexions mostrant les seves publicacions pròpies d'artista, \"Exercicis Tipogràfics\", i tots els llibres publicats amb el projecte I.F publications (International Friendship) conjuntament amb el filòsof Guillem Serrahima en els últims 10 anys. L’editorial d'art i pensament crític ha estat un referent en ‘el fer i reflexionar col·lectiu’ a través d'artistes com: Francesc Abad, Jordi Mitjà, Moritz Küng, Simon Williams, Alba Pagán, Santi Rivas, George Jepson, Riccardo Badano, Gui De Vore, Francesc Ruíz, Ferran Fandos i Dork Zabunyan. També gràcies a Anna L. Tsing, Isabelle Stengers, Jonathan Beller, Fred Moten i Stefano Harney, Itziar Okariz, George Brecht i Heimo Zobernig. Molts dels llibres presents a la mostra, han estat dissenyats i conceptualitzats durant el procés d'impressió a l'impremta Automàtica.",
+        "es": "Exposición retrospectiva del trabajo editorial de Ariadna Serrahima. Tatara se convierte en un espacio de consulta, diálogo, venta y conexión en el que se presentan sus publicaciones de artista, Exercicis Tipogràfics, y todos los libros publicados durante los últimos diez años por I.F Publications (International Friendship), proyecto que desarrolla junto con el filósofo Guillem Serrahima. Esta editorial de arte y pensamiento crítico ha sido un referente del «hacer y pensar en colectivo» a través de la colaboración con artistas como Francesc Abad, Jordi Mitjà, Moritz Küng, Simon Williams, Alba Pagán, Santi Rivas, George Jepson, Riccardo Badano, Gui De Vore, Francesc Ruíz, Ferran Fandos y Dork Zabunyan. También han formado parte del proyecto Anna L. Tsing, Isabelle Stengers, Jonathan Beller, Fred Moten y Stefano Harney, Itziar Okariz, George Brecht y Heimo Zobernig. Muchos de los libros presentes en la exposición fueron diseñados y conceptualizados durante el propio proceso de impresión en la imprenta Automàtica.",
+        "en": "A retrospective exhibition of Ariadna Serrahima’s editorial work. Tatara becomes a space for browsing, dialogue, sales, and connection, presenting her own artist publications, including Exercicis Tipogràfics, alongside all the books published over the past ten years by I.F Publications (International Friendship), a project she develops together with philosopher Guillem Serrahima. This publishing project dedicated to art and critical thought has become a reference point for «collective making and thinking» through collaborations with artists such as Francesc Abad, Jordi Mitjà, Moritz Küng, Simon Williams, Alba Pagán, Santi Rivas, George Jepson, Riccardo Badano, Gui De Vore, Francesc Ruíz, Ferran Fandos, and Dork Zabunyan. The project has also featured contributions from Anna L. Tsing, Isabelle Stengers, Jonathan Beller, Fred Moten and Stefano Harney, Itziar Okariz, George Brecht, and Heimo Zobernig. Many of the books included in the exhibition were designed and conceptualised during the printing process itself at the Automàtica print shop."
+      },
+      "images": [
+        "assets/img/expos/ariadna-serrahima-1.webp",
+        "assets/img/expos/ariadna-serrahima-2.webp",
+        "assets/img/expos/ariadna-serrahima-3.webp",
+        "assets/img/expos/ariadna-serrahima-4.webp",
+        "assets/img/expos/ariadna-serrahima-5.webp"
+      ],
+      "bio": {
+        "ca": "Ariadna Serrahima (Barcelona, 1984) és una dissenyadora gràfica i educadora especialitzada en edicions editorials i d'artistes. Ha desenvolupat la seva carrera en la intersecció de les arts visuals, el disseny gràfic i la seva investigació sobre les 'pedagogias radicals'. Després de treballar de forma independent durant molts anys, va cofundar l'estudi de disseny gràfic, Oficina de Disseny, el 2015. És professora i cofundadora de diversos projectes col·lectius, entre els quals destaquen: L'Automàtica, MUNT (plataforma d'art sonor) i I.F. Publications (editorial independent). També ha creat recentment 'Aquí no hay prisa', una iniciativa editorial autònoma amb seu a Oaxaca que se centra en l'aprenentatge comunitari fora dels marcs institucionals per enfortir els processos de resistència. Actualment està realitzant investigacions doctorals a Goldsmiths, Universitat de Londres.",
+        "es": "Ariadna Serrahima (Barcelona, 1984) es una diseñadora gráfica y educadora especializada en ediciones editoriales y de artistas. Ha desarrollado su carrera en la intersección de las artes visuales, el diseño gráfico y su investigación sobre las 'pedagogias radicales'. Después de trabajar de forma independiente durante muchos años, cofundó el estudio de diseño gráfico, Oficina de Diseño, el 2015. Es profesora y cofundadora de varios proyectos colectivos, entre los cuales destacan: La Automática, MUNT (plataforma de arte sonoro) e I.F. Publications (editorial independiente). También ha creado recientemente 'Aquí no hay prisa', una iniciativa editorial autónoma con sede en Oaxaca que se centra en el aprendizaje comunitario fuera de los marcos institucionales para fortalecer los procesos de resistencia. Actualmente está realizando investigaciones doctorales en Goldsmiths, Universidad de Londres.",
+        "en": "Ariadna Serrahima (born in Barcelona in 1984) is a graphic designer and educator who specialises in publishing and artists' editions. She has developed her career at the intersection of visual arts, graphic design, and her research into 'radical pedagogies'. After working independently for many years, she co-founded the graphic design studio, Oficina de Disseny, in 2015. She is a teacher and co-founder of several collective projects, including: L’Automàtica (a self-organised print shop), MUNT (a sound art platform) and I.F. Publications (an independent publishing house). She has also recently established 'Aquí no hay prisa', an autonomous publishing initiative based in Oaxaca that focuses on community learning outside institutional frameworks to strengthen resistance processes. She is currently conducting doctoral research at Goldsmiths, University of London."
+      },
+      "link": "http://ariadnaserrahima.com",
+      "pdf": "assets/pdf/ariadna-serrahima-cataleg.pdf"
+    },
+    {
+      "name": "Solange Dalannais",
+      "expo": {
+        "ca": "Presencia en la impermanencia",
+        "es": "Presencia en la impermanencia",
+        "en": "Presencia en la impermanencia"
+      },
+      "date": {
+        "start": "2026-04-18",
+        "end": "2026-05-30"
+      },
+      "text": {
+        "ca": "Presencia en la impermanencia és una exploració de llenguatges cartogràfics des d’on explorar en el sòl, l’essència del territori, cercant la connexió i relació entre codis transversals primaris. Dalannais explora el color de la flora silvestre a través d’una investigació d’alquímia. La simbiosi entre bacteris, espores i plantes obre el camp de recerca de les ecologies de l’aparició i processos d’activació, al mateix temps que obra la mirada per entrellaçar-se al territori en un procés d’acceptació i vincle.",
+        "es": "Presencia en la impermanencia es una exploración de lenguajes cartográficos desde donde explorar en el suelo, la esencia del territorio, buscando la conexión y relación entre códigos transversales primarios. Dalannais explora el color de la flora silvestre a través de una investigación de alquimia. La simbiosis entre bacterias, esporas y plantas abre el campo de investigación de las ecologías de la aparición y procesos de activación, al mismo tiempo que obra la mirada para entrelazarse en el territorio en un proceso de aceptación y vínculo.",
+        "en": "“Presencia en la impermanencia” is an exploration of cartographic languages used to investigate the soil and the essence of the territory, seeking a connection and relationship between primary transversal codes. Dalannais explores the color of wild flora through an alchemist research. The symbiosis between bacteria, spores, and plants opens a field of research into the “ecologies of emergence” and activation processes, while simultaneously expanding the gaze to intertwine with the territory in a process of acceptance and bonding."
+      },
+      "images": [
+        "assets/img/expos/solange-1.webp",
+        "assets/img/expos/solange-2.webp",
+        "assets/img/expos/solange-3.webp",
+        "assets/img/expos/solange-4.webp"
+      ],
+      "bio": {
+        "ca": "Solange Dalannais (Santiago de Chile, 1976) és artista transdisciplinar i paisagiste, el seu treball es basa en l’escolta profunda al territori com a gest de resistència a l’alteritat buscant la familiaritat del sòl. Dalannais porta més de deu anys investigant el sòl, les plantes silvestres i el color a través de la sensorialitat, la química i els sistemes. És natural de Santiago de Chile, amb arrels profundes a São Paulo i Barcelona. Forma part del col·lectiu activista i artístic Tornen les Esquelles.",
+        "es": "Solange Dalannais (Santiago de Chile, 1976) es artista transdisciplinar y paisagiste, su trabajo se basa en la escucha profunda en el territorio como gesto de resistencia a la alteridad buscando la familiaridad del suelo. Dalannais lleva más de diez años investigando el suelo, las plantas silvestres y el color a través de la sensorialidad, la química y los sistemas. Es natural de Santiago de Chile, con raíces profundas en São Paulo y Barcelona. Forma parte del colectivo activista y artístico Tornen les Esquelles.",
+        "en": "Solange Dalannais (Santiago de Chile, 1976) is an artist and landscape architect whose work is rooted in a deep listening to the territory — a gesture of resistance against “otherness” in search of a familiarity through the soil. For over ten years, Dalannais has been investigating the soil, wild plants, and color through sensoriality, chemistry, and systems. Born in Santiago de Chile with deep roots in São Paulo and Barcelona. She is a member of the activist and artistic collective Tornen les Esquelles."
+      },
+      "link": "http://www.solangedalannais.com/",
+      "pdf": "assets/pdf/solange-full-de-sala.pdf"
+    },
+    {
+      "name": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "expo": {
+        "ca": "No Limits",
+        "es": "No Limits",
+        "en": "No Limits"
+      },
+      "date": {
+        "start": "2026-06-04",
+        "end": "2026-06-20"
+      },
+      "text": {
+        "ca": "No Limits és un projecte de cocreació amb voluntat social de Joanna Mallol, Olatz Azcona i Sara G. De Ubieta, també hi col·labora Alba Yruela i Sara V. Mallo. El projecte té la voluntat d’implicar el món de l’art i del disseny al sector social. Entenent la disciplina artística com un coneixement vàlid per afrontar els reptes socials, ecològics i educatius actuals. Ho han fet amb el centre ocupacional TEB Bellvitge, el projecte d’inserció laboral Solidança i la fundació Engrunes.",
+        "es": "No Limits es un proyecto de cocreación con voluntad social de Joanna Mallol, Olatz Azcona y Sara G. De Ubieta, también colaboran Alba Yruela y Sara V. Mallo. El proyecto tiene la voluntad de implicar el mundo del arte y el diseño con el sector social. Entendiendo la disciplina artística como un conocimiento válido para afrontar los retos sociales, ecológicos y educativos actuales. Lo han hecho con el centro ocupacional TEB Bellvitge, el proyecto de inserción laboral Solidança y la fundación Engrunes.",
+        "en": "No Limits is a socially engaged co-creation project by Joana Mallol, Olatz Azcona, and Sara G. de Ubieta, with contributions from Alba Yruela and Sara V. Mallo. The project aims to connect the fields of art and design with the social sector, understanding artistic practice as a valid form of knowledge for addressing today’s social, ecological, and educational challenges. It has been developed in collaboration with the TEB Bellvitge occupational centre, the employment integration initiative Solidança, and Fundació Engrunes."
+      },
+      "images": [
+        "assets/img/expos/no-limits-1.webp",
+        "assets/img/expos/no-limits-2.webp",
+        "assets/img/expos/no-limits-3.webp",
+        "assets/img/expos/no-limits-4.webp",
+        "assets/img/expos/no-limits-5.webp"
+      ],
+      "bio": {
+        "ca": "Joana Mallol Mestre (Sant Feliu de Guíxols, 1991) és llicenciada en Estudis Literaris (UB), i en Comunicació i Producció Audiovisual (EMAV). Amb àmplia experiència en el sector social com a educadora i amb treball acompanyant persones amb diversitat funcional i discapacitat, ha creat vincle entre el món artístic, el cultural i el pedagògic que surt dels esquemes preconcebuts. — Olatz Azcona (Pamplona, 1981) és llicenciada en Belles Arts (UB). Ha realitzat estudis de direcció de cinema a Barcelona, és fundadora de Hako on desenvolupa el saber en disseny, direcció d’art i fotografia. — Sara González de Ubieta (Madrid, 1982) és llicenciada en Arquitectura Superior ETSAB (UPC). La seva pràctica professional se centra en la investigació i l’experimentació amb materials a través del disseny, entenent la matèria no com un recurs sinó com un element viu que pot transformar les relacions entre les persones i el seu entorn.",
+        "es": "Joana Mallol Mestre (Sant Feliu de Guíxols, 1991) es licenciada en Estudios Literarios (UB), y en Comunicación y Producción Audiovisual (EMAV). Experiencia en el sector social como educadora y del trabajo junto a personas con diversidad funcional y discapacidad, ha encontrado el vínculo entre el mundo artístico y cultural y una práctica pedagógica que querría salirse de los esquemas preconcebidos y de las prácticas habituales. — Olatz Azcona (Pamplona, 1981) es licenciada en Bellas Artes por la UB. Ha realizado estudios de dirección de cine en Barcelona, fundadora de Hako donde desarrolla sus saberes en diseño, dirección de arte y fotografía. — Sara González de Ubieta (Madrid, 1982) es licenciada en Arquitectura Superior por la ETSAB (UPC). Su práctica profesional se centra en la investigación y la experimentación con materiales a través del diseño, concibiendo la materia no solo como una forma provisional o un recurso de consumo, sino como un elemento vivo que puede transformar las relaciones entre las personas y su entorno.",
+        "en": "Joana Mallol Mestre (Sant Feliu de Guíxols, 1991) holds degrees in Literary Studies from the University of Barcelona (UB) and in Audiovisual Communication and Production from EMAV. Through her experience as an educator in the social sector and her work alongside people with functional diversity and disabilities, she has forged a connection between the artistic and cultural fields and a pedagogical practice that seeks to move beyond preconceived frameworks and conventional methods. — Olatz Azcona (Pamplona, 1981) holds a degree in Fine Arts from the University of Barcelona (UB) and has studied film directing in Barcelona. She is the founder of Hako, where she develops her practice in design, art direction, and photography. — Sara González de Ubieta (Madrid, 1982) holds a degree in Architecture from ETSAB (UPC). Her professional practice focuses on material research and experimentation through design. She conceives of matter not merely as a provisional form or a consumable resource, but as a living element capable of transforming relationships between people and their environment."
+      },
+      "link": null,
+      "pdf": "assets/pdf/no-limits-full-de-sala.pdf"
+    },
+    {
+      "name": "Emma Prats",
+      "expo": {
+        "ca": "Tocar Fusta",
+        "es": "Tocar Madera",
+        "en": "Knock on Wood"
+      },
+      "date": {
+        "start": "2026-06-24",
+        "end": "2026-09-03"
+      },
+      "text": {
+        "ca": "Tocar fusta parteix del gest, expressió i superstició popular homònima. Tenint origen en l’antiga creença que els mals esperits habitaven a la fusta, la interferència del contacte entre mà i superfície és generar un obstacle en l’escolta d’aquests esperits per evitar que reverteixin el desig verbalitzat. A partir d’aquest fenomen, es pretén explorar la seva vigència en la contemporaneïtat mitjançant la construcció col·lectiva de relats de sentit i la ritualització del subjecte. Desvelant una incertesa vinculada a una por o un desig, invocant una força major d’emparament. Així com la latència de la materialitat i el llenguatge com a capacitat d’acció, donant compte de la seva possibilitat d’estructurar i transformar la realitat, funcionant com una sort d’amulet.",
+        "es": "Tocar madera parte del gesto, expresión y superstición popular homónima. Tiene su origen en la antigua creencia de que los malos espíritus habitaban en la madera; el contacto entre la mano y la superficie interfería en la escucha de estos espíritus, generando un obstáculo que evitaba que revirtieran el deseo verbalizado. A partir de este fenómeno, se pretende explorar su vigencia en la contemporaneidad mediante la construcción colectiva de relatos de sentido y la ritualización del sujeto. Desvelando una incertidumbre vinculada a un miedo o a un deseo, e invocando una fuerza mayor de amparo. Asimismo, se atiende a la latencia de la materialidad y del lenguaje como capacidad de acción, dando cuenta de su posibilidad de estructurar y transformar la realidad, funcionando como una suerte de amuleto.",
+        "en": "Tocar Fusta “Knock on Wood” stems from the gesture, expression, and popular superstition of the same name. It originates from the ancient belief that evil spirits inhabited wood; the contact between hand and surface interfered with these spirits’ ability to hear, creating an obstacle that prevented them from reversing the spoken wish. From this phenomenon, the work seeks to explore its persistence in the contemporary moment through the collective construction of narratives of meaning and the ritualization of the subject. It reveals an uncertainty linked to fear or desire, invoking a greater protective force. At the same time, it tends to the latency of materiality and language as forms of agency, acknowledging their capacity to structure and transform reality, functioning as a kind of amulet."
+      },
+      "images": [
+        "assets/img/expos/emma-prats-1.webp",
+        "assets/img/expos/emma-prats-2.webp",
+        "assets/img/expos/emma-prats-3.webp",
+        "assets/img/expos/emma-prats-4.webp",
+        "assets/img/expos/emma-prats-5.webp",
+        "assets/img/expos/emma-prats-6.webp"
+      ],
+      "bio": {
+        "ca": "Emma Prats (Barcelona, 2001) parteix de gestos culturalment situats capaços d’activar formes de reconeixement. Mitjançant exercicis mínims, suggereix un desplaçament de l’atenció, obrint espai a la dimensió afectiva que intervé en la construcció de narratives de sentit i en processos d’identificació i codificació. És graduada en Disseny per BAU (2024). Ha participat en els programes d’estudi independents JAI Instituto de Prácticas Artísticas (Tabakalera Donosti, Artium i Museo Oteiza, 2025), Organismo Año Uno (TBA21, 2024-2025) i en el grup autogestionat d’investigació artística Departament Exotèric (MACBA, 2021-2023). La seva obra s’ha mostrat a la Fundació Miró dins el marc de Lluerna 2026 (Barcelona, 2026), Pluto (València, 2025), Sala d’Art Jove (Barcelona, 2024), ART NOU i MACBA dins del marc de Sala d’Art Jove (Barcelona, 2024). Ha sigut beneficiària de la residència d’Art i Mediambient de Matadero (Madrid, 2025) i del Premi Sala d’Art Jove Creació (Barcelona, 2024). Ha col·laborat amb la segona edició de Manual per fer volar coloms de la Fundació Miró i amb Archivo Orsini.",
+        "es": "Emma Prats (Barcelona, 2001) parte de gestos culturalmente situados capaces de activar formas de reconocimiento. Mediante ejercicios mínimos sugiere un desplazamiento de la atención, abriendo espacio a la dimensión afectiva que interviene en la construcción de narrativas de sentido y en procesos de identificación y codificación. Es graduada en Diseño por BAU (2024). Ha participado en los programas de estudio independientes JAI Instituto de Prácticas Artísticas (Tabakalera Donosti, Artium y Museo Oteiza, 2025), Organismo Año Uno (TBA21, 2024-2025) y en el grupo autogestionado de investigación artística Departament Exotèric (MACBA, 2021-2023). Su obra se ha mostrado en la Fundació Miró en el marco de Lluerna 2026 (Barcelona, 2026), Pluto (Valencia, 2025), Sala d’Art Jove (Barcelona, 2024), ART NOU y MACBA dentro del marco de Sala d’Art Jove (Barcelona, 2024). Ha sido beneficiaria de la residencia de Arte y Medioambiente de Matadero (Madrid, 2025) y del Premi Sala d’Art Jove Creació (Barcelona, 2024). Ha colaborado con la segunda edición de Manual per fer volar coloms de la Fundació Miró y con Archivo Orsini.",
+        "en": "Emma Prats (Barcelona, 2001) works from culturally situated gestures capable of activating forms of recognition. Through minimal exercises, she suggests a shift in attention, opening space for the affective dimension that intervenes in the construction of narratives of meaning and in processes of identification and encoding. She graduated in Design from BAU (2024). She has participated in the independent study programs JAI Institute of Artistic Practices (Tabakalera Donosti, Artium, and Museo Oteiza, 2025), Organismo Año Uno (TBA21, 2024-2025), and the self-managed artistic research group Departament Exotèric (MACBA, 2021-2023). Her work has been shown at the Fundació Miró within the framework of Lluerna 2026 (Barcelona, 2026), Pluto (Valencia, 2025), Sala d’Art Jove (Barcelona, 2024), ART NOU and MACBA within the framework of Sala d’Art Jove (Barcelona, 2024). She has been a beneficiary of the Matadero Art and Environment residency (Madrid, 2025) and the Sala d’Art Jove Creació Award (Barcelona, 2024). She has collaborated with the second edition of Manual per fer volar coloms of the Fundació Miró and with Archivo Orsini."
+      },
+      "link": null,
+      "pdf": "assets/pdf/emma-prats-full-de-sala.pdf"
+    },
+    {
+      "name": "Arnau Sala Saez",
+      "expo": {
+        "ca": "Catàleg de Fulles",
+        "es": "Catàleg de Fulles",
+        "en": "Catàleg de Fulles"
+      },
+      "date": {
+        "start": "2026-09-05",
+        "end": "2026-09-30"
+      },
+      "text": {
+        "ca": "Catàleg de Fulles és últim projecte de l’Arnau Sala Saez des d’on vol explorar la subcultura del te i explorar la possibilitat de treure’n coneixements vàlids per i amb el territori local.",
+        "es": "Catàleg de Fulles es último proyecto de Arnau Sala Saez desde donde quiere explorar la subcultura del té y explorar la posibilidad de sacar conocimientos válidos por y con el territorio local.",
+        "en": "Catàleg de Fulles is Arnau Sala Saez’s latest project, through which he explores tea subculture and the possibility of generating meaningful knowledge from and in collaboration with the local territory."
+      },
+      "bio": {
+        "ca": "Arnau Sala Saez (Manresa, 1978) és un artista i investigador multidisciplinari; a la seva pràctica explora la intersecció entre el so, el treball gràfic i la investigació de sistemes. En la seva vessant més teòrica i metodològica, desenvolupa propostes com Resistance Degrowth for Artists, on reflexiona sobre el decreixement en la pràctica artística, i Good Praxis, centrada en l'ètica i els protocols de treball.",
+        "es": "Arnau Sala Saez (Manresa, 1978) es un artista e investigador multidisciplinario; en su práctica explora la intersección entre el sonido, el trabajo gráfico y la investigación de sistemas. En su vertiente más teórica y metodológica, desarrolla propuestas como Resistance Degrowth for Artists, donde reflexiona sobre el decrecimiento en la práctica artística, y Good Praxis, centrada en la ética y los protocolos de trabajo.",
+        "en": "Arnau Sala Saez (Manresa, 1978) is a multidisciplinary artist and researcher whose practice explores the intersections between sound, graphic work, and systems research. In the more theoretical and methodological dimension of his practice, he develops projects such as Resistance Degrowth for Artists, which reflects on degrowth in artistic practice, and Good Praxis, which focuses on ethics and working protocols."
+      },
+      "link": "http://arnausalasaez.com"
+    },
+    {
+      "name": "Guus Vandeweerd",
+      "expo": {
+        "ca": "Inventory",
+        "es": "Inventory",
+        "en": "Inventory"
+      },
+      "date": {
+        "start": "2026-10-08",
+        "end": "2026-10-31"
+      },
+      "text": {
+        "ca": "Inventory és un projecte de recerca artística desenvolupat dins de Minecraft. Explora altres maneres d’habitar el planeta, de crear noves relacions amb el més-que-humà i de recuperar formes ancestrals de vincular-nos i relacionar-nos en una nova realitat. El projecte investiga la responsabilitat envers un lloc específic i com les pràctiques físiques i afectives poden, en retorn, donar forma a aquest lloc. Traduint coneixement ecològic situat a través de plantes, roques i objectes relacionals procedents de Flandes, Bèlgica.",
+        "es": "Inventory es un proyecto de investigación artística desarrollado dentro de Minecraft. Explora otras maneras de habitar el planeta, de crear nuevas relaciones con el más-que-humano y de recuperar formas ancestrales de vincularnos y relacionarnos en una nueva realidad. El proyecto investiga la responsabilidad hacia un lugar específico y cómo las prácticas físicas y afectivas pueden, en retorno, dar forma a este lugar. Traduciendo conocimiento ecológico situado a través de plantas, rocas y objetos relacionales procedentes de Flandes, Bélgica.",
+        "en": "Inventory is an artistic research project developed within Minecraft. It seeks to explore other ways of inhabiting the planet, creating new relationships with the more-than-human and recovering ancestral ways of bonding and relating in a new reality. It explores responsibility towards a specific place and how affective physical practices can, in return, shape that place. It translates situated ecological knowledge through plants, rocks, and relational objects from Flanders, Belgium."
+      },
+      "bio": {
+        "ca": "Guus Vandeweerd (Genk, Bèlgica, 2000) és investigador en disseny i viu a Brussel·les. Actualment cursa un doctorat a la PXL-MAD School of Arts i a la Universitat de Hasselt. La seva recerca se centra en els avatars més-que-humans i en la hibridació entre els entorns físics i virtuals. Els videojocs són el mitjà central de la seva pràctica interdisciplinària. Tot i que la seva obra sovint pren forma fora del joc, continua estretament vinculada al disseny de videojocs i a la creació de mons virtuals. L’especulació ocupa un lloc central en la manera com desenvolupa aquesta relació. La seva obra s’ha presentat a l’iMAL de Brussel·les, al London College of Fashion i a FRAME, a Hasselt. Els seus textos s’han publicat a Collateral i a l’International Journal of Performance Arts and Digital Media.",
+        "es": "Guus Vandeweerd (Genk, Bélgica, 2000) es investigador en diseño y vive en Bruselas. Actualmente cursa un doctorado en la PXL-MAD School of Arts y en la Universidad de Hasselt. Su investigación se centra en los avatares más-que-humanos y en la hibridación entre los entornos físicos y virtuales. Los videojuegos son el medio central de su práctica interdisciplinaria. A pesar de que su obra a menudo toma forma fuera del juego, continúa estrechamente vinculada al diseño de videojuegos y a la creación de mundos virtuales. La especulación ocupa un lugar central en la manera como desarrolla esta relación. Su obra se ha presentado en el iMAL de Bruselas, en el London College of Fashion y en FRAME, en Hasselt. Sus textos se han publicado en Collateral y en el International Journal of Performance Arts and Digital Media.",
+        "en": "Guus Vandeweerd (Genk, Belgium, 2000) is a design researcher based in Brussels. He is currently pursuing a PhD at PXL-MAD School of Arts and Hasselt University. His research focuses on more-than-human avatars and the hybridity between physical and virtual environments. Games are the central medium of his interdisciplinary practice. Although his work often takes shape outside the game itself, it remains connected to game design and virtual worlding. Speculation is central to how he develops this relationship. His work has been presented at iMAL in Brussels and London College of Fashion. It has also been shown at FRAME in Hasselt. His writing has appeared in Collateral and the International Journal of Performance Arts and Digital Media."
+      },
+      "link": "https://www.guusvandeweerd.com/"
+    }
+  ]
+}
