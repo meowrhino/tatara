@@ -23,7 +23,29 @@ let errores = 0, avisos = 0;
 const err = (dónde, qué) => { errores++; console.log(`  ✗ ${dónde}: ${qué}`); };
 const avi = (dónde, qué) => { avisos++; console.log(`  · ${dónde}: ${qué}`); };
 
-const leer = (rel) => JSON.parse(readFileSync(join(ROOT, rel), 'utf8'));
+// Un JSON mal escrito (una coma de más, una que falta) deja la web en blanco:
+// es el error más fácil de cometer editando a mano y el más difícil de leer en
+// el mensaje que da Node. Aquí lo traducimos a "archivo, línea, y esta es".
+function leer(rel) {
+  const bruto = readFileSync(join(ROOT, rel), 'utf8');
+  try {
+    return JSON.parse(bruto);
+  } catch (e) {
+    const pos = /position (\d+)/.exec(e.message);
+    let dónde = '';
+    if (pos) {
+      const hasta = bruto.slice(0, +pos[1]);
+      const línea = hasta.split('\n').length;
+      const texto = bruto.split('\n')[línea - 1] || '';
+      dónde = `\n     línea ${línea}:  ${texto.trim()}`;
+    }
+    console.log(`\n✗ ${rel} no es un JSON válido y la web no lo va a poder abrir.`);
+    console.log(`     ${e.message}${dónde}`);
+    console.log('\n  Casi siempre es una coma: sobra una antes de un } o un ], o falta');
+    console.log('  una entre dos líneas. Cada entrada va separada por coma menos la última.\n');
+    process.exit(1);
+  }
+}
 
 /* ---------- comprobaciones sueltas ---------- */
 
