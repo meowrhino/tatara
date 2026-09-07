@@ -1,12 +1,13 @@
 # NEXT STEPS — TAT ARA (parte ecommerce)
 
 El código de la tienda está completo y desplegado (2026-07-07): botiga con carret real,
-checkout Stripe (dormido hasta poner claves), admin en `/admin/`. Esto es lo que queda,
-en orden. Casi todo son decisiones de la clienta.
+checkout Stripe (dormido hasta poner claves), admin en `/admin/`. El contenido de las
+cinco secciones está al día con el documento de septiembre (2026-09-07). Esto es lo que
+queda, en orden. Casi todo son decisiones de la clienta, no código.
 
 ## 1. Decisiones de la clienta
-- [ ] **Precios** de las 5 ediciones que están a `price: null` en `data/botiga.json`
-      (solo Fricción tiene precio). Con precio puesto, pasan solas de "pròximament" a comprables.
+- [x] ~~**Precios**~~ — puestos los once desde la tabla del documento de septiembre
+      (7 de septiembre de 2026). Ya no queda ningún `price: null`.
 - [ ] **Envíos**: ¿solo recogida en galería o también envío? `data/envios.json` está vacío
       (`[]` = no se pide dirección ni se cobra). Para activarlos, rellenar zonas
       (`{zona, nombre, precio|tramos, paises?, recogida?}`) — el worker ya lo soporta,
