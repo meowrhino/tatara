@@ -1,76 +1,131 @@
 <!doctype html>
-<html lang="es">
+<html lang="ca">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Pedidos — Admin TAT ARA</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Comandes — Admin TAT ARA</title>
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
+    <header class="bar bar--top">
+      <span class="bar__side"><a href="index.html">← panell</a></span>
+      <a class="word" href="index.html" aria-label="TAT ARA"><span>T</span><span>A</span><span>T</span></a>
+      <span class="bar__side bar__side--right"><a href="stock.html">stock</a></span>
+    </header>
+
     <main>
-      <h1>Pedidos</h1>
-      <p><a href="index.html">← volver</a></p>
-      <table id="tabla">
-        <thead>
-          <tr><th>Fecha</th><th>Email</th><th>Total</th><th>Items</th><th>Envío</th><th>Estado</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <h1>Comandes</h1>
+      <p class="soft">Les cent últimes. L'estat es guarda sol en triar-lo.</p>
+
+      <div class="taula-scroll">
+        <table id="taula" hidden>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Correu</th>
+              <th class="num">Total</th>
+              <th>Peces</th>
+              <th>Enviament</th>
+              <th>Estat</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="estat" id="estat">carregant…</p>
     </main>
+
+    <footer class="bar bar--bottom">
+      <span class="bar__side"></span>
+      <span class="word" role="img" aria-label="ARA"><span>A</span><span>R</span><span>A</span></span>
+      <span class="bar__side bar__side--right"></span>
+    </footer>
 
     <script>
       const token = localStorage.getItem("tatara:admin") || "";
-      const ESTADOS = ["pendiente", "enviado", "entregado", "cancelado"];
+      const ESTATS = ["pendiente", "enviado", "entregado", "cancelado"];
+      const $ = (sel) => document.querySelector(sel);
+      const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-      const dirTxt = (envio) => {
+      function avis(html, esError) {
+        const el = $("#estat");
+        el.innerHTML = html;
+        el.hidden = false;
+        el.className = "estat" + (esError ? " estat--error" : "");
+      }
+
+      // La direcció ve de Stripe, amb els noms de camp d'ells.
+      const adreca = (envio) => {
         if (!envio) return "—";
         const a = envio.direccion || {};
-        const partes = [envio.nombre, a.line1, a.line2, [a.postal_code, a.city].filter(Boolean).join(" "), a.state, a.country]
-          .filter(Boolean);
-        const zona = envio.zona ? `[${envio.zona}] ` : "";
-        return zona + (partes.length ? partes.join(", ") : "sin dirección");
+        const parts = [envio.nombre, a.line1, a.line2,
+          [a.postal_code, a.city].filter(Boolean).join(" "), a.state, a.country].filter(Boolean);
+        return (envio.zona ? `[${envio.zona}] ` : "") + (parts.length ? parts.join(", ") : "sense adreça");
       };
 
-      async function load() {
-        if (!token) return alert("Guarda el token en /admin primero");
-        const res = await fetch(`/api/admin/historial?limit=100`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!res.ok) return alert("Error: " + res.status);
+      async function carrega() {
+        if (!token) {
+          return avis('Falta la contrasenya. <a href="index.html">Posa-la al panell</a> i torna.', true);
+        }
+        let comandes;
+        try {
+          const res = await fetch("/api/admin/historial?limit=100", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (res.status === 401) return avis("Contrasenya incorrecta.", true);
+          if (!res.ok) return avis("Error " + res.status + " en demanar les comandes.", true);
+          comandes = await res.json();
+        } catch (err) {
+          return avis("Sense connexió amb el servidor: " + esc(err.message), true);
+        }
 
-        const pedidos = await res.json();
-        const tbody = document.querySelector("#tabla tbody");
-        tbody.innerHTML = pedidos
-          .map(
-            (p) => `
-            <tr>
-              <td>${new Date(p.createdAt + "Z").toLocaleString()}</td>
-              <td>${p.email || "—"}</td>
-              <td>${((p.amount_total || 0) / 100).toFixed(2)} €</td>
-              <td>${(p.items || []).map((i) => `${i.nombre || i.id} ×${i.cantidad}`).join(", ")}</td>
-              <td>${dirTxt(p.envio)}</td>
-              <td>
-                <select data-pedido="${p.id}">
-                  ${ESTADOS.map((e) => `<option value="${e}" ${e === (p.estado || "pendiente") ? "selected" : ""}>${e}</option>`).join("")}
-                </select>
-              </td>
-            </tr>`
-          )
-          .join("");
+        if (!comandes.length) {
+          // Encara no s'ha venut res: no és un error, i convé que es noti.
+          return avis("Encara no hi ha cap comanda.");
+        }
 
-        tbody.querySelectorAll("select[data-pedido]").forEach((sel) => {
+        $("#taula tbody").innerHTML = comandes.map((p) => `
+          <tr>
+            <td>${esc(new Date(p.createdAt + "Z").toLocaleString("ca-ES"))}</td>
+            <td>${esc(p.email || "—")}</td>
+            <td class="num">${((p.amount_total || 0) / 100).toFixed(2)} €</td>
+            <td>${esc((p.items || []).map((i) => `${i.nombre || i.id} ×${i.cantidad}`).join(", "))}</td>
+            <td>${esc(adreca(p.envio))}</td>
+            <td>
+              <select data-comanda="${esc(p.id)}" aria-label="estat de la comanda">
+                ${ESTATS.map((e) => `<option value="${e}"${e === (p.estado || "pendiente") ? " selected" : ""}>${e}</option>`).join("")}
+              </select>
+            </td>
+          </tr>`).join("");
+        $("#estat").hidden = true;
+        $("#taula").hidden = false;
+
+        document.querySelectorAll("select[data-comanda]").forEach((sel) => {
+          // Si el desat falla, tornem el selector on estava: així el que es veu a la
+          // pantalla i el que hi ha guardat no poden acabar dient coses diferents.
+          let anterior = sel.value;
           sel.addEventListener("change", async () => {
-            const res = await fetch(`/api/admin/pedido-estado`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-              body: JSON.stringify({ id: sel.dataset.pedido, estado: sel.value }),
-            });
-            if (!res.ok) alert("Error guardando estado: " + res.status);
+            sel.disabled = true;
+            try {
+              const res = await fetch("/api/admin/pedido-estado", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ id: sel.dataset.comanda, estado: sel.value }),
+              });
+              if (!res.ok) throw new Error(res.status);
+              anterior = sel.value;
+            } catch (err) {
+              sel.value = anterior;
+              alert("No s'ha pogut guardar l'estat (" + err.message + "). Torna-ho a provar.");
+            } finally {
+              sel.disabled = false;
+            }
           });
         });
       }
 
-      load();
+      carrega();
     </script>
   </body>
 </html>

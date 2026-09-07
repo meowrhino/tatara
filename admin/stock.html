@@ -1,71 +1,136 @@
 <!doctype html>
-<html lang="es">
+<html lang="ca">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
     <title>Stock — Admin TAT ARA</title>
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
+    <header class="bar bar--top">
+      <span class="bar__side"><a href="index.html">← panell</a></span>
+      <a class="word" href="index.html" aria-label="TAT ARA"><span>T</span><span>A</span><span>T</span></a>
+      <span class="bar__side bar__side--right"><a href="../#botiga">↗ botiga</a></span>
+    </header>
+
     <main>
       <h1>Stock</h1>
-      <p><a href="index.html">← volver</a></p>
-      <p class="soft">El catálogo (títulos, precios) se edita en <code>data/botiga.json</code> + push.
-        Aquí solo el stock vivo. Los productos sin precio no son comprables aunque tengan stock.</p>
-      <div id="lista"></div>
-      <button id="guardar">Guardar cambios</button>
-      <span id="feedback" class="soft"></span>
+      <p class="soft">Quantes unitats queden de cada peça. Una peça amb 0 surt a la
+        web com a <em>exhaurit</em>: es veu, però no es pot comprar.</p>
+
+      <div class="taula-scroll">
+        <table id="taula" hidden>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Peça</th>
+              <th class="num">Preu</th>
+              <th class="num">Unitats</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="estat" id="estat">carregant…</p>
+
+      <div class="accions" id="accions" hidden>
+        <button id="guardar" type="button">Guardar canvis</button>
+        <span id="feedback" class="feedback"></span>
+      </div>
+
+      <p class="nota">El títol, el preu i la foto surten de <code>data/botiga.json</code>
+        i no es canvien des d'aquí. Una peça sense preu no és comprable encara que
+        tingui unitats.</p>
     </main>
+
+    <footer class="bar bar--bottom">
+      <span class="bar__side"></span>
+      <span class="word" role="img" aria-label="ARA"><span>A</span><span>R</span><span>A</span></span>
+      <span class="bar__side bar__side--right"></span>
+    </footer>
 
     <script>
       const token = localStorage.getItem("tatara:admin") || "";
-      let productos = [];
+      const $ = (sel) => document.querySelector(sel);
+      const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-      async function load() {
-        if (!token) return alert("Guarda el token en /admin primero");
-        const [edicions, stockRes] = await Promise.all([
-          fetch("../data/botiga.json").then((r) => r.json()),
-          fetch("/api/stock").then((r) => r.json()).catch(() => ({})),
-        ]);
-        productos = (edicions.products || []).map((p) => ({
-          id: p.id,
-          title: (typeof p.title === "string" ? p.title : (p.title?.ca ?? Object.values(p.title ?? {})[0] ?? "")),
-          sinPrecio: !(typeof p.price === "number" && p.price > 0),
-          cantidad: Number(stockRes[p.id]?._ ?? 0),
+      // El títol pot ser text solt o {ca, es, en}: aquí sempre l'ensenyem en català.
+      const titol = (p) => (typeof p.title === "string" ? p.title : (p.title?.ca ?? Object.values(p.title ?? {})[0] ?? ""));
+
+      function avis(html, esError) {
+        const el = $("#estat");
+        el.innerHTML = html;
+        el.hidden = false;
+        el.className = "estat" + (esError ? " estat--error" : "");
+      }
+
+      let productes = [];
+
+      async function carrega() {
+        if (!token) {
+          return avis('Falta la contrasenya. <a href="index.html">Posa-la al panell</a> i torna.', true);
+        }
+        try {
+          const [cataleg, stock] = await Promise.all([
+            fetch("../data/botiga.json").then((r) => r.json()),
+            fetch("/api/stock").then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+          ]);
+          productes = (cataleg.products || []).map((p) => ({
+            id: p.id,
+            titol: titol(p),
+            preu: typeof p.price === "number" && p.price > 0 ? p.price : null,
+            moneda: cataleg.currency || "€",
+            foto: (p.images || [])[0] || null,
+            unitats: Number(stock[p.id]?._ ?? 0),
+          }));
+        } catch (err) {
+          return avis("No s'ha pogut carregar el catàleg: " + esc(err.message), true);
+        }
+        if (!productes.length) return avis("El catàleg és buit.");
+        pinta();
+      }
+
+      function pinta() {
+        $("#taula tbody").innerHTML = productes.map((p, i) => `
+          <tr>
+            <td>${p.foto ? `<img class="mini" src="../${esc(p.foto)}" alt="" loading="lazy">` : '<span class="mini"></span>'}</td>
+            <td>${esc(p.titol)}${p.preu === null ? ' <span class="tag tag--avis">sense preu</span>' : ""}</td>
+            <td class="num">${p.preu === null ? "—" : esc(p.preu + p.moneda)}</td>
+            <td class="num"><input type="number" min="0" step="1" value="${p.unitats}"
+                  data-prod="${i}" aria-label="unitats de ${esc(p.titol)}"></td>
+          </tr>`).join("");
+        $("#estat").hidden = true;
+        $("#taula").hidden = false;
+        $("#accions").hidden = false;
+      }
+
+      $("#guardar").addEventListener("click", async (e) => {
+        const btn = e.currentTarget;
+        const feedback = $("#feedback");
+        btn.disabled = true;
+        feedback.textContent = "";
+        const payload = [...document.querySelectorAll("input[data-prod]")].map((inp) => ({
+          id: productes[Number(inp.dataset.prod)].id,
+          cantidad: Math.max(0, Number(inp.value) || 0),
         }));
-        render();
-      }
-
-      function render() {
-        document.getElementById("lista").innerHTML = productos
-          .map(
-            (p, i) => `
-            <fieldset>
-              <legend>${p.title} ${p.sinPrecio ? '<span class="soft">(sense preu — no comprable)</span>' : ""}</legend>
-              <label>stock:
-                <input type="number" min="0" value="${p.cantidad}" data-prod="${i}">
-              </label>
-            </fieldset>`
-          )
-          .join("");
-      }
-
-      document.getElementById("guardar").addEventListener("click", async () => {
-        const payload = [];
-        document.querySelectorAll("input[data-prod]").forEach((inp) => {
-          const p = productos[Number(inp.dataset.prod)];
-          payload.push({ id: p.id, cantidad: Number(inp.value) || 0 });
-        });
-        const res = await fetch(`/api/admin/stock-bulk`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-          body: JSON.stringify({ productos: payload }),
-        });
-        document.getElementById("feedback").textContent =
-          res.ok ? "guardado ✓" : "error " + res.status;
+        try {
+          const res = await fetch("/api/admin/stock-bulk", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ productos: payload }),
+          });
+          feedback.textContent = res.ok ? "guardat ✓" : (res.status === 401 ? "contrasenya incorrecta" : "error " + res.status);
+          feedback.className = "feedback " + (res.ok ? "feedback--ok" : "feedback--error");
+        } catch {
+          feedback.textContent = "sense connexió amb el servidor";
+          feedback.className = "feedback feedback--error";
+        } finally {
+          btn.disabled = false;
+        }
       });
 
-      load();
+      carrega();
     </script>
   </body>
 </html>

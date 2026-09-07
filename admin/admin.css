@@ -1,18 +1,213 @@
-/* Admin interno de TAT ARA — autocontenido, no usa el CSS de la web. */
+/* ============================================================
+   TAT ARA — panell d'administració
+   Autocontingut a propòsit: NO importa css/styles.css. L'admin no és la web
+   pública (no té router, ni idiomes, ni el marc TAT·ARA sencer) i barrejar els
+   dos fulls faria que tocar un color de la web pogués trencar el panell.
+
+   El que sí es copia són els tokens de data.json → theme i palette, perquè el
+   panell es reconegui com a part de la mateixa casa. Si allà canvia un color,
+   canviar-lo també aquí, a :root. Són set línies.
+   ============================================================ */
+
+:root {
+  color-scheme: only light;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* mateixos valors que data.json → theme */
+  --bg: #ffffff;
+  --ink: #111111;
+  --ink-mid: #6f6f6f;
+  --ink-soft: #9a9a9a;
+  --grey-soft: #eae7e0;
+
+  /* mateixos valors que data.json → palette */
+  --blau: #aec6cd;
+  --menta: #cbdac3;
+  --rosa: #e3a57e;
+  --mostassa: #cfc1ab;
+
+  --bar-h: 52px;
+  --col: 640px;   /* més ample que a la web: aquí hi ha taules */
+}
+
 * { box-sizing: border-box; }
-body { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 14px; margin: 0; padding: 2rem 1.2rem 4rem; color: #111; background: #fff; }
-main { max-width: 44rem; margin: 0 auto; }
-h1 { font-size: 1.1rem; letter-spacing: 0.12em; text-transform: uppercase; }
-a { color: inherit; }
-nav { display: flex; gap: 1.2rem; margin-top: 1.4rem; }
-section { margin: 1.4rem 0; }
+
+body {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  padding: var(--bar-h) 1.2rem calc(var(--bar-h) + 2rem);
+  color: var(--ink);
+  background: var(--bg);
+}
+
+main { max-width: var(--col); margin: 0 auto; }
+
+/* ---------- marc: TAT a dalt, ARA a baix, com a la web ---------- */
+
+.bar {
+  position: fixed;
+  left: 0; right: 0;
+  height: var(--bar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  background: var(--bg);
+  z-index: 10;
+}
+.bar--top { top: 0; }
+.bar--bottom { bottom: 0; }
+
+/* Les tres lletres repartides, com la marca de la web. */
+.word {
+  display: flex;
+  justify-content: space-between;
+  width: min(var(--col), 60vw);
+  letter-spacing: 0.02em;
+}
+.bar a { color: inherit; text-decoration: none; }
+.bar__side {
+  min-width: 5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-mid);
+}
+.bar__side--right { text-align: right; }
+
+/* ---------- text ---------- */
+
+h1 {
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 0.3rem;
+}
+h2 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  margin: 2.2rem 0 0.8rem;
+}
+p { margin: 0 0 1rem; }
+a { color: inherit; text-underline-offset: 0.18em; }
+.soft { color: var(--ink-mid); }
+.nota {
+  background: var(--grey-soft);
+  padding: 0.8rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.nota code { background: rgba(0, 0, 0, 0.05); padding: 0.05em 0.3em; }
+
+/* ---------- controls ---------- */
+
+input, select, button {
+  font: inherit;
+  color: inherit;
+  border: 1px solid var(--ink);
+  background: none;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0;
+}
+input[type="number"] { width: 5.5rem; text-align: right; }
+button { cursor: pointer; letter-spacing: 0.04em; }
+button:hover:not(:disabled) { background: var(--ink); color: var(--bg); }
+button:disabled { opacity: 0.4; cursor: default; }
 label { display: inline-flex; gap: 0.5rem; align-items: center; }
-input, select, button { font: inherit; border: 1px solid #111; background: none; padding: 0.35rem 0.6rem; }
-button { cursor: pointer; }
-button:hover { background: #111; color: #fff; }
-fieldset { border: 1px solid #111; margin: 0 0 1rem; padding: 0.8rem 1rem; }
-legend { padding: 0 0.4rem; font-weight: 700; }
-table { border-collapse: collapse; width: 100%; }
-th, td { border-bottom: 1px solid #ccc; text-align: left; padding: 0.5rem 0.6rem; vertical-align: top; }
-th { border-bottom-color: #111; }
-.soft { color: #777; }
+
+/* Acció principal d'una pantalla: enganxada a baix mentre es fa scroll, perquè
+   en una llista llarga el botó de guardar no quedi fora de vista. */
+.accions {
+  position: sticky;
+  bottom: calc(var(--bar-h) + 0.6rem);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 1.6rem -1.2rem 0;
+  /* El fondo tiene que llegar de lado a lado: si no, al quedarse pegado abajo se
+     ven las filas de la tabla asomando por los costados del botón. */
+  padding: 0.7rem 1.2rem;
+  background: var(--bg);
+  box-shadow: 0 -0.6rem 0.6rem var(--bg);
+}
+
+/* ---------- portada: les dues targetes ---------- */
+
+.cartes { display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); margin-top: 1.6rem; }
+.carta {
+  display: block;
+  padding: 1.4rem 1.2rem;
+  text-decoration: none;
+  min-height: 8rem;
+}
+.carta--stock { background: var(--menta); }
+.carta--pedidos { background: var(--blau); }
+.carta__titol { display: block; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.8rem; }
+.carta__desc { display: block; margin-top: 0.5rem; font-size: 0.82rem; line-height: 1.5; }
+.carta:hover .carta__titol { text-decoration: underline; text-underline-offset: 0.18em; }
+
+/* ---------- taules ---------- */
+
+/* Les taules no caben en un mòbil: scroll horitzontal dins del seu propi
+   contenidor, mai a la pàgina sencera. */
+.taula-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+th, td { text-align: left; padding: 0.6rem 0.7rem; vertical-align: middle; border-bottom: 1px solid var(--grey-soft); }
+th {
+  border-bottom: 1px solid var(--ink);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--ink-mid);
+  white-space: nowrap;
+}
+tbody tr:hover { background: rgba(0, 0, 0, 0.02); }
+td.num { text-align: right; white-space: nowrap; }
+
+/* Miniatura del producte, per reconèixer-lo d'un cop d'ull. */
+.mini { width: 44px; height: 44px; object-fit: cover; background: var(--grey-soft); display: block; }
+
+/* Etiqueta d'estat (sense preu, esgotat…). */
+.tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  background: var(--grey-soft);
+  color: var(--ink-mid);
+  white-space: nowrap;
+}
+.tag--avis { background: var(--rosa); color: var(--ink); }
+
+/* ---------- avisos ---------- */
+
+/* Ocupa el lloc de la llista mentre carrega o quan no hi ha res a ensenyar,
+   en comptes de deixar la pantalla en blanc. */
+.estat { padding: 2.5rem 0; text-align: center; color: var(--ink-mid); }
+.estat--error { color: var(--ink); }
+.estat a { font-weight: 700; }
+
+.feedback { font-size: 0.82rem; color: var(--ink-mid); }
+.feedback--ok { color: var(--ink); }
+.feedback--error { color: var(--ink); background: var(--rosa); padding: 0.15rem 0.45rem; }
+
+@media (max-width: 520px) {
+  body { padding-left: 0.9rem; padding-right: 0.9rem; }
+  .bar { padding: 0 0.9rem; }
+  .accions { margin-left: -0.9rem; margin-right: -0.9rem; padding-left: 0.9rem; padding-right: 0.9rem; }
+  /* En un móvil no caben las dos esquinas y la marca en la misma línea. Se queda
+     el "← panell", que es la navegación; el enlace de la derecha está duplicado
+     dentro de la página. */
+  .bar__side { min-width: 0; font-size: 0.72rem; }
+  .bar__side--right { display: none; }
+  .word { width: 62vw; margin-left: auto; }
+  .bar--bottom .word { margin: 0 auto; }
+  h1 { font-size: 0.9rem; }
+}

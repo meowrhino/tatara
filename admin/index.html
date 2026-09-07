@@ -1,35 +1,77 @@
 <!doctype html>
-<html lang="es">
+<html lang="ca">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
     <title>Admin — TAT ARA</title>
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
+    <header class="bar bar--top">
+      <span class="bar__side">admin</span>
+      <a class="word" href="index.html" aria-label="TAT ARA"><span>T</span><span>A</span><span>T</span></a>
+      <span class="bar__side bar__side--right"><a href="../">↗ web</a></span>
+    </header>
+
     <main>
-      <h1>TAT ARA — admin</h1>
+      <h1>Panell</h1>
+      <p class="soft">Des d'aquí es porta el dia a dia de la botiga: quantes unitats
+        queden de cada peça i què passa amb cada comanda.</p>
 
-      <section>
+      <h2>Contrasenya</h2>
+      <p class="soft">És l'<code>ADMIN_TOKEN</code>. Es guarda en aquest navegador,
+        així que només cal escriure-la un cop per dispositiu.</p>
+      <p>
         <label>token
-          <input id="token" type="password" placeholder="ADMIN_TOKEN" />
+          <input id="token" type="password" placeholder="ADMIN_TOKEN" autocomplete="off" />
         </label>
-        <button id="save">guardar</button>
-        <span id="feedback" class="soft"></span>
-      </section>
+        <button id="save" type="button">guardar</button>
+        <span id="feedback" class="feedback"></span>
+      </p>
 
-      <nav>
-        <a href="stock.html">stock</a>
-        <a href="tickets.html">pedidos</a>
-      </nav>
+      <h2>Què vols fer</h2>
+      <div class="cartes">
+        <a class="carta carta--stock" href="stock.html">
+          <span class="carta__titol">Stock</span>
+          <span class="carta__desc">Comptar quantes unitats queden de cada peça.
+            Sense unitats, res es pot comprar.</span>
+        </a>
+        <a class="carta carta--pedidos" href="tickets.html">
+          <span class="carta__titol">Comandes</span>
+          <span class="carta__desc">Veure què s'ha venut i marcar-ho com a
+            enviat o entregat.</span>
+        </a>
+      </div>
+
+      <h2>El que NO es toca aquí</h2>
+      <p class="nota">Els títols, els preus, les fotos i els textos de la botiga
+        viuen a <code>data/botiga.json</code>: s'editen al fitxer i es publiquen amb
+        un <em>push</em>. Aquí només hi ha el que canvia sol amb cada venda.<br><br>
+        Per què separat: l'stock ha de baixar tot sol quan algú compra. Si visqués
+        al fitxer, cada compra demanaria publicar la web una altra vegada.</p>
     </main>
+
+    <footer class="bar bar--bottom">
+      <span class="bar__side"></span>
+      <span class="word" role="img" aria-label="ARA"><span>A</span><span>R</span><span>A</span></span>
+      <span class="bar__side bar__side--right"></span>
+    </footer>
 
     <script>
       const input = document.getElementById("token");
+      const feedback = document.getElementById("feedback");
       input.value = localStorage.getItem("tatara:admin") || "";
+
       document.getElementById("save").addEventListener("click", () => {
-        localStorage.setItem("tatara:admin", input.value.trim());
-        document.getElementById("feedback").textContent = "guardado ✓";
+        const valor = input.value.trim();
+        localStorage.setItem("tatara:admin", valor);
+        feedback.textContent = valor ? "guardat ✓" : "esborrat";
+        feedback.className = "feedback feedback--ok";
+      });
+      // Enter dins del camp també guarda: és l'únic botó de la pantalla.
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") document.getElementById("save").click();
       });
     </script>
   </body>
