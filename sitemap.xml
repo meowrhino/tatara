@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  La web és una sola pàgina: les seccions viuen darrere del coixinet
+  (#agenda, #exposicions…) i els cercadors no tracten un coixinet com una
+  adreça diferent. Per això aquí només hi ha l'arrel. Si algun dia les
+  seccions passen a tenir adreça pròpia (/exposicions), s'afegeixen aquí.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://tatara.cat/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

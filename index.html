@@ -5,15 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- El sitio es negro-sobre-blanco: opt-out del modo oscuro forzado del navegador -->
   <meta name="color-scheme" content="light">
-  <title>TAT ARA</title>
-  <meta name="description" content="TAT ARA — espai galeria d'art, disseny i ecologia.">
+  <title>TAT ARA — espai galeria d'art, disseny i ecologia a Barcelona</title>
+  <meta name="description" content="TAT ARA és una associació sense ànims de lucre a Barcelona: un espai galeria que visibilitza i connecta projectes d'art, disseny i ecologia. Exposicions, recerca i edicions al Carrer Martí, 59B.">
+  <link rel="canonical" href="https://tatara.cat/">
+  <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Com es veu l'enllaç en compartir-lo (Instagram, WhatsApp, Telegram…).
+       Sense això, enganxar tatara.cat no ensenya res: només la URL pelada.
+       og:image ha de ser una adreça ABSOLUTA; les xarxes no resolen les
+       relatives. En canviar de domini, canviar-la aquí i a og:url. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TAT ARA">
+  <meta property="og:locale" content="ca_ES">
+  <meta property="og:title" content="TAT ARA — espai galeria d'art, disseny i ecologia">
+  <meta property="og:description" content="Un espai galeria a Barcelona que visibilitza i connecta projectes d'art, disseny i ecologia. Exposicions, recerca i edicions.">
+  <meta property="og:url" content="https://tatara.cat/">
+  <meta property="og:image" content="https://tatara.cat/assets/img/og-tatara.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Flors, fulles i mostres de pigment sobre una taula de fusta.">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <!-- Precarga la display (TAT/ARA) para evitar el flash de la fuente de reserva -->
   <link rel="preload" href="fonts/SuperstudioTrialTT-Bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Dades estructurades: li diuen a Google que això és una galeria d'art amb
+       una adreça física, cosa que no pot deduir del text sol. És el que fa
+       sortir la fitxa al mapa en buscar "galeria art Barcelona". Si canvia
+       l'adreça o el correu a data.json, canviar-los també aquí. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ArtGallery",
+    "name": "TAT ARA",
+    "url": "https://tatara.cat/",
+    "image": "https://tatara.cat/assets/img/og-tatara.jpg",
+    "description": "Associació sense ànims de lucre i espai galeria que visibilitza i connecta projectes d'art, disseny i ecologia.",
+    "email": "associaciotatara@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Carrer Martí, 59B",
+      "postalCode": "08024",
+      "addressLocality": "Barcelona",
+      "addressCountry": "ES"
+    }
+  }
+  </script>
 </head>
 <body>
   <!-- Barra superior fija: menú · marca · carret.
