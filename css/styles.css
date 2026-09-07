@@ -115,6 +115,17 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__label .seg__who b { font-weight: 700; }
 .seg__label .seg__when { flex: 0 0 auto; opacity: 0.92; }
 
+/* Tipo de la entrada (exposició, retrospectiva, exposició i festival…), encima
+   del título. Discreto: es contexto, no titular. */
+.seg__kind {
+  padding: 0.7rem 1rem 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.seg__kind + .seg__label { padding-top: 0.15rem; }
+
 /* Fila inferior del bloque: fecha de cierre (izq) + estado (der) en una línea,
    igual que la cabecera. Hereda la tinta del bloque (negra o blanca). */
 .seg__foot {

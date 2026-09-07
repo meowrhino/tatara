@@ -27,8 +27,10 @@ function textOn(hex) {
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.62 ? '#111' : '#fff';
 }
 
-// Todo lo que va anidado dentro de una exposición es Open Research, así que la
-// etiqueta es fija: ya no hay campo 'kind' en agenda.json.
+// 'kind' (traducible) es el tipo de cada entrada: exposició, lectura, conversa,
+// O.R.… Viene de la columna "tipus" de la tabla de la clienta. Si una entrada
+// anidada no lo trae, cae a "O.R.", que es lo que era antes fijo.
+const kindOf = (ev, fallback = '') => t(ev.kind) || fallback;
 const OR = 'O.R.';
 
 // Unidad de viewport para el hueco entre bloques y el suelo mínimo. svh (small
@@ -128,7 +130,9 @@ function eventBlock(ev, o, today) {
   if (ev.end && !sameDay(s, e)) foot.appendChild(el('span', 'seg__end', esc(dMes(e))));
   foot.appendChild(el('span', 'seg__status seg__status--' + stClass, esc(ui(stKey))));
 
+  const kind = kindOf(ev);
   const head = el('div', 'seg__head');
+  if (kind) head.appendChild(el('div', 'seg__kind', esc(kind)));
   head.appendChild(el('div', 'seg__label',
     `<span class="seg__who">${esc(t(ev.title))}${ev.artist ? ' – <b>' + esc(ev.artist) + '</b>' : ''}</span>` +
     `<span class="seg__when">${esc(rangeSlash(ev))}</span>`));
@@ -154,7 +158,7 @@ function eventBlock(ev, o, today) {
       const info = el('div', 'seg__child-info');
       info.innerHTML =
         `<span class="seg__child-when">${esc(rangeSlash(c))}</span>` +
-        `<span class="seg__child-name">${OR} · ${esc(t(c.title))}${c.artist ? ' – <b>' + esc(c.artist) + '</b>' : ''}</span>`;
+        `<span class="seg__child-name">${esc(kindOf(c, OR))} · ${esc(t(c.title))}${c.artist ? ' – <b>' + esc(c.artist) + '</b>' : ''}</span>`;
       row.appendChild(info);
       if (c.image) row.appendChild(mediaEl(c.image, t(c.title), imgCount++));
       if (c.description) row.appendChild(el('div', 'seg__child-desc', esc(t(c.description))));

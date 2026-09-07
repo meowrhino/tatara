@@ -14,6 +14,7 @@ export const dMes = (d) => `${d.getDate()} ${monthName(d.getMonth())}`;    // 2 
 // Rango "d/m – d/m" (o un solo día "d/m · hora" si start == end).
 export function rangeSlash(ev) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
-  if (sameDay(s, e)) return dm(s) + (ev.time ? ` · ${ev.time}` : '');
-  return `${dm(s)} – ${dm(e)}`;
+  const hora = ev.time ? ` · ${ev.time}` : '';
+  if (sameDay(s, e)) return dm(s) + hora;
+  return `${dm(s)} – ${dm(e)}${hora}`;
 }
