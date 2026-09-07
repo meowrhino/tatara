@@ -312,7 +312,21 @@ app.post("/stripe-webhook", async (c) => {
       await c.env.DB.batch(stmts);
       console.log(`[webhook] pedido ${pedidoId} registrado`);
     } catch (err) {
-      console.error("Error procesando checkout.session.completed:", err);
+      // Aquí se cruzan dos fallos que se parecen y piden lo contrario:
+      //
+      //   - UNIQUE: Stripe ha reenviado un evento que ya procesamos. Todo está
+      //     bien; hay que contestar 200 o Stripe lo reintentará para siempre.
+      //   - Cualquier otro (D1 caída, timeout): el cobro se ha hecho y el pedido
+      //     NO se ha guardado. Hay que contestar 5xx para que Stripe lo reintente
+      //     — reintenta durante tres días. Si contestáramos 200, Stripe daría el
+      //     evento por entregado y el pedido se perdería sin que nadie se entere.
+      const msg = String(err?.message || err);
+      if (/UNIQUE constraint failed/i.test(msg)) {
+        console.log(`[webhook] sesión ${session.id} ya registrada, se ignora`);
+      } else {
+        console.error("Error procesando checkout.session.completed:", err);
+        return c.text("error guardando el pedido", 500);
+      }
     }
   }
 
@@ -345,10 +359,22 @@ app.post("/contacto", async (c) => {
 // ─── admin ───────────────────────────────────────────────
 const admin = new Hono();
 
+/** Compara dos cadenas sin cortar en la primera diferencia. Un `===` normal
+ *  tarda más cuanto más largo es el prefijo acertado, y esa diferencia de tiempo
+ *  deja adivinar el token carácter a carácter. Aquí el coste no depende del
+ *  contenido, solo de la longitud. */
+function igualdadSegura(a, b) {
+  if (typeof a !== "string" || typeof b !== "string" || a.length !== b.length) return false;
+  let dif = 0;
+  for (let i = 0; i < a.length; i++) dif |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return dif === 0;
+}
+
 admin.use("*", async (c, next) => {
   const auth = c.req.header("authorization") || "";
   const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
-  if (!c.env.ADMIN_TOKEN || token !== c.env.ADMIN_TOKEN) return c.json({ error: "unauthorized" }, 401);
+  if (!c.env.ADMIN_TOKEN || !igualdadSegura(token, c.env.ADMIN_TOKEN))
+    return c.json({ error: "unauthorized" }, 401);
   await next();
 });
 
