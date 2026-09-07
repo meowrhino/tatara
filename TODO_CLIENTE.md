@@ -145,6 +145,22 @@ basta, sin acordarse de subir ninguna versión.
       ejemplo), **esa garantía desaparece** y habrá que volver a poner el
       versionado a mano. Es una razón más para quedarse en Cloudflare.
 
+## 7ter. Límite de peticiones a los formularios públicos
+
+`/api/newsletter` y `/api/contacto` están abiertos a cualquiera, sin límite. Hoy
+no importa porque nadie conoce la web; el día que `tatara.cat` esté publicado, un
+bot puede meter miles de altas y miles de mensajes en la base de datos, y —cuando
+los avisos por email estén puestos— miles de correos en la bandeja de la
+asociación.
+
+- [ ] Poner una **regla de rate limiting en el panel de Cloudflare** (Security →
+      WAF → Rate limiting rules): algo como 5 peticiones por minuto y por IP a
+      `/api/newsletter` y `/api/contacto`. Es gratis en el plan Free, no toca
+      código, y es la forma correcta de resolverlo: filtra antes de llegar al
+      Worker.
+- [ ] Si aun así entra spam, el paso siguiente es Turnstile (el captcha de
+      Cloudflare, invisible) en los dos formularios.
+
 ## 8. Seguridad — hacer esto sí o sí
 
 - [ ] **Cambiar la contraseña SFTP de Pangea.** Se compartió por WhatsApp y
@@ -178,3 +194,4 @@ Un resumen para priorizar, porque no todo pesa igual:
 | Backup de la D1 | Nada el día del traspaso; a partir de la primera venta, todo |
 | Reconectar Workers Builds | Cada cambio de contenido pasa a exigir terminal |
 | Contraseña SFTP | Sigue circulando por WhatsApp y por el Drive |
+| Rate limiting | Nada hasta que alguien encuentre los formularios; después, spam en la base de datos |

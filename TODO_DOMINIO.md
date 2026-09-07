@@ -106,7 +106,10 @@ npx wrangler secret put ADMIN_TOKEN
 ## Datos del dominio
 
 - **Dominio:** `tatara.cat`
-- **Registrado en:** Pangea
+- **Registrado en:** Pangea — **y ahí se queda**. No hace falta transferirlo ni
+  volver a comprarlo: solo se cambian los *nameservers* (paso 6) para que sea
+  Cloudflare quien resuelva el DNS. El registro, las renovaciones y la factura
+  siguen siendo de Pangea.
 - Los **nameservers** se cambian en el panel de Pangea (paso 6).
 - El **SFTP de Pangea NO se usa** para esto.
 
