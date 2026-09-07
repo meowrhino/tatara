@@ -80,3 +80,18 @@ export const t = (f) => f == null ? '' : (typeof f === 'string' ? f : (f[LANG] |
 
 // Normaliza el campo de imágenes: prioriza 'images' (array) y cae a 'image'.
 export const imagesOf = (x) => x.images && x.images.length ? x.images : (x.image ? [x.image] : []);
+
+// Texto de contenido con enlaces internos en sintaxis markdown-lite:
+//   "les trobareu a la [botiga](botiga)"  →  <a href="#botiga">botiga</a>
+// El destino es el 'id' de una sección de data/menu.json (agenda, nosaltres,
+// artistes, diari, botiga, contacte, newsletter). Así la clienta solo pone
+// corchetes alrededor de la palabra y el paréntesis con el id: no hay que tocar
+// código para añadir, quitar o mover enlaces.
+// Si el id no existe (typo, sección eliminada), el enlace se degrada a texto
+// plano en vez de romper la navegación. Todo va escapado antes de enlazar.
+export const richText = (s, ids = null) => esc(s).replace(
+  /\[([^\]\n]+)\]\(([a-z0-9_-]+)\)/gi,
+  (_, label, id) => (!ids || ids.includes(id))
+    ? `<a class="link-inline" href="#${id}">${label}</a>`
+    : label
+);

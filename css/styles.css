@@ -236,6 +236,19 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .prose { max-width: var(--col); margin: 0 auto; }
 .prose p { text-align: justify; hyphens: auto; margin: 0 0 1rem; }
 .prose__heading { text-align: center; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.02em; margin: 2rem 0 0.8rem; }
+.prose > .prose__heading:first-child { margin-top: 0; }
+
+/* Enlaces internos dentro del texto (sintaxis [etiqueta](seccio) en los JSON).
+   Se distinguen por color, no por subrayado: el texto corrido va en --ink-mid
+   y los enlaces en --ink (el negro pleno). Al pasar por encima sí aparece la
+   línea, como confirmación de que es clicable. */
+.prose { color: var(--ink-mid); }
+.link-inline { color: var(--ink); text-decoration: none; }
+.link-inline:hover, .link-inline:focus-visible { text-decoration: underline; text-underline-offset: 0.18em; }
+
+/* Logos de colaboradores al final de nosaltres. */
+.prose .prose__img { margin: 0.4rem 0 1rem; text-align: center; }
+.prose__img img { width: 190px; max-width: 60%; height: auto; }
 
 /* Exposicions/Recerca: lista de nombres (cada uno abre un modal con bio + fotos
    + PDF). Columna de color como la agenda: --col de ancho, centrada, fondo gris,

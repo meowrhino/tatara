@@ -1,37 +1,68 @@
 {
-  "_comment": "Statement de Nosaltres. Texto literal del documento de la clienta (web tatara-TEXT-july, ~160 paraules): 4 párrafos seguidos, sin títulos. Se respeta la redacción original en catalán tal cual. PENDIENTE: traducciones es/en — mientras no estén, t() cae al catalán.",
+  "_comment": "Página NOSALTRES. Cada bloque de 'body' admite: heading (título), link (id de sección de menu.json → el título se vuelve enlace), text (párrafo) e image. Dentro de 'text' se pueden poner enlaces internos con la sintaxis [etiqueta](id-de-seccion). Ids válidos: agenda, nosaltres, artistes (=exposicions), diari (=recerca), botiga, contacte, newsletter. Si el id no existe, el enlace se muestra como texto normal.",
   "title": {
     "ca": "Nosaltres",
-    "es": "Nosotras",
-    "en": "About"
+    "es": "Nosotres",
+    "en": "Us"
   },
   "body": [
     {
       "text": {
-        "ca": "TAT ARA és una associació sense ànims de lucrE. Un espai galeria que visibiliza i connecta projectes d'art, disseny i ecologia. Acull propostes crítiques, experimentals i d'investigació. És un espai a recés del sistema per connectar, crear friccions i fer xarxa entre persones, comunitats i pràctiques. Un espai cultural obert al públic per exposició, producció, lectura, debat, escolta, conversa, i investigació..",
-        "es": "TAT ARA es una asociación sin ánimo de lucro. Un espacio galería que visibiliza y conecta proyectos de arte, diseño y ecología. Acoge propuestas críticas, experimentales y de investigación. Es un espacio al resguardo del sistema para conectar, crear fricciones y hacer red entre personas, comunidades y prácticas. Un espacio cultural abierto al público para exposición, producción, lectura, debate, escucha, conversación e investigación.",
-        "en": "TAT ARA is a non-profit association. A gallery space that makes visible and connects art, design and ecology projects. It hosts critical, experimental and research-based proposals. It is a space sheltered from the system for connecting, creating frictions and building networks between people, communities and practices. A cultural space open to the public for exhibition, production, reading, debate, listening, conversation and research."
+        "ca": "TAT ARA és una associació sense ànims de lucre a Barcelona. Un espai galeria que visibilitza i connecta projectes d'art, disseny i ecologia. Acull propostes crítiques, experimentals i d'investigació. Un espai cultural obert al públic per exposició, producció, lectura, debat, escolta, conversa, i investigació.",
+        "es": "TAT ARA es una asociación sin ánimo de lucro en Barcelona. Un espacio galería que visibiliza y conecta proyectos de arte, diseño y ecología. Acoge propuestas críticas, experimentales y de investigación. Un espacio cultural abierto al público para exposición, producción, lectura, debate, escucha, conversación, e investigación.",
+        "en": "TAT ARA is a non-profit association in Barcelona: a gallery space that gives visibility to and connects projects across art, design, and ecology. It supports critical, experimental, and research-based practices. Open to the public, it is a cultural space for exhibition, production, reading, debate, listening, conversation, and research."
       }
     },
     {
+      "heading": {
+        "ca": "Exposicions",
+        "es": "Exposiciones",
+        "en": "Exhibitions"
+      },
+      "link": "artistes",
       "text": {
-        "ca": "Un espai de mostra per assajar i trobar afinitats, similituds i friccions. Un espai on buscar mirades complices des d'on es generen diàlegs de pensament sensible i crític. La galeria com a espai d'investigació, com a espai de ficció on es creuent plaer i crítica. Un espai en constant transformació.",
-        "es": "Un espacio de muestra para ensayar y encontrar afinidades, similitudes y fricciones. Un espacio donde buscar miradas cómplices desde donde se generan diálogos de pensamiento sensible y crítico. La galería como espacio de investigación, como espacio de ficción donde se cruzan el placer y la crítica. Un espacio en constante transformación.",
-        "en": "A showcase space for rehearsing and finding affinities, similarities and frictions. A space where complicit gazes are sought, from which dialogues of sensitive and critical thought are generated. The gallery as a space of research, as a space of fiction where pleasure and critique intersect. A space in constant transformation."
+        "ca": "Un espai de mostra per assajar i trobar afinitats, similituds i friccions. Un espai on buscar mirades còmplices des d'on es generen diàlegs de pensament sensible i crític. La galeria com a espai d'investigació on es creuen desig i crítica. Un espai en constant transformació. Podeu consultar totes les artistes, dissenyadores i pensadores que s'han vinculat amb l'espai a [exposicions](artistes).",
+        "es": "Un espacio de muestra para ensayar y encontrar afinidades, similitudes y fricciones. Un espacio donde buscar miradas cómplices desde donde se generan diálogos de pensamiento sensible y crítico. La galería como espacio de investigación donde se cruzan deseo y crítica. Un espacio en constante transformación. Podéis consultar todas las artistas, diseñadoras y pensadoras que se han vinculado con el espacio en [exposiciones](artistes).",
+        "en": "A space in which to experiment and discover affinities, similarities, and frictions. A place to seek out kindred perspectives from which sensitive and critical dialogues can emerge. The gallery as a space for research where desire and critique intersect. A space in constant transformation. You can discover all the artists, designers, and thinkers who have been involved with the space in the [Exhibitions](artistes) section."
       }
     },
     {
+      "heading": {
+        "ca": "Recerca",
+        "es": "Investigación",
+        "en": "Research"
+      },
+      "link": "diari",
       "text": {
-        "ca": "Com aprenem? com ens arriba el coneixament que constantment ens envolta però sovint no ens atravesa? Proposem explorar maneres d'aprendre i compartir coneixaments. A través de tallers, lectures, converses, sessions d'escoletes, debats, sessions transpersonals, grups de treball, consultoria i acompanyaments per trobar les eines de reflexió, transformació i connexió afectives.",
-        "es": "¿Cómo aprendemos? ¿Cómo nos llega el conocimiento que constantemente nos rodea pero a menudo no nos atraviesa? Proponemos explorar maneras de aprender y compartir conocimientos. A través de talleres, lecturas, conversaciones, sesiones de escucha, debates, sesiones transpersonales, grupos de trabajo, consultoría y acompañamientos para encontrar las herramientas de reflexión, transformación y conexión afectivas.",
-        "en": "How do we learn? How does the knowledge that constantly surrounds us reach us, when it so often fails to move through us? We propose exploring ways of learning and sharing knowledge. Through workshops, readings, conversations, listening sessions, debates, transpersonal sessions, working groups, consultancy and accompaniment, to find tools for affective reflection, transformation and connection."
+        "ca": "Com aprenem? Com ens arriba el coneixement que constantment ens envolta, però sovint no ens travessa? Proposem explorar maneres d'aprendre i compartir coneixements. A través de tallers, lectures, converses, sessions d'escoltes, debats, sessions energètiques, grups de treball, consultoria i acompanyaments per trobar les eines de reflexió, transformació i connexió afectives. Podeu consultar les persones implicades i els temes explorats a l'apartat [recerca](diari).",
+        "es": "¿Cómo aprendemos? ¿Cómo nos llega el conocimiento que constantemente nos rodea, pero a menudo no nos atraviesa? Proponemos explorar maneras de aprender y compartir conocimientos. A través de talleres, lecturas, conversaciones, sesiones de escucha, debates, sesiones energéticas, grupos de trabajo, consultoría y acompañamientos para encontrar las herramientas de reflexión, transformación y conexión afectivas. Podéis consultar las personas implicadas y los temas explorados en el apartado [investigación](diari).",
+        "en": "How do we learn? How does the knowledge that constantly surrounds us reach us, yet so often fail to affect us? We explore different ways of learning and sharing knowledge. Through workshops, readings, conversations, listening sessions, debates, energy sessions, working groups, consultancy, and mentoring, we seek tools for reflection, transformation, and affective connection. You can discover the people involved and the subjects explored in the [Research](diari) section."
       }
     },
     {
+      "heading": {
+        "ca": "Edicions",
+        "es": "Ediciones",
+        "en": "Editions"
+      },
+      "link": "botiga",
       "text": {
-        "ca": "Produccions amb artistes i col·laboradores per generar economia que permeti sostenir les pràctiques artístiques i crítiques. Artefactes i publicacions que definieixen un territori des d'on pensar i estar.",
-        "es": "Producciones con artistas y colaboradoras para generar economía que permita sostener las prácticas artísticas y críticas. Artefactos y publicaciones que definen un territorio desde donde pensar y estar.",
-        "en": "Productions with artists and collaborators to generate an economy that allows sustaining artistic and critical practices. Artefacts and publications that define a territory from which to think and to be."
+        "ca": "Produccions amb artistes i col·laboradores per generar economia que permeti sostenir les pràctiques artístiques i crítiques. I una petita llibreria amb una selecció de publicacions d'art, disseny i ecologia. Les peces i publicacions les trobareu a la [botiga](botiga).",
+        "es": "Producciones con artistas y colaboradoras para generar economía que permita sostener las prácticas artísticas y críticas. Y una pequeña librería con una selección de publicaciones de arte, diseño y ecología. Las piezas y publicaciones las encontraréis en la [tienda](botiga).",
+        "en": "Collaborative productions with artists and other contributors, creating an economy that helps sustain artistic and critical practices. And a small bookshop with a selection of publications on art, design, and ecology. The pieces and publications are available in the [Shop](botiga)."
+      }
+    },
+    {
+      "heading": {
+        "ca": "Col·labora",
+        "es": "Colabora",
+        "en": "Collaborators"
+      },
+      "image": "assets/img/nosaltres/generalitat-cultura.jpg",
+      "alt": {
+        "ca": "Generalitat de Catalunya — Departament de Cultura",
+        "es": "Generalitat de Catalunya — Departament de Cultura",
+        "en": "Generalitat de Catalunya — Department of Culture"
       }
     }
   ]

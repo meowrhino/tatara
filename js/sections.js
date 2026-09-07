@@ -5,7 +5,7 @@
    Cada una recibe (view, data) y escribe view.innerHTML.
    ============================================================ */
 
-import { esc, t, ui, imagesOf } from './utils.js';
+import { esc, t, ui, imagesOf, richText } from './utils.js';
 import { parseDate, dMes, sameDay } from './dates.js';
 import { SITE } from './state.js';
 import { openModal, closeModal } from './modal.js';
@@ -40,12 +40,29 @@ function pageWrap(inner) {
   return `<div class="page">${inner}</div>`;
 }
 
+/* ---------- nosaltres (y cualquier página de texto) ----------
+   Cada bloque de 'body' admite:
+     heading  título traducible {ca,es,en}
+     link     id de sección → el título se convierte en enlace interno
+     text     párrafo traducible; acepta enlaces [etiqueta](id-de-seccion)
+     image    ruta de imagen (p. ej. el logo de la Generalitat) + 'alt'
+   Los ids válidos son los de data/menu.json, así que la clienta puede
+   añadir o mover enlaces editando solo el JSON. */
 export function renderText(view, data) {
-  const blocks = data.body || [];
-  const body = blocks.map((b) => {
-    const heading = b.heading ? `<h2 class="prose__heading">${esc(t(b.heading))}</h2>` : '';
+  const ids = (SITE.sections || []).map((s) => s.id);
+  const body = (data.body || []).map((b) => {
+    const title = t(b.heading);
+    const heading = title
+      ? `<h2 class="prose__heading">${b.link && ids.includes(b.link)
+          ? `<a class="link-inline" href="#${esc(b.link)}">${esc(title)}</a>`
+          : esc(title)}</h2>`
+      : '';
     const text = t(b.text);
-    return text ? `${heading}<p>${esc(text)}</p>` : heading;
+    const para = text ? `<p>${richText(text, ids)}</p>` : '';
+    const img = b.image
+      ? `<p class="prose__img"><img src="${esc(b.image)}" alt="${esc(t(b.alt) || '')}" loading="lazy"></p>`
+      : '';
+    return heading + para + img;
   }).join('');
   view.innerHTML = pageWrap(`<div class="prose">${body}</div>`);
 }
