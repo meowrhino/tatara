@@ -61,9 +61,12 @@ con otro proyecto** (quienNoCorre). TAT ARA usa las tablas con prefijo
       hay que tocar nada y el prefijo solo queda como una rareza histórica.
 - [ ] **Backups.** Hoy la copia semanal la hace el repo de quienNoCorre, que
       cubre las dos bases por estar en la misma. Al separarse, TAT ARA se queda
-      **sin backup**: hay que añadir su propio workflow (plantilla en
+      sin ella: hay que añadir su propio workflow (plantilla en
       semillaEcommerce, `.github/workflows/backup-d1.yml`, más un secret
       `CLOUDFLARE_API_TOKEN` de su cuenta).
+      No corre prisa para el traspaso en sí: la tienda no habrá vendido nada
+      antes de ese día, así que no hay datos que perder. Es al abrir la tienda
+      cuando pasa a ser urgente.
 
 ## 3. Secretos
 
@@ -126,6 +129,21 @@ nueva.
 - [ ] **Página legal** (aviso legal, privacidad, desistimiento). No existe, y con
       una tienda con cobro real es obligatoria. Plantilla en semillaEcommerce.
 - [ ] `npm run check` en verde antes de entregar.
+- [ ] `assets/img/mr/` son 27 fotos de piezas de Maria Roy que ya no usa ningún
+      JSON, desde que la pieza de cerámica salió del catálogo. Decidir si vuelve
+      a venderse o si se borran.
+
+## 7bis. Un detalle de hosting que conviene no romper
+
+La web no lleva ningún truco de caché (nada de `?v=`, nada de `no-store`):
+Cloudflare sirve todos los archivos con `Cache-Control: max-age=0,
+must-revalidate` y un ETag del contenido, así que el navegador comprueba en cada
+visita y se trae lo nuevo en cuanto cambia. Por eso editar un JSON y hacer push
+basta, sin acordarse de subir ninguna versión.
+
+- [ ] Si algún día se sirve la web desde otro sitio (el SFTP de Pangea, por
+      ejemplo), **esa garantía desaparece** y habrá que volver a poner el
+      versionado a mano. Es una razón más para quedarse en Cloudflare.
 
 ## 8. Seguridad — hacer esto sí o sí
 
@@ -155,8 +173,8 @@ Un resumen para priorizar, porque no todo pesa igual:
 | Se olvida | Qué pasa |
 |---|---|
 | `database_id` en `wrangler.toml` | La web carga, pero newsletter y carrito fallan en silencio |
-| Exportar la D1 | Se pierden las suscripciones a la newsletter y el historial |
+| Exportar la D1 | Se pierden las suscripciones a la newsletter (lo demás aún estará vacío) |
 | Webhook de Stripe | Se cobra, pero el stock no baja y el pedido no se registra |
-| Backup de la D1 | Nadie lo nota hasta que hace falta |
+| Backup de la D1 | Nada el día del traspaso; a partir de la primera venta, todo |
 | Reconectar Workers Builds | Cada cambio de contenido pasa a exigir terminal |
 | Contraseña SFTP | Sigue circulando por WhatsApp y por el Drive |

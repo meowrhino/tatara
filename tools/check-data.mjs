@@ -121,16 +121,29 @@ function revisaAgenda(menu) {
     (ev.eventos || []).forEach((c) => revisaEntrada(c, `${dónde} › ${c.slug || '(sin slug)'}`, ev));
   });
 
-  // Imágenes en assets/img/agenda que ya no usa nadie: no rompen nada, solo
-  // ocupan sitio en el repo.
+}
+
+/* ---------- imágenes y PDF que ya no usa nadie ---------- */
+
+// No rompen nada, solo ocupan sitio en el repo. Se miran TODOS los JSON de data/
+// contra TODAS las carpetas de assets/img y assets/pdf, en vez de una lista a
+// mano: así la comprobación no se queda vieja cuando se añade una sección o se
+// renombra un archivo de datos.
+function revisaHuerfanas() {
   const usadas = new Set();
-  for (const rel of ['data/agenda.json', 'data/persones.json', 'data/recerca.json', 'data/edicions.json']) {
-    if (!existsSync(join(ROOT, rel))) continue;
-    for (const m of readFileSync(join(ROOT, rel), 'utf8').matchAll(/assets\/img\/[^"]+/g)) usadas.add(m[0]);
+  for (const f of readdirSync(join(ROOT, 'data')).filter((x) => x.endsWith('.json'))) {
+    for (const m of readFileSync(join(ROOT, 'data', f), 'utf8').matchAll(/assets\/[^"]+/g)) usadas.add(m[0]);
   }
-  const dir = 'assets/img/agenda';
-  const huerfanas = readdirSync(join(ROOT, dir)).filter((f) => f.endsWith('.webp') && !usadas.has(`${dir}/${f}`));
-  if (huerfanas.length) avi(dir, `${huerfanas.length} imágenes que ya no usa ningún JSON: ${huerfanas.join(', ')}`);
+  const dirs = [
+    ...readdirSync(join(ROOT, 'assets/img'), { withFileTypes: true })
+      .filter((d) => d.isDirectory()).map((d) => `assets/img/${d.name}`),
+    ...(existsSync(join(ROOT, 'assets/pdf')) ? ['assets/pdf'] : []),
+  ];
+  for (const dir of dirs) {
+    const sobran = readdirSync(join(ROOT, dir))
+      .filter((f) => /\.(webp|jpg|jpeg|png|svg|pdf)$/i.test(f) && !usadas.has(`${dir}/${f}`));
+    if (sobran.length) avi(dir, `${sobran.length} archivo(s) que ya no usa ningún JSON: ${sobran.join(', ')}`);
+  }
 }
 
 /* ---------- nosaltres y demás páginas de texto ---------- */
@@ -158,6 +171,37 @@ function revisaTextos(menu) {
   }
 }
 
+/* ---------- exposicions y demás secciones de fichas ---------- */
+
+function revisaFichas(menu) {
+  for (const sec of menu.sections.filter((s) => s.type === 'people' && s.data)) {
+    console.log(`\n${sec.data}`);
+    const data = leer(sec.data);
+    (data.people || []).forEach((p, i) => {
+      if (p.spacer) return;
+      const dónde = p.name || `ficha ${i + 1}`;
+      if (!p.name) err(dónde, 'falta "name"');
+      revisaTraducible('expo', p.expo, dónde, false);
+      revisaTraducible('text', p.text, dónde, false);
+      revisaTraducible('bio', p.bio, dónde, false);
+      (p.images || []).forEach((src) => revisaImagen(src, dónde));
+      // pdf admite string, {url,label} o un array de cualquiera de los dos
+      const pdfs = Array.isArray(p.pdf) ? p.pdf : (p.pdf ? [p.pdf] : []);
+      pdfs.forEach((pdf) => {
+        const url = typeof pdf === 'string' ? pdf : pdf && pdf.url;
+        if (url && !existsSync(join(ROOT, url))) err(dónde, `el PDF no existe: ${url}`);
+      });
+      if (p.date) {
+        for (const k of ['start', 'end']) {
+          const mal = p.date[k] && fechaMala(p.date[k]);
+          if (mal) err(dónde, `"date.${k}" (${p.date[k]}) ${mal}`);
+        }
+      }
+      if (p.link && !/^https?:\/\//.test(p.link)) avi(dónde, `"link" no empieza por http: ${p.link}`);
+    });
+  }
+}
+
 /* ---------- menú ---------- */
 
 function revisaMenu(menu) {
@@ -177,7 +221,9 @@ function revisaMenu(menu) {
 const menu = leer('data/menu.json');
 revisaMenu(menu);
 revisaAgenda(menu);
+revisaFichas(menu);
 revisaTextos(menu);
+revisaHuerfanas();
 
 console.log('');
 if (!errores && !avisos) console.log('✓ todo correcto.');

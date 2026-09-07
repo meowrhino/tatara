@@ -27,7 +27,7 @@ data/nosaltres.json   Text de la secció "nosaltres"
 data/exposicions.json Exposicions: text, fotos, bio, full de sala (PDF)
 data/recerca.json     Recerca: converses, lectures i tallers
 data/botiga.json      Catàleg de la botiga
-assets/img/           Imatges optimitzades (.webp): agenda/ · expos/ · edicions/ · mr/
+assets/img/           Imatges optimitzades (.webp): agenda/ · expos/ · recerca/ · edicions/ · mr/
 assets/pdf/           Fulls de sala de les exposicions
 assets/icons/         Favicon
 tools/                Scripts: check-data.mjs, to-webp.sh, serve.py
@@ -82,8 +82,8 @@ redimensionar.
 
 ## Pendent
 
-- **Links** de cada artista a la seva web: n'hi ha vuit; falten les de nou
-  persones de recerca.
+- **Links** a la web de cada artista: n'hi ha nou posats; en falten tretze
+  (quatre a exposicions, nou a recerca).
 - **Stock** de la botiga: neix a 0 i sense estoc res és comprable.
 - Decisió/compte de **Stripe** i **enviaments** (`data/envios.json` és buit).
 - **Instagram** per a contacte.
