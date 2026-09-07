@@ -1,5 +1,5 @@
 {
-  "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), color (clave de data.json -> palette; SOLO en las entradas de primer nivel), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (UNA sola), start, end, time, description {ca,es,en} y eventos[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema pero sin color). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). OJO con los anos: los que venian escritos en esa tabla (2025, 2026) eran de una version anterior del documento; la programacion real arranca en septiembre de 2026 y llega a enero de 2028, asi que aqui todo va un ano por delante de lo que pone el .docx. Las imagenes llevan el numero de la carpeta 'FOTOS AGENDA' delante para poder cruzarlas de un vistazo.",
+  "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), color (clave de data.json -> palette; SOLO en las entradas de primer nivel), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (UNA sola), start, end, time, description {ca,es,en} y eventos[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema pero sin color). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). Los anos son los de esa tabla: la temporada va de septiembre de 2025 a enero de 2027. Las filas del final que solo traen el mes ('dec', 'gener') son diciembre de 2026 y enero de 2027. Las imagenes llevan el numero de la carpeta 'FOTOS AGENDA' delante para poder cruzarlas de un vistazo.",
   "events": [
     {
       "slug": "pateres-de-llet",
@@ -16,8 +16,8 @@
       },
       "artist": "Anna Dot",
       "image": "assets/img/agenda/01-pateres-de-llet.webp",
-      "start": "2026-09-21",
-      "end": "2026-10-10",
+      "start": "2025-09-21",
+      "end": "2025-10-10",
       "description": {
         "ca": "El 2022 Anna Dot va treballar entorn l'objecte: Pàtera. Les pàteres eren uns objectes que en l'antiga Grècia es feien servir per fer libacions, és a dir, rituals quotidians en què es vessava una mica d'aigua o vi a terra o sobre un altar en memòria dels que ja no hi són. A Tatara s'exposarà una pàtera feta per la llet materna residual que la seva filla no es menja, un element per fer rituals quotidians i enviar aquesta llet on més es necessita. Un projecte que parla de l'objecte ritual, de la maternitat, de la conciliació i de les noves quotidianitats vinculades al treball reproductiu i productiu.",
         "es": "En 2022 Anna Dot trabajó en torno al objeto: Pátera. Las páteras eran unos objetos que en la antigua Grecia se usaban para hacer libaciones, es decir, rituales cotidianos en los que se vertía un poco de agua o vino en la tierra o sobre un altar en memoria de quienes ya no están. En Tatara se expondrá una pátera hecha con la leche materna residual que su hija no se toma, un elemento para hacer rituales cotidianos y enviar esa leche allí donde más se necesita. Un proyecto que habla del objeto ritual, de la maternidad, de la conciliación y de las nuevas cotidianidades vinculadas al trabajo reproductivo y productivo.",
@@ -39,8 +39,8 @@
       },
       "artist": "Tasio Ranz i Santiago Daza Santana",
       "image": "assets/img/agenda/02-ensayo-espontaneo.webp",
-      "start": "2026-10-17",
-      "end": "2026-11-30",
+      "start": "2025-10-17",
+      "end": "2025-11-30",
       "description": {
         "ca": "Recerca matèrica buscant la connexió amb les ruralitats i el qüestionament de la nostra relació amb els objectes.",
         "es": "Investigación matérica que busca la conexión con las ruralidades y el cuestionamiento de nuestra relación con los objetos.",
@@ -61,7 +61,7 @@
           },
           "artist": "Vinik Juré · Amistat Radical",
           "image": "assets/img/agenda/03-vinik-jure.webp",
-          "start": "2026-10-25",
+          "start": "2025-10-25",
           "description": {
             "ca": "Lectura del primer número de la sèrie Ecologías Enraizadas, format per dos assaigs: “El origen del Dia de los Muertos” i la “Historia crítica de la taxonomía del maguey”. En aquest volum, comparteix pràctiques ancestrals transmeses de persona a persona dins la comunitat, i on el bé comú és intrínsec al benestar individual i no a l’inrevés. Comparteix documents d'investigació etnogràfica, reflexions i converses amb el món camperol en diverses comunitats arrelades; una mirada que s'allunya de la lògica individualista i extractivista del món modern i recupera aquella on la relació amb la terra es fonamenta en el respecte, la reciprocitat i la cura.",
             "es": "Lectura del primer número de la serie Ecologías Enraizadas, formado por dos ensayos: “El origen del Día de los Muertos” y la “Historia crítica de la taxonomía del maguey”. En este volumen, comparte prácticas ancestrales transmitidas de persona a persona dentro de la comunidad, y donde el bien común es intrínseco al bienestar individual y no al revés. Comparte documentos de investigación etnográfica, reflexiones y conversaciones con el mundo campesino en diversas comunidades arraigadas; una mirada que se aleja de la lógica individualista y extractivista del mundo moderno y recupera aquella donde la relación con la tierra se fundamenta en el respeto, la reciprocidad y el cuidado.",
@@ -82,7 +82,7 @@
           },
           "artist": "DU-DA, en conversa amb Raquel Buj",
           "image": "assets/img/agenda/04-tanatolab-duda.webp",
-          "start": "2026-11-10",
+          "start": "2025-11-10",
           "description": {
             "ca": "Trobada i activació de l’espai al voltant de la mort, l’ecofeminisme, les metodologies corporals, intuïtives i poètiques. Explorant la regeneració d’ecosistemes i els biomaterials.",
             "es": "Encuentro y activación del espacio alrededor de la muerte, el ecofeminismo, las metodologías corporales, intuitivas y poéticas. Explorando la regeneración de ecosistemas y los biomateriales.",
@@ -103,7 +103,7 @@
           },
           "artist": "Trazo Continuo i Tornen les Esquelles",
           "image": "assets/img/agenda/05-materia-actante.webp",
-          "start": "2026-11-14",
+          "start": "2025-11-14",
           "description": {
             "ca": "Convesa per per compartir processos ancestrals de creació tèxtil amb el col·lectiu xilè i el català.",
             "es": "Conversación para compartir procesos ancestrales de creación textil con el colectivo chileno y el catalán.",
@@ -124,7 +124,7 @@
           },
           "artist": "Col·lectiu Pimienta",
           "image": "assets/img/agenda/06-pimienta.webp",
-          "start": "2026-11-15",
+          "start": "2025-11-15",
           "description": {
             "ca": "Sessió d’escolta atenta amb MansO amb el soundsistem fet i dissenyat per Pimienta",
             "es": "Sesión de escucha atenta con MansO con el soundsystem fabricado y diseñado por Pimienta",
@@ -148,7 +148,7 @@
       },
       "artist": "Ale Carrero",
       "image": "assets/img/agenda/07-reverberar-el-cos.webp",
-      "start": "2026-12-10",
+      "start": "2025-12-10",
       "description": {
         "ca": "Sessió grupal per equilibrar el cos a través de ressonància sonora. Explorant l’ecologia dels tres cossos.",
         "es": "Sesión grupal para equilibrar el cuerpo a través de resonancia sonora. Explorando la ecología de los tres cuerpos.",
@@ -170,8 +170,8 @@
       },
       "artist": "Maria Roy Deulofeu",
       "image": "assets/img/agenda/08-sostenir-la-terra.webp",
-      "start": "2026-12-13",
-      "end": "2027-01-28",
+      "start": "2025-12-13",
+      "end": "2026-01-28",
       "description": {
         "ca": "Runes, maons, roques, cases que es desintegren, terra, fang, esmalt, pedres, argiles dels camins del bosc i minerals a alta temperatura visibilitzen un llenguatge ocult de la riquesa del sol que conformen les peces de l’exposició.",
         "es": "Escombros, ladrillos, rocas, casas que se desintegran, tierra, barro, esmalte, piedras, arcillas de los caminos del bosque y minerales a alta temperatura visibilizan un lenguaje oculto de la riqueza del sol que conforman las piezas de la exposición.",
@@ -191,7 +191,7 @@
             "en": "Gathering with the Tanatolab project group"
           },
           "artist": "DU-DA",
-          "start": "2026-12-15",
+          "start": "2025-12-15",
           "description": {
             "ca": "DU-DA activa l'espai a través del projecte Tanatolab: un programa de trobades on es comparteix la recerca Morir Guay. Es desenvolupa en diàleg amb agents locals i ofereix eines per repensar la mort amb sobirania i des d'una mirada ecofeminista, mitjançant metodologies corporals, intuïtives i poètiques.",
             "es": "DU-DA activa el espacio a través del proyecto Tanatolab: un programa de encuentros donde se comparte la investigación Morir Guay. Se desarrolla en diálogo con agentes locales y ofrece herramientas para repensar la muerte con soberanía y desde una mirada ecofeminista, mediante metodologías corporales, intuitivas y poéticas.",
@@ -212,7 +212,7 @@
           },
           "artist": "Maria Roy Deulofeu",
           "image": "assets/img/agenda/09-sostenir-la-terra-taller.webp",
-          "start": "2026-12-17",
+          "start": "2025-12-17",
           "description": {
             "ca": "Recol·lecta i preparació de ceràmica amb argiles del barri de Gràcia, residuals d’una obra.",
             "es": "Recoleta y preparación de cerámica con arcillas del barrio de Gracia, residuales de una obra.",
@@ -232,7 +232,7 @@
             "en": "Gathering and preparing ceramics (2/3)"
           },
           "artist": "Maria Roy Deulofeu",
-          "start": "2026-12-18"
+          "start": "2025-12-18"
         },
         {
           "slug": "sostenir-la-terra-taller-3",
@@ -247,7 +247,7 @@
             "en": "Gathering and preparing ceramics (3/3)"
           },
           "artist": "Maria Roy Deulofeu",
-          "start": "2026-12-24"
+          "start": "2025-12-24"
         },
         {
           "slug": "conversa-ines-sol",
@@ -263,7 +263,7 @@
           },
           "artist": "Amb el Textile Lab de TMDC",
           "image": "assets/img/agenda/10-ines-sistiaga-sol-prado.webp",
-          "start": "2027-01-25",
+          "start": "2026-01-25",
           "time": "12:00",
           "description": {
             "ca": "Sistemes de producció globals d’objectes tèxtils i la seva relació amb els sistemes d’experimentació locals. Organitzat amb Textile Lab de TMDC La fàbrica com a centre del debat: espai de coneixement i de vincle amb el territori; més enllà d'una eina capitalista, una eina de resistència i cultura.",
@@ -285,7 +285,7 @@
           },
           "artist": "Maria Roy Deulofeu i Mati Cini",
           "image": "assets/img/agenda/11-maria-roy-mati-cini.webp",
-          "start": "2027-01-28",
+          "start": "2026-01-28",
           "time": "18:30",
           "description": {
             "ca": "Conversa amb Mati Cini, ceramista i investigadora cofundadora de Salemi Ceramics, sobre territori, observació, investigació i connexió amb la terra. Salemi Ceramics és la residència artística siciliana on Maria Roy Deulofeu ha creat part de l'exposició. Coincideix amb el darrer dia.",
@@ -310,8 +310,8 @@
       },
       "artist": "Ariadna Serrahima",
       "image": "assets/img/agenda/13-ariadna-serrahima.webp",
-      "start": "2027-02-09",
-      "end": "2027-02-28",
+      "start": "2026-02-09",
+      "end": "2026-02-28",
       "description": {
         "ca": "Retrospectiva on es podrà consultat tot el catàleg de l’artista, entre converses al voltant de llibres de pensament crític com Lxs Subcomunes, El Mensaje Mata, Fricción i Brujería Capitalista. El portfolio editorial és d'Ariadna Serrahima i Guillem Serrahima.",
         "es": "Retrospectiva donde se podrá consultado todo el catálogo del artista, entre conversaciones alrededor de libros de pensamiento crítico como Lxs Subcomunes, El Mensaje Mata, Fricción y Brujería Capitalista. El portafolio editorial es de Ariadna Serrahima y Guillem Serrahima.",
@@ -331,7 +331,7 @@
             "en": "Tornen les Esquelles"
           },
           "image": "assets/img/agenda/12-tornen-les-esquelles.webp",
-          "start": "2027-02-10",
+          "start": "2026-02-10",
           "description": {
             "ca": "Introducció a l’activisme ecològic des de l’art. Contextualització en els sistemes trencats del procés de l’ús de la llana local, i pràctica manual de fer feltre amb llana local.",
             "es": "Introducción al activismo ecológico desde el arte. Contextualización en los sistemas rotos del proceso del uso de la lana local, y práctica manual de hacer fieltro con lana local.",
@@ -355,8 +355,8 @@
       },
       "artist": "Solange Dalannais",
       "image": "assets/img/agenda/14-presencia-impermanencia.webp",
-      "start": "2027-04-18",
-      "end": "2027-05-30",
+      "start": "2026-04-18",
+      "end": "2026-05-30",
       "description": {
         "ca": "Dalannais explora el color de la flora silvestre a través d’una investigació d’alquímia. La simbiosi entre bacteris, espores i plantes obre el camp de recerca de les ecologies de l’aparició i processos d’activació, al mateix temps que obra la mirada per entrellaçar-se al territori en un procés d’acceptació i vincle.",
         "es": "Dalannais explora el color de la flora silvestre a través de una investigación de alquimia. La simbiosis entre bacterias, esporas y plantas abre el campo de investigación de las ecologías de la aparición y procesos de activación, al mismo tiempo que obra la mirada para entrelazarse en el territorio en un proceso de aceptación y vínculo.",
@@ -377,7 +377,7 @@
           },
           "artist": "Solange Dalannais",
           "image": "assets/img/agenda/15-taller-recerca-local.webp",
-          "start": "2027-05-23",
+          "start": "2026-05-23",
           "description": {
             "ca": "Aprendre amb el cos, un taller de sis hores de recol·lecta local d’elements botànics, manipulació per a tintes, pigments i procés de tenyit. Dins del programa Investigacions Afables.",
             "es": "Aprender con el cuerpo, un taller de seis horas de recoleta local de elementos botánicos, manipulación para tintas, pigmentos y proceso de teñido. Dentro del programa Investigacions Afables.",
@@ -401,9 +401,9 @@
       },
       "artist": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
       "image": "assets/img/agenda/16-no-limits.webp",
-      "start": "2027-06-04",
+      "start": "2026-06-04",
       "time": "16:00",
-      "end": "2027-06-20",
+      "end": "2026-06-20",
       "description": {
         "ca": "Projecte de la cocreació que aspira a una societat inclusiva on la cultura és plural i els agents creatius també ho són. En aquets projecte Un grup d’artistes i creadores diverses en les seves subjectivitats i en la cultura que les travessa ha desenvolupat el que li ha semblat més ad hoc, més il·lusionant o més confortable. Projecte de Joana Mallol, Olatz Azcona i Sara G. De Ubieta. Col·laboració amb TEB Bellvitge, Solidança i Engrunes Amb el suport de Cap Dep. Participants: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas i Ma Jesús Peiret.",
         "es": "Proyecto de la cocreación que aspira a una sociedad inclusiva donde la cultura es plural y los agentes creativos también lo son. En estos proyecto Un grupo de artistas y creadoras diversas en sus subjetividades y en la cultura que las atraviesa ha desarrollado el que le ha parecido más ad hoc más ilusionante o más confortable.Proyecto de Joana Mallol, Olatz Azcona y Sara G. De Ubieta. Colaboración con TEB Bellvitge, Solidança Con el apoyo de Cap Dep. Participantes: Lidia Gámez, Manel Moneo, Alfonso Martín, Miriam Franco, Siria Becerra, Cristina Avilés, Rafa Jiménez, Raquel Escoda, Andrea Cañadas y Ma Jesús Peiret.",
@@ -425,8 +425,8 @@
       },
       "artist": "Emma Prats",
       "image": "assets/img/agenda/17-tocar-fusta.webp",
-      "start": "2027-06-24",
-      "end": "2027-09-03",
+      "start": "2026-06-24",
+      "end": "2026-09-03",
       "description": {
         "ca": "Tocar fusta és la proposta d’Emma Prats per el festival d’art emergent, Artnou. L’artista parteix del gest, expressió i superstició popular homònima. Que te el seu origen en l’antiga creença que els mals esperits habitaven a la fusta. A partir d’aquest fenomen, es pretén explorar la seva vigència en la contemporaneïtat mitjançant la construcció col·lectiva de relats de sentit i la ritualització del subjecte. Desvelant una incertesa vinculada a una por o un desig. Així com la latència de la materialitat i el llenguatge com a capacitat d’acció, funcionant com una sort d’amulet.",
         "es": "Tocar Fusta es la propuesta de Emma Prats por el festival de arte emergente, Artnou. El artista parte del gesto, expresión y superstición popular homónima. Que tiene su origen en la antigua creencia que los malos espíritus habitaban a la madera. A partir de este fenómeno, se pretende explorar su vigencia en la contemporaneidad mediante la construcción colectiva de relatos de sentido y la ritualitzación del sujeto. Desvelando una incertidumbre vinculada a un miedo o un deseo. Así como la latencia de la materialidad y el lenguaje como capacidad de acción, funcionando como una suerte de amuleto.",
@@ -447,7 +447,7 @@
           },
           "artist": "Emma Prats",
           "image": "assets/img/agenda/18-tocar-fusta-projeccio.webp",
-          "start": "2027-08-29",
+          "start": "2026-08-29",
           "description": {
             "ca": "Projecció del vídeo de la investigació de Tocar Fusta d’Emma Prats",
             "es": "Proyección del video de la investigación de Tocar Madera de Emma Prats",
@@ -468,7 +468,7 @@
           },
           "artist": "Emma Prats",
           "image": "assets/img/agenda/19-tocar-fusta-clausura.webp",
-          "start": "2027-09-03",
+          "start": "2026-09-03",
           "description": {
             "ca": "Lectures de referents vinculats a la recerca de l’exposició amb l’artista",
             "es": "Lecturas de referentes vinculados en investigación de la exposición con el artista",
@@ -491,8 +491,8 @@
         "en": "Arnau Sala Saez"
       },
       "image": "assets/img/agenda/20-arnau-sala-saez.webp",
-      "start": "2027-09-05",
-      "end": "2027-09-30",
+      "start": "2026-09-05",
+      "end": "2026-09-30",
       "description": {
         "ca": "La galeria es transforma en un espai col·lectiu d’investigació sobre el te. A través de dues sessions de treball dirigides per l’artista la sala anirà prenent forma. El punt d’inici és els processos en què es tracte el te i explorar les possibilitats d’aplicar-ho a plantes locals.",
         "es": "La galería se transforma en un espacio colectivo de investigación sobre el té. A través de dos sesiones de trabajo dirigidas por el artista la sala irá tomando forma. El punto de inicio es los procesos en que se trate el té y explorar las posibilidades de aplicarlo a plantas locales.",
@@ -513,8 +513,8 @@
           },
           "artist": "Arnau Sala Saez",
           "image": "assets/img/agenda/21-arnau-sala-saez-s12.webp",
-          "start": "2027-09-05",
-          "end": "2027-09-06",
+          "start": "2026-09-05",
+          "end": "2026-09-06",
           "time": "10:00 – 13:00",
           "description": {
             "ca": "Sessió 1: ens acostarem al te, experimentant-lo, i fent un recorregut entre diversos tipus de te, per així entendre les diferències entre cada varietat. Sessió 2: Mètodes de processos del te tradicionals de cada varietat.",
@@ -536,8 +536,8 @@
           },
           "artist": "Arnau Sala Saez",
           "image": "assets/img/agenda/22-arnau-sala-saez-s34.webp",
-          "start": "2027-09-12",
-          "end": "2027-09-13",
+          "start": "2026-09-12",
+          "end": "2026-09-13",
           "time": "10:00 – 13:00",
           "description": {
             "ca": "Sessió 3 i 4:les altres sessions ens servirà com a punt de partida per experimentar algunes d’aquestes tècniques amb plantes locals des de la col·lectivitat.",
@@ -562,8 +562,8 @@
       },
       "artist": "Guus Vandeweerd",
       "image": "assets/img/agenda/23-guus-vandeweerd.webp",
-      "start": "2027-10-08",
-      "end": "2027-10-31",
+      "start": "2026-10-08",
+      "end": "2026-10-31",
       "description": {
         "ca": "Pot el coneixement situat traduir els sabers ancestrals locals a través d’una cartografia virtual pixelada?",
         "es": "¿Puede el conocimiento situado traducir la ancestralidad local a través de una cartografía virtual pixelada?",
@@ -583,8 +583,8 @@
         "es": "BSB at Loop",
         "en": "BSB at Loop"
       },
-      "start": "2027-11-11",
-      "end": "2027-11-30"
+      "start": "2026-11-11",
+      "end": "2026-11-30"
     },
     {
       "slug": "ines-sistiaga",
@@ -599,8 +599,8 @@
         "es": "Inés Sistiaga",
         "en": "Inés Sistiaga"
       },
-      "start": "2027-12-01",
-      "end": "2027-12-31"
+      "start": "2026-12-01",
+      "end": "2026-12-31"
     },
     {
       "slug": "sander-wassink",
@@ -616,8 +616,8 @@
         "en": "Sander Wassink"
       },
       "artist": "Studio compartida per Open Structures",
-      "start": "2028-01-01",
-      "end": "2028-01-31",
+      "start": "2027-01-01",
+      "end": "2027-01-31",
       "description": {
         "ca": "Taller de V7.3 (A.1057)Studio compartida per Open Structures.",
         "es": "Taller de V7.3 (A.1057)Studio compartida per Open Structures.",
