@@ -145,13 +145,13 @@ export function renderShop(view, data) {
     const price = (p.price != null) ? `${p.price}${cur}` : '—';
     return `<button class="product" type="button" data-i="${i}">
       <div class="product__media">${img ? `<img src="${esc(img)}" alt="${esc(t(p.title))}" loading="lazy">` : ''}</div>
-      <div class="product__row">
-        <div class="product__info">
-          ${p.editorial ? `<span class="product__editorial">${esc(p.editorial)}</span>` : ''}
+      <div class="product__info">
+        <div class="product__row">
           <span class="product__title">${esc(t(p.title))}</span>
-          ${p.author ? `<span class="product__author">${esc(p.author)}</span>` : ''}
+          <span class="product__price">${esc(price)}</span>
         </div>
-        <span class="product__price">${esc(price)}</span>
+        ${p.author ? `<span class="product__author">${esc(p.author)}</span>` : ''}
+        ${p.editorial ? `<span class="product__editorial">${esc(p.editorial)}</span>` : ''}
       </div>
     </button>`;
   }).join('');

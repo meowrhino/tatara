@@ -119,12 +119,12 @@
     {
       "id": "bossa-1",
       "title": {
-        "ca": "Bossa Nº1",
-        "es": "Bolso Nº1",
-        "en": "Bag Nº1"
+        "ca": "Bossa No Limits Nº1",
+        "es": "Bolso No Limits Nº1",
+        "en": "No Limits Bag Nº1"
       },
-      "author": "No Limits",
-      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "author": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "editorial": null,
       "price": 260,
       "images": [
         "assets/img/edicions/bossa-1.webp"
@@ -138,12 +138,12 @@
     {
       "id": "bossa-2",
       "title": {
-        "ca": "Bossa Nº2",
-        "es": "Bolso Nº2",
-        "en": "Bag Nº2"
+        "ca": "Bossa No Limits Nº2",
+        "es": "Bolso No Limits Nº2",
+        "en": "No Limits Bag Nº2"
       },
-      "author": "No Limits",
-      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "author": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "editorial": null,
       "price": 260,
       "images": [
         "assets/img/edicions/bossa-2.webp"
@@ -157,12 +157,12 @@
     {
       "id": "bossa-3",
       "title": {
-        "ca": "Bossa Nº3",
-        "es": "Bolso Nº3",
-        "en": "Bag Nº3"
+        "ca": "Bossa No Limits Nº3",
+        "es": "Bolso No Limits Nº3",
+        "en": "No Limits Bag Nº3"
       },
-      "author": "No Limits",
-      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "author": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "editorial": null,
       "price": 260,
       "images": [
         "assets/img/edicions/bossa-3.webp"
@@ -176,12 +176,12 @@
     {
       "id": "bossa-4",
       "title": {
-        "ca": "Bossa Nº4",
-        "es": "Bolso Nº4",
-        "en": "Bag Nº4"
+        "ca": "Bossa No Limits Nº4",
+        "es": "Bolso No Limits Nº4",
+        "en": "No Limits Bag Nº4"
       },
-      "author": "No Limits",
-      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "author": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "editorial": null,
       "price": 260,
       "images": [
         "assets/img/edicions/bossa-4.webp"
@@ -195,12 +195,12 @@
     {
       "id": "bossa-5",
       "title": {
-        "ca": "Bossa Nº5",
-        "es": "Bolso Nº5",
-        "en": "Bag Nº5"
+        "ca": "Bossa No Limits Nº5",
+        "es": "Bolso No Limits Nº5",
+        "en": "No Limits Bag Nº5"
       },
-      "author": "No Limits",
-      "editorial": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "author": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
+      "editorial": null,
       "price": 260,
       "images": [
         "assets/img/edicions/bossa-5.webp"

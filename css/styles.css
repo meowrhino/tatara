@@ -296,15 +296,21 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   max-width: var(--col); margin: 0 auto; width: 100%;
   display: grid; grid-template-columns: 1fr; gap: 2.4rem;
 }
-.product { display: block; width: 100%; text-align: left; }
+/* El <button> centra su contenido en vertical cuando la celda de la rejilla es
+   más alta que la ficha (fichas con títulos de distinto largo). Con flex-column
+   el contenido vuelve arriba y todas las cajas empiezan a la misma altura. */
+.product { display: flex; flex-direction: column; width: 100%; text-align: left; }
 .product__media { background: var(--media-bg); aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden; }
-.product__media img { width: 100%; height: 100%; object-fit: cover; }
-.product__row { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.6rem; align-items: baseline; }
-.product__info { display: flex; flex-direction: column; line-height: 1.35; }
-.product__editorial { font-size: 0.78rem; color: var(--ink-soft); }
-.product__title { font-weight: 700; }
-.product__author { font-size: 0.85rem; }
+/* 'contain': la foto se ve ENTERA dentro de la caja, sea horizontal o vertical.
+   Con 'cover' las verticales salían recortadas por arriba y por abajo. */
+.product__media img { width: 100%; height: 100%; object-fit: contain; }
+/* Orden de la ficha: títol — preu / autor / +info (editorial, traducció…). */
+.product__info { display: flex; flex-direction: column; line-height: 1.35; margin-top: 0.6rem; }
+.product__row { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+.product__title { font-weight: 700; min-width: 0; }
 .product__price { flex: 0 0 auto; }
+.product__author { font-size: 0.85rem; }
+.product__editorial { font-size: 0.78rem; color: var(--ink-soft); }
 @media (min-width: 560px) { .shop { grid-template-columns: 1fr 1fr; } }
 
 /* Contacte: texto de intro arriba, axonometría del local en medio, dirección
