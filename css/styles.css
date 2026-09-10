@@ -489,7 +489,11 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .modal__body .m-when { font-size: 0.82rem; color: var(--ink-soft); letter-spacing: 0.04em; margin: 0; }
 .modal__body .m-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 6vw, 2rem); letter-spacing: 0.05em; text-transform: uppercase; margin: 0.4rem 0 0.2rem; line-height: 1.1; }
 .modal__body .m-person { font-weight: 700; margin: 0 0 1rem; }
-.modal__body .m-desc { line-height: 1.6; text-align: justify; hyphens: auto; }
+/* Sin justificar: en monoespaciada y a ~30 caracteres por línea (el diálogo en
+   móvil), justificar abre huecos enormes entre palabras. En bandera se lee
+   parejo. La agenda sí va justificada, pero con letra más pequeña y más
+   caracteres por línea, donde el hueco no canta. */
+.modal__body .m-desc { line-height: 1.6; text-align: left; hyphens: manual; text-wrap: pretty; }
 .modal__body .m-bio { margin-top: 1.4rem; }
 .modal__body .m-link { margin: 1.2rem 0 0; font-weight: 700; }
 .modal__body .m-price { font-weight: 700; margin: 1rem 0 0.6rem; }
