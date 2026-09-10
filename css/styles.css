@@ -316,7 +316,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 /* Contacte: texto de intro arriba, axonometría del local en medio, dirección
    + los 3 links (IG · Newsletter · Medium) abajo. */
 .contact { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; flex: 1; gap: 2rem; }
-.contact__intro { position: relative; z-index: 1; max-width: var(--col); margin: 0; text-align: center; hyphens: auto; }
+/* Centrado y SIN hyphens: al partir palabras, todas las líneas llegaban al
+   mismo ancho y el párrafo se leía como justificado. */
+.contact__intro { position: relative; z-index: 1; max-width: var(--col); margin: 0; text-align: center; hyphens: manual; text-wrap: pretty; }
 /* Axonometria de fons: absoluta i centrada, DARRERE del text (no ocupa scroll). */
 .contact__axo { position: absolute; inset: 0; margin: auto; max-width: 16rem; max-height: 40svh; width: auto; height: auto; z-index: 0; pointer-events: none; }
 .contact__info { position: relative; z-index: 1; margin: 0; width: 100%; }
