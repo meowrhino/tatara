@@ -102,7 +102,11 @@ for f in "$SRC"/*.{jpg,jpeg,png,tif,tiff,pdf,webp}; do
   else
     rh=$(( H < MAX ? H : MAX )); resize="-resize 0 $rh"
   fi
-  cwebp -quiet -q "$Q" $resize "$f" -o "$out"
+  # -blend_alpha: si la imagen de origen trae transparencia (TIF, PNG, PDF
+  # exportado), la funde sobre BLANCO en vez de arrastrarla al webp. Un cartel
+  # con fondo transparente sobre un bloque de color de la agenda se veía del
+  # color del bloque, no blanco como el papel.
+  cwebp -quiet -q "$Q" -blend_alpha 0xffffff $resize "$f" -o "$out"
   count=$((count+1))
   echo "✓ $name.webp  ($W x $H)"
 done

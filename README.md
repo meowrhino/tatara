@@ -142,6 +142,9 @@ A `data/botiga.json`:
 }
 ```
 
+La fitxa es pinta sempre en aquest ordre: **títol — preu**, a sota l'**autor**
+i a sota l'**editorial** (o qualsevol altra dada de context), en gris petit.
+
 Dues coses importants:
 
 - **`price: null` vol dir "pròximament"**: es veu però no es pot comprar. En
@@ -162,8 +165,12 @@ npm run webp "carpeta amb les fotos" assets/img/agenda
 ```
 
 Redimensiona el costat gran a 1600 px, gira les fotos de mòbil que venen
-tombades i també accepta PDF (els cartells exportats d'InDesign). Escriu el nom
-en minúscules i amb guions.
+tombades, posa **fons blanc** a les que porten transparència (TIF, PNG i PDF
+exportats sovint en porten) i també accepta PDF (els cartells exportats
+d'InDesign). Escriu el nom en minúscules i amb guions.
+
+Si una foto es veu **de costat**, és que venia sense l'etiqueta d'orientació: cal
+girar-la a l'ordinador abans de convertir-la.
 
 ## Enllaços dins d'un text
 
