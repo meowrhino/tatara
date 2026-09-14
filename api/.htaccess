@@ -1,0 +1,32 @@
+# api/.htaccess — todo lo que entra por /api/... lo atiende index.php.
+# (En el Worker esto lo hacía Hono con basePath("/api"); aquí lo hace Apache.)
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /api/
+
+  # La cabecera Authorization no llega a PHP en muchos Apache con CGI/FastCGI,
+  # y sin ella el panel /admin daría 401 siempre. Esto la reinyecta.
+  RewriteCond %{HTTP:Authorization} .
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  # Cualquier ruta que no sea un fichero real → index.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# Si aun así el panel /admin diera 401 con el token correcto, descomentar
+# (necesita Apache 2.4.13 o superior; en versiones viejas da error 500):
+# CGIPassAuth On
+
+# config.php tiene la contraseña de la base de datos y las claves de Stripe.
+# PHP no lo serviría como texto, pero por si acaso: nadie lo pide directamente.
+<Files "config.php">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</Files>

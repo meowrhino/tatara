@@ -28,3 +28,8 @@ node_modules/
 # Worker (backend): secretos locales y caché de wrangler
 .dev.vars
 .wrangler/
+
+# Opción Pangea: credenciales del hosting y base local de pruebas.
+api/config.php
+.data/
+dist/

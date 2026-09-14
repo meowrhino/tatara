@@ -3,7 +3,9 @@
 Web de **TAT ARA**, espai galeria d'art, disseny i ecologia (Barcelona).
 HTML/CSS/JS a pèl, sense build. Mobile-first, trilingüe (CAT/CAST/ENG).
 El backend (newsletter, carret, stock) és un Worker de Cloudflare — veure
-[DEPLOY.md](DEPLOY.md).
+[DEPLOY.md](DEPLOY.md). Hi ha una segona opció, sense Cloudflare, amb el mateix
+backend escrit en PHP per a allotjament compartit (Pangea) — veure
+[DEPLOY_PANGEA.md](DEPLOY_PANGEA.md).
 
 ---
 

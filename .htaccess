@@ -1,0 +1,37 @@
+# .htaccess de la raíz — solo para la opción Pangea (Apache).
+# En Cloudflare este fichero no se usa para nada; se sube igual y no molesta.
+
+DirectoryIndex index.html
+
+# La web es una SPA con router de hash (#agenda, #botiga…), así que NO hace falta
+# reescribir nada: el navegador siempre pide "/" y el hash lo resuelve el JS.
+
+# Por si alguna vez se sube el repo entero: lo que no es web, no se sirve.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(src|tools|migrations|node_modules|\.wrangler)/ - [F,L]
+  RewriteRule \.(sql|toml|md)$ - [F,L]
+</IfModule>
+
+<FilesMatch "^\.(dev\.vars|env|gitignore|assetsignore)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Los JSON de data/ son el contenido de la web: se piden en cada visita y cambian
+# cuando la clienta los edita. Cachear poco y revalidar siempre.
+<IfModule mod_headers.c>
+  <FilesMatch "\.json$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(webp|jpg|jpeg|png|avif|woff2?|pdf)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+AddDefaultCharset UTF-8
