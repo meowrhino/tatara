@@ -21,6 +21,18 @@ Con esta opción **no se mueve nada**: dominio, DNS, web y base de datos se qued
 en Pangea. El precio es que hay que subir los ficheros a mano (no hay despliegue
 automático desde GitHub) y que no hay CDN mundial delante.
 
+### De quién es la cuenta (septiembre de 2026)
+
+En Pangea todo cuelga de una cuenta de socia, y `tatara.cat` vive bajo la de
+**L'Afluent SCCL**, no bajo una propia de la asociación. Decisión suya, tomada el
+30/09/2026. Lo que implica:
+
+- La **factura** del dominio y del alojamiento va a nombre de L'Afluent.
+- Los **accesos** (panel, SFTP, phpMyAdmin) son compartidos con ellos.
+- Si algún día la asociación quiere cuenta propia, hay que **migrar** dominio,
+  web y base de datos de una cuenta a otra: trabajo manual y con corte de
+  servicio. Cuanto antes se haga, más barato sale.
+
 ## Qué cambia y qué no
 
 | | Cloudflare (`main`) | Pangea (`opcion-pangea`) |
