@@ -17,6 +17,7 @@ mkdir -p "$DEST"
 rsync -a \
   --exclude '.git' --exclude '.git*' --exclude '.claude' --exclude '.wrangler' \
   --exclude '.dev.vars*' --exclude '.DS_Store' --exclude 'node_modules' \
+  --exclude '.data' \
   --exclude 'src' --exclude 'tools' --exclude 'migrations' --exclude 'dist' \
   --exclude 'referencias' --exclude 'FOTOS EDICIONS' --exclude 'FOTOS AGENDA' \
   --exclude 'FOTOS_MR' --exclude 'FULLS DE SALA' \
