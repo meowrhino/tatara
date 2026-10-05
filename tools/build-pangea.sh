@@ -11,6 +11,16 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 DEST=dist
+CFG="$DEST/api/config.php"
+
+# config.php lleva las credenciales del servidor y no está en git: si ya existe
+# en dist/, se guarda y se devuelve, para no tener que volver a escribirlo.
+GUARDADA=""
+if [[ -f "$CFG" ]]; then
+  GUARDADA=$(mktemp)
+  cp "$CFG" "$GUARDADA"
+fi
+
 rm -rf "$DEST"
 mkdir -p "$DEST"
 
@@ -31,6 +41,13 @@ rsync -a \
 # primero hay que asegurarlo y el segundo sobra.
 rm -f "$DEST/.assetsignore"
 [[ -f .htaccess ]] && cp .htaccess "$DEST/.htaccess"
+
+if [[ -n "$GUARDADA" ]]; then
+  cp "$GUARDADA" "$CFG"
+  chmod 600 "$CFG"
+  rm -f "$GUARDADA"
+  echo "· api/config.php conservado del build anterior"
+fi
 
 echo "✓ dist/ listo ($(du -sh "$DEST" | cut -f1))"
 echo
