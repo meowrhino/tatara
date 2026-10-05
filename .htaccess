@@ -23,10 +23,11 @@ DirectoryIndex index.html
   </IfModule>
 </FilesMatch>
 
-# Los JSON de data/ son el contenido de la web: se piden en cada visita y cambian
-# cuando la clienta los edita. Cachear poco y revalidar siempre.
+# El contenido que la clienta edita (JSON) y el código de la web (HTML/CSS/JS)
+# se revalidan en cada visita: subir un fichero por SFTP y verlo ya cambiado.
+# Las fotos y las tipografías, cuando cambian, cambian de nombre: caché larga.
 <IfModule mod_headers.c>
-  <FilesMatch "\.json$">
+  <FilesMatch "\.(json|html|css|js)$">
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
   <FilesMatch "\.(webp|jpg|jpeg|png|avif|woff2?|pdf)$">

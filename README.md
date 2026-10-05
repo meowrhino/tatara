@@ -2,10 +2,12 @@
 
 Web de **TAT ARA**, espai galeria d'art, disseny i ecologia (Barcelona).
 HTML/CSS/JS a pèl, sense build. Mobile-first, trilingüe (CAT/CAST/ENG).
-El backend (newsletter, carret, stock) és un Worker de Cloudflare — veure
-[DEPLOY.md](DEPLOY.md). Hi ha una segona opció, sense Cloudflare, amb el mateix
-backend escrit en PHP per a allotjament compartit (Pangea) — veure
-[DEPLOY_PANGEA.md](DEPLOY_PANGEA.md).
+El backend (newsletter, carret, stock) està escrit en PHP i corre a
+l'allotjament de **Pangea**, on també hi ha el domini — veure
+[DEPLOY_PANGEA.md](DEPLOY_PANGEA.md). El mateix backend existeix també com a
+Worker de Cloudflare ([DEPLOY.md](DEPLOY.md)): és l'alternativa que es va
+descartar per preferir un allotjament de proximitat. Les dues funcionen amb el
+mateix frontend, que crida `/api/...` en relatiu.
 
 ---
 
@@ -14,8 +16,8 @@ backend escrit en PHP per a allotjament compartit (Pangea) — veure
 ## La regla
 
 **Tot el contingut viu a `data/`, en fitxers `.json`.** Per canviar un text, una
-data, un preu o una foto no cal tocar codi: s'edita el JSON, es puja, i la web es
-publica sola.
+data, un preu o una foto no cal tocar codi: s'edita el JSON, es puja per SFTP al
+servidor, i al recarregar la web ja hi és.
 
 L'única excepció és l'**stock** de la botiga, que es porta des de `/admin/`
 perquè ha de baixar tot sol amb cada venda.
@@ -37,7 +39,35 @@ perquè ha de baixar tot sol amb cada venda.
 Cada fitxer comença amb un `_comment` que explica què admet cada camp. És la
 documentació més fiable, perquè viu al costat de les dades.
 
-## Abans de pujar, sempre
+## Com es publica
+
+La web viu en un allotjament de **Pangea**. Publicar vol dir **copiar el fitxer
+al servidor**, i es fa amb un programa d'SFTP — [Cyberduck](https://cyberduck.io)
+és gratuït i va bé.
+
+Connexió (les contrasenyes, al gestor de contrasenyes — mai per WhatsApp):
+
+```
+Servidor:  web-12.pangea.org        Port: 22
+Protocol:  SFTP
+Usuari:    tatara-web
+```
+
+En connectar s'obre la carpeta de la web. A dins hi ha `data/`, `assets/`,
+`index.html`… Per canviar un text:
+
+1. **Guarda una còpia** del JSON que vols tocar, abans d'editar-lo.
+2. Edita'l a l'ordinador (amb qualsevol editor de text).
+3. Arrossega'l a la carpeta `data/` del servidor, substituint el que hi havia.
+4. Recarrega `https://tatara.cat` i mira que es vegi bé.
+
+> **Si la secció surt en blanc**, el JSON té un error de format (quasi sempre una
+> coma de més o de menys). Torna a pujar la còpia del pas 1 i la web torna.
+
+Les fotos van igual: es pugen a la carpeta d'`assets/img/` que toqui i després
+s'escriu el seu nom al JSON.
+
+## Abans de pujar, si tens el projecte al Mac
 
 ```bash
 npm run check
@@ -202,6 +232,81 @@ número u, i és el que deixa la web en blanc.
 
 ---
 
+# Traspàs: comptes, contrasenyes i accessos
+
+> Aquí no hi ha cap contrasenya escrita, i no n'hi ha d'haver mai. Aquest
+> fitxer viu a GitHub. Les contrasenyes van al gestor de contrasenyes.
+
+## On viu cada cosa
+
+| | On | De qui és |
+|---|---|---|
+| El domini `tatara.cat` | Pangea | compte de sòcia de **L'Afluent SCCL** |
+| L'allotjament i la base de dades | Pangea, servidor `web-12` | el mateix compte |
+| El certificat HTTPS | el renova Pangea sol | — |
+| El codi | [github.com/meowrhino/tatara](https://github.com/meowrhino/tatara) | compte de desenvolupament |
+| Els cobraments | Stripe (pendent d'activar) | compte de TAT ARA |
+
+## Les tres claus que fan falta
+
+1. **SFTP** — per pujar la web i el contingut. Servidor `web-12.pangea.org`,
+   usuari `tatara-web`. La contrasenya la dona Pangea.
+2. **Token d'administració** — per entrar a `/admin/stock.html` i portar l'stock.
+   És una cadena llarga generada a l'atzar.
+3. **phpMyAdmin** — per mirar la base de dades. El mateix usuari que l'SFTP, amb
+   una contrasenya pròpia que dona Pangea. *No cal per al dia a dia.*
+
+Les tres s'entreguen pel gestor de contrasenyes, no per xat ni per correu.
+
+## On viu el token d'administració (i com se'n fa un de nou)
+
+**No és al repositori.** `api/config.php` està al `.gitignore` i no ha viatjat mai
+a GitHub: existeix només **al servidor**, a `api/config.php` dins la carpeta de la
+web. Clonar el repositori no el dona.
+
+Si es perd, no hi ha res a migrar: s'entra per SFTP, s'obre `api/config.php`, es
+canvia el valor de `admin_token` i ja està. Per generar-ne un:
+
+```bash
+openssl rand -hex 32
+```
+
+El mateix fitxer guarda la contrasenya de la base de dades i, el dia que hi hagi
+cobraments, les claus de Stripe. **És l'únic fitxer del servidor amb secrets:**
+si algun dia es canvia d'allotjament, és l'únic que s'ha de tornar a escriure.
+
+## El dia a dia, qui fa què
+
+| Tasca | Qui | Com |
+|---|---|---|
+| Canviar textos, dates, fotos, preus | TAT ARA | editar el JSON i pujar-lo per SFTP |
+| Posar quantes unitats queden | TAT ARA | `/admin/stock.html` amb el token |
+| Veure comandes, missatges i altes | TAT ARA | `/admin/tickets.html` amb el token |
+| Tocar codi, afegir seccions | desenvolupament | GitHub |
+
+TAT ARA **no necessita ni GitHub ni terminal** per res del dia a dia: només
+Cyberduck i el navegador.
+
+## Comprovacions que es poden fer en qualsevol moment
+
+```bash
+# La web i l'API responen?
+curl -s https://tatara.cat/api/health
+
+# Els fitxers que no s'han de veure, no es veuen? (han de dir 403)
+curl -s -o /dev/null -w "%{http_code}\n" https://tatara.cat/schema-tatara.mysql.sql
+curl -s -o /dev/null -w "%{http_code}\n" https://tatara.cat/api/lib/db.php
+```
+
+## Si algun dia es canvia d'allotjament
+
+Tot el que fa falta és en aquest repositori: la web, el backend en PHP
+([DEPLOY_PANGEA.md](DEPLOY_PANGEA.md)) i el backend en Cloudflare Workers
+([DEPLOY.md](DEPLOY.md)), que és l'alternativa que es va descartar per preferir
+un allotjament de proximitat. Les dues versions funcionen amb el mateix frontend.
+
+---
+
 # Per a qui toqui el codi
 
 ## Estructura
@@ -221,7 +326,11 @@ js/                   Mòduls ES, sense build. Entrada: main.js
   agenda.js             Secció agenda
   sections.js           Render de text / people / shop / contact / newsletter / cart
   cart.js               Carret a localStorage
-src/index.js          Worker de Cloudflare: /api/* (newsletter, stock, Stripe)
+api/                  Backend EN ÚS: /api/* en PHP (newsletter, stock, Stripe)
+  index.php             Les rutes
+  config.php            Credencials. NO és al repo: viu només al servidor
+  lib/                  db (PDO) · catàleg · Stripe per REST · HTTP
+src/index.js          El mateix backend com a Worker de Cloudflare (alternativa)
 admin/                Panell intern: stock i comandes
 data/*.json           TOT el contingut. Cada fitxer es diu com la seva secció
 assets/img/           Imatges .webp: agenda/ · expos/ · recerca/ · edicions/ · mr/
@@ -236,8 +345,13 @@ tools/                check-data.mjs · to-webp.sh · serve.py
 
 ```bash
 npm install
-npm run dev        # Worker + web (l'API funciona)
-npm run check      # revisa els JSON
+npm run check                          # revisa els JSON
+
+# La versió que està publicada (PHP). Cal php: brew install php
+php -S 127.0.0.1:8788 -t . tools/php-router.php
+bash tools/test-api-php.sh             # 37 comprovacions de l'API
+
+npm run dev                            # l'alternativa amb Worker de Cloudflare
 ```
 
 Per mirar només la web, sense API, val qualsevol servidor estàtic
@@ -265,11 +379,13 @@ Cada bloc porta a baix a la dreta un marcador d'estat (`passat` / `ara` /
 `proximament`) calculat per data, i en obrir l'agenda la vista arrenca al costat
 del que passa avui (`scrollAgendaToToday`).
 
-**Caché.** No hi ha cap truc: ni `?v=`, ni `no-store`. Cloudflare serveix tot amb
-`max-age=0, must-revalidate` i un ETag del contingut, així que el navegador
-revalida a cada visita i es porta el fitxer nou quan canvia. Editar un JSON i fer
-push n'hi ha prou. Això ho garanteix Cloudflare: si algun dia la web se serveix
-des d'un altre lloc, caldrà tornar a posar el versionat a mà.
+**Caché.** No hi ha cap truc: ni `?v=`, ni `no-store`. Ho resol el `.htaccess`
+de l'arrel: el contingut que canvia sovint (`.json`, `.html`, `.css`, `.js`) va
+amb `no-cache, must-revalidate`, i les fotos i tipografies, que quan canvien
+canvien de nom, amb una setmana de caché. Així, pujar un JSON per SFTP n'hi ha
+prou perquè es vegi de seguida. **Si algun dia la web se serveix des d'un altre
+lloc, aquestes capçaleres s'han de tornar a posar**, o el navegador ensenyarà
+versions velles.
 
 ## Documentació
 
@@ -277,8 +393,9 @@ des d'un altre lloc, caldrà tornar a posar el versionat a mà.
 |---|---|
 | [NEXT_STEPS.md](NEXT_STEPS.md)     | El que queda de l'encàrrec, en ordre |
 | [TODO_CLIENTE.md](TODO_CLIENTE.md) | Tot el que cal fer i revisar el dia del traspàs |
-| [TODO_DOMINIO.md](TODO_DOMINIO.md) | Apuntar `tatara.cat` a Cloudflare |
+| [DEPLOY_PANGEA.md](DEPLOY_PANGEA.md) | **Com està publicada avui**: Pangea, PHP i MariaDB |
 | [DEPLOY.md](DEPLOY.md)             | Arquitectura, API i panell d'admin |
+| [TODO_DOMINIO.md](TODO_DOMINIO.md) | L'alternativa descartada: apuntar el domini a Cloudflare |
 | [FUTURO.md](FUTURO.md)             | Idees plantejades i **no pressupostades** |
 
 ## Pendent
