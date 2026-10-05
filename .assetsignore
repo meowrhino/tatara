@@ -25,3 +25,8 @@ FULLS DE SALA
 package.json
 package-lock.json
 Recurso 2.png
+
+# Opción Pangea: el backend en PHP y su Apache. En Cloudflare no se ejecuta
+# nada de esto — se serviría como texto plano, enseñando el código del backend.
+api
+.htaccess
