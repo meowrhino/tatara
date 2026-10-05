@@ -1,197 +1,147 @@
 # TODO — Traspaso a la clienta
 
-Lista de todo lo que hay que **hacer y revisar** el día que TAT ARA pase a ser
-dueña de su web: su cuenta de Cloudflare, su base de datos, su Stripe, su repo.
+Lo que hay que hacer y revisar el día que TAT ARA pase a llevar su web.
 
-Hoy nada de esto está hecho: el Worker corre en la cuenta de Manu, en
-`tatara.manuellatourf.workers.dev`, y comparte base de datos con otro proyecto.
-Eso está bien para desarrollar y es lo que hay que deshacer al entregar.
+**Dónde está todo hoy:** la web está publicada en el alojamiento de Pangea, bajo
+la cuenta de socia de L'Afluent SCCL, con el dominio `tatara.cat` y su
+certificado. El backend en PHP y la base de datos MariaDB están en ese mismo
+sitio — ver [DEPLOY_PANGEA.md](DEPLOY_PANGEA.md).
 
-Los pasos del **dominio** viven en [TODO_DOMINIO.md](TODO_DOMINIO.md) y no se
-repiten aquí. Lo que queda del encargo, en [NEXT_STEPS.md](NEXT_STEPS.md).
-
----
-
-## Antes de empezar: decidir de quién es cada cosa
-
-Cinco cuentas, y conviene saber de quién será cada una **antes** de tocar nada,
-porque algunas decisiones son difíciles de deshacer:
-
-| | ¿De quién? | Notas |
-|---|---|---|
-| Cloudflare | | Tiene que ser la misma cuenta que el dominio (regla de oro de TODO_DOMINIO.md) |
-| GitHub | | Si se transfiere el repo, Manu pierde el acceso salvo que se le invite |
-| Stripe | | Aquí es donde llega el dinero: **no puede quedarse a nombre de Manu** |
-| Dominio (Pangea) | | Solo hay que cambiar los nameservers, el registro se queda donde está |
-| Correo de avisos | | A dónde llegan los pedidos y los mensajes de contacto |
+Lo que queda del encargo, en [NEXT_STEPS.md](NEXT_STEPS.md). Cómo se publica el
+contenido, en el [README](README.md).
 
 ---
 
-## 1. Cloudflare
+## 1. Lo que queda vivo de la etapa anterior — cerrar antes de nada
 
-- [ ] La asociación crea su cuenta (plan Free) y **hace la transferencia del
-      Worker**, no una invitación: si Manu solo la invita a su cuenta, la web
-      sigue siendo suya.
-- [ ] Desplegar el Worker `tatara` desde el repo — ver TODO_DOMINIO.md, paso 2.
-- [ ] Comprobar que **Workers Builds** queda conectado: cada push a `main` tiene
-      que desplegar solo. Si no, cada cambio de contenido exige terminal.
-- [ ] Apuntar `tatara.cat` — TODO_DOMINIO.md, pasos 5 a 7.
-- [ ] Dar de baja o dejar apagado `tatara.manuellatourf.workers.dev` cuando el
-      dominio propio funcione, para que no queden dos webs vivas indexándose.
+Durante el desarrollo la web corrió en un Worker de Cloudflare, en la cuenta de
+Manu, con una base de datos compartida con otro proyecto (quienNoCorre). Eso
+sigue en pie y hay que cerrarlo, **en este orden**:
 
-## 2. Base de datos (D1) — lo más delicado
+- [ ] **Sacar los datos antes de borrar nada.** Si alguien se apuntó a la
+      newsletter o mandó un mensaje durante las pruebas, está ahí y solo ahí:
 
-Ahora mismo `wrangler.toml` apunta a una D1 llamada `shop` que **es compartida
-con otro proyecto** (quienNoCorre). TAT ARA usa las tablas con prefijo
-`tatara_`; el otro proyecto usa las mismas sin prefijo.
+      npx wrangler d1 execute shop --remote \
+        --command "SELECT COUNT(*) FROM tatara_newsletter"
 
-- [ ] Crear una D1 propia en la cuenta de la clienta:
-      `npx wrangler d1 create shop`
-- [ ] **Pegar el `database_id` nuevo en `wrangler.toml`.** El que hay escrito
-      ahora es de la cuenta de Manu: si se despliega sin cambiarlo, el Worker
-      arranca pero la newsletter y el carrito fallan sin decir por qué.
-- [ ] Cargar el esquema: `npx wrangler d1 execute shop --remote --file=schema-tatara.sql`
-- [ ] **Exportar lo que ya se haya acumulado** (altas de newsletter, mensajes de
-      contacto, pedidos) y meterlo en la base nueva:
-      `npx wrangler d1 export shop --remote --output=backup.sql`, filtrar las
-      tablas `tatara_*` e importarlas. Si se salta este paso, se pierden las
-      suscripciones a la newsletter.
-- [ ] Decidir si al separarse se quita el prefijo `tatara_` de las tablas. Si se
-      quita, hay que tocar `src/index.js` y `schema-tatara.sql`; si se deja, no
-      hay que tocar nada y el prefijo solo queda como una rareza histórica.
-- [ ] **Backups.** Hoy la copia semanal la hace el repo de quienNoCorre, que
-      cubre las dos bases por estar en la misma. Al separarse, TAT ARA se queda
-      sin ella: hay que añadir su propio workflow (plantilla en
-      semillaEcommerce, `.github/workflows/backup-d1.yml`, más un secret
-      `CLOUDFLARE_API_TOKEN` de su cuenta).
-      No corre prisa para el traspaso en sí: la tienda no habrá vendido nada
-      antes de ese día, así que no hay datos que perder. Es al abrir la tienda
-      cuando pasa a ser urgente.
+      Lo mismo con `tatara_mensajes` y `tatara_pedidos`. Si algún recuento no es
+      0, exportar y volver a meter esas altas en la web nueva (para la
+      newsletter basta con un `POST /api/newsletter` por cada email).
+- [ ] **Borrar el Worker `tatara`** de la cuenta de Cloudflare de Manu. Mientras
+      exista, hay una segunda copia pública de la web, con datos de la
+      asociación, dentro de una cuenta personal.
+- [ ] **Borrar las tablas `tatara_*`** de la D1 compartida, una vez exportadas.
+- [ ] El código de aquella versión no se pierde: vive en la rama
+      `opcion-cloudflare` del repositorio.
 
-## 3. Secretos
+## 2. Las tres claves
 
-Los tres se ponen por terminal, nunca en `wrangler.toml`. Los actuales son de la
-cuenta de Manu y **no viajan solos**: hay que volver a ponerlos en la cuenta
-nueva.
+No hay cuentas que traspasar: el alojamiento es de L'Afluent y el dominio
+también. Lo que sí hay que entregar son las contraseñas, **por gestor de
+contraseñas, nunca por WhatsApp ni por correo**:
 
-- [ ] `npx wrangler secret put STRIPE_SECRET_KEY`
-- [ ] `npx wrangler secret put STRIPE_WEBHOOK_SECRET`
-- [ ] `npx wrangler secret put ADMIN_TOKEN` — y **dárselo a la clienta**, que es
-      lo que abre `/admin/`. Sin él no puede ni contar stock ni ver pedidos.
+- [ ] **SFTP** (`web-12.pangea.org`, usuario `tatara-web`) — para subir
+      contenido. La da Pangea.
+- [ ] **Token de admin** — abre `/admin/`. Vive en `api/config.php`, en el
+      servidor. Si se pierde o se ha compartido mal, se entra por SFTP y se
+      cambia; se genera uno nuevo con `openssl rand -hex 32`.
+- [ ] **phpMyAdmin** — mismo usuario, contraseña propia de Pangea. No hace falta
+      para el día a día.
+- [ ] ⚠️ **Cambiar la contraseña SFTP actual.** Se compartió por WhatsApp y está
+      escrita en claro en `web tatara-TEXT-SETEMBRE.docx`, en el Drive.
+      Cambiarla en Pangea y borrarla del documento.
 
-## 4. Stripe
+## 3. Stripe — solo cuando se quiera cobrar de verdad
+
+Hoy no hay claves puestas: la botiga enseña las piezas y el botón de comprar
+contesta 503. Para abrirla:
 
 - [ ] Cuenta de Stripe **a nombre de la asociación**, con su banco. Es donde
-      llega el dinero de las ventas: este punto no admite atajos.
-- [ ] Claves nuevas en los secretos de arriba.
-- [ ] **Rehacer el webhook** apuntando al dominio nuevo:
+      llega el dinero: este punto no admite atajos.
+- [ ] Poner `stripe_secret_key` y `stripe_webhook_secret` en `api/config.php`
+      (por SFTP), no en ningún otro sitio.
+- [ ] **Webhook** en el panel de Stripe hacia
       `https://tatara.cat/api/stripe-webhook`, evento
-      `checkout.session.completed`. El webhook viejo apunta al `.workers.dev` y
-      dejará de servir. Sin webhook los pagos se cobran pero **el stock no baja
-      y el pedido no se registra**.
-- [ ] Compra de prueba en modo test (`4242 4242 4242 4242`) → comprobar que el
-      pedido aparece en `/admin/tickets.html` → recién entonces, claves live.
+      `checkout.session.completed`. Sin webhook se cobra, pero **el stock no
+      baja y el pedido no se registra**.
+- [ ] Compra de prueba en modo test (`4242 4242 4242 4242`) → que el pedido
+      aparezca en `/admin/tickets.html` → recién entonces, claves live.
 
-## 5. GitHub
+## 4. Avisos por correo — pendiente, y con un detalle de Pangea
 
-- [ ] Decidir entre transferir el repo (`Settings → Danger Zone → Transfer`) o
-      hacer un fork a la cuenta de la asociación. Ver el aviso de
-      TODO_DOMINIO.md, paso 2.
-- [ ] Si se transfiere: **reconectar Workers Builds**, que se rompe con la
-      transferencia.
-- [ ] Decidir si Manu conserva acceso. Si la clienta va a seguir pidiendo
-      cambios, hace falta.
+Tal como está, nadie se entera de que ha entrado un pedido o un mensaje salvo
+que alguien mire `/admin/`.
 
-## 6. Correo
-
-- [ ] Los avisos por email **todavía no están puestos** (ver NEXT_STEPS.md,
-      punto 2bis): tal como está, nadie se entera de que ha entrado un pedido o
-      un mensaje de contacto salvo que alguien mire `/admin/`. Portarlos
-      necesita el dominio propio, así que es trabajo del traspaso.
 - [ ] Decidir el destinatario: `associaciotatara@gmail.com`, Manu, o los dos
       durante el rodaje.
-- [ ] Remitente `noreply@tatara.cat`, dando de alta el dominio en Email Sending.
-- [ ] ⚠️ Al darlo de alta se añaden **SPF y DKIM**. Si `tatara.cat` ya tiene SPF,
-      hay que **fusionarlos**, no sustituirlos. Y no confundir Email **Sending**
-      con Email **Routing**: Routing añade registros **MX** y rompería el correo
-      entrante de la asociación.
+- [ ] ⚠️ En el servidor de Pangea **la función `mail()` de PHP está
+      deshabilitada**: hay que enviar por SMTP autenticado. Pangea da
+      instrucciones y una cuenta de correo del dominio.
+- [ ] Si se usa un remitente `@tatara.cat`, revisar SPF y DKIM con ellos.
 
-## 7. Contenido y datos que hay que revisar
+## 5. Contenido y datos que hay que revisar
 
 - [ ] **Datos de contacto** en `data/data.json`: email, dirección, redes. Que
       sean los de la asociación y no los de pruebas.
-- [ ] **Precios y stock.** Los precios ya están puestos desde el documento de
-      septiembre, pero **el stock nace a 0 y sin stock nada es comprable**: hay
-      que contar ejemplares en `/admin/stock.html`.
+- [ ] **Stock.** Nace a 0, y sin unidades nada es comprable: contar ejemplares
+      en `/admin/stock.html`.
 - [ ] **Envíos.** `data/envios.json` está vacío (`[]`), que significa "solo
       recogida en galería": no se pide dirección ni se cobra envío. Si van a
       enviar, hay que rellenar las zonas.
 - [ ] **Página legal** (aviso legal, privacidad, desistimiento). No existe, y con
-      una tienda con cobro real es obligatoria. Plantilla en semillaEcommerce.
+      una tienda con cobro real es obligatoria.
+- [ ] **Enlaces** a la web de cada artista: faltan trece.
 - [ ] `npm run check` en verde antes de entregar.
 - [ ] `assets/img/mr/` son 27 fotos de piezas de Maria Roy que ya no usa ningún
-      JSON, desde que la pieza de cerámica salió del catálogo. Decidir si vuelve
-      a venderse o si se borran.
+      JSON. Decidir si vuelven al catálogo o se borran.
 
-## 7bis. Un detalle de hosting que conviene no romper
+## 6. Formularios públicos sin límite de peticiones
 
-La web no lleva ningún truco de caché (nada de `?v=`, nada de `no-store`):
-Cloudflare sirve todos los archivos con `Cache-Control: max-age=0,
-must-revalidate` y un ETag del contenido, así que el navegador comprueba en cada
-visita y se trae lo nuevo en cuanto cambia. Por eso editar un JSON y hacer push
-basta, sin acordarse de subir ninguna versión.
+`/api/newsletter` y `/api/contacto` están abiertos a cualquiera. Hoy no importa
+porque nadie conoce la web; el día que circule, un bot puede meter miles de altas
+y miles de mensajes en la base de datos.
 
-- [ ] Si algún día se sirve la web desde otro sitio (el SFTP de Pangea, por
-      ejemplo), **esa garantía desaparece** y habrá que volver a poner el
-      versionado a mano. Es una razón más para quedarse en Cloudflare.
+- [ ] Cuando empiece a verse: poner un límite. En este alojamiento no hay WAF, o
+      sea que se resuelve en el propio PHP (un contador por IP y minuto en la
+      base de datos, unas veinte líneas) o con
+      [Turnstile](https://www.cloudflare.com/products/turnstile/), el captcha
+      invisible de Cloudflare, que funciona en cualquier web sin alojar nada
+      allí.
 
-## 7ter. Límite de peticiones a los formularios públicos
+## 7. Copias de seguridad
 
-`/api/newsletter` y `/api/contacto` están abiertos a cualquiera, sin límite. Hoy
-no importa porque nadie conoce la web; el día que `tatara.cat` esté publicado, un
-bot puede meter miles de altas y miles de mensajes en la base de datos, y —cuando
-los avisos por email estén puestos— miles de correos en la bandeja de la
-asociación.
+Pangea hace copia **cada noche**, guarda 7 días seguidos y luego la del domingo
+durante 6 meses. Para restaurar, correo a `suport@pangea.org` de lunes a viernes
+de 9 a 14.
 
-- [ ] Poner una **regla de rate limiting en el panel de Cloudflare** (Security →
-      WAF → Rate limiting rules): algo como 5 peticiones por minuto y por IP a
-      `/api/newsletter` y `/api/contacto`. Es gratis en el plan Free, no toca
-      código, y es la forma correcta de resolverlo: filtra antes de llegar al
-      Worker.
-- [ ] Si aun así entra spam, el paso siguiente es Turnstile (el captcha de
-      Cloudflare, invisible) en los dos formularios.
+- [ ] Que la asociación sepa que esa es la red de seguridad, y que la pérdida
+      máxima es de un día.
+- [ ] Antes de cualquier cambio gordo, exportar la base desde phpMyAdmin.
+- [ ] Los pedidos con dinero de verdad están **también en Stripe**: aunque se
+      perdiera la base, el cobro y los datos del comprador no se pierden.
 
-## 8. Seguridad — hacer esto sí o sí
+## 8. Qué hay que enseñarle a la clienta
 
-- [ ] **Cambiar la contraseña SFTP de Pangea.** Se compartió por WhatsApp y
-      además está escrita en claro dentro de `web tatara-TEXT-SETEMBRE.docx`, en
-      el Drive. Cambiarla y borrarla del documento.
-- [ ] Revisar que en el repo no queda ningún secreto. Hoy no lo hay: todos van
-      por `wrangler secret` y `.dev.vars` está en `.gitignore`.
-- [ ] Rotar el `ADMIN_TOKEN` si se ha compartido por chat en algún momento.
+Sin esto el traspaso no está terminado:
 
-## 9. Qué le hay que enseñar a la clienta
-
-No es una tarea técnica, pero sin esto el traspaso no está terminado:
-
-- [ ] Cómo actualizar el contenido (la guía irá en el README).
-- [ ] Cómo entrar en `/admin/`, contar stock y marcar pedidos como enviados.
-- [ ] Qué pasa si edita mal un JSON, y que `npm run check` se lo dice antes de
-      subirlo.
+- [ ] Instalar Cyberduck y guardar el marcador de conexión (README, "Com es
+      publica").
+- [ ] Cambiar un texto de prueba de principio a fin, ella sola: copia de
+      seguridad, editar, subir, recargar.
+- [ ] Qué pasa si edita mal un JSON y cómo volver atrás.
+- [ ] Entrar en `/admin/`, contar stock y marcar un pedido como enviado.
 - [ ] A quién llamar cuando algo se rompa.
 
 ---
 
 ## Qué se rompe si se olvida cada cosa
 
-Un resumen para priorizar, porque no todo pesa igual:
-
 | Se olvida | Qué pasa |
 |---|---|
-| `database_id` en `wrangler.toml` | La web carga, pero newsletter y carrito fallan en silencio |
-| Exportar la D1 | Se pierden las suscripciones a la newsletter (lo demás aún estará vacío) |
+| Exportar los datos antes de borrar el Worker | Se pierden las altas de newsletter de las pruebas |
+| Borrar el Worker viejo | Queda una segunda web pública, con datos, en una cuenta personal |
 | Webhook de Stripe | Se cobra, pero el stock no baja y el pedido no se registra |
-| Backup de la D1 | Nada el día del traspaso; a partir de la primera venta, todo |
-| Reconectar Workers Builds | Cada cambio de contenido pasa a exigir terminal |
 | Contraseña SFTP | Sigue circulando por WhatsApp y por el Drive |
-| Rate limiting | Nada hasta que alguien encuentre los formularios; después, spam en la base de datos |
+| Stock | La botiga entera sale como *exhaurit* |
+| Página legal | Vender sin ella no es legal |
+| Límite en los formularios | Nada hasta que alguien los encuentre; después, spam en la base |

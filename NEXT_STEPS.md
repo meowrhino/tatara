@@ -13,12 +13,12 @@ queda, en orden. Casi todo son decisiones de la clienta, no código.
       (`{zona, nombre, precio|tramos, paises?, recogida?}`) — el worker ya lo soporta,
       y el selector aparece solo en el carret. Ver ejemplos en semillaEcommerce.
 - [ ] **Stock real**: contar ejemplares y fijarlos en `/admin/stock.html` (todo nace a 0;
-      sin stock nada es comprable). Antes: `npx wrangler secret put ADMIN_TOKEN`.
+      sin stock nada es comprable). El token está en `api/config.php`, en el servidor.
 
 ## 2. Stripe (cuando lo anterior esté)
-- [ ] Cuenta de Stripe (de la clienta) → `npx wrangler secret put STRIPE_SECRET_KEY`.
+- [ ] Cuenta de Stripe (de la clienta) → `stripe_secret_key` en `api/config.php`.
 - [ ] Webhook: endpoint `https://<dominio>/api/stripe-webhook`, evento
-      `checkout.session.completed` → `npx wrangler secret put STRIPE_WEBHOOK_SECRET`.
+      `checkout.session.completed` → `stripe_webhook_secret` en `api/config.php`.
 - [ ] Dashboard: Bizum + recibos por email + cupones si toca.
 - [ ] Compra de prueba en modo test (`4242 4242 4242 4242`) → pedido visible en
       `/admin/tickets.html` → clave live.
@@ -31,7 +31,7 @@ a la tienda; confirmación y "pedido enviado" al cliente). **Aquí no se ha port
 
 **Por qué está bloqueado:** el Worker corre en `tatara.manuellatourf.workers.dev` y un
 `.workers.dev` **no sirve como remitente**. Hasta que `tatara.cat` esté en Cloudflare
-(ver `TODO_DOMINIO.md`) no se puede enviar desde el dominio propio.
+no se puede enviar desde el dominio propio.
 
 Cuando se retome, en este orden:
 - [ ] **Decidir a quién llegan los avisos**: `associaciotatara@gmail.com` (el contacto de la
@@ -42,12 +42,12 @@ Cuando se retome, en este orden:
         pero el aviso solo lo leen ellas y se cambia con una var el día del traspaso.
 - [ ] **Portar el módulo**: copiar `src/notify.js` de semillaEcommerce (es idéntico en los tres
       repos, no hay que adaptarlo — recibe objetos ya construidos) y enganchar los cuatro
-      avisos en `src/index.js`. Ojo: aquí las tablas llevan prefijo `tatara_`.
-- [ ] **Vars en `wrangler.toml`**: `EMAIL_FROM`, `EMAIL_TIENDA`, `EMAIL_RESPUESTA`,
+      avisos en `api/index.php`. Ojo: aquí las tablas llevan prefijo `tatara_`.
+- [ ] **Datos del remitente en `api/config.php`**: `EMAIL_FROM`, `EMAIL_TIENDA`, `EMAIL_RESPUESTA`,
       `TIENDA_NOMBRE` + descomentar `[[send_email]]`.
 - [ ] ⚠️ **Al dar de alta el dominio en Email Sending** se añaden SPF y DKIM. Si `tatara.cat`
       ya tiene SPF, hay que **fusionarlos**. Y no confundir con Email **Routing**, que añade
-      **MX** y rompería el correo entrante — es el mismo aviso del paso 5 de `TODO_DOMINIO.md`.
+      **MX** y rompería el correo entrante.
 - [ ] Los avisos **a la tienda** son gratis en plan free (destino verificado). Los avisos **al
       cliente** requieren Workers Paid o Resend; se pueden dejar apagados sin afectar al resto.
 
@@ -59,4 +59,4 @@ Cuando se retome, en este orden:
 ## 4. Traspaso a la clienta
 Toda la lista —cuentas, D1 propia, secretos, Stripe, backups, qué se rompe si se olvida
 cada cosa— está en **[TODO_CLIENTE.md](TODO_CLIENTE.md)**. El dominio, en
-[TODO_DOMINIO.md](TODO_DOMINIO.md).
+[DEPLOY_PANGEA.md](DEPLOY_PANGEA.md).

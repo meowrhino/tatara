@@ -1,11 +1,12 @@
 # Opción Pangea — la web entera en un alojamiento compartido
 
-> Esta rama (`opcion-pangea`) es la misma web de TAT ARA, pero sin Cloudflare:
-> el backend está reescrito en PHP y la base de datos es MySQL, que es lo que da
-> un alojamiento compartido como el de [Pangea](https://pangea.org).
+> Cómo está publicada la web de TAT ARA: alojamiento compartido de
+> [Pangea](https://pangea.org), backend en PHP y base de datos MariaDB.
 >
-> Para la opción con Cloudflare, ver [DEPLOY.md](DEPLOY.md) y
-> [TODO_DOMINIO.md](TODO_DOMINIO.md). Las dos hacen lo mismo; cambia quién lo aloja.
+> Hubo una versión del mismo backend como Worker de Cloudflare. Se descartó por
+> preferir un alojamiento de proximidad, y se quitó de aquí para que el repo
+> describa una sola realidad. Sigue entera en la rama **`opcion-cloudflare`**:
+> `git checkout opcion-cloudflare`.
 
 ---
 
@@ -35,11 +36,11 @@ En Pangea todo cuelga de una cuenta de socia, y `tatara.cat` vive bajo la de
 
 ## Qué cambia y qué no
 
-| | Cloudflare (`main`) | Pangea (`opcion-pangea`) |
+| | Antes (Cloudflare) | Ahora (Pangea) |
 |---|---|---|
 | La web (HTML/CSS/JS/fotos) | idéntica | idéntica |
 | El contenido en `data/*.json` | idéntico | idéntico |
-| El backend | Worker, `src/index.js` | PHP, `api/` |
+| El backend | Worker de Cloudflare | PHP, `api/` |
 | La base de datos | D1 (Cloudflare) | MySQL (Pangea) |
 | Newsletter, carrito, stock, admin | funcionan | funcionan igual |
 | Publicar un cambio | `git push` | subir por SFTP |
@@ -176,6 +177,32 @@ en GitHub.
 
 ---
 
+## La API, ruta por ruta
+
+| ruta | qué hace |
+|---|---|
+| `GET /api/health` | ping + nº de productos |
+| `GET /api/stock` | stock vivo por producto |
+| `POST /api/crear-sesion` | checkout Stripe `{carrito:[{id,cantidad}], envio?:{zona}}` (503 sin claves; la sesión caduca a 30 min; cupones activados) |
+| `GET /api/session-status?session_id=…` | estado de una sesión, para confirmar el pago al volver de Stripe |
+| `POST /api/stripe-webhook` | descuenta stock + registra el pedido (zona, dirección y estado) |
+| `POST /api/newsletter` | alta `{email}` |
+| `POST /api/contacto` | mensaje `{texto, email?, nombre?}` |
+| `GET /api/admin/historial\|newsletter\|mensajes` | lecturas (Bearer ADMIN_TOKEN) |
+| `POST /api/admin/stock-bulk` | fija stock `{productos:[{id,cantidad}]}` o `{productos:[{id,stockByTalla}]}` |
+| `POST /api/admin/pedido-estado` | `{id, estado}` → pendiente / enviado / entregado / cancelado |
+| `GET /api/admin/instalar` | crea las tablas si no existen |
+
+Fijar stock desde la terminal, sin pasar por el panel:
+
+```sh
+curl -X POST https://tatara.cat/api/admin/stock-bulk \
+  -H "Authorization: Bearer $ADMIN_TOKEN" -H "content-type: application/json" \
+  -d '{"productos":[{"id":"friccion","cantidad":10}]}'
+```
+
+---
+
 ## Probarlo en local antes de subir nada
 
 🖥️ Hace falta PHP (`brew install php`). No hace falta ni MySQL ni Pangea:
@@ -209,7 +236,7 @@ TATARA_DB_USER=root TATARA_DB_PASS=xxx bash tools/test-api-php.sh
 
 ```
 api/
-  index.php            las rutas: mismas que src/index.js, una por una
+  index.php            las rutas, una por una
   config.example.php   plantilla de config.php (el de verdad no va a git)
   .htaccess            manda /api/... a index.php y cuida la cabecera Authorization
   lib/

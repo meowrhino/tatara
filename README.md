@@ -4,10 +4,7 @@ Web de **TAT ARA**, espai galeria d'art, disseny i ecologia (Barcelona).
 HTML/CSS/JS a pèl, sense build. Mobile-first, trilingüe (CAT/CAST/ENG).
 El backend (newsletter, carret, stock) està escrit en PHP i corre a
 l'allotjament de **Pangea**, on també hi ha el domini — veure
-[DEPLOY_PANGEA.md](DEPLOY_PANGEA.md). El mateix backend existeix també com a
-Worker de Cloudflare ([DEPLOY.md](DEPLOY.md)): és l'alternativa que es va
-descartar per preferir un allotjament de proximitat. Les dues funcionen amb el
-mateix frontend, que crida `/api/...` en relatiu.
+[DEPLOY_PANGEA.md](DEPLOY_PANGEA.md).
 
 ---
 
@@ -42,30 +39,66 @@ documentació més fiable, perquè viu al costat de les dades.
 ## Com es publica
 
 La web viu en un allotjament de **Pangea**. Publicar vol dir **copiar el fitxer
-al servidor**, i es fa amb un programa d'SFTP — [Cyberduck](https://cyberduck.io)
-és gratuït i va bé.
+al servidor**. No cal ni GitHub ni terminal: només un programa per copiar
+fitxers a distància.
 
-Connexió (les contrasenyes, al gestor de contrasenyes — mai per WhatsApp):
+### Un sol cop: instal·lar Cyberduck
 
-```
-Servidor:  web-12.pangea.org        Port: 22
-Protocol:  SFTP
-Usuari:    tatara-web
-```
+[Cyberduck](https://cyberduck.io) és gratuït i és el que farem servir. Funciona
+com el Finder: a l'esquerra el teu ordinador, a la dreta el servidor, i
+s'arrosseguen fitxers d'un costat a l'altre.
 
-En connectar s'obre la carpeta de la web. A dins hi ha `data/`, `assets/`,
-`index.html`… Per canviar un text:
+1. Descarregar-lo de [cyberduck.io](https://cyberduck.io) i arrossegar-lo a
+   *Aplicacions*. (A la seva web demana una donació; el programa funciona igual
+   sense pagar.)
+2. Obrir-lo → **Nova connexió**.
+3. A dalt de tot, al desplegable, triar **SFTP (SSH File Transfer Protocol)**.
+   Això és important: si es queda en *FTP* no connecta.
+4. Omplir:
 
-1. **Guarda una còpia** del JSON que vols tocar, abans d'editar-lo.
-2. Edita'l a l'ordinador (amb qualsevol editor de text).
-3. Arrossega'l a la carpeta `data/` del servidor, substituint el que hi havia.
-4. Recarrega `https://tatara.cat` i mira que es vegi bé.
+   ```
+   Servidor:    web-12.pangea.org
+   Port:        22
+   Usuari:      tatara-web
+   Contrasenya: (la del gestor de contrasenyes)
+   ```
 
-> **Si la secció surt en blanc**, el JSON té un error de format (quasi sempre una
-> coma de més o de menys). Torna a pujar la còpia del pas 1 i la web torna.
+5. Marcar **Afegeix al clauer** i **Connecta**.
+6. Un cop dins: menú **Marcadors → Nou marcador**. A partir d'ara s'entra amb
+   dos clics i sense escriure res.
 
-Les fotos van igual: es pugen a la carpeta d'`assets/img/` que toqui i després
-s'escriu el seu nom al JSON.
+### Cada cop que es vol canviar alguna cosa
+
+Al connectar s'obre directament la carpeta de la web. A dins hi ha `data/`
+(el contingut), `assets/` (les fotos), `admin/` i algun fitxer més.
+
+**Per canviar un text, una data o un preu:**
+
+1. **Baixa't el JSON que vols tocar**: arrossega'l del servidor a l'escriptori.
+   Aquesta còpia és la xarxa de seguretat — no la esborris fins que tot vagi bé.
+2. **Fes-ne una segona còpia** i guarda-la en una altra carpeta, per si de cas.
+3. Obre la primera amb un editor de text i canvia el que calgui. A macOS, amb
+   clic dret → *Obre amb* → **TextEdit**. (Millor encara:
+   [Visual Studio Code](https://code.visualstudio.com), gratuït, que avisa dels
+   errors de format mentre escrius.)
+4. Guarda, i arrossega el fitxer de l'escriptori a la carpeta `data/` del
+   servidor. Pregunta si vols substituir: sí.
+5. Recarrega `https://tatara.cat` i mira que es vegi bé.
+
+**Per canviar o afegir una foto:**
+
+1. Posa-li un nom sense accents, sense espais i sense majúscules:
+   `exposicio-nova-1.webp`.
+2. Puja-la a la carpeta d'`assets/img/` que toqui (`agenda/`, `expos/`,
+   `recerca/`, `edicions/`).
+3. Escriu aquest nom al JSON de la secció, com al pas de dalt.
+
+> ### Si alguna cosa surt en blanc
+>
+> Vol dir que el JSON té un error de format: quasi sempre una coma de més, una
+> de menys, o unes cometes sense tancar. **No passa res i no s'ha trencat res
+> de manera permanent**: torna a pujar la còpia del pas 1 i la web torna a
+> estar com estava. Després ja es mira amb calma què havia passat.
 
 ## Abans de pujar, si tens el projecte al Mac
 
@@ -300,10 +333,13 @@ curl -s -o /dev/null -w "%{http_code}\n" https://tatara.cat/api/lib/db.php
 
 ## Si algun dia es canvia d'allotjament
 
-Tot el que fa falta és en aquest repositori: la web, el backend en PHP
-([DEPLOY_PANGEA.md](DEPLOY_PANGEA.md)) i el backend en Cloudflare Workers
-([DEPLOY.md](DEPLOY.md)), que és l'alternativa que es va descartar per preferir
-un allotjament de proximitat. Les dues versions funcionen amb el mateix frontend.
+Tot el que fa falta és en aquest repositori: la web i el backend en PHP
+([DEPLOY_PANGEA.md](DEPLOY_PANGEA.md)). El frontend crida `/api/...` en relatiu,
+així que no depèn del domini ni de qui allotgi.
+
+Hi va haver una versió del backend com a **Worker de Cloudflare**, descartada per
+preferir un allotjament de proximitat. Es va treure del projecte perquè el repo
+descrigui una sola realitat, però segueix sencera a la branca `opcion-cloudflare`.
 
 ---
 
@@ -330,7 +366,6 @@ api/                  Backend EN ÚS: /api/* en PHP (newsletter, stock, Stripe)
   index.php             Les rutes
   config.php            Credencials. NO és al repo: viu només al servidor
   lib/                  db (PDO) · catàleg · Stripe per REST · HTTP
-src/index.js          El mateix backend com a Worker de Cloudflare (alternativa)
 admin/                Panell intern: stock i comandes
 data/*.json           TOT el contingut. Cada fitxer es diu com la seva secció
 assets/img/           Imatges .webp: agenda/ · expos/ · recerca/ · edicions/ · mr/
@@ -394,8 +429,7 @@ versions velles.
 | [NEXT_STEPS.md](NEXT_STEPS.md)     | El que queda de l'encàrrec, en ordre |
 | [TODO_CLIENTE.md](TODO_CLIENTE.md) | Tot el que cal fer i revisar el dia del traspàs |
 | [DEPLOY_PANGEA.md](DEPLOY_PANGEA.md) | **Com està publicada avui**: Pangea, PHP i MariaDB |
-| [DEPLOY.md](DEPLOY.md)             | Arquitectura, API i panell d'admin |
-| [TODO_DOMINIO.md](TODO_DOMINIO.md) | L'alternativa descartada: apuntar el domini a Cloudflare |
+| [TODO_CLIENTE.md](TODO_CLIENTE.md) | El dia del traspàs, pas a pas |
 | [FUTURO.md](FUTURO.md)             | Idees plantejades i **no pressupostades** |
 
 ## Pendent

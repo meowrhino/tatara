@@ -5,7 +5,7 @@ comprometidas: quedan aquí escritas para que, si algún día se contratan, no h
 que redescubrirlas.
 
 Lo que sí está pendiente y sí está dentro del encargo vive en
-[NEXT_STEPS.md](NEXT_STEPS.md) y [TODO_DOMINIO.md](TODO_DOMINIO.md).
+[NEXT_STEPS.md](NEXT_STEPS.md) y [TODO_CLIENTE.md](TODO_CLIENTE.md).
 
 ---
 

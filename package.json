@@ -3,19 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "wrangler dev --persist-to ../.tatara-wrangler-state",
+    "dev": "php -S 127.0.0.1:8788 -t . tools/php-router.php",
+    "test": "bash tools/test-api-php.sh",
     "check": "node tools/check-data.mjs",
-    "webp": "tools/to-webp.sh",
-    "deploy": "wrangler deploy",
-    "db:schema": "wrangler d1 execute shop --remote --file=schema-tatara.sql",
-    "db:migrate": "wrangler d1 execute shop --remote --file=./migrations/2026-07-07_tatara_pedidos_envio.sql",
-    "db:migrate:local": "wrangler d1 execute shop --local --file=./migrations/2026-07-07_tatara_pedidos_envio.sql"
-  },
-  "dependencies": {
-    "hono": "^4.4.0",
-    "stripe": "^16.0.0"
-  },
-  "devDependencies": {
-    "wrangler": "^4.69.0"
+    "build": "bash tools/build-pangea.sh",
+    "webp": "tools/to-webp.sh"
   }
 }
