@@ -69,8 +69,20 @@ las otras. El resto de la guía asume que sí.
 En el panel de Pangea, crear una base de datos MySQL y apuntar cuatro datos:
 **host, nombre, usuario y contraseña**.
 
-Cargar las tablas desde phpMyAdmin → pestaña **Importar** → fichero
+Cargar las tablas, de las dos maneras que hay:
+
+**a) Desde phpMyAdmin** → pestaña **Importar** → fichero
 [`schema-tatara.mysql.sql`](schema-tatara.mysql.sql).
+
+**b) Desde la propia web**, si phpMyAdmin no va (en octubre de 2026 el de Pangea
+daba un «Error» en blanco en cualquier navegador). Con la web ya subida:
+
+```bash
+curl -H "Authorization: Bearer EL-TOKEN-DE-ADMIN" https://tatara.cat/api/admin/instalar
+```
+
+Contesta qué tablas hay y cuáles faltan. Son `CREATE TABLE IF NOT EXISTS`:
+llamarlo dos veces no borra nada ni rompe nada.
 
 Son las mismas cuatro tablas que en D1: `tatara_stock`, `tatara_pedidos`,
 `tatara_newsletter`, `tatara_mensajes`.

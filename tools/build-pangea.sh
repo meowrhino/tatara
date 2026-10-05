@@ -21,6 +21,7 @@ rsync -a \
   --exclude 'src' --exclude 'tools' --exclude 'migrations' --exclude 'dist' \
   --exclude 'referencias' --exclude 'FOTOS EDICIONS' --exclude 'FOTOS AGENDA' \
   --exclude 'FOTOS_MR' --exclude 'FULLS DE SALA' \
+  --include 'schema-tatara.mysql.sql' \
   --exclude '*.md' --exclude '*.sql' --exclude '*.toml' --exclude '*.pages' \
   --exclude 'package.json' --exclude 'package-lock.json' --exclude 'Recurso 2.png' \
   --exclude 'api/config.php' \

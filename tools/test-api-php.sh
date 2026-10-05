@@ -87,6 +87,22 @@ P_STOCK=$(printf '{"productos":[{"id":"%s","cantidad":5}]}' "$PRODUCTO")
 comprobar "stock-bulk actualiza"   '"updated":1' "$(curl -s -X POST "${AUTH[@]}" "$BASE/admin/stock-bulk" -d "$P_STOCK")"
 comprobar "el stock quedó en 5"    "\"$PRODUCTO\":{\"_\":5}" "$(curl -s "$BASE/stock")"
 
+echo "instalar tablas desde cero"
+# La base de pruebas ya tiene las tablas, así que se tiran y se piden otra vez.
+if [[ "$TATARA_DB_DRIVER" == "mysql" ]]; then
+  "${MY[@]}" "$TATARA_DB_NAME" -e "DROP TABLE tatara_stock, tatara_pedidos, tatara_newsletter, tatara_mensajes"
+else
+  php -r '$db=new PDO("sqlite:".getenv("TATARA_SQLITE_PATH"));
+          foreach(["tatara_stock","tatara_pedidos","tatara_newsletter","tatara_mensajes"] as $t) $db->exec("DROP TABLE $t");'
+fi
+comprobar "sin tablas, /stock falla"   '500' "$(codigo "$BASE/stock")"
+comprobar "/admin/instalar sin token → 401" '401' "$(codigo "$BASE/admin/instalar")"
+comprobar "/admin/instalar las crea"   '"faltan":[]' "$(curl -s "${AUTH[@]}" "$BASE/admin/instalar")"
+comprobar "llamarlo dos veces no rompe" '"faltan":[]' "$(curl -s "${AUTH[@]}" "$BASE/admin/instalar")"
+comprobar "y el stock vuelve"          "\"$PRODUCTO\":{\"_\":0}" "$(curl -s "$BASE/stock")"
+# Se deja el stock otra vez a 5 para lo que viene después.
+curl -s -X POST "${AUTH[@]}" "$BASE/admin/stock-bulk" -d "$P_STOCK" >/dev/null
+
 echo "checkout sin claves de Stripe"
 P_CARRITO=$(printf '{"carrito":[{"id":"%s","cantidad":1}]}' "$PRODUCTO")
 comprobar "crear-sesión → 503"     '503' "$(codigo -X POST "$BASE/crear-sesion" -d "$P_CARRITO")"

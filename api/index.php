@@ -439,6 +439,9 @@ function despachar_admin(string $ruta, string $metodo): void
 
         case 'POST /stock-bulk':
             stock_bulk();
+
+        case 'GET /instalar':
+            instalar_tablas();
     }
 
     fail('no encontrado', 404);
@@ -473,6 +476,33 @@ function stock_bulk(): void
         });
     }
     json_out(['updated' => count($escrituras)]);
+}
+
+/**
+ * Crea las cuatro tablas, por si no hay forma de entrar a phpMyAdmin.
+ *
+ * Es el mismo fichero de esquema que se importaría a mano, y todas las
+ * sentencias son CREATE TABLE IF NOT EXISTS: llamarlo dos veces no rompe nada
+ * ni borra datos. Pide el token de admin, como el resto de /admin.
+ */
+function instalar_tablas(): void
+{
+    $fichero = __DIR__ . '/../' . (db_driver() === 'sqlite' ? 'schema-tatara.sql' : 'schema-tatara.mysql.sql');
+    if (!is_file($fichero)) fail('no encuentro el fichero de esquema', 500);
+
+    $sql = file_get_contents($fichero);
+    // Fuera los comentarios de línea, y una sentencia por cada ';' final.
+    $sql = preg_replace('/^\s*--.*$/m', '', $sql);
+    $sentencias = array_filter(array_map('trim', explode(';', $sql)));
+
+    foreach ($sentencias as $sentencia) db()->exec($sentencia);
+
+    $tablas = ['tatara_stock', 'tatara_pedidos', 'tatara_newsletter', 'tatara_mensajes'];
+    $creadas = [];
+    foreach ($tablas as $t) {
+        try { db_first("SELECT 1 FROM $t LIMIT 1"); $creadas[] = $t; } catch (Throwable $e) {}
+    }
+    json_out(['tablas' => $creadas, 'faltan' => array_values(array_diff($tablas, $creadas))]);
 }
 
 /** https://tatara.cat — de dónde vino la petición, para las URLs de vuelta de Stripe. */
