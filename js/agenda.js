@@ -1,32 +1,22 @@
 /* ============================================================
    TAT ARA — AGENDA
-   Un "strip" vertical de bloques de color, uno por exposición, en orden
-   cronológico. Cada bloque mide POR CONTENIDO (título + imagen + descripción +
-   O.R. anidados), con una altura mínima de suelo (minEventVh) para que los
-   eventos cortos no queden como una tira fina. Los bloques van pegados: el
-   cambio de color es el que separa una exposición de la siguiente.
+   Una lista vertical de entradas, una por exposición, en orden cronológico,
+   separadas por un hilo negro. Cada entrada:
 
-   Cada bloque lleva abajo a la derecha un marcador de estado en negrita
-   (passat / ara / proximament) calculado por fecha. Ya no hay eje temporal a escala
-   ni auto-scroll a "hoy": el estado se comunica con ese marcador.
+     TÍTOL                                  13/12 – 28/1
+     ARTISTA
+     descripció
+     [imatge, a l'esquerra]
+     O.R. anidados (converses, tallers…)
+     28 GENER                                  EXPOSICIÓ
+     ───────────────────────────────────────────────────
+
+   Al abrir, el scroll arranca en lo que pasa hoy (o lo próximo).
    ============================================================ */
 
 import { el, esc, t, ui } from './utils.js';
-import { SITE } from './state.js';
 import { openLightbox } from './modal.js';
 import { parseDate, todayDate, sameDay, rangeSlash, dMes } from './dates.js';
-
-// agenda.json guarda claves de paleta ("menta", "rosa"...); data.json -> palette
-// es la fuente única de verdad. Si llega un valor que no está en la paleta se
-// usa tal cual (admite hex literal de respaldo).
-const resolveColor = (key) => (SITE && SITE.palette && SITE.palette[key]) || key || '#111';
-
-// Elige tinta negra o blanca según la luminancia del fondo.
-function textOn(hex) {
-  const c = (hex || '#111').replace('#', '');
-  const r = parseInt(c.slice(0, 2), 16), g = parseInt(c.slice(2, 4), 16), b = parseInt(c.slice(4, 6), 16);
-  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.62 ? '#111' : '#fff';
-}
 
 // 'kind' (traducible) es el tipo de cada entrada: exposició, lectura, conversa,
 // O.R.… Viene de la columna "tipus" de la tabla de la clienta. Si una entrada
@@ -34,15 +24,7 @@ function textOn(hex) {
 const kindOf = (ev, fallback = '') => t(ev.kind) || fallback;
 const OR = 'O.R.';
 
-// Unidad de viewport para el hueco entre bloques y el suelo mínimo. svh (small
-// viewport height) es estable frente a la barra de iOS (no "respira" al hacer
-// scroll como dvh).
-const VH = 'svh';
-
 export function renderAgenda(view, data) {
-  const cfg = (SITE && SITE.agenda) || {};
-  const minVh = cfg.minEventVh || 10;
-
   const events = (data.events || []).slice()
     .sort((a, b) => parseDate(a.start) - parseDate(b.start));
 
@@ -52,7 +34,7 @@ export function renderAgenda(view, data) {
   const today = todayDate();
   let currentBlock = null, upcomingBlock = null, lastBlock = null;
   events.forEach((ev) => {
-    const block = eventBlock(ev, { minVh }, today);
+    const block = eventBlock(ev);
     strip.appendChild(block);
     const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
     if (!currentBlock && today >= s && today <= e) currentBlock = block;
@@ -67,14 +49,13 @@ export function renderAgenda(view, data) {
   if (target) target.dataset.todayTarget = '1';
 }
 
-// Deja algo de contexto por encima del bloque de "hoy" al hacer scroll.
-const TODAY_TOP_MARGIN = 0.12;
-
+// El bloque de "hoy" queda justo debajo de TAT, donde empieza toda sección
+// (el padding-top de #view es la altura de la barra).
 function scrollToToday(view) {
   const tgt = view.querySelector('[data-today-target="1"]');
   if (!tgt) return;
   const y = tgt.getBoundingClientRect().top + window.scrollY;
-  window.scrollTo(0, Math.max(0, y - window.innerHeight * TODAY_TOP_MARGIN));
+  window.scrollTo(0, Math.max(0, y - parseFloat(getComputedStyle(view).paddingTop)));
 }
 
 // Al cargar imágenes/fuentes cambian las alturas y "hoy" se desplaza; recolocamos
@@ -110,45 +91,24 @@ export function scrollAgendaToToday(view) {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(settle);
 }
 
-function eventBlock(ev, o, today) {
+function eventBlock(ev) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
   const children = (ev.eventos || []).slice().sort((a, b) => parseDate(a.start) - parseDate(b.start));
-  // "Compacto": sin O.R., ni descripción, ni imagen → solo la cabecera, centrada.
-  const compact = !children.length && !ev.description && !ev.image;
 
-  const color = resolveColor(ev.color);
-  const block = el('div', 'seg seg--event' + (compact ? ' seg--compact' : ''));
-  block.style.minHeight = `${o.minVh}${VH}`;   // solo suelo; el contenido manda
-  block.style.background = color;
-  block.style.color = textOn(color);
+  const block = el('div', 'seg');
   block.dataset.slug = ev.slug;
 
-  // Fila inferior (misma línea): fecha de cierre (izq) + estado (der), como la
-  // cabecera con título (izq) + fechas (der). El estado va en negrita.
-  const stKey = today > e ? 'statusPast' : (today < s ? 'statusNext' : 'statusNow');
-  const stClass = today > e ? 'past' : (today < s ? 'next' : 'now');
-  const foot = el('div', 'seg__foot');
-  if (ev.end && !sameDay(s, e)) foot.appendChild(el('span', 'seg__end', esc(dMes(e))));
-  foot.appendChild(el('span', 'seg__status seg__status--' + stClass, esc(ui(stKey))));
-
-  const kind = kindOf(ev);
+  // Cabecera: título (izq) + fechas (der); el artista, en la línea de debajo.
   const head = el('div', 'seg__head');
-  if (kind) head.appendChild(el('div', 'seg__kind', esc(kind)));
   head.appendChild(el('div', 'seg__label',
-    `<span class="seg__who">${esc(t(ev.title))}${ev.artist ? ' – <b>' + esc(ev.artist) + '</b>' : ''}</span>` +
+    `<span class="seg__title">${esc(t(ev.title))}</span>` +
     `<span class="seg__when">${esc(rangeSlash(ev))}</span>`));
+  if (ev.artist) head.appendChild(el('div', 'seg__artist', esc(ev.artist)));
+  block.appendChild(head);
 
-  if (compact) { block.appendChild(head); block.appendChild(foot); return block; }
-
-  // Cabecera + imagen + descripción en flujo natural.
-  const lead = el('div', 'seg__lead');
-  lead.appendChild(head);
-
-  // Contador de imágenes del bloque (expo + O.R.), para alternar izq/dcha.
-  let imgCount = 0;
-  if (ev.image) lead.appendChild(mediaEl(ev.image, t(ev.title), imgCount++));
-  if (ev.description) lead.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
-  block.appendChild(lead);
+  // Descripción e imagen en flujo natural.
+  if (ev.description) block.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
+  if (ev.image) block.appendChild(mediaEl(ev.image, t(ev.title)));
 
   // O.R. anidados (converses, lectures…): simplemente en flujo, uno tras otro.
   if (children.length) {
@@ -162,23 +122,28 @@ function eventBlock(ev, o, today) {
       // "13:00O.R." todo junto.
       info.innerHTML =
         `<span class="seg__child-when">${esc(rangeSlash(c))}</span> ` +
-        `<span class="seg__child-name">${esc(kindOf(c, OR))} · ${esc(t(c.title))}${c.artist ? ' – <b>' + esc(c.artist) + '</b>' : ''}</span>`;
+        `<span class="seg__child-name">${esc(kindOf(c, OR))} · ${esc(t(c.title))}${c.artist ? ' – ' + esc(c.artist) : ''}</span>`;
       row.appendChild(info);
-      if (c.image) row.appendChild(mediaEl(c.image, t(c.title), imgCount++));
       if (c.description) row.appendChild(el('div', 'seg__child-desc', esc(t(c.description))));
+      if (c.image) row.appendChild(mediaEl(c.image, t(c.title)));
       daysRegion.appendChild(row);
     });
   }
 
-  block.appendChild(foot);
+  // Pie: fecha de cierre (izq) + tipo de entrada (der).
+  const foot = el('div', 'seg__foot');
+  if (ev.end && !sameDay(s, e)) foot.appendChild(el('span', 'seg__end', esc(dMes(e))));
+  const kind = kindOf(ev);
+  if (kind) foot.appendChild(el('span', 'seg__kind', esc(kind)));
+  if (foot.children.length) block.appendChild(foot);
 
   return block;
 }
 
 // La imagen es un <button> (no un <img> suelto) para que se pueda ampliar también
-// con teclado; alterna izquierda/derecha según su posición en el bloque.
-function mediaEl(src, alt, idx) {
-  const btn = el('button', 'seg__media ' + (idx % 2 === 0 ? 'seg__media--left' : 'seg__media--right'));
+// con teclado. Siempre a la izquierda, como el texto.
+function mediaEl(src, alt) {
+  const btn = el('button', 'seg__media');
   btn.type = 'button';
   btn.setAttribute('aria-label', alt ? `${ui('enlargeImage')}: ${alt}` : ui('enlargeImage'));
   const img = el('img');

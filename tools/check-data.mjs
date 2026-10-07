@@ -81,7 +81,6 @@ function revisaImagen(ruta, dónde) {
 
 function revisaAgenda(menu) {
   console.log('\ndata/agenda.json');
-  const paleta = Object.keys(leer('data/data.json').palette || {});
   const eventos = leer('data/agenda.json').events || [];
   const slugs = new Set();
 
@@ -104,14 +103,11 @@ function revisaAgenda(menu) {
     }
 
     if (padre) {
-      if (ev.color) avi(dónde, 'lleva "color", pero el color solo pinta en las entradas de primer nivel');
       const ini = new Date(padre.start), fin = new Date(padre.end || padre.start);
       const s = new Date(ev.start), e = new Date(ev.end || ev.start);
       if (s < ini || e > fin) {
         avi(dónde, `cae fuera de "${padre.slug}" (${padre.start} → ${padre.end || padre.start}): o va en otra exposición, o va suelto de primer nivel`);
       }
-    } else if (ev.color && !paleta.includes(ev.color)) {
-      avi(dónde, `"color": "${ev.color}" no está en la paleta de data.json (${paleta.join(', ')})`);
     }
   };
 

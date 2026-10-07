@@ -1,9 +1,8 @@
 {
-  "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), color (clave de data.json -> palette; SOLO en las entradas de primer nivel), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (UNA sola), start, end, time, description {ca,es,en} y eventos[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema pero sin color). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). Los anos son los de esa tabla: la temporada va de septiembre de 2025 a enero de 2027. Las filas del final que solo traen el mes ('dec', 'gener') son diciembre de 2026 y enero de 2027. Las imagenes llevan el numero de la carpeta 'FOTOS AGENDA' delante para poder cruzarlas de un vistazo.",
+  "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (UNA sola), start, end, time, description {ca,es,en} y eventos[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). Los anos son los de esa tabla: la temporada va de septiembre de 2025 a enero de 2027. Las filas del final que solo traen el mes ('dec', 'gener') son diciembre de 2026 y enero de 2027. Las imagenes llevan el numero de la carpeta 'FOTOS AGENDA' delante para poder cruzarlas de un vistazo.",
   "events": [
     {
       "slug": "pateres-de-llet",
-      "color": "menta",
       "kind": {
         "ca": "Exposició",
         "es": "Exposición",
@@ -26,7 +25,6 @@
     },
     {
       "slug": "ensayo-espontaneo",
-      "color": "blau",
       "kind": {
         "ca": "Exposició",
         "es": "Exposición",
@@ -135,7 +133,6 @@
     },
     {
       "slug": "reverberar-el-cos",
-      "color": "mostassa",
       "kind": {
         "ca": "Sessió d'escolta transpersonal",
         "es": "Sesión de escucha transpersonal",
@@ -157,7 +154,6 @@
     },
     {
       "slug": "sostenir-la-terra",
-      "color": "rosa",
       "kind": {
         "ca": "Exposició",
         "es": "Exposición",
@@ -277,7 +273,6 @@
     },
     {
       "slug": "ariadna-serrahima",
-      "color": "menta",
       "kind": {
         "ca": "Retrospectiva",
         "es": "Retrospectiva",
@@ -322,7 +317,6 @@
     },
     {
       "slug": "presencia-impermanencia",
-      "color": "blau",
       "kind": {
         "ca": "Exposició",
         "es": "Exposición",
@@ -368,7 +362,6 @@
     },
     {
       "slug": "no-limits",
-      "color": "mostassa",
       "kind": {
         "ca": "Exposició",
         "es": "Exposición",
@@ -391,7 +384,6 @@
     },
     {
       "slug": "tocar-fusta",
-      "color": "rosa",
       "kind": {
         "ca": "Exposició i festival",
         "es": "Exposición y festival",
@@ -458,7 +450,6 @@
     },
     {
       "slug": "arnau-sala-saez",
-      "color": "menta",
       "kind": {
         "ca": "Exposició en transformació",
         "es": "Exposición en transformación",
@@ -529,7 +520,6 @@
     },
     {
       "slug": "guus-vandeweerd-swab",
-      "color": "blau",
       "kind": {
         "ca": "Exposició i fira",
         "es": "Exposición y feria",
@@ -552,7 +542,6 @@
     },
     {
       "slug": "bsb-at-loop",
-      "color": "mostassa",
       "kind": {
         "ca": "Exposició i festival",
         "es": "Exposición y festival",
@@ -568,7 +557,6 @@
     },
     {
       "slug": "ines-sistiaga",
-      "color": "rosa",
       "kind": {
         "ca": "Exposició",
         "es": "Exposición",
@@ -584,7 +572,6 @@
     },
     {
       "slug": "sander-wassink",
-      "color": "menta",
       "kind": {
         "ca": "Exposició i taller",
         "es": "Exposición y taller",

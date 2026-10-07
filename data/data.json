@@ -1,5 +1,5 @@
 {
-  "_comment": "Configuración general de la web TAT ARA: identidad, paleta, idiomas y datos de contacto. El índice de secciones (menú + router) vive en data/menu.json. El contenido de cada sección vive en su propio JSON (ver menu.json → sections[].data).",
+  "_comment": "Configuración general de la web TAT ARA: identidad, colores, idiomas y datos de contacto. El índice de secciones (menú + router) vive en data/menu.json. El contenido de cada sección vive en su propio JSON (ver menu.json → sections[].data).",
   "site": {
     "name": "TAT ARA",
     "studio": "tatara studio",
@@ -15,14 +15,8 @@
     "en"
   ],
   "defaultLang": "ca",
-  "palette": {
-    "blau": "#AEC6CD",
-    "menta": "#CBDAC3",
-    "rosa": "#E3A57E",
-    "mostassa": "#CFC1AB"
-  },
   "theme": {
-    "_comment": "Colores de la interfaz (antes hardcodeados en css/styles.css). La web es en blanco y negro: --bg y --ink son los únicos colores de texto y fondo. Cada clave se publica como custom property CSS --<clave>; la paleta de arriba se publica como --color-<clave>. Ver js/main.js.",
+    "_comment": "Colores de la interfaz (antes hardcodeados en css/styles.css). La web es en blanco y negro: --bg y --ink son los únicos colores de texto y fondo. Cada clave se publica como custom property CSS --<clave>. Ver js/main.js.",
     "bg": "#ffffff",
     "ink": "#111111",
     "grey-soft": "#EAE7E0",
@@ -31,10 +25,6 @@
     "img-placeholder": "rgba(0, 0, 0, 0.04)",
     "lightbox-bg": "rgba(0, 0, 0, 0.92)",
     "backdrop": "rgba(255, 255, 255, 0.85)"
-  },
-  "agenda": {
-    "_comment": "Los bloques miden por contenido y van pegados unos a otros: el cambio de color es lo que separa una exposición de la siguiente. minEventVh = altura mínima (svh) de cada bloque.",
-    "minEventVh": 10
   },
   "contact": {
     "intro": {

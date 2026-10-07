@@ -1,6 +1,6 @@
 /* ============================================================
    TAT ARA — arranque (entry point)
-   Carga la config, expone la paleta como custom properties, construye el
+   Carga la config, expone los colores como custom properties, construye el
    menú y cablea los listeners globales. Es el único <script> del HTML
    (type="module"); el resto de módulos se importan desde aquí.
    ============================================================ */
@@ -32,18 +32,14 @@ async function init() {
   // La marca "TAT" del header lleva a la primera sección (home).
   $('#brand-home').setAttribute('href', '#' + SITE.sections[0].id);
 
-  // Colores: TODOS viven en data.json (fuente única).
-  //   theme   → --<clau>        (--bg, --ink, --grey-soft…): los que usa el CSS.
-  //   palette → --color-<clau>  (--color-blau…): los de la agenda, que además se
-  //             eligen por nombre desde agenda.json ("color": "blau").
-  // Las claves con '_' (comentarios del JSON) se ignoran.
+  // Colores: TODOS viven en data.json → theme (fuente única), y se publican
+  // como --<clau> (--bg, --ink…). Las claves con '_' (comentarios) se ignoran.
   const setVars = (obj, prefix) =>
     Object.entries(obj || {}).forEach(([key, hex]) => {
       if (key.startsWith('_') || typeof hex !== 'string') return;
       document.documentElement.style.setProperty(`--${prefix}${key}`, hex);
     });
   setVars(SITE.theme, '');
-  setVars(SITE.palette, 'color-');
 
   buildMenu();
 

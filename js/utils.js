@@ -21,9 +21,6 @@ export const monthName = (i) => (MONTHS[LANG] || MONTHS.ca)[i];
 // Mismo formato {ca, es, en} que resuelve t() con el idioma activo.
 const STR = {
   today:          { ca: 'avui', es: 'hoy', en: 'today' },
-  statusNow:      { ca: 'ara', es: 'ahora', en: 'now' },
-  statusPast:     { ca: 'passat', es: 'pasado', en: 'past' },
-  statusNext:     { ca: 'proximament', es: 'próximamente', en: 'upcoming' },
   roomSheet:      { ca: 'full de sala (PDF)', es: 'hoja de sala (PDF)', en: 'room sheet (PDF)' },
   websiteLink:    { ca: 'web', es: 'web', en: 'website' },
   noEvents:       { ca: 'sense esdeveniments', es: 'sin eventos', en: 'no events' },

@@ -132,7 +132,6 @@ dins del fitxer és igual**: la web ordena per `start`.
 ```json
 {
   "slug": "nom-curt-sense-accents",
-  "color": "menta",
   "kind": { "ca": "Exposició", "es": "Exposición", "en": "Exhibition" },
   "title": { "ca": "Títol", "es": "Título", "en": "Title" },
   "artist": "Nom de l'artista",
@@ -144,15 +143,14 @@ dins del fitxer és igual**: la web ordena per `start`.
 ```
 
 - `slug` — un nom curt i únic, sense accents ni espais. No es veu enlloc.
-- `color` — `blau`, `menta`, `rosa` o `mostassa` (surten de `data.json` →
-  `palette`). Convé que no coincideixi amb el bloc de sobre ni el de sota.
+- `kind` — el tipus (exposició, conversa, taller…). Surt a baix a la dreta.
 - `start` / `end` — sempre `AAAA-MM-DD`. Sense `end`, és d'un sol dia.
 - `time` — opcional, `"18:30"`.
 
 ## Afegir un esdeveniment dins d'una exposició
 
 Una conversa, una lectura o un taller que passa **durant** una exposició va dins
-del seu `eventos[]`, amb els mateixos camps però **sense `color`**:
+del seu `eventos[]`, amb els mateixos camps:
 
 ```json
 "eventos": [
@@ -168,7 +166,7 @@ del seu `eventos[]`, amb els mateixos camps però **sense `color`**:
 ]
 ```
 
-Si passa fora de qualsevol exposició, va com a bloc de primer nivell, amb color.
+Si passa fora de qualsevol exposició, va com a entrada de primer nivell.
 `npm run check` avisa si un esdeveniment queda fora del rang del seu bloc.
 
 ## Afegir una exposició a la secció Exposicions
@@ -348,7 +346,7 @@ descrigui una sola realitat, però segueix sencera a la branca `opcion-cloudflar
 ## Estructura
 
 ```
-index.html            Shell (barres fixes + #view + menú overlay + modal)
+index.html            Shell (barres fixes + #view + menú + modal)
 css/styles.css        Estils. Els colors surten de data.json, no d'aquí
 js/                   Mòduls ES, sense build. Entrada: main.js
   main.js               Arrenca: carrega config, publica colors, cabla listeners
@@ -357,7 +355,7 @@ js/                   Mòduls ES, sense build. Entrada: main.js
   data.js               loadJSON amb caché en memòria
   dates.js              Parseig i format de dates
   router.js             Navegació per hash + fundit entre vistes
-  menu.js               Menú overlay + canvi d'idioma
+  menu.js               Menú (columna fixa a escriptori, capa a mòbil) + idioma
   modal.js              Diàleg de detall + lightbox
   agenda.js             Secció agenda
   sections.js           Render de text / people / shop / contact / newsletter / cart
@@ -400,19 +398,23 @@ Afegir-ne una = una entrada a `menu.json` + el seu JSON + (només si el `type` �
 nou) un `render*()` a `js/sections.js` i el seu `case` al switch de
 `js/router.js`.
 
-**Colors.** Tots surten de `data.json`. `theme` es publica com a custom
-properties (`--ink`, `--grey-soft`…) i `palette` com `--color-blau` i companyia;
-ho fa `setVars()` a `main.js`. El CSS no té cap color escrit a mà.
+**Disseny.** Blanc i negre: el color només arriba amb les fotos. A escriptori,
+quatre columnes iguals: el menú a la primera, el contingut a les dues del mig
+(amb TAT a dalt i ARA a baix repartides al seu ample) i carret/idiomes a la
+quarta. Un sol cos de lletra (`--fs`) i un sol interlineat (`--lh`) per a tota
+la web; a escriptori el cos creix amb la columna per mantenir uns 72 caràcters
+per línia. Sense negretes: els títols van en majúscula i el que es vol
+destacar, subratllat. El disseny anterior (blocs de color) és a l'etiqueta
+`v0-disseny-color` i a [meowrhino/tatarav0](https://github.com/meowrhino/tatarav0).
 
-**Agenda.** Una tira vertical de blocs de color, un per exposició, en ordre
-cronològic. Cada bloc **mesura pel seu contingut** (títol + imatge + descripció +
-esdeveniments anidats), amb un terra mínim (`minEventVh`, a `data.json`) perquè
-un esdeveniment curt no quedi com una tira fina. Els blocs van enganxats: el
-canvi de color és el que separa una exposició de la següent.
+**Colors.** Surten de `data.json` → `theme`, que es publica com a custom
+properties (`--bg`, `--ink`…); ho fa `setVars()` a `main.js`.
 
-Cada bloc porta a baix a la dreta un marcador d'estat (`passat` / `ara` /
-`proximament`) calculat per data, i en obrir l'agenda la vista arrenca al costat
-del que passa avui (`scrollAgendaToToday`).
+**Agenda.** Una llista vertical d'entrades, una per exposició, en ordre
+cronològic i separades per un fil negre. Cada entrada: títol i dates, artista,
+descripció, imatge (a l'esquerra), els esdeveniments anidats, i a baix la data
+de tancament i el tipus (`kind`). En obrir l'agenda la vista arrenca al que
+passa avui (`scrollAgendaToToday`).
 
 **Caché.** No hi ha cap truc: ni `?v=`, ni `no-store`. Ho resol el `.htaccess`
 de l'arrel: el contingut que canvia sovint (`.json`, `.html`, `.css`, `.js`) va
