@@ -250,7 +250,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 .seg__title, .seg__artist, .seg__kind, .seg__end, .seg__child-name,
 .person__name, .product__title { text-transform: uppercase; }
 
-.menu__list a.is-active, .bar__langs button.is-active,
+.bar__langs button.is-active,
 .menu__langs button.is-active, .langmodal__list button.is-active { text-decoration: underline; }
 
 /* ============================================================
@@ -340,6 +340,19 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 .menu__list { list-style: none; margin: 1.4rem 0 0; padding: 0; }
 .menu__list a { display: inline-block; padding: 0.55rem 0; }   /* en móvil, que se pueda tocar con el dedo */
+
+/* El subrayado del menú se dibuja de izquierda a derecha al pasar por encima, y
+   se queda puesto en la sección activa. No es text-decoration (no se puede
+   animar): es una línea de 1px de fondo cuyo ancho va de 0 a 100%. */
+.menu__list a {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat content-box;
+  transition: background-size 0.3s ease;
+}
+.menu__list a:hover, .menu__list a:focus-visible, .menu__list a.is-active {
+  text-decoration: none;
+  background-size: 100% 1px;
+}
 
 /* Selector d'idioma dins del menú: baix-esquerra */
 .menu__langs { margin-top: auto; display: flex; gap: 1.4rem; }
@@ -450,5 +463,5 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu, #view { transition: none; }
+  .menu, #view, .menu__list a { transition: none; }
 }
