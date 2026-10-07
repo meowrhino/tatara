@@ -10,7 +10,8 @@ import { SITE } from './state.js';
 import { loadJSON } from './data.js';
 import { closeModal } from './modal.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
-import { renderText, renderPeople, renderShop, renderContact, renderCart, renderNewsletter } from './sections.js';
+import { renderText, renderPeople, renderContact, renderNewsletter } from './sections.js';
+import { renderShop, renderCart } from './botiga.js';
 
 // Id de sección del hash actual; cae a la primera sección si no es válido.
 // El hash admite parámetros (#carret?gracies=1&session_id=…, la vuelta de Stripe):

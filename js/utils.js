@@ -76,6 +76,14 @@ export const zoomImg = (src, alt = '') =>
   `<button class="zoom" type="button" data-zoom="${esc(src)}" aria-label="${esc(alt ? `${ui('enlargeImage')}: ${alt}` : ui('enlargeImage'))}">` +
   `<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy"></button>`;
 
+// La cruz de cerrar: dos líneas rectas de 1px, como todos los hilos de la web.
+// El tamaño lo pone el CSS de quien la usa. (index.html tiene dos copias
+// estáticas, para el menú y el modal.)
+export const X_ICON = '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 6 L34 34 M34 6 L6 34" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>';
+
+// Envoltorio común de las páginas de contenido (todo menos la agenda).
+export const pageWrap = (inner) => `<div class="page">${inner}</div>`;
+
 /* ---------- texto ---------- */
 export const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 

@@ -6,7 +6,7 @@
    closeModal consulta al menú antes de liberarlo.
    ============================================================ */
 
-import { $, el, esc, ui, captureFocus } from './utils.js';
+import { $, el, ui, captureFocus, X_ICON } from './utils.js';
 import { isMenuOpen } from './menu.js';
 
 let restoreModalFocus = null;   // devuelve el foco al elemento que abrió el modal
@@ -46,7 +46,7 @@ export function openLightbox(src, alt) {
   const btn = el('button', 'lightbox__close');
   btn.type = 'button';
   btn.setAttribute('aria-label', ui('close'));
-  btn.innerHTML = '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><path d="M6 6 L34 34 M34 6 L6 34" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>';
+  btn.innerHTML = X_ICON;
   btn.addEventListener('click', close);
 
   const img = el('img', 'lightbox__img');

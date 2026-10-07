@@ -359,7 +359,8 @@ js/                   Mòduls ES, sense build. Entrada: main.js
   menu.js               Menú (columna fixa a escriptori, capa a mòbil) + idioma
   modal.js              Diàleg de detall (botiga) + lightbox
   agenda.js             Secció agenda
-  sections.js           Render de text / people / shop / contact / newsletter / cart
+  sections.js           Render de text / exposicions / contact / newsletter
+  botiga.js             Botiga, fitxa de producte i carret (pagament amb Stripe)
   cart.js               Carret a localStorage
 api/                  Backend EN ÚS: /api/* en PHP (newsletter, stock, Stripe)
   index.php             Les rutes
