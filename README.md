@@ -15,8 +15,9 @@ l'allotjament de [Pangea](https://pangea.org).
 | El codi | aquest repositori |
 | El primer disseny (v0, arxivat) | [meowrhino.github.io/tatarav0](https://meowrhino.github.io/tatarav0/) |
 
-> **Fer `git push` no publica res.** La web es publica pujant fitxers per SFTP a
-> Pangea. El contingut el puja TAT ARA directament; el codi, qui el programa.
+> **Publicar** vol dir pujar fitxers per SFTP a Pangea. Es pot fer a mà o,
+> quan el repositori tingui el secret `SFTP_PASSWORD`, sol amb cada `git push` a
+> `main` (GitHub Actions). Detall a [DESARROLLO.md](DESARROLLO.md#publicar-en-pangea).
 
 ## Documents
 

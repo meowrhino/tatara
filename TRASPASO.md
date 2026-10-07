@@ -28,11 +28,15 @@ trabajo manual y con corte de servicio. Cuanto antes, más barato.
 |---|---|---|
 | Cambiar un texto, una fecha, una foto, un precio | editar el JSON y subirlo por SFTP ([GUIA.md](GUIA.md)) | **sí**, al momento |
 | Cambiar las unidades de stock | `/admin/stock.html` | sí, al momento |
-| Cambiar el diseño o el código | commit y `git push` | **no**: solo guarda el código en GitHub |
-| Publicar un cambio de diseño o de código | `npm run build` y subir `dist/` por SFTP ([DESARROLLO.md](DESARROLLO.md#publicar-en-pangea)) | sí |
+| Cambiar el diseño o el código | commit y `git push` a `main` | **sí, solo**, si la publicación automática está activada; si no, solo guarda el código |
+| Publicar a mano | `npm run build` y subir `dist/` por SFTP ([DESARROLLO.md](DESARROLLO.md#publicar-en-pangea)) | sí |
 
-No hay despliegue automático: Pangea no sabe nada de GitHub. Es el precio de no
-pasar el dominio por Cloudflare.
+La publicación automática es un script de GitHub Actions que revisa los JSON y
+sube a Pangea por SFTP con cada push. **Está preparada pero no activada**: falta
+guardar la contraseña de SFTP como secret del repositorio
+([DESARROLLO.md](DESARROLLO.md#publicación-automática-github-actions)). Con ella
+activa, la clienta también podría editar el contenido directamente en GitHub en
+vez de usar Cyberduck.
 
 ### Las dos copias del contenido ⚠️
 
@@ -137,6 +141,11 @@ con el diseño viejo y sus propios datos. En este orden:
       en claro en `web tatara-TEXT-SETEMBRE.docx`, en el Drive. Cambiarla en
       Pangea y borrarla del documento.
 - [ ] Decidir quién se queda el repositorio (A o B, arriba).
+- [ ] Publicación automática: guardar `SFTP_PASSWORD` como secret del repo (en
+      la cuenta que se quede el repositorio). **Cada vez que cambie la contraseña
+      de SFTP, cambiarla también ahí.**
+- [ ] Si se activa: decidir si la clienta pasa a editar en GitHub (sin
+      Cyberduck) y actualizar [GUIA.md](GUIA.md) en consecuencia.
 
 ### 3. Contenido
 

@@ -1,0 +1,72 @@
+# Publicar en tatara.cat
+#
+# Cada cambio que llega a main se revisa (npm run check) y, si está bien, se
+# sube a Pangea por SFTP. Si un JSON está roto, no se publica nada.
+#
+# Necesita un secret del repositorio: SFTP_PASSWORD (Settings → Secrets and
+# variables → Actions). Sin él, revisa y prepara dist/, pero no sube nada.
+# Detalle en DESARROLLO.md, "Publicación automática".
+
+name: Publicar en tatara.cat
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**.md']   # cambiar documentación no publica nada
+  workflow_dispatch:          # botón "Run workflow" para publicar a mano
+
+concurrency:
+  group: publicar             # nunca dos subidas a la vez
+  cancel-in-progress: false
+
+permissions:
+  contents: write             # para mover la etiqueta 'publicado'
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      # hace falta la etiqueta 'publicado'
+          fetch-tags: true
+
+      - name: Revisar los JSON
+        run: node tools/check-data.mjs
+
+      # También comprueba que en el servidor no haya cambios que no estén en
+      # GitHub (alguien que subió un JSON por SFTP). Si los hay, para.
+      - name: Preparar dist/
+        run: bash tools/build-pangea.sh
+
+      - name: Subir a Pangea
+        env:
+          LFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+        run: |
+          if [ -z "$LFTP_PASSWORD" ]; then
+            echo "::notice::Falta el secret SFTP_PASSWORD: revisado y preparado, pero no se publica."
+            exit 0
+          fi
+          sudo apt-get install -y -qq lftp >/dev/null
+          # La clave del servidor, fijada: si no es esta, no se sube nada.
+          # (ED25519 SHA256:iePOeIV5BCyI4Q7fG9hrAfIPfjxz3scdQTpyysr2GYs)
+          mkdir -p ~/.ssh
+          echo "web-12.pangea.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA9TPoIqxI1p0LUiaz5IibCy+rYXyQppUV8TI70IkMsQ" >> ~/.ssh/known_hosts
+          # Sube lo que ha cambiado y no borra nada del servidor: api/config.php
+          # (que no está en dist/) se queda donde está.
+          lftp --env-password -u tatara-web sftp://web-12.pangea.org -e "
+            set net:max-retries 2; set net:timeout 30;
+            mirror --reverse --verbose --parallel=4 dist /tatara;
+            bye"
+          echo "PUBLICADO=1" >> "$GITHUB_ENV"
+
+      - name: Comprobar
+        if: env.PUBLICADO == '1'
+        run: curl -fsS https://tatara.cat/api/health
+
+      - name: Marcar lo publicado
+        if: env.PUBLICADO == '1'
+        run: |
+          git tag -f publicado
+          git push -f origin publicado

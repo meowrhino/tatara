@@ -106,8 +106,41 @@ a poner esas cabeceras**, o el navegador enseñará versiones viejas.
 
 ## Publicar en Pangea
 
-> **`git push` no publica nada.** GitHub guarda el código; la web que se ve en
-> `tatara.cat` es la que hay en el servidor de Pangea, y llega ahí por SFTP.
+La web que se ve en `tatara.cat` es la que hay en el servidor de Pangea, y llega
+ahí por SFTP. Hay dos maneras: **automática**, con cada `git push` a `main`
+(si está activada, ver abajo), o **a mano**, con los pasos 0 a 4.
+
+### Publicación automática (GitHub Actions)
+
+[.github/workflows/publicar.yml](.github/workflows/publicar.yml) se ejecuta con
+cada push a `main` que no sea solo documentación (`*.md`), y también a mano desde
+la pestaña *Actions* → *Publicar en tatara.cat* → *Run workflow*. Hace esto:
+
+1. `npm run check`. **Si un JSON está roto, para y no publica nada.**
+2. `npm run build`, que además comprueba que en el servidor no haya cambios de
+   `data/` que no estén en GitHub (alguien que subió un JSON por SFTP). Si los
+   hay, para: hay que traerlos desde un ordenador con `npm run build`, hacer
+   commit y push.
+3. Sube `dist/` por SFTP con `lftp mirror`: solo lo que ha cambiado, sin borrar
+   nada del servidor (así `api/config.php` no se toca). La clave del servidor va
+   fijada en el script: si no es la de Pangea, no sube.
+4. Comprueba `/api/health` y mueve la etiqueta `publicado`.
+
+**Para activarla**: en GitHub, *Settings* → *Secrets and variables* → *Actions* →
+*New repository secret*, nombre `SFTP_PASSWORD`, valor la contraseña de SFTP.
+Sin ese secret el workflow revisa y prepara, pero no sube nada. **Cuando Pangea
+cambie la contraseña, hay que cambiarla también aquí.**
+
+Si la publicación falla, GitHub manda un correo a quien hizo el push y el
+detalle está en la pestaña *Actions*. La web se queda como estaba.
+
+Con la publicación automática activa, la clienta puede editar los JSON
+directamente en GitHub (el lápiz de cada fichero → *Commit changes*) y se
+publican solos, ya revisados. Si sigue subiéndolos por SFTP también funciona,
+pero entonces el próximo push de código parará hasta que alguien traiga sus
+cambios al repo (paso 0).
+
+### Publicación a mano
 
 ### 0. El contenido de la clienta ⚠️
 

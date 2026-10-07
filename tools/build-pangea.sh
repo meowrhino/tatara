@@ -37,6 +37,14 @@ PARCHE=$(mktemp)
 git diff publicado -- data/ > "$PARCHE"
 git checkout -q -- data/
 if [[ -s "$PARCHE" ]]; then
+  # En GitHub Actions nadie puede revisar ni guardar esos cambios: se publicarían
+  # sin estar en el repo y la siguiente subida los perdería. Mejor parar.
+  if [[ "${CI:-}" == "true" ]]; then
+    echo "✗ En el servidor hay cambios en data/ que no están en GitHub (alguien subió un JSON por SFTP):"
+    git apply --stat "$PARCHE"
+    echo "  Tráelos desde un ordenador con 'npm run build', haz commit y push, y se publicará solo."
+    exit 1
+  fi
   if git apply --3way "$PARCHE"; then
     echo "· traídos cambios de la clienta a data/ (verlos: git diff HEAD -- data/). Guárdalos con un commit."
   else
