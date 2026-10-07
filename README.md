@@ -356,7 +356,7 @@ js/                   Mòduls ES, sense build. Entrada: main.js
   dates.js              Parseig i format de dates
   router.js             Navegació per hash + fundit entre vistes
   menu.js               Menú (columna fixa a escriptori, capa a mòbil) + idioma
-  modal.js              Diàleg de detall + lightbox
+  modal.js              Diàleg de detall (botiga) + lightbox
   agenda.js             Secció agenda
   sections.js           Render de text / people / shop / contact / newsletter / cart
   cart.js               Carret a localStorage

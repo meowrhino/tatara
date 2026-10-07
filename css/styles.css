@@ -170,19 +170,21 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .prose__shot { display: block; width: 100%; padding: 0; cursor: zoom-in; }
 .prose__shot img { width: 100%; height: auto; display: block; aspect-ratio: 3 / 2 auto; background: var(--img-placeholder); }
 
-/* Exposicions/Recerca: lista de nombres (cada uno abre un modal con bio + fotos
-   + PDF). Columna de color como la agenda: --col de ancho, centrada, fondo gris,
-   nombres a la izquierda con el mismo margen interno que los bloques. */
-.people { list-style: none; margin: 0 auto; padding: 1.6rem 1rem; background: var(--grey-soft); }
-.person { margin: 0 0 0.9rem; }
+/* Exposicions: "ARTISTA, Nom de l'expo", una por línea, sin marco ni fondo.
+   Es la única lista con interlineado propio (--lh-list): tiene poco texto.
+   Lo clicable se subraya al pasar por encima. */
+.people { list-style: none; margin: 0; padding: 0; line-height: var(--lh-list); }
 .person-spacer { height: 2.4rem; }
-.person__role { margin-left: 0.5rem; font-weight: 400; }
-.person__open { display: inline-flex; align-items: baseline; gap: 0.5rem; text-align: left; padding: 0; }
-.person--clickable .person__open::after { content: "+"; font-weight: 400; }
-.person--clickable:hover .person__name { text-decoration: underline; }
-.person--clickable:hover .person__open::after { color: var(--ink); }
-.m-pdf { margin: 0.8rem 0 0; }
-.m-pdf a:hover { text-decoration: underline; }
+.person__name { text-transform: uppercase; }
+.person a:hover, .person a:focus-visible { text-decoration: underline; }
+
+/* Ficha de una exposición, dentro de la columna. */
+.expo p { margin: 0 0 1rem; }
+.expo img { display: block; width: 100%; height: auto; margin: 0 0 1rem; }
+.expo a:hover { text-decoration: underline; }
+.expo__close { display: block; width: max(var(--brand), 2.4rem); margin: 0 0 1rem auto; line-height: 0; }
+.expo__close svg { width: 100%; height: auto; }
+.expo__title { margin: 0 0 1rem; text-decoration: underline; }
 
 /* Botiga */
 .shop {

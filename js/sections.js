@@ -83,7 +83,7 @@ export function renderText(view, data) {
     b.addEventListener('click', () => openLightbox(b.dataset.src, b.querySelector('img').alt)));
 }
 
-// Un artista es "ampliable" (abre modal) si tiene algo que enseñar: bio, fotos,
+// Un artista es "ampliable" (tiene ficha) si tiene algo que enseñar: bio, fotos,
 // hoja de sala (PDF) o web. Si no, se lista como nombre a secas.
 const personHasDetail = (p) => !!(t(p.bio) || t(p.expo) || t(p.text) || imagesOf(p).length || p.pdf || p.link);
 
@@ -94,48 +94,57 @@ function rangoExpo(d) {
   return sameDay(s, e) ? dMes(s) : `${dMes(s)} – ${dMes(e)}`;
 }
 
+// Identificador de la ficha en la URL (#exposicions?expo=anna-dot), sacado del
+// nombre: así el JSON no necesita un campo más y el botón de atrás funciona.
+const slugOf = (p) => p.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+// "ANNA DOT, Pàteres de llet": el artista en mayúscula, la expo tal cual.
+const expoLine = (p) => `<span class="person__name">${esc(p.name)}</span>` +
+  (t(p.expo) ? `, ${esc(t(p.expo))}` : '') +
+  (p.role ? ` <span class="person__role">${esc(p.role)}</span>` : '');
+
 export function renderPeople(view, data) {
-  const items = (data.people || []).map((p, i) => {
+  const people = data.people || [];
+  const slug = hashQuery().get('expo');
+  const open = slug && people.find((p) => p && !p.spacer && slugOf(p) === slug);
+  if (open) { view.innerHTML = pageWrap(expoDetail(open, '#' + view.dataset.section)); return; }
+
+  const items = people.map((p) => {
     // Separación entre grupos: un item { "spacer": true } en el JSON deja aire.
     if (p && p.spacer) return `<li class="person-spacer" aria-hidden="true"></li>`;
-    // 'role' (formato: conversa, taller…) opcional, para las fichas de recerca.
-    const name = `<span class="person__name">${esc(p.name)}</span>` +
-      (p.role ? `<span class="person__role">${esc(p.role)}</span>` : '');
-    if (!personHasDetail(p)) {
-      return `<li class="person">${name}</li>`;
-    }
-    return `<li class="person person--clickable">
-      <button class="person__open" type="button" data-i="${i}">${name}</button>
-    </li>`;
+    return personHasDetail(p)
+      ? `<li class="person"><a href="#${esc(view.dataset.section)}?expo=${slugOf(p)}">${expoLine(p)}</a></li>`
+      : `<li class="person">${expoLine(p)}</li>`;
   }).join('');
   view.innerHTML = pageWrap(`<ul class="people">${items}</ul>`);
-
-  view.querySelectorAll('.person__open').forEach((b) =>
-    b.addEventListener('click', () => openPersonModal(data.people[+b.dataset.i])));
 }
 
-// Bloque de exposición, en este orden: nombre + expo · fecha · texto de la expo ·
-// fotos (apiladas, scroll simple hacia abajo) · bio · web/PDF.
-function openPersonModal(p) {
-  const gallery = imagesOf(p).map((src) => `<img src="${esc(src)}" alt="${esc(t(p.expo) || p.name)}" loading="lazy">`).join('');
+// La ficha se abre dentro de la columna, no en una ventana: cruz grande arriba a
+// la derecha (vuelve a la lista), título subrayado, fecha, texto, fotos apiladas
+// (scroll simple hacia abajo), bio y web/PDF.
+function expoDetail(p, back) {
   // pdf admite un string, un objeto {url, label} o un array de cualquiera de ambos.
   const pdfs = Array.isArray(p.pdf) ? p.pdf : (p.pdf ? [p.pdf] : []);
   const pdfLinks = pdfs.map((pdf) => {
     const url = typeof pdf === 'string' ? pdf : pdf.url;
     const label = (pdf && pdf.label) ? t(pdf.label) : ui('roomSheet');
-    return url ? `<p class="m-pdf"><a href="${esc(url)}" target="_blank" rel="noopener" download>${esc(label)} ↓</a></p>` : '';
+    return url ? `<p><a href="${esc(url)}" target="_blank" rel="noopener" download>${esc(label)} ↓</a></p>` : '';
   }).join('');
-  const expo = t(p.expo), texto = t(p.text), bio = t(p.bio), fecha = rangoExpo(p.date);
-  openModal(`
-    <h2 class="m-title" id="modal-title">${esc(p.name)}</h2>
-    ${expo ? `<p class="m-person">${esc(expo)}</p>` : ''}
-    ${fecha ? `<p class="m-when">${esc(fecha)}</p>` : ''}
-    ${texto ? `<p class="m-desc">${esc(texto)}</p>` : ''}
+  const gallery = imagesOf(p).map((src) => `<img src="${esc(src)}" alt="${esc(t(p.expo) || p.name)}" loading="lazy">`).join('');
+  const texto = t(p.text), bio = t(p.bio), fecha = rangoExpo(p.date);
+  return `<article class="expo">
+    <a class="expo__close" href="${esc(back)}" aria-label="${esc(ui('close'))}">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 6 L34 34 M34 6 L6 34" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
+    </a>
+    <h1 class="expo__title">${expoLine(p)}</h1>
+    ${fecha ? `<p>${esc(fecha)}</p>` : ''}
+    ${texto ? `<p>${esc(texto)}</p>` : ''}
     ${gallery}
-    ${bio ? `<p class="m-desc m-bio">${esc(bio)}</p>` : ''}
-    ${p.link ? `<p class="m-link"><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(ui('websiteLink'))} ↗</a></p>` : ''}
+    ${bio ? `<p>${esc(bio)}</p>` : ''}
+    ${p.link ? `<p><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(ui('websiteLink'))} ↗</a></p>` : ''}
     ${pdfLinks}
-  `);
+  </article>`;
 }
 
 export function renderShop(view, data) {
