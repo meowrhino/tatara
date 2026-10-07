@@ -368,7 +368,7 @@ api/                  Backend EN ÚS: /api/* en PHP (newsletter, stock, Stripe)
   lib/                  db (PDO) · catàleg · Stripe per REST · HTTP
 admin/                Panell intern: stock i comandes
 data/*.json           TOT el contingut. Cada fitxer es diu com la seva secció
-assets/img/           Imatges .webp: expos/ · recerca/ · edicions/ · mr/ (i agenda/, si mai cal)
+assets/img/           Imatges .webp: expos/ · recerca/ · edicions/ (i agenda/, si mai cal)
 assets/pdf/           Fulls de sala de les exposicions
 tools/                check-data.mjs · to-webp.sh · build-pangea.sh · test-api-php.sh · serve.py
 ```

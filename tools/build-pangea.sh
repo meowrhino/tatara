@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # tools/build-pangea.sh — prepara dist/ con EXACTAMENTE lo que se sube a Pangea.
 #
-# No compila nada (la web no tiene build): copia la web y la API y deja fuera el
-# código del Worker, las fotos de origen y la documentación. Es la misma lista
-# que .assetsignore usa en Cloudflare, para que las dos opciones suban lo mismo.
+# No compila nada (la web no tiene build): copia la web y la API y deja fuera
+# las herramientas, las fotos de origen y la documentación.
 #
 #   bash tools/build-pangea.sh
 #   → dist/  ·  arrastrar su CONTENIDO a la carpeta pública del SFTP

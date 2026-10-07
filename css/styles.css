@@ -400,6 +400,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
   .bar--bottom { align-items: end; padding-bottom: var(--gutter); }
 
   .bar__menu { visibility: hidden; }   /* el menú ya está a la vista */
+  .bar__section { pointer-events: none; }   /* abajo solo dice dónde estás: ya no abre nada */
   .bar__brand {
     grid-column: 2 / 4;
     justify-self: stretch;
