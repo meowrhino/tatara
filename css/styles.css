@@ -152,6 +152,19 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
   flex-direction: column;
 }
 
+/* Las secciones con poco contenido (contacte, newsletter, carret vacío o el
+   "gràcies" después de pagar) no se quedan arriba a la izquierda: van centradas
+   en el hueco que queda entre las barras, en las dos direcciones. margin-block
+   auto dentro de .page (flex en columna) es lo que las centra en vertical. */
+.contact, .newsletter, .cart:not(.cart--full) {
+  margin-block: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.contact__intro, .newsletter__intro { text-wrap: balance; }   /* líneas de largo parecido, sin una palabra suelta al final */
+
 .prose p { margin: 0 0 1rem; }
 .prose__heading { margin: 2rem 0 0.8rem; }
 .prose > .prose__heading:first-child { margin-top: 0; }
@@ -191,22 +204,21 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 .product__info { display: grid; grid-template-columns: 1fr auto; gap: 1rem; }
 .product__text { display: flex; flex-direction: column; min-width: 0; }
 
-/* Contacte: texto de intro arriba, axonometría del local en medio, dirección
-   + los 3 links (IG · Newsletter · Medium) abajo. */
-.contact { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; flex: 1; gap: 2rem; }
-.contact__intro { position: relative; z-index: 1; margin: 0; }
-/* Axonometria de fons: absoluta, a l'esquerra com tot, DARRERE del text (no ocupa scroll). */
-.contact__axo { position: absolute; inset: 0 auto 0 0; margin: auto 0; max-width: 16rem; max-height: 40svh; width: auto; height: auto; z-index: 0; pointer-events: none; }
-.contact__info { position: relative; z-index: 1; margin: 0; width: 100%; }
+/* Contacte, de arriba abajo y centrado: texto de intro, axonometría del local,
+   dirección + correo + los 3 links (IG · Newsletter · Medium). */
+.contact { gap: 2rem; }
+.contact__intro { margin: 0; }
+.contact__axo { display: block; max-width: 16rem; max-height: 30svh; width: auto; height: auto; }
+.contact__info { margin: 0; }
 .contact__addr { margin: 0 0 0.4rem; }
 .contact__email { margin: 0 0 1.4rem; }
-.contact__links { margin: 0; display: flex; gap: 1.6rem; }
+.contact__links { margin: 0; display: flex; justify-content: center; gap: 1.6rem; }
 
 /* Newsletter (secció pròpia): intro + alta al butlletí */
-.newsletter { display: flex; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
+.newsletter { gap: 1.4rem; }
 .newsletter__intro { max-width: 30rem; margin: 0; }
-.newsletter__form { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.newsletter__input { font: inherit; border: 1px solid var(--ink); background: none; padding: 0.45rem 0.7rem; min-width: 13rem; }
+.newsletter__form { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.newsletter__input { font: inherit; border: 1px solid var(--ink); background: none; padding: 0.45rem 0.7rem; min-width: 13rem; text-align: center; }
 .newsletter__btn { border: 1px solid var(--ink); padding: 0.45rem 1rem; }
 .newsletter__btn:not(:disabled):hover { background: var(--ink); color: var(--bg); }
 .newsletter__btn:disabled { opacity: 0.5; cursor: not-allowed; }

@@ -77,7 +77,9 @@ cuarta; las barras son transparentes y el contenido pasa por debajo del logo.
 En móvil, una columna y el menú como capa. Un solo cuerpo de letra (`--fs`) y un
 solo interlineado (`--lh`); en escritorio el cuerpo crece con la columna para
 mantener unos 72 caracteres por línea. Sin negritas: los títulos van en
-mayúscula y lo que se quiere resaltar, subrayado. Viene del feedback de Ariadna
+mayúscula y lo que se quiere resaltar, subrayado. Todo va alineado a la
+izquierda salvo las secciones con poco contenido (contacte, newsletter, carret
+vacío), que van centradas en las dos direcciones. Viene del feedback de Ariadna
 Serrahima (octubre de 2026). El diseño anterior, con bloques de color, está en
 la etiqueta `v0-disseny-color` y publicado en
 [meowrhino.github.io/tatarav0](https://meowrhino.github.io/tatarav0/).
