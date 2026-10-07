@@ -152,16 +152,18 @@ export function renderShop(view, data) {
   const cards = (data.products || []).map((p, i) => {
     const img = imagesOf(p)[0];
     const price = (p.price != null) ? `${p.price}${cur}` : '—';
+    // Dos bloques de texto: a la izquierda título/autor/editorial, a la derecha
+    // solo el precio. Así nunca cae texto debajo del precio.
     return `<button class="product" type="button" data-i="${i}">
-      <div class="product__media">${img ? `<img src="${esc(img)}" alt="${esc(t(p.title))}" loading="lazy">` : ''}</div>
-      <div class="product__info">
-        <div class="product__row">
+      ${img ? `<img class="product__img" src="${esc(img)}" alt="${esc(t(p.title))}" loading="lazy">` : ''}
+      <span class="product__info">
+        <span class="product__text">
           <span class="product__title">${esc(t(p.title))}</span>
-          <span class="product__price">${esc(price)}</span>
-        </div>
-        ${p.author ? `<span class="product__author">${esc(p.author)}</span>` : ''}
-        ${p.editorial ? `<span class="product__editorial">${esc(p.editorial)}</span>` : ''}
-      </div>
+          ${p.author ? `<span>${esc(p.author)}</span>` : ''}
+          ${p.editorial ? `<span>${esc(p.editorial)}</span>` : ''}
+        </span>
+        <span class="product__price">${esc(price)}</span>
+      </span>
     </button>`;
   }).join('');
   view.innerHTML = pageWrap(`<div class="shop">${cards}</div>`);

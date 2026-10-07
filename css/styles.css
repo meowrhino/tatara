@@ -186,24 +186,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .expo__close svg { width: 100%; height: auto; }
 .expo__title { margin: 0 0 1rem; text-decoration: underline; }
 
-/* Botiga */
-.shop {
-  width: 100%;
-  display: grid; grid-template-columns: 1fr; gap: 2.4rem;
-}
-/* El <button> centra su contenido en vertical cuando la celda de la rejilla es
-   más alta que la ficha (fichas con títulos de distinto largo). Con flex-column
-   el contenido vuelve arriba y todas las cajas empiezan a la misma altura. */
-.product { display: flex; flex-direction: column; width: 100%; text-align: left; }
-.product__media { background: var(--media-bg); aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden; }
-/* 'contain': la foto se ve ENTERA dentro de la caja, sea horizontal o vertical.
-   Con 'cover' las verticales salían recortadas por arriba y por abajo. */
-.product__media img { width: 100%; height: 100%; object-fit: contain; }
-/* Orden de la ficha: títol — preu / autor / +info (editorial, traducció…). */
-.product__info { display: flex; flex-direction: column; line-height: 1.35; margin-top: 0.6rem; }
-.product__row { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
-.product__title { min-width: 0; }
-.product__price { flex: 0 0 auto; }
+/* Botiga: dos fichas por fila. La foto, entera y a su proporción, sin caja
+   detrás (cada foto ya trae su fondo de estudio). */
+.shop { width: 100%; display: grid; grid-template-columns: 1fr; gap: 2.4rem; align-items: start; }
+.product { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; padding: 0; text-align: left; }
+.product__img { display: block; width: 100%; height: auto; }
+.product__info { display: grid; grid-template-columns: 1fr auto; gap: 1rem; }
+.product__text { display: flex; flex-direction: column; min-width: 0; }
+.product__title { text-transform: uppercase; }
+.product:hover .product__title { text-decoration: underline; }
 @media (min-width: 560px) { .shop { grid-template-columns: 1fr 1fr; } }
 
 /* Contacte: texto de intro arriba, axonometría del local en medio, dirección
