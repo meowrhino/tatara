@@ -77,8 +77,11 @@ SFTP, y cada cambio de código pasa por la regla de las dos copias.
 `tatarav0` se queda en nuestra cuenta: es un archivo de diseño, no forma parte
 de la web.
 
-En los dos casos, **nada de lo que hay en el servidor cambia**: la web, la base
-de datos y `api/config.php` siguen donde están.
+En los dos casos, **nada de lo que hay en el servidor cambia** y **no hay que
+avisar a Pangea**: Pangea no sabe nada de GitHub. Lo único que une los dos es el
+secret `SFTP_PASSWORD` del repo; si después de transferirlo sigue ahí, la
+publicación automática funciona igual. La web, la base de datos y
+`api/config.php` siguen donde están.
 
 ---
 
@@ -137,9 +140,9 @@ con el diseño viejo y sus propios datos. En este orden:
 ### 2. Claves
 
 - [ ] Las tres claves de arriba, al gestor de contraseñas de la asociación.
-- [ ] ⚠️ **Cambiar la contraseña SFTP.** Se compartió por WhatsApp y está escrita
-      en claro en `web tatara-TEXT-SETEMBRE.docx`, en el Drive. Cambiarla en
-      Pangea y borrarla del documento.
+- [ ] **Cambiar la contraseña SFTP**, cuando el traspaso esté cerrado: pedirla
+      a Pangea, actualizar el secret `SFTP_PASSWORD` y borrar la vieja del
+      `.docx` del Drive.
 - [ ] Decidir quién se queda el repositorio (A o B, arriba).
 - [x] Publicación automática: `SFTP_PASSWORD` guardada como secret del repo.
 - [ ] **Al cambiar la contraseña de SFTP, cambiarla también en el secret**
