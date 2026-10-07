@@ -50,8 +50,10 @@ fi
 
 echo "✓ dist/ listo ($(du -sh "$DEST" | cut -f1))"
 echo
+echo "  0. ¿Has bajado antes data/ del servidor? Si no, este dist/ lleva los JSON"
+echo "     del repo y pisará lo que haya cambiado la clienta (DESARROLLO.md, paso 0)."
 echo "  1. Subir el CONTENIDO de dist/ a la carpeta pública del SFTP de Pangea."
-echo "  2. Crear allí api/config.php a partir de api/config.example.php (NO se sube solo)."
+echo "  2. Solo la primera vez: crear allí api/config.php a partir de api/config.example.php."
 echo "  3. Comprobar https://tatara.cat/api/health"
 echo
 echo "  Ojo: api/config.php se queda en el servidor entre subidas. No lo borres."
