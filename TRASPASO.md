@@ -143,8 +143,9 @@ con el diseño viejo y sus propios datos. En este orden:
 - [ ] Decidir quién se queda el repositorio (A o B, arriba).
 - [x] Publicación automática: `SFTP_PASSWORD` guardada como secret del repo.
 - [ ] **Al cambiar la contraseña de SFTP, cambiarla también en el secret**
-      (`gh secret set SFTP_PASSWORD`). Si el repo pasa a TAT ARA (opción B), los
-      secrets no viajan con la transferencia: hay que volver a crearlo.
+      (`gh secret set SFTP_PASSWORD`). Si el repo pasa a TAT ARA (opción B),
+      comprobar después que el secret sigue en *Settings → Secrets* y, si no,
+      volver a crearlo.
 - [ ] Decidir si la clienta pasa a editar en GitHub (sin Cyberduck) y
       actualizar [GUIA.md](GUIA.md) en consecuencia.
 
