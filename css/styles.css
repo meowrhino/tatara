@@ -57,6 +57,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 #view {
   min-height: 100dvh;
+  padding-inline: var(--gutter);
   padding-top: var(--bar-h);
   padding-bottom: var(--bar-h);
   opacity: 1;
@@ -145,7 +146,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   min-height: calc(100dvh - 2 * var(--bar-h));
   display: flex;
   flex-direction: column;
-  padding: 2.5rem 1.4rem 1rem;
 }
 
 .prose { margin: 0; }
@@ -405,9 +405,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
     --bar-h: calc(var(--gutter) + var(--brand) + 2.4rem);
   }
 
-  #view { padding-inline: var(--gutter); }
   .agenda__strip, .page > * { width: 50%; max-width: none; margin-inline: auto; }
-  .page { padding: 0; }
 
   .bar {
     grid-template-columns: repeat(4, 1fr);
