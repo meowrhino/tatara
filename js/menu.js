@@ -1,7 +1,9 @@
 /* ============================================================
    TAT ARA — menú y selector de idioma
-   Overlay que se despliega desde abajo. Construye su lista a partir de
-   SITE.sections y los botones de idioma a partir de SITE.languages.
+   En escritorio el menú es la primera columna, siempre a la vista; en móvil,
+   una capa que se abre con el botón "menú" (solo el CSS cambia). Construye
+   su lista a partir de SITE.sections y los botones de idioma a partir de
+   SITE.languages.
    ============================================================ */
 
 import { $, esc, t, captureFocus } from './utils.js';

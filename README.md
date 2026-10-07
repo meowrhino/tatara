@@ -370,7 +370,7 @@ admin/                Panell intern: stock i comandes
 data/*.json           TOT el contingut. Cada fitxer es diu com la seva secció
 assets/img/           Imatges .webp: expos/ · recerca/ · edicions/ · mr/ (i agenda/, si mai cal)
 assets/pdf/           Fulls de sala de les exposicions
-tools/                check-data.mjs · to-webp.sh · serve.py
+tools/                check-data.mjs · to-webp.sh · build-pangea.sh · test-api-php.sh · serve.py
 ```
 
 > El material **font** (fotos originals, PDF, `.docx`) no és al repo: massa
@@ -379,15 +379,14 @@ tools/                check-data.mjs · to-webp.sh · serve.py
 ## Desenvolupament
 
 ```bash
-npm install
 npm run check                          # revisa els JSON
 
 # La versió que està publicada (PHP). Cal php: brew install php
 php -S 127.0.0.1:8788 -t . tools/php-router.php
-bash tools/test-api-php.sh             # 37 comprovacions de l'API
-
-npm run dev                            # l'alternativa amb Worker de Cloudflare
+npm test                               # 37 comprovacions de l'API
 ```
+
+`npm run dev` fa el mateix que la línia de `php -S`.
 
 Per mirar només la web, sense API, val qualsevol servidor estàtic
 (`python3 tools/serve.py`).

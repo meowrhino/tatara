@@ -1,5 +1,4 @@
-# .htaccess de la raíz — solo para la opción Pangea (Apache).
-# En Cloudflare este fichero no se usa para nada; se sube igual y no molesta.
+# .htaccess de la raíz (Apache, Pangea).
 
 DirectoryIndex index.html
 

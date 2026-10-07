@@ -243,8 +243,8 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 /* ============================================================
    BARRAS FIJAS  —  marco de marca: TAT arriba · ARA abajo
-   Grid de 3 columnas (1fr auto 1fr) para que la marca quede
-   siempre centrada, sean cuales sean los anchos de los lados.
+   Móvil: 3 columnas (1fr auto 1fr), la marca siempre centrada.
+   Escritorio: las 4 columnas de la página (ver DESKTOP, al final).
    ============================================================ */
 .bar {
   position: fixed;
@@ -298,7 +298,8 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 
 /* ============================================================
-   MENÚ OVERLAY  (fundido, igual que el cambio de vista)
+   MENÚ — en móvil, capa con fundido (como el cambio de vista);
+   en escritorio, la columna 1 (ver DESKTOP)
    ============================================================ */
 .menu {
   position: fixed;

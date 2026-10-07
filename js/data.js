@@ -3,11 +3,11 @@
    Fetch de JSONs con caché en memoria: una sola petición por URL mientras dura
    la visita, aunque se navegue entre secciones ida y vuelta.
 
-   No hay caché a mano (ni '?v=', ni 'no-store'): Cloudflare sirve TODOS los
-   assets —JSON, JS, CSS e imágenes— con 'Cache-Control: public, max-age=0,
-   must-revalidate' y un ETag del contenido. El navegador revalida en cada carga
-   y se trae el archivo nuevo en cuanto cambia. Editar un JSON y hacer push es
-   suficiente: no hay ninguna versión que acordarse de subir.
+   No hay caché a mano (ni '?v=', ni 'no-store'): el .htaccess de la raíz sirve
+   JSON, HTML, CSS y JS con 'Cache-Control: no-cache, must-revalidate', y Apache
+   añade un ETag. El navegador revalida en cada carga y se trae el archivo nuevo
+   en cuanto cambia. Subir un JSON por SFTP es suficiente: no hay ninguna versión
+   que acordarse de cambiar.
    ============================================================ */
 
 const CACHE = new Map();   // url -> json ya parseado
