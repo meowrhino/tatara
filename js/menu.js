@@ -13,10 +13,14 @@ export const isMenuOpen = () => $('#menu').classList.contains('is-open');
 
 let restoreMenuFocus = null;   // devuelve el foco a quien abrió el menú al cerrarlo
 
+// En escritorio el menú es una columna fija, no una capa: no hay nada que abrir
+// (y bloquear el scroll del body dejaría la página congelada).
+const menuIsColumn = () => window.matchMedia('(min-width: 720px)').matches;
+
 export function openMenu() {
+  if (menuIsColumn()) return;
   restoreMenuFocus = captureFocus();
   $('#menu').classList.add('is-open');
-  $('#menu').setAttribute('aria-hidden', 'false');
   $('#open-menu').setAttribute('aria-expanded', 'true');
   document.body.classList.add('no-scroll');
   $('#close-menu').focus();
@@ -24,7 +28,6 @@ export function openMenu() {
 
 export function closeMenu() {
   $('#menu').classList.remove('is-open');
-  $('#menu').setAttribute('aria-hidden', 'true');
   $('#open-menu').setAttribute('aria-expanded', 'false');
   if ($('#modal').hidden) document.body.classList.remove('no-scroll');
   if (restoreMenuFocus) { restoreMenuFocus(); restoreMenuFocus = null; }
