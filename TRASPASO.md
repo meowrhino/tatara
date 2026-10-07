@@ -38,11 +38,12 @@ pasar el dominio por Cloudflare.
 
 Los JSON de `data/` existen dos veces: en el servidor (los que edita la clienta)
 y en el repositorio (los que tiene quien programa). **La buena es la del
-servidor.** Antes de publicar un cambio de código hay que bajar `data/` del
-servidor al repo; si no, se suben los JSON viejos del repo y **se pisan los
-cambios de la clienta**. El paso a paso está en
-[DESARROLLO.md](DESARROLLO.md#0-bajar-el-contenido-del-servidor-), y la guía de
-la clienta también se lo recuerda.
+servidor.** Si se subieran los JSON del repo sin más, **se pisarían los cambios
+de la clienta**. `npm run build` lo evita: antes de preparar nada, trae a `data/`
+lo que ella haya cambiado desde la última publicación (la etiqueta git
+`publicado`). Detalle en
+[DESARROLLO.md](DESARROLLO.md#0-el-contenido-de-la-clienta-), y la guía de la
+clienta también lo recuerda.
 
 ---
 
@@ -218,7 +219,7 @@ Sin esto el traspaso no está terminado:
 
 | Se olvida | Qué pasa |
 |---|---|
-| Bajar `data/` del servidor antes de publicar código | Se pisan los cambios de contenido de la clienta |
+| Mover la etiqueta `publicado` después de subir | La próxima publicación compara con una versión vieja y puede deshacer cambios |
 | Sacar los datos antes de borrar el Worker | Se pierden las altas de newsletter de las pruebas |
 | Borrar el Worker viejo | Sigue habiendo otra web pública, vieja, en una cuenta personal |
 | Webhook de Stripe | Se cobra, pero el stock no baja y el pedido no se registra |

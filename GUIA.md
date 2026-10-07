@@ -259,8 +259,8 @@ número u, i és el que deixa la web en blanc.
 
 ## Si algú fa canvis de disseny a la web
 
-El contingut bo és **el que hi ha al servidor**, el que vosaltres pugeu. Qui
-toqui el codi l'ha de baixar del servidor abans de publicar res (està explicat a
-[DESARROLLO.md](DESARROLLO.md)); si no, podria tornar a pujar una versió vella
-dels JSON i desfer els vostres canvis. Si sabeu que algú farà canvis, recordeu-li.
+El contingut bo és **el que hi ha al servidor**, el que vosaltres pugeu. Quan
+qui toca el codi prepara una versió nova, el procés baixa primer els vostres
+JSON del servidor i hi suma els seus canvis, així no es perd res. Si sabeu que
+algú farà canvis, digueu-li igualment què heu tocat últimament.
 

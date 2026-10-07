@@ -108,36 +108,27 @@ a poner esas cabeceras**, o el navegador enseñará versiones viejas.
 > **`git push` no publica nada.** GitHub guarda el código; la web que se ve en
 > `tatara.cat` es la que hay en el servidor de Pangea, y llega ahí por SFTP.
 
-### 0. Bajar el contenido del servidor ⚠️
+### 0. El contenido de la clienta ⚠️
 
-La clienta edita los JSON de `data/` y los sube **directamente al servidor**. Por
-eso el `data/` del servidor es más nuevo que el del repo, y si se sube `dist/`
-sin más, **se pisan sus cambios**. Antes de cada publicación de código:
+La clienta edita los JSON de `data/` y los sube **directamente al servidor**, así
+que el `data/` del servidor puede ser más nuevo que el del repo. Si se sube
+`dist/` sin más, **se pisan sus cambios**.
 
-```bash
-cd /ruta/al/repo
-sftp tatara-web@web-12.pangea.org
-```
+`npm run build` lo resuelve solo: antes de copiar nada, baja los JSON del
+servidor (son públicos: ni SFTP ni contraseña), los compara con lo último que se
+publicó —la etiqueta git **`publicado`**— y suma a `data/` solo lo que ha
+cambiado ella, sin deshacer lo que hayamos cambiado nosotros. Puede decir:
 
-Dentro de `sftp>`:
+- `la clienta no ha cambiado nada` → sigue.
+- `traídos cambios de la clienta` → sigue, y quedan en `data/` para guardarlos
+  con un commit (`git diff HEAD -- data/` para verlos).
+- `Sus cambios chocan con los tuyos` → para. Hay que abrir el JSON, elegir entre
+  `<<<<<<< ours` (lo nuestro) y `>>>>>>> theirs` (lo suyo), y repetir.
+- `No se ha podido bajar…` → para sin tocar nada (sin red, o el servidor no
+  contesta).
 
-```
-lcd data
-cd data
-get *.json
-bye
-```
-
-Y de vuelta en la terminal, mirar qué ha cambiado y guardarlo:
-
-```bash
-git diff --stat data/
-npm run check
-git commit -am "contenido: lo que había en el servidor"
-```
-
-Si `git diff` sale vacío, no había cambios. Es el único paso que no tiene red de
-seguridad: no saltárselo.
+Por eso es importante el paso 4: si la etiqueta `publicado` no se mueve después
+de subir, la próxima vez se compararía con una versión vieja.
 
 ### 1. Preparar lo que se sube
 
@@ -181,6 +172,15 @@ curl -s -o /dev/null -w "%{http_code}\n" https://tatara.cat/schema-tatara.mysql.
 ```
 
 Y abrir `https://tatara.cat` en una ventana privada.
+
+### 4. Marcar lo publicado
+
+```bash
+git tag -f publicado && git push -f origin publicado
+```
+
+La etiqueta `publicado` dice qué commit hay en el servidor. Es lo que usa el
+paso 0 la próxima vez.
 
 **Si `/api/health` da 404**: falta el `api/.htaccess` o `mod_rewrite` no está
 activo. **Si `/admin` da 401 con el token bueno**: Apache no pasa la cabecera
