@@ -8,6 +8,7 @@
 import { $, esc, t, ui } from './utils.js';
 import { SITE } from './state.js';
 import { loadJSON } from './data.js';
+import { closeModal } from './modal.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
 import { renderText, renderPeople, renderShop, renderContact, renderCart, renderNewsletter } from './sections.js';
 
@@ -43,6 +44,7 @@ export async function renderRoute() {
   const section = SITE.sections.find((s) => s.id === id);
   const view = $('#view');
   const animate = !!view.dataset.section && !reducedMotion();
+  if (!$('#modal').hidden) closeModal();   // una ficha abierta no sobrevive al cambio de sección (p. ej. con «atrás»)
 
   if (animate) {
     view.classList.add('view--fade');
