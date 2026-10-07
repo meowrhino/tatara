@@ -14,8 +14,7 @@
    Al abrir, el scroll arranca en lo que pasa hoy (o lo próximo).
    ============================================================ */
 
-import { el, esc, t, ui } from './utils.js';
-import { openLightbox } from './modal.js';
+import { el, esc, t, ui, zoomImg } from './utils.js';
 import { parseDate, todayDate, sameDay, rangeSlash, dMes } from './dates.js';
 
 // 'kind' (traducible) es el tipo de cada entrada: exposició, lectura, conversa,
@@ -108,7 +107,7 @@ function eventBlock(ev) {
 
   // Descripción e imagen en flujo natural.
   if (ev.description) block.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
-  if (ev.image) block.appendChild(mediaEl(ev.image, t(ev.title)));
+  if (ev.image) block.insertAdjacentHTML('beforeend', zoomImg(ev.image, t(ev.title)));
 
   // O.R. anidados (converses, lectures…): simplemente en flujo, uno tras otro.
   if (children.length) {
@@ -125,7 +124,7 @@ function eventBlock(ev) {
         `<span class="seg__child-name">${esc(kindOf(c, OR))} · ${esc(t(c.title))}${c.artist ? ' – ' + esc(c.artist) : ''}</span>`;
       row.appendChild(info);
       if (c.description) row.appendChild(el('div', 'seg__child-desc', esc(t(c.description))));
-      if (c.image) row.appendChild(mediaEl(c.image, t(c.title)));
+      if (c.image) row.insertAdjacentHTML('beforeend', zoomImg(c.image, t(c.title)));
       daysRegion.appendChild(row);
     });
   }
@@ -138,17 +137,4 @@ function eventBlock(ev) {
   if (foot.children.length) block.appendChild(foot);
 
   return block;
-}
-
-// La imagen es un <button> (no un <img> suelto) para que se pueda ampliar también
-// con teclado. Siempre a la izquierda, como el texto.
-function mediaEl(src, alt) {
-  const btn = el('button', 'seg__media');
-  btn.type = 'button';
-  btn.setAttribute('aria-label', alt ? `${ui('enlargeImage')}: ${alt}` : ui('enlargeImage'));
-  const img = el('img');
-  img.src = src; img.alt = alt; img.loading = 'lazy';
-  btn.appendChild(img);
-  btn.addEventListener('click', (ev) => { ev.stopPropagation(); openLightbox(src, alt); });
-  return btn;
 }

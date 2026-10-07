@@ -92,13 +92,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 .seg__desc, .seg__child-desc { margin: 0; }
 
-/* Imagen: media columna, a la izquierda. */
-.seg__media { display: block; width: 50%; padding: 0; cursor: zoom-in; }
-/* aspect-ratio con 'auto' delante: manda la proporción real de la imagen en
-   cuanto se conoce, y mientras tanto se reserva 4/5, que es el formato de
-   cartel que usa casi toda la agenda. Reservar de más o de menos hace que la
-   página crezca bajo el dedo al ir hacia atrás en el historial. */
-.seg__media img { width: 100%; height: auto; display: block; aspect-ratio: 4 / 5 auto; background: var(--img-placeholder); }
+.seg .zoom { width: 50%; }   /* en la agenda, media columna y a la izquierda */
 
 /* O.R. / esdeveniments anidados dentro de una exposición. */
 .seg__days { display: flex; flex-direction: column; gap: 1rem; }
@@ -107,7 +101,13 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    la segunda línea vuelve al margen y no cuelga de la fecha. */
 .seg__child-when { white-space: nowrap; margin-right: 0.6rem; }   /* "12/9 – 13/9 · 10:00" no se parte */
 
-/* Lightbox: clic en una imagen de la agenda la abre a pantalla completa.
+/* Imagen ampliable (utils.zoomImg): agenda, recerca y expos. aspect-ratio con
+   'auto' delante: manda la proporción real en cuanto se conoce, y mientras
+   tanto reserva 3/2, así la página no crece de golpe bajo el dedo. */
+.zoom { display: block; width: 100%; padding: 0; cursor: zoom-in; }
+.zoom img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2 auto; background: var(--img-placeholder); }
+
+/* Lightbox: clic en una imagen ampliable la abre a pantalla completa.
    La imagen se limita a vw/svh para caber ENTERA (alto y ancho) en cualquier
    pantalla; el clic fuera cierra (cursor zoom-out), el clic en la imagen no. */
 .lightbox {
@@ -164,11 +164,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 /* "Amb: nom, nom, nom." — la lista de personas de recerca. */
 .prose__people { margin: 1.4rem 0 0; }
 
-/* Galería de una página de texto (recerca): fotos apiladas, ancho de columna,
-   ampliables al hacer clic como las de la agenda. */
+/* Galería de una página de texto (recerca): fotos apiladas, ancho de columna. */
 .prose__gallery { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.4rem 0 0; }
-.prose__shot { display: block; width: 100%; padding: 0; cursor: zoom-in; }
-.prose__shot img { width: 100%; height: auto; display: block; aspect-ratio: 3 / 2 auto; background: var(--img-placeholder); }
 
 /* Exposicions: "ARTISTA, Nom de l'expo", una por línea, sin marco ni fondo.
    Es la única lista con interlineado propio (--lh-list): tiene poco texto.
@@ -180,7 +177,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* Ficha de una exposición, dentro de la columna. */
 .expo p { margin: 0 0 1rem; }
-.expo img { display: block; width: 100%; height: auto; margin: 0 0 1rem; }
+.expo .zoom { margin: 0 0 1rem; }
 .expo a:hover { text-decoration: underline; }
 .expo__close { display: block; width: max(var(--brand), 2.4rem); margin: 0 0 1rem auto; line-height: 0; }
 .expo__close svg { width: 100%; height: auto; }

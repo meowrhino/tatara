@@ -5,10 +5,10 @@
    Cada una recibe (view, data) y escribe view.innerHTML.
    ============================================================ */
 
-import { esc, t, ui, imagesOf, richText } from './utils.js';
+import { esc, t, ui, imagesOf, richText, zoomImg } from './utils.js';
 import { parseDate, dMes, sameDay } from './dates.js';
 import { SITE } from './state.js';
-import { openModal, closeModal, openLightbox } from './modal.js';
+import { openModal, closeModal } from './modal.js';
 import { loadJSON } from './data.js';
 import { hashQuery } from './router.js';
 import { getCart, addToCart, setQty, removeItem, clearCart } from './cart.js';
@@ -71,16 +71,11 @@ export function renderText(view, data) {
       : '';
     // 'images' (varias) se apilan como galería y se amplían al hacer clic.
     const gal = (b.images || []).length
-      ? `<div class="prose__gallery">` + b.images.map((src) =>
-          `<button class="prose__shot" type="button" data-src="${esc(src)}" aria-label="${esc(ui('enlargeImage'))}">` +
-          `<img src="${esc(src)}" alt="${esc(t(b.alt) || '')}" loading="lazy"></button>`).join('') + `</div>`
+      ? `<div class="prose__gallery">${b.images.map((src) => zoomImg(src, t(b.alt))).join('')}</div>`
       : '';
     return heading + para + gente + img + gal;
   }).join('');
   view.innerHTML = pageWrap(`<div class="prose">${body}</div>`);
-
-  view.querySelectorAll('.prose__shot').forEach((b) =>
-    b.addEventListener('click', () => openLightbox(b.dataset.src, b.querySelector('img').alt)));
 }
 
 // Un artista es "ampliable" (tiene ficha) si tiene algo que enseñar: bio, fotos,
@@ -131,7 +126,7 @@ function expoDetail(p, back) {
     const label = (pdf && pdf.label) ? t(pdf.label) : ui('roomSheet');
     return url ? `<p><a href="${esc(url)}" target="_blank" rel="noopener" download>${esc(label)} ↓</a></p>` : '';
   }).join('');
-  const gallery = imagesOf(p).map((src) => `<img src="${esc(src)}" alt="${esc(t(p.expo) || p.name)}" loading="lazy">`).join('');
+  const gallery = imagesOf(p).map((src) => zoomImg(src, t(p.expo) || p.name)).join('');
   const texto = t(p.text), bio = t(p.bio), fecha = rangoExpo(p.date);
   return `<article class="expo">
     <a class="expo__close" href="${esc(back)}" aria-label="${esc(ui('close'))}">

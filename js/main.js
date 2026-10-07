@@ -9,7 +9,7 @@ import { CONFIG_URL, SITE, setSite, setLang, storedLang } from './state.js';
 import { $, esc, ui } from './utils.js';
 import { loadJSON } from './data.js';
 import { buildMenu, openMenu, closeMenu, isMenuOpen, openLangModal, closeLangModal, isLangModalOpen } from './menu.js';
-import { closeModal } from './modal.js';
+import { closeModal, openLightbox } from './modal.js';
 import { renderRoute } from './router.js';
 
 async function init() {
@@ -54,6 +54,12 @@ async function init() {
     if (!$('#modal').hidden) closeModal();
     else if (isLangModalOpen()) closeLangModal();
     else if (isMenuOpen()) closeMenu();
+  });
+
+  // Cualquier imagen ampliable (utils.zoomImg) abre el lightbox.
+  document.addEventListener('click', (e) => {
+    const z = e.target.closest('[data-zoom]');
+    if (z) openLightbox(z.dataset.zoom, z.querySelector('img')?.alt);
   });
 
   window.addEventListener('hashchange', renderRoute);

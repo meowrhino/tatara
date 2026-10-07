@@ -69,6 +69,13 @@ export const captureFocus = () => {
   return () => { if (prev && typeof prev.focus === 'function') prev.focus(); };
 };
 
+// Imagen ampliable: un <button> (se puede abrir también con teclado) con la
+// ruta en data-zoom. No lleva listener propio: main.js escucha los clics en
+// cualquier [data-zoom] y abre el lightbox. Lo usan agenda, recerca y expos.
+export const zoomImg = (src, alt = '') =>
+  `<button class="zoom" type="button" data-zoom="${esc(src)}" aria-label="${esc(alt ? `${ui('enlargeImage')}: ${alt}` : ui('enlargeImage'))}">` +
+  `<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy"></button>`;
+
 /* ---------- texto ---------- */
 export const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
