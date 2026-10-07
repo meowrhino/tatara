@@ -26,6 +26,7 @@ l'allotjament de [Pangea](https://pangea.org).
 | [TRASPASO.md](TRASPASO.md) | totes dues parts | Qui té què, les claus, qui es queda el repositori i la llista del traspàs |
 | [DESARROLLO.md](DESARROLLO.md) | qui toqui el codi | Estructura, disseny, com publicar a Pangea, l'API i les proves |
 | [FUTURO.md](FUTURO.md) | — | Idees plantejades i no pressupostades |
+| [CORREO_CRIS_2026-10-06.md](CORREO_CRIS_2026-10-06.md) | — | El feedback del redisseny (octubre de 2026), punt per punt, i els dubtes oberts |
 
 ## En dues línies
 
