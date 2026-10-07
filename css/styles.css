@@ -408,6 +408,15 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
     pointer-events: none;          /* que no tape el contenido que pasa por debajo */
   }
   .bar > * { pointer-events: auto; }
+  /* Modo diferencia: TAT ARA (y el resto de las barras) se ve negro sobre
+     blanco, y al pasar por encima de una foto o del texto invierte lo que tiene
+     debajo. Mezcla la barra entera porque es ella (fixed) la que crea el
+     contexto de apilamiento: un hijo solo se mezclaría con la barra vacía. Para
+     que la diferencia dé negro sobre blanco, la tinta de la barra es blanca, y
+     el carrito (un png negro) se invierte. Solo en escritorio: en móvil las
+     barras son opacas y no pasa nada por debajo. */
+  .bar { mix-blend-mode: difference; color: var(--bg); }
+  .bar__cart-icon { filter: invert(1); }
   .bar--top { align-items: start; padding-top: var(--gutter); }
   .bar--bottom { align-items: end; padding-bottom: var(--gutter); }
 
