@@ -1,19 +1,14 @@
 /* ============================================================
    TAT ARA — minimal, monospace, mobile-first
-   Negro sobre blanco. Color solo en los bloques de la agenda.
+   Blanco y negro: el color solo llega con las fotos. Un solo cuerpo de
+   letra, sin negritas; los títulos van en mayúscula y lo que se quiere
+   resaltar se subraya.
    ============================================================ */
 
 @font-face {
   font-family: "Superstudio Trial";
   src: url("../fonts/SuperstudioTrialTT-Regular.ttf") format("truetype");
   font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-@font-face {
-  font-family: "Superstudio Trial";
-  src: url("../fonts/SuperstudioTrialTT-Bold.ttf") format("truetype");
-  font-weight: 700;
   font-style: normal;
   font-display: block;
 }
@@ -24,8 +19,15 @@
   --font-display: "Superstudio Trial", "JetBrains Mono", ui-monospace, monospace;
 
   /* Los COLORES no viven aquí: están todos en data/data.json → "theme"
-     (--bg, --ink, --ink-soft, --doodle, --grey-soft, --media-bg, --overlay-ink)
-     y los inyecta js/main.js al arrancar. Los de la agenda, en "palette". */
+     (--bg, --ink, --overlay-ink…) y los inyecta js/main.js al arrancar. */
+
+  /* Tipografía: UN solo cuerpo (--fs) y UN solo interlineado (--lh) para toda
+     la web. La única excepción es la lista de exposiciones (--lh-list), que
+     tiene poco texto. En escritorio el cuerpo crece con la columna central
+     para que quepan unos 72 caracteres por línea, como en la maqueta. */
+  --fs: 12px;
+  --lh: 1.4;
+  --lh-list: 1.7;
 
   --bar-h: 52px;
   --gutter: 16px;  /* margen exterior; en escritorio, 40px */
@@ -41,10 +43,13 @@ html, body {
   background: var(--bg, #ffffff);   /* el fallback solo se ve el instante */
   color: var(--ink, #111111);      /* previo a que cargue data.json */
   font-family: var(--font-mono);
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: var(--fs);
+  line-height: var(--lh);
+  text-underline-offset: 0.2em;
   -webkit-font-smoothing: antialiased;
 }
+/* Ni negritas ni tamaños propios en los títulos: todo hereda el cuerpo. */
+h1, h2, h3, b, strong { font: inherit; }
 body.no-scroll { overflow: hidden; }
 
 a { color: inherit; text-decoration: none; }
@@ -60,7 +65,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 #view.view--fade { opacity: 0; }
 /* El gris de exposicions/recerca vive en su columna (.people), no a sangre. */
 
-.loading { text-align: center; color: var(--ink-soft); padding: 3rem 1rem; letter-spacing: 0.1em; }
+.loading { padding: 3rem 0; }
 
 /* ============================================================
    AGENDA
@@ -97,10 +102,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 .seg__desc {
   padding: 0.6rem 1rem 0;
-  font-size: 0.8rem;
   line-height: 1.5;
-  text-align: justify;
-  hyphens: auto;
+  text-align: left;
 }
 
 .seg__label {
@@ -109,19 +112,14 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   justify-content: space-between;
   gap: 1rem;
   padding: 0.7rem 1rem 0;
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
 }
 .seg__label .seg__who { min-width: 0; } /* sin truncar: el título puede ocupar varias líneas */
-.seg__label .seg__who b { font-weight: 700; }
 .seg__label .seg__when { flex: 0 0 auto; opacity: 0.92; }
 
 /* Tipo de la entrada (exposició, retrospectiva, exposició i festival…), encima
    del título. Discreto: es contexto, no titular. */
 .seg__kind {
   padding: 0.7rem 1rem 0;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.7;
 }
@@ -140,9 +138,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__status {
   flex: 0 0 auto;
   margin-left: auto;   /* siempre a la derecha, aunque no haya fecha de cierre */
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .seg__status--now { opacity: 1; }
@@ -182,8 +177,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   width: 100%;
   text-align: left;
   cursor: default;
-  font-size: 0.76rem;
-  letter-spacing: 0.01em;
   line-height: 1.45;
   opacity: 0.92;
 }
@@ -192,20 +185,16 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    unidad, y partirla a media hora se lee fatal. */
 .seg__child-when { white-space: nowrap; margin-right: 0.6rem; }
 .seg__child-name { min-width: 0; }
-.seg__child-name b { font-weight: 700; }
 
 .seg__child-desc {
   padding: 0.4rem 0 0;
-  font-size: 0.74rem;
   line-height: 1.5;
-  text-align: justify;
-  hyphens: auto;
+  text-align: left;
   opacity: 0.92;
 }
 
 .seg__end {
-  flex: 0 1 auto;
-  font-size: 0.8rem; opacity: 0.92;
+  flex: 0 1 auto; opacity: 0.92;
 }
 
 /* Lightbox: clic en una imagen de la agenda la abre a pantalla completa.
@@ -251,25 +240,20 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 .prose { margin: 0; }
-.prose p { text-align: justify; hyphens: auto; margin: 0 0 1rem; }
-.prose__heading { text-align: center; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.02em; margin: 2rem 0 0.8rem; }
+.prose p { text-align: left; margin: 0 0 1rem; }
+.prose__heading { margin: 2rem 0 0.8rem; }
 .prose > .prose__heading:first-child { margin-top: 0; }
 
 /* Enlaces internos dentro del texto (sintaxis [etiqueta](seccio) en los JSON).
-   Se distinguen por color, no por subrayado: el texto corrido va en --ink-mid
-   y los enlaces en --ink (el negro pleno). Al pasar por encima sí aparece la
-   línea, como confirmación de que es clicable. */
-.prose { color: var(--ink-mid); }
-.link-inline { color: var(--ink); text-decoration: none; }
-.link-inline:hover, .link-inline:focus-visible { text-decoration: underline; text-underline-offset: 0.18em; }
+   Todo es negro, así que el enlace se distingue por el subrayado. */
+.link-inline { text-decoration: underline; }
 
 /* Logos de colaboradores al final de nosaltres. */
-.prose .prose__img { margin: 0.4rem 0 1rem; text-align: center; }
+.prose .prose__img { margin: 0.4rem 0 1rem; }
 .prose__img img { width: 190px; max-width: 60%; height: auto; }
 
-/* "Amb: nom, nom, nom." — la lista de personas de recerca. Centrada, para que
-   no se lea como un párrafo más. */
-.prose__people { text-align: center; margin: 1.4rem 0 0; }
+/* "Amb: nom, nom, nom." — la lista de personas de recerca. */
+.prose__people { margin: 1.4rem 0 0; }
 
 /* Galería de una página de texto (recerca): fotos apiladas, ancho de columna,
    ampliables al hacer clic como las de la agenda. */
@@ -283,10 +267,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .people { list-style: none; margin: 0 auto; padding: 1.6rem 1rem; background: var(--grey-soft); }
 .person { margin: 0 0 0.9rem; }
 .person-spacer { height: 2.4rem; }
-.person__name { font-weight: 700; font-size: 1rem; letter-spacing: 0.02em; }
-.person__role { margin-left: 0.5rem; color: var(--ink-soft); font-weight: 400; font-size: 0.85rem; }
+.person__role { margin-left: 0.5rem; font-weight: 400; }
 .person__open { display: inline-flex; align-items: baseline; gap: 0.5rem; text-align: left; padding: 0; }
-.person--clickable .person__open::after { content: "+"; color: var(--ink-soft); font-weight: 400; }
+.person--clickable .person__open::after { content: "+"; font-weight: 400; }
 .person--clickable:hover .person__name { text-decoration: underline; }
 .person--clickable:hover .person__open::after { color: var(--ink); }
 .m-pdf { margin: 0.8rem 0 0; }
@@ -308,58 +291,61 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 /* Orden de la ficha: títol — preu / autor / +info (editorial, traducció…). */
 .product__info { display: flex; flex-direction: column; line-height: 1.35; margin-top: 0.6rem; }
 .product__row { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
-.product__title { font-weight: 700; min-width: 0; }
+.product__title { min-width: 0; }
 .product__price { flex: 0 0 auto; }
-.product__author { font-size: 0.85rem; }
-.product__editorial { font-size: 0.78rem; color: var(--ink-soft); }
 @media (min-width: 560px) { .shop { grid-template-columns: 1fr 1fr; } }
 
 /* Contacte: texto de intro arriba, axonometría del local en medio, dirección
    + los 3 links (IG · Newsletter · Medium) abajo. */
-.contact { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; flex: 1; gap: 2rem; }
-/* Centrado y SIN hyphens: al partir palabras, todas las líneas llegaban al
-   mismo ancho y el párrafo se leía como justificado. */
-.contact__intro { position: relative; z-index: 1; margin: 0; text-align: center; hyphens: manual; text-wrap: pretty; }
-/* Axonometria de fons: absoluta i centrada, DARRERE del text (no ocupa scroll). */
-.contact__axo { position: absolute; inset: 0; margin: auto; max-width: 16rem; max-height: 40svh; width: auto; height: auto; z-index: 0; pointer-events: none; }
+.contact { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; flex: 1; gap: 2rem; }
+.contact__intro { position: relative; z-index: 1; margin: 0; }
+/* Axonometria de fons: absoluta, a l'esquerra com tot, DARRERE del text (no ocupa scroll). */
+.contact__axo { position: absolute; inset: 0 auto 0 0; margin: auto 0; max-width: 16rem; max-height: 40svh; width: auto; height: auto; z-index: 0; pointer-events: none; }
 .contact__info { position: relative; z-index: 1; margin: 0; width: 100%; }
 .contact__addr { margin: 0 0 0.4rem; }
 .contact__email { margin: 0 0 1.4rem; }
 .contact__email a:hover { text-decoration: underline; }
-.contact__links { margin: 0; display: flex; gap: 1.6rem; justify-content: center; }
+.contact__links { margin: 0; display: flex; gap: 1.6rem; }
 .contact__links a:hover { text-decoration: underline; }
 
 /* Newsletter (secció pròpia): intro + alta al butlletí */
-.newsletter { text-align: center; margin: auto 0; display: flex; flex-direction: column; align-items: center; gap: 1.4rem; }
+.newsletter { display: flex; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
 .newsletter__intro { max-width: 30rem; margin: 0; }
-.newsletter__form { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
-.newsletter__input { font: inherit; border: 1px solid var(--ink); background: none; padding: 0.45rem 0.7rem; min-width: 13rem; text-align: center; }
-.newsletter__btn { border: 1px solid var(--ink); padding: 0.45rem 1rem; letter-spacing: 0.04em; }
+.newsletter__form { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.newsletter__input { font: inherit; border: 1px solid var(--ink); background: none; padding: 0.45rem 0.7rem; min-width: 13rem; }
+.newsletter__btn { border: 1px solid var(--ink); padding: 0.45rem 1rem; }
 .newsletter__btn:not(:disabled):hover { background: var(--ink); color: var(--bg); }
 .newsletter__btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.newsletter__feedback { min-height: 1.2em; margin: 0; color: var(--ink-soft); letter-spacing: 0.04em; }
+.newsletter__feedback { min-height: 1.2em; margin: 0; }
 
 /* Carret */
-.cart { text-align: center; margin: auto 0; color: var(--ink-soft); letter-spacing: 0.06em; }
-.cart--full { text-align: left; color: var(--ink); width: 100%; }
+.cart--full { width: 100%; }
 .cart-items { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.2rem; }
 .cart-item { display: grid; grid-template-columns: 3rem 1fr 4rem auto; gap: 0.7rem; align-items: center; }
 .cart-item__img { width: 3rem; height: 3rem; object-fit: cover; }
-.cart-item__title { font-weight: 700; }
 .cart-item__qty { width: 3.4rem; border: 1px solid var(--ink); background: none; padding: 0.25rem 0.3rem; text-align: center; font: inherit; }
 .cart-item__price { justify-self: end; white-space: nowrap; }
 .cart-item__remove { margin-left: 0.4rem; opacity: 0.6; }
 .cart-item__remove:hover { opacity: 1; }
-.cart__total { display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--ink); padding-top: 0.8rem; margin-bottom: 1.2rem; }
+.cart__total { display: flex; justify-content: space-between; border-top: 1px solid var(--ink); padding-top: 0.8rem; margin-bottom: 1.2rem; }
 .cart__zone { display: block; margin-bottom: 0.3rem; }
 .cart__zone select { font: inherit; border: 1px solid var(--ink); background: none; padding: 0.25rem 0.4rem; margin-left: 0.5rem; }
-.cart__zone-note { font-size: 0.82rem; color: var(--ink-soft); margin: 0 0 1rem; }
+.cart__zone-note { margin: 0 0 1rem; }
 .cart__pay { margin-top: 0.4rem; }
-.cart__feedback { color: var(--ink-soft); min-height: 1.2em; margin: 0.7rem 0 0; }
+.cart__feedback { min-height: 1.2em; margin: 0.7rem 0 0; }
 .cart__back { margin-top: 1.6rem; }
 .cart__back a:hover, .cart--thanks a:hover { text-decoration: underline; }
-.cart--thanks { color: var(--ink); }
-.cart__thanks-title { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.cart__thanks-title { margin: 0 0 1rem; }
+
+/* ============================================================
+   TÍTULOS EN MAYÚSCULA · LO ACTIVO, SUBRAYADO
+   ============================================================ */
+.bar__menu, .bar__section, .bar__lang, .bar__langs button,
+.menu__title, .menu__list a, .menu__langs button, .langmodal__list button,
+.prose__heading, .m-title, .cart__thanks-title, .cart-item__title { text-transform: uppercase; }
+
+.menu__list a.is-active, .bar__langs button.is-active,
+.menu__langs button.is-active, .langmodal__list button.is-active { text-decoration: underline; }
 
 /* ============================================================
    BARRAS FIJAS  —  marco de marca: TAT arriba · ARA abajo
@@ -376,7 +362,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   align-items: center;
   padding: 0 1rem;
   background: var(--bg);
-  letter-spacing: 0.04em;
 }
 .bar--top { top: 0; }
 .bar--bottom { bottom: 0; }
@@ -390,10 +375,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   display: inline-flex;
   gap: 0.55em;                 /* el aire entre TAT y ARA cuando van juntos (móvil) */
   font-family: var(--font-display);
-  font-weight: 700;
-  text-transform: uppercase;
+  font-size: var(--brand);
   letter-spacing: 0.14em;
-  font-size: 1.15rem;
+  text-transform: uppercase;
 }
 .bar__word { display: inline-flex; }
 
@@ -404,21 +388,18 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 /* Carrito: única acción del extremo derecho del header. */
 .bar__cart { grid-column: 3; justify-self: end; display: inline-flex; align-items: center; gap: 0.15rem; color: var(--ink); }
 .bar__cart-icon { height: 34px; width: auto; display: block; }
-.bar__cart-count { font-size: 0.75rem; font-weight: 700; }
 
 /* Footer: sección actual (izq, discreta, abre el menú) e idioma activo (der,
    un botón que abre el modal de idioma). */
-.bar__section { grid-column: 1; justify-self: start; color: var(--ink-soft); font-size: 0.85rem; letter-spacing: 0.04em; }
-.bar__section:hover { color: var(--ink); text-decoration: underline; }
+.bar__section { grid-column: 1; justify-self: start; }
+.bar__section:hover { text-decoration: underline; }
 /* Móvil: solo el idioma activo (botón → modal). Escritorio: cat es en inline. */
 /* Columna fija: si el ARA del centro se oculta (móvil) el idioma NO debe
    deslizarse a la columna central. */
 .bar__langbox { grid-column: 3; justify-self: end; }
-.bar__lang { font-size: 0.85rem; letter-spacing: 0.04em; }
 .bar__lang:hover { text-decoration: underline; }
 .bar__langs { display: none; gap: 0.7rem; }
-.bar__langs button { font-size: 0.85rem; letter-spacing: 0.04em; color: var(--ink-soft); }
-.bar__langs button.is-active { color: var(--ink); font-weight: 700; }
+
 @media (min-width: 560px) {
   .bar__langbox .bar__lang { display: none; }
   .bar__langbox .bar__langs { display: flex; }
@@ -428,9 +409,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    centrada (TAT / ARA). */
 @media (max-width: 430px) {
   .bar { padding: 0 0.8rem; }
-  .bar__section { font-size: 0.78rem; }
-  .bar__lang { font-size: 0.78rem; }
-  .bar__brand { font-size: 1.05rem; letter-spacing: 0.1em; gap: 0.45em; }
+  .bar__brand { gap: 0.45em; }
 }
 
 /* ============================================================
@@ -457,19 +436,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 .menu__head { display: flex; align-items: flex-start; justify-content: space-between; }
-.menu__title { letter-spacing: 0.04em; }
 .menu__close { line-height: 0; padding: 0.2rem; margin: -0.2rem; transition: opacity 0.15s ease; }
 .menu__close:hover { opacity: 0.55; }
 
 .menu__list { list-style: none; margin: 2.2rem 0 0; padding: 0; }
 .menu__list li { margin: 0.55rem 0; }
-.menu__list a { font-size: 1.15rem; letter-spacing: 0.02em; }
-.menu__list a.is-active { font-weight: 700; }
+.menu__list a:hover { text-decoration: underline; }
 
-/* Selector d'idioma dins del menú: baix-esquerra, actiu en negreta */
+/* Selector d'idioma dins del menú: baix-esquerra */
 .menu__langs { margin-top: auto; display: flex; gap: 1.4rem; }
-.menu__langs button { font-size: 1rem; letter-spacing: 0.04em; color: var(--ink-soft); }
-.menu__langs button.is-active { color: var(--ink); font-weight: 700; }
 
 /* ============================================================
    MODAL (eventos / productos)
@@ -487,17 +462,14 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .modal__close { position: absolute; top: 0.5rem; right: 0.6rem; line-height: 0; }
 .modal__body img { width: 100%; height: auto; margin-bottom: 1rem; }
-.modal__body .m-when { font-size: 0.82rem; color: var(--ink-soft); letter-spacing: 0.04em; margin: 0; }
-.modal__body .m-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 6vw, 2rem); letter-spacing: 0.05em; text-transform: uppercase; margin: 0.4rem 0 0.2rem; line-height: 1.1; }
-.modal__body .m-person { font-weight: 700; margin: 0 0 1rem; }
-/* Justificado y partiendo palabras: en monoespaciada los huecos entre palabras
-   solo se cierran si el navegador puede partir. hyphenate-limit-chars evita los
-   cortes de dos letras, que son los que se leen mal. */
-.modal__body .m-desc { line-height: 1.6; text-align: justify; hyphens: auto; hyphenate-limit-chars: 6 3 3; }
+.modal__body .m-when { margin: 0; }
+.modal__body .m-title { margin: 0.4rem 0 0.2rem; }
+.modal__body .m-person { margin: 0 0 1rem; }
+.modal__body .m-desc { margin: 0 0 1rem; }
 .modal__body .m-bio { margin-top: 1.4rem; }
-.modal__body .m-link { margin: 1.2rem 0 0; font-weight: 700; }
-.modal__body .m-price { font-weight: 700; margin: 1rem 0 0.6rem; }
-.m-buy { border: 1px solid var(--ink); padding: 0.6rem 1rem; width: 100%; letter-spacing: 0.04em; background: none; }
+.modal__body .m-link { margin: 1.2rem 0 0; }
+.modal__body .m-price { margin: 1rem 0 0.6rem; }
+.m-buy { border: 1px solid var(--ink); padding: 0.6rem 1rem; width: 100%; background: none; }
 .m-buy:not(:disabled):hover { background: var(--ink); color: var(--bg); }
 .m-buy:disabled { opacity: 0.45; cursor: not-allowed; }
 
@@ -509,8 +481,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .langmodal__backdrop { position: absolute; inset: 0; background: var(--backdrop); }
 .langmodal__dialog { position: relative; z-index: 1; background: var(--bg); border: 1px solid var(--ink); padding: 1.6rem 2.4rem; }
 .langmodal__list { display: flex; flex-direction: column; gap: 0.9rem; }
-.langmodal__list button { font-size: 1.15rem; letter-spacing: 0.04em; text-align: center; }
-.langmodal__list button.is-active { font-weight: 700; }
+.langmodal__list button { text-align: center; }
+
 .langmodal__list button:hover { text-decoration: underline; }
 
 /* ============================================================
@@ -525,6 +497,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 @media (min-width: 720px) {
   :root {
     --gutter: 40px;
+    /* columna central = (100vw - 80px) / 2; 72 caracteres de 0,6em → /86,4 */
+    --fs: clamp(12px, 1.16vw - 1px, 16px);
     --brand: 3.3rem;
     --bar-h: calc(var(--gutter) + var(--brand) + 2.4rem);
   }
@@ -547,8 +521,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .bar__brand {
     grid-column: 2 / 4;
     justify-self: stretch;
-    font-size: var(--brand);
-    font-weight: 400;
     letter-spacing: 0;
     line-height: 1;
   }

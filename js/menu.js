@@ -33,7 +33,7 @@ export function closeMenu() {
   if (restoreMenuFocus) { restoreMenuFocus(); restoreMenuFocus = null; }
 }
 
-const langLabel = (l) => (l === 'ca' ? 'cat' : l);
+const langLabel = (l) => ({ ca: 'cat', es: 'cast', en: 'eng' }[l] || l);
 
 export function buildMenu() {
   const list = $('#menu-list');

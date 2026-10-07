@@ -46,7 +46,7 @@ export function openLightbox(src, alt) {
   const btn = el('button', 'lightbox__close');
   btn.type = 'button';
   btn.setAttribute('aria-label', ui('close'));
-  btn.innerHTML = '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><path d="M7 9 Q19 19 33 31 M33 8 Q20 20 8 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  btn.innerHTML = '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><path d="M6 6 L34 34 M34 6 L6 34" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>';
   btn.addEventListener('click', close);
 
   const img = el('img', 'lightbox__img');
