@@ -55,6 +55,12 @@ body.no-scroll { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 
+/* Lo clicable se subraya al pasar por encima (nunca negrita ni color). */
+a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
+.bar__menu:hover, .bar__section:hover, .bar__lang:hover,
+.bar__langs button:hover, .menu__langs button:hover, .langmodal__list button:hover,
+.product:hover .product__title { text-decoration: underline; }
+
 #view {
   min-height: 100dvh;
   padding-inline: var(--gutter);
@@ -64,7 +70,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   transition: opacity var(--fade) ease;
 }
 #view.view--fade { opacity: 0; }
-/* El gris de exposicions/recerca vive en su columna (.people), no a sangre. */
 
 .loading { padding: 3rem 0; }
 
@@ -88,7 +93,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .seg__label, .seg__foot { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 .seg__title { min-width: 0; }   /* sin truncar: el título puede ocupar varias líneas */
 .seg__when, .seg__kind { flex: 0 0 auto; margin-left: auto; }   /* a la derecha aunque falte lo de la izquierda */
-.seg__title, .seg__artist, .seg__kind, .seg__end, .seg__child-name { text-transform: uppercase; }
 
 .seg__desc, .seg__child-desc { margin: 0; }
 
@@ -140,7 +144,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .lightbox__close svg { width: 34px; height: 34px; display: block; }
 
 /* ============================================================
-   PÁGINAS DE CONTENIDO (nosaltres, artistes, diari, botiga, contacte, carret)
+   PÁGINAS DE CONTENIDO (todo lo que no es la agenda)
    ============================================================ */
 .page {
   min-height: calc(100dvh - 2 * var(--bar-h));
@@ -148,8 +152,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   flex-direction: column;
 }
 
-.prose { margin: 0; }
-.prose p { text-align: left; margin: 0 0 1rem; }
+.prose p { margin: 0 0 1rem; }
 .prose__heading { margin: 2rem 0 0.8rem; }
 .prose > .prose__heading:first-child { margin-top: 0; }
 
@@ -168,31 +171,25 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .prose__gallery { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.4rem 0 0; }
 
 /* Exposicions: "ARTISTA, Nom de l'expo", una por línea, sin marco ni fondo.
-   Es la única lista con interlineado propio (--lh-list): tiene poco texto.
-   Lo clicable se subraya al pasar por encima. */
+   Es la única lista con interlineado propio (--lh-list): tiene poco texto. */
 .people { list-style: none; margin: 0; padding: 0; line-height: var(--lh-list); }
 .person-spacer { height: 2.4rem; }
-.person__name { text-transform: uppercase; }
-.person a:hover, .person a:focus-visible { text-decoration: underline; }
 
 /* Ficha de una exposición, dentro de la columna. */
 .expo p { margin: 0 0 1rem; }
 .expo .zoom { margin: 0 0 1rem; }
-.expo a:hover { text-decoration: underline; }
 .expo__close { display: block; width: max(var(--brand), 2.4rem); margin: 0 0 1rem auto; line-height: 0; }
 .expo__close svg { width: 100%; height: auto; }
 .expo__title { margin: 0 0 1rem; text-decoration: underline; }
 
-/* Botiga: dos fichas por fila. La foto, entera y a su proporción, sin caja
-   detrás (cada foto ya trae su fondo de estudio). */
-.shop { width: 100%; display: grid; grid-template-columns: 1fr; gap: 2.4rem; align-items: start; }
+/* Botiga: hasta dos fichas por fila, y una sola cuando la columna es tan
+   estrecha que el título quedaría en una tira de pocas letras. La foto, entera
+   y a su proporción, sin caja detrás (cada foto ya trae su fondo de estudio). */
+.shop { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(max(14rem, 40%), 1fr)); gap: 2.4rem; align-items: start; }
 .product { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; padding: 0; text-align: left; }
 .product__img { display: block; width: 100%; height: auto; }
 .product__info { display: grid; grid-template-columns: 1fr auto; gap: 1rem; }
 .product__text { display: flex; flex-direction: column; min-width: 0; }
-.product__title { text-transform: uppercase; }
-.product:hover .product__title { text-decoration: underline; }
-@media (min-width: 560px) { .shop { grid-template-columns: 1fr 1fr; } }
 
 /* Contacte: texto de intro arriba, axonometría del local en medio, dirección
    + los 3 links (IG · Newsletter · Medium) abajo. */
@@ -203,9 +200,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .contact__info { position: relative; z-index: 1; margin: 0; width: 100%; }
 .contact__addr { margin: 0 0 0.4rem; }
 .contact__email { margin: 0 0 1.4rem; }
-.contact__email a:hover { text-decoration: underline; }
 .contact__links { margin: 0; display: flex; gap: 1.6rem; }
-.contact__links a:hover { text-decoration: underline; }
 
 /* Newsletter (secció pròpia): intro + alta al butlletí */
 .newsletter { display: flex; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
@@ -224,8 +219,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .cart-item__img { width: 3rem; height: 3rem; object-fit: cover; }
 .cart-item__qty { width: 3.4rem; border: 1px solid var(--ink); background: none; padding: 0.25rem 0.3rem; text-align: center; font: inherit; }
 .cart-item__price { justify-self: end; white-space: nowrap; }
-.cart-item__remove { margin-left: 0.4rem; opacity: 0.6; }
-.cart-item__remove:hover { opacity: 1; }
+.cart-item__remove { margin-left: 0.4rem; }
 .cart__total { display: flex; justify-content: space-between; border-top: 1px solid var(--ink); padding-top: 0.8rem; margin-bottom: 1.2rem; }
 .cart__zone { display: block; margin-bottom: 0.3rem; }
 .cart__zone select { font: inherit; border: 1px solid var(--ink); background: none; padding: 0.25rem 0.4rem; margin-left: 0.5rem; }
@@ -233,7 +227,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .cart__pay { margin-top: 0.4rem; }
 .cart__feedback { min-height: 1.2em; margin: 0.7rem 0 0; }
 .cart__back { margin-top: 1.6rem; }
-.cart__back a:hover, .cart--thanks a:hover { text-decoration: underline; }
 .cart__thanks-title { margin: 0 0 1rem; }
 
 /* ============================================================
@@ -241,7 +234,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
    ============================================================ */
 .bar__menu, .bar__section, .bar__lang, .bar__langs button,
 .menu__title, .menu__list a, .menu__langs button, .langmodal__list button,
-.prose__heading, .m-title, .cart__thanks-title, .cart-item__title { text-transform: uppercase; }
+.prose__heading, .m-title, .cart__thanks-title, .cart-item__title,
+.seg__title, .seg__artist, .seg__kind, .seg__end, .seg__child-name,
+.person__name, .product__title { text-transform: uppercase; }
 
 .menu__list a.is-active, .bar__langs button.is-active,
 .menu__langs button.is-active, .langmodal__list button.is-active { text-decoration: underline; }
@@ -266,7 +261,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .bar--bottom { bottom: 0; }
 
 .bar__menu { grid-column: 1; justify-self: start; }
-.bar__menu:hover { text-decoration: underline; }
 
 .bar__brand {
   grid-column: 2;
@@ -285,18 +279,16 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .bar__brand--foot { display: none; }
 
 /* Carrito: única acción del extremo derecho del header. */
-.bar__cart { grid-column: 3; justify-self: end; display: inline-flex; align-items: center; gap: 0.15rem; color: var(--ink); }
+.bar__cart { grid-column: 3; justify-self: end; display: inline-flex; align-items: center; gap: 0.15rem; }
 .bar__cart-icon { height: 34px; width: auto; display: block; }
 
 /* Footer: sección actual (izq, discreta, abre el menú) e idioma activo (der,
    un botón que abre el modal de idioma). */
 .bar__section { grid-column: 1; justify-self: start; }
-.bar__section:hover { text-decoration: underline; }
 /* Móvil: solo el idioma activo (botón → modal). Escritorio: cat es en inline. */
 /* Columna fija: si el ARA del centro se oculta (móvil) el idioma NO debe
    deslizarse a la columna central. */
 .bar__langbox { grid-column: 3; justify-self: end; }
-.bar__lang:hover { text-decoration: underline; }
 .bar__langs { display: none; gap: 0.7rem; }
 
 @media (min-width: 560px) {
@@ -335,18 +327,16 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 .menu__head { display: flex; align-items: flex-start; justify-content: space-between; }
-.menu__close { line-height: 0; padding: 0.2rem; margin: -0.2rem; transition: opacity 0.15s ease; }
-.menu__close:hover { opacity: 0.55; }
+.menu__close { line-height: 0; padding: 0.2rem; margin: -0.2rem; }
 
 .menu__list { list-style: none; margin: 2.2rem 0 0; padding: 0; }
 .menu__list li { margin: 0.55rem 0; }
-.menu__list a:hover { text-decoration: underline; }
 
 /* Selector d'idioma dins del menú: baix-esquerra */
 .menu__langs { margin-top: auto; display: flex; gap: 1.4rem; }
 
 /* ============================================================
-   MODAL (eventos / productos)
+   MODAL (ficha de producto)
    ============================================================ */
 .modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; }
 .modal[hidden] { display: none; }
@@ -365,8 +355,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .modal__body .m-title { margin: 0.4rem 0 0.2rem; }
 .modal__body .m-person { margin: 0 0 1rem; }
 .modal__body .m-desc { margin: 0 0 1rem; }
-.modal__body .m-bio { margin-top: 1.4rem; }
-.modal__body .m-link { margin: 1.2rem 0 0; }
 .modal__body .m-price { margin: 1rem 0 0.6rem; }
 .m-buy { border: 1px solid var(--ink); padding: 0.6rem 1rem; width: 100%; background: none; }
 .m-buy:not(:disabled):hover { background: var(--ink); color: var(--bg); }
@@ -381,8 +369,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .langmodal__dialog { position: relative; z-index: 1; background: var(--bg); border: 1px solid var(--ink); padding: 1.6rem 2.4rem; }
 .langmodal__list { display: flex; flex-direction: column; gap: 0.9rem; }
 .langmodal__list button { text-align: center; }
-
-.langmodal__list button:hover { text-decoration: underline; }
 
 /* ============================================================
    DESKTOP
