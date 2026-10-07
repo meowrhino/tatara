@@ -135,7 +135,6 @@ dins del fitxer és igual**: la web ordena per `start`.
   "kind": { "ca": "Exposició", "es": "Exposición", "en": "Exhibition" },
   "title": { "ca": "Títol", "es": "Título", "en": "Title" },
   "artist": "Nom de l'artista",
-  "image": "assets/img/agenda/24-cartell.webp",
   "start": "2027-03-01",
   "end": "2027-04-15",
   "description": { "ca": "…", "es": "…", "en": "…" }
@@ -144,6 +143,8 @@ dins del fitxer és igual**: la web ordena per `start`.
 
 - `slug` — un nom curt i únic, sense accents ni espais. No es veu enlloc.
 - `kind` — el tipus (exposició, conversa, taller…). Surt a baix a la dreta.
+- `image` — opcional, una sola. Una foto de l'obra, **mai el cartell**: el cartell
+  repeteix el que ja diu el text. Va a `assets/img/agenda/`.
 - `start` / `end` — sempre `AAAA-MM-DD`. Sense `end`, és d'un sol dia.
 - `time` — opcional, `"18:30"`.
 
@@ -224,7 +225,7 @@ Van totes a `assets/img/` i han de ser `.webp`. Per convertir una carpeta
 sencera:
 
 ```bash
-npm run webp "carpeta amb les fotos" assets/img/agenda
+npm run webp "carpeta amb les fotos" assets/img/expos
 ```
 
 Redimensiona el costat gran a 1600 px, gira les fotos de mòbil que venen
@@ -366,7 +367,7 @@ api/                  Backend EN ÚS: /api/* en PHP (newsletter, stock, Stripe)
   lib/                  db (PDO) · catàleg · Stripe per REST · HTTP
 admin/                Panell intern: stock i comandes
 data/*.json           TOT el contingut. Cada fitxer es diu com la seva secció
-assets/img/           Imatges .webp: agenda/ · expos/ · recerca/ · edicions/ · mr/
+assets/img/           Imatges .webp: expos/ · recerca/ · edicions/ · mr/ (i agenda/, si mai cal)
 assets/pdf/           Fulls de sala de les exposicions
 tools/                check-data.mjs · to-webp.sh · serve.py
 ```

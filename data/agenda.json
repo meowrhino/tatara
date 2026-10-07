@@ -1,5 +1,5 @@
 {
-  "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (UNA sola), start, end, time, description {ca,es,en} y eventos[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). Los anos son los de esa tabla: la temporada va de septiembre de 2025 a enero de 2027. Las filas del final que solo traen el mes ('dec', 'gener') son diciembre de 2026 y enero de 2027. Las imagenes llevan el numero de la carpeta 'FOTOS AGENDA' delante para poder cruzarlas de un vistazo.",
+  "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (UNA sola, opcional: una foto de la obra, NUNCA el cartel, que repite lo que ya dice el texto), start, end, time, description {ca,es,en} y eventos[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). Los anos son los de esa tabla: la temporada va de septiembre de 2025 a enero de 2027. Las filas del final que solo traen el mes ('dec', 'gener') son diciembre de 2026 y enero de 2027.",
   "events": [
     {
       "slug": "pateres-de-llet",
@@ -14,7 +14,6 @@
         "en": "Pàteres de llet"
       },
       "artist": "Anna Dot",
-      "image": "assets/img/agenda/01-pateres-de-llet.webp",
       "start": "2025-09-21",
       "end": "2025-10-10",
       "description": {
@@ -36,7 +35,6 @@
         "en": "Ensayo de lo Espontáneo"
       },
       "artist": "Tasio Ranz i Santiago Daza Santana",
-      "image": "assets/img/agenda/02-ensayo-espontaneo.webp",
       "start": "2025-10-17",
       "end": "2025-11-30",
       "description": {
@@ -58,7 +56,6 @@
             "en": "Reading of Ecologías Enraizadas"
           },
           "artist": "Vinik Juré · Amistat Radical",
-          "image": "assets/img/agenda/03-vinik-jure.webp",
           "start": "2025-10-25",
           "description": {
             "ca": "Lectura del primer número de la sèrie Ecologías Enraizadas, format per dos assaigs: “El origen del Dia de los Muertos” i la “Historia crítica de la taxonomía del maguey”. En aquest volum, comparteix pràctiques ancestrals transmeses de persona a persona dins la comunitat, i on el bé comú és intrínsec al benestar individual i no a l’inrevés.",
@@ -79,7 +76,6 @@
             "en": "Tanatolab"
           },
           "artist": "DU-DA, en conversa amb Raquel Buj",
-          "image": "assets/img/agenda/04-tanatolab-duda.webp",
           "start": "2025-11-10",
           "description": {
             "ca": "Trobada i activació de l’espai al voltant de la mort, l’ecofeminisme, les metodologies corporals, intuïtives i poètiques. Explorant la regeneració d’ecosistemes i els biomaterials.",
@@ -100,7 +96,6 @@
             "en": "Materia Actante"
           },
           "artist": "Trazo Continuo i Tornen les Esquelles",
-          "image": "assets/img/agenda/05-materia-actante.webp",
           "start": "2025-11-14",
           "description": {
             "ca": "Convesa per per compartir processos ancestrals de creació tèxtil amb el col·lectiu xilè i el català.",
@@ -121,7 +116,6 @@
             "en": "Deep listening with MansO"
           },
           "artist": "Col·lectiu Pimienta",
-          "image": "assets/img/agenda/06-pimienta.webp",
           "start": "2025-11-15",
           "description": {
             "ca": "Sessió d’escolta atenta amb MansO amb el soundsistem fet i dissenyat per Pimienta",
@@ -144,7 +138,6 @@
         "en": "Reverberating the body"
       },
       "artist": "Ale Carrero",
-      "image": "assets/img/agenda/07-reverberar-el-cos.webp",
       "start": "2025-12-10",
       "description": {
         "ca": "Sessió grupal per equilibrar el cos a través de ressonància sonora. Explorant l’ecologia dels tres cossos.",
@@ -165,7 +158,6 @@
         "en": "Holding the Earth"
       },
       "artist": "Maria Roy Deulofeu",
-      "image": "assets/img/agenda/08-sostenir-la-terra.webp",
       "start": "2025-12-13",
       "end": "2026-01-28",
       "description": {
@@ -187,7 +179,6 @@
             "en": "Gathering and preparing ceramics (1/3)"
           },
           "artist": "Maria Roy Deulofeu",
-          "image": "assets/img/agenda/09-sostenir-la-terra-taller.webp",
           "start": "2025-12-17",
           "description": {
             "ca": "Recol·lecta i preparació de ceràmica amb argiles del barri de Gràcia, residuals d’una obra.",
@@ -238,7 +229,6 @@
             "en": "Conversation"
           },
           "artist": "Inés Sistiaga i Sol Prado",
-          "image": "assets/img/agenda/10-ines-sistiaga-sol-prado.webp",
           "start": "2026-01-25",
           "time": "12:00",
           "description": {
@@ -260,7 +250,6 @@
             "en": "Territory, aesthetics and material agency"
           },
           "artist": "Maria Roy Deulofeu i Mati Cini",
-          "image": "assets/img/agenda/11-maria-roy-mati-cini.webp",
           "start": "2026-01-28",
           "time": "18:30",
           "description": {
@@ -284,7 +273,6 @@
         "en": "IF Publications retrospective"
       },
       "artist": "Ariadna Serrahima",
-      "image": "assets/img/agenda/13-ariadna-serrahima.webp",
       "start": "2026-02-09",
       "end": "2026-02-28",
       "description": {
@@ -305,7 +293,6 @@
             "es": "Tornen les Esquelles",
             "en": "Tornen les Esquelles"
           },
-          "image": "assets/img/agenda/12-tornen-les-esquelles.webp",
           "start": "2026-02-10",
           "description": {
             "ca": "Introducció a l’activisme ecològic des de l’art. Contextualització en els sistemes trencats del procés de l’ús de la llana local, i pràctica manual de fer feltre amb llana local.",
@@ -328,7 +315,6 @@
         "en": "Presence in impermanence"
       },
       "artist": "Solange Dalannais",
-      "image": "assets/img/agenda/14-presencia-impermanencia.webp",
       "start": "2026-04-18",
       "end": "2026-05-30",
       "description": {
@@ -350,7 +336,6 @@
             "en": "Workshop for local research"
           },
           "artist": "Solange Dalannais",
-          "image": "assets/img/agenda/15-taller-recerca-local.webp",
           "start": "2026-05-23",
           "description": {
             "ca": "Aprendre amb el cos, un taller de sis hores de recol·lecta local d’elements botànics, manipulació per a tintes, pigments i procés de tenyit.",
@@ -373,7 +358,6 @@
         "en": "No Limits"
       },
       "artist": "Joana Mallol, Olatz Azcona i Sara G. de Ubieta",
-      "image": "assets/img/agenda/16-no-limits.webp",
       "start": "2026-06-04",
       "end": "2026-06-20",
       "description": {
@@ -395,7 +379,6 @@
         "en": "Knock on Wood"
       },
       "artist": "Emma Prats",
-      "image": "assets/img/agenda/17-tocar-fusta.webp",
       "start": "2026-06-24",
       "end": "2026-09-03",
       "description": {
@@ -417,7 +400,6 @@
             "en": "A&E1"
           },
           "artist": "Emma Prats",
-          "image": "assets/img/agenda/18-tocar-fusta-projeccio.webp",
           "start": "2026-08-29",
           "description": {
             "ca": "Projecció del vídeo de la investigació de Tocar Fusta d’Emma Prats",
@@ -438,7 +420,6 @@
             "en": "Knock on Wood closing"
           },
           "artist": "Emma Prats",
-          "image": "assets/img/agenda/19-tocar-fusta-clausura.webp",
           "start": "2026-09-03",
           "description": {
             "ca": "Lectures de referents vinculats a la recerca de l’exposició amb l’artista",
@@ -461,7 +442,6 @@
         "en": "Catàleg de Fulles"
       },
       "artist": "Arnau Sala Saez",
-      "image": "assets/img/agenda/20-arnau-sala-saez.webp",
       "start": "2026-09-05",
       "end": "2026-09-30",
       "description": {
@@ -483,7 +463,6 @@
             "en": "Session 1 and 2"
           },
           "artist": "Arnau Sala Saez",
-          "image": "assets/img/agenda/21-arnau-sala-saez-s12.webp",
           "start": "2026-09-05",
           "end": "2026-09-06",
           "time": "10:00 – 13:00",
@@ -506,7 +485,6 @@
             "en": "Session 3 and 4"
           },
           "artist": "Arnau Sala Saez",
-          "image": "assets/img/agenda/22-arnau-sala-saez-s34.webp",
           "start": "2026-09-12",
           "end": "2026-09-13",
           "time": "10:00 – 13:00",
@@ -531,7 +509,6 @@
         "en": "Inventory"
       },
       "artist": "Guus Vandeweerd",
-      "image": "assets/img/agenda/23-guus-vandeweerd.webp",
       "start": "2026-10-08",
       "end": "2026-10-31",
       "description": {
