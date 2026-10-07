@@ -47,6 +47,7 @@ html, body {
   line-height: var(--lh);
   text-underline-offset: 0.2em;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;   /* sin el "estirón" blanco al pasarse de arriba o de abajo */
 }
 /* Ni negritas ni tamaños propios en los títulos: todo hereda el cuerpo. */
 h1, h2, h3, b, strong { font: inherit; }
