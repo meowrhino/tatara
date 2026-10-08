@@ -327,7 +327,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 /* Carrito: única acción del extremo derecho del header. */
 .bar__cart { grid-column: 3; justify-self: end; display: inline-flex; align-items: center; gap: 0.15rem; }
-.bar__cart-icon { height: 34px; width: auto; display: block; }
+.bar__cart-icon { height: 42px; width: auto; display: block; }
 
 /* Footer: sección actual (izq, discreta, abre el menú) e idioma activo (der,
    un botón que abre el modal de idioma). */
