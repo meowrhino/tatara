@@ -2,7 +2,7 @@
    TAT ARA — bienvenida
    Al abrir la web, TAT y ARA se colocan en su barra a medida que carga la
    primera vista: en escritorio nacen juntos en el centro y se separan; en
-   móvil, TAT sale abajo, encima de ARA, y sube. Cuando llegan, aparece el
+   móvil, TAT ARA sale abajo y sube entero. Cuando llegan, aparece el
    resto. El recorrido lo pone el CSS (--intro: 1 = al empezar, 0 = en su
    sitio); aquí solo se anima ese número.
    La clase .intro la pone un script en línea del <head> (para que no se vea

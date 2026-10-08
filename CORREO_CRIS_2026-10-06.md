@@ -20,7 +20,7 @@ El diseño anterior quedó guardado en la etiqueta `v0-disseny-color` y en
 | **1)** Interlineado 11/9 (y 13 en la lista de expos) | 1,4 y 1,7, lo que mide el PDF, en vez de 1,22 y 1,44 | ⚠️ Duda 1 |
 | **1)** Cuerpo 9 (el de la agenda) | 12px en móvil; en escritorio crece con la columna (13–20px) para mantener los ~72 caracteres por línea del PDF | ⚠️ Duda 2 |
 | **1)** Todo a la izquierda, sin partir palabras | Hecho, imágenes incluidas | ✅ Salvo contacte, newsletter y carret vacío, centrados a petición de Manu |
-| **2)** TAT ARA más grande | ~3,3 veces el texto en escritorio, 1,8 en móvil, en Bold (lo pidió Cris el 8 oct). Desde el 8 oct, también en móvil TAT arriba y ARA abajo | ✅ |
+| **2)** TAT ARA más grande | ~3,3 veces el texto en escritorio, 1,8 en móvil, en Bold (lo pidió Cris el 8 oct) | ✅ |
 | **3)** Blanco y negro, hilo negro, mismo grosor | Fuera colores, grises y opacidades; hilo de 1px entre eventos; cruces de 1px | ✅ |
 | **4)** Sin carteles en la agenda | Quitados los 23 | ✅ La agenda queda sin imágenes hasta que haya fotos de obra |
 | **5)** Expos sin marco, artista + expo, subrayado en vez de +, cruz más grande | Hecho; la ficha se abre en la columna y el botón de atrás funciona | ✅ |

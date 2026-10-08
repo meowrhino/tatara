@@ -282,7 +282,8 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 .bar__menu { grid-column: 1; justify-self: start; }
 
-/* TAT en el header y ARA en el footer, en la columna del centro. */
+/* Móvil: TAT ARA entero en el header y el centro del footer vacío.
+   Escritorio: TAT en el header y ARA en el footer (ver DESKTOP). */
 .bar__brand {
   grid-column: 2;
   justify-self: center;
@@ -295,10 +296,13 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
   text-transform: uppercase;
 }
 
-/* Bienvenida (móvil): TAT ARA sale abajo, con TAT justo encima de ARA, y TAT
-   sube hasta su barra a medida que carga, como una barra de progreso. Hasta que
+.bar__ara { margin-left: 0.55em; }                 /* el aire entre TAT y ARA */
+.bar--bottom .bar__brand { display: none; }
+
+/* Bienvenida (móvil): TAT ARA sale abajo, donde iría el footer, y sube entero
+   hasta su barra a medida que carga, como una barra de progreso. Hasta que
    llega no se ve nada más. En escritorio salen del centro (ver DESKTOP). */
-.bar--top .bar__brand { transform: translateY(calc(var(--intro) * (var(--screen-h) - 2 * var(--brand-c) - 1em))); }
+.bar--top .bar__brand { transform: translateY(calc(var(--intro) * (var(--screen-h) - 2 * var(--brand-c)))); }
 .intro #view, .intro .menu, .intro .bar > :not(.bar__brand) { opacity: 0; }
 .bar > :not(.bar__brand) { transition: opacity var(--fade) ease; }
 
@@ -451,6 +455,8 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
     justify-content: space-between;
     letter-spacing: 0;
   }
+  .bar__ara { display: none; }                      /* el ARA de arriba solo es de móvil */
+  .bar--bottom .bar__brand { display: flex; }
   /* Bienvenida: TAT con el pie y ARA con la cabeza en el centro de la pantalla,
      y se separan hasta su barra. */
   .bar--top .bar__brand { transform: translateY(calc(var(--intro) * (var(--screen-h) / 2 - var(--brand-c) - 0.5em))); }
