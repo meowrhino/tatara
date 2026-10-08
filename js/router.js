@@ -1,12 +1,15 @@
 /* ============================================================
    TAT ARA — router
-   Navegación por hash (#agenda, #botiga…). Resuelve la sección activa a
-   partir de SITE.sections, carga su JSON y delega en el renderizador que
-   toca, con un fundido entre vistas.
+   Cada sección tiene su dirección (/, /nosaltres/, /exposicions/anna-dot/…).
+   Resuelve la sección activa a partir de la URL y SITE.sections, carga su
+   JSON y delega en el renderizador que toca, con un fundido entre vistas.
+   Los enlaces internos no recargan la página (main.js usa pushState). Cada
+   dirección existe además como HTML ya pintado, que genera tools/prerender.mjs
+   al publicar, para los buscadores y las vistas previas al compartir.
    ============================================================ */
 
 import { $, esc, t, ui } from './utils.js';
-import { SITE } from './state.js';
+import { SITE, pathOf } from './state.js';
 import { loadJSON } from './data.js';
 import { closeModal } from './modal.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
@@ -14,18 +17,31 @@ import { renderText, renderPeople, renderContact, renderNewsletter } from './sec
 import { renderShop, renderCart } from './botiga.js';
 import { setIntroProgress } from './intro.js';
 
-// Id de sección del hash actual; cae a la primera sección si no es válido.
-// El hash admite parámetros (#carret?gracies=1&session_id=…, la vuelta de Stripe):
-// para resolver la sección solo cuenta lo anterior al '?'.
+// "/exposicions/anna-dot/" → ['exposicions', 'anna-dot']
+const segments = () => location.pathname.split('/').filter(Boolean);
+
+// Id de la sección actual; cae a la primera sección si no es válido.
 function currentId() {
-  const id = location.hash.replace(/^#/, '').split('?')[0];
+  const id = segments()[0];
   return SITE.sections.some((s) => s.id === id) ? id : SITE.sections[0].id;
 }
 
-// Parámetros del hash (la parte tras '?'), p. ej. la vuelta de Stripe.
-export function hashQuery() {
-  const q = location.hash.split('?')[1] || '';
-  return new URLSearchParams(q);
+// Lo que va tras la sección: la ficha abierta (/exposicions/anna-dot/ → 'anna-dot').
+export const subPath = () => segments()[1] || null;
+
+// Parámetros de la URL, p. ej. la vuelta de Stripe (/carret/?gracies=1&session_id=…).
+export const query = () => new URLSearchParams(location.search);
+
+// Las direcciones de antes (#agenda, #exposicions?expo=anna-dot, #carret?gracies=…)
+// siguen funcionando: se reescriben a la de ahora sin recargar.
+export function migrateHash() {
+  const m = location.hash.match(/^#([\w-]+)(?:\?(.*))?$/);
+  if (!m || !SITE.sections.some((s) => s.id === m[1])) return;
+  const params = new URLSearchParams(m[2] || '');
+  const expo = params.get('expo');
+  params.delete('expo');
+  const qs = params.toString();
+  history.replaceState(null, '', pathOf(m[1], expo) + (qs ? `?${qs}` : ''));
 }
 
 // Marca el enlace activo en el menú.

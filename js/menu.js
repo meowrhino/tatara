@@ -7,7 +7,7 @@
    ============================================================ */
 
 import { $, esc, t, captureFocus } from './utils.js';
-import { SITE, LANG, setLang } from './state.js';
+import { SITE, LANG, setLang, pathOf } from './state.js';
 import { renderRoute } from './router.js';
 import { updateCartBadge } from './cart.js';
 
@@ -40,7 +40,7 @@ const langLabel = (l) => ({ ca: 'cat', es: 'cast', en: 'eng' }[l] || l);
 export function buildMenu() {
   const list = $('#menu-list');
   list.innerHTML = SITE.sections.filter((s) => !s.hidden).map((s) =>
-    `<li><a href="#${s.id}" data-id="${s.id}">${esc(t(s.label))}</a></li>`).join('');
+    `<li><a href="${pathOf(s.id)}" data-id="${s.id}">${esc(t(s.label))}</a></li>`).join('');
   list.querySelectorAll('a').forEach((a) =>
     a.addEventListener('click', () => closeMenu()));
   updateCartBadge();

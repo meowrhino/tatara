@@ -32,11 +32,18 @@ jobs:
           fetch-depth: 0      # hace falta la etiqueta 'publicado'
           fetch-tags: true
 
+      # Node 22+ para el pre-render (usa WebSocket). Chrome y php ya vienen en
+      # la imagen de ubuntu de GitHub.
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
       - name: Revisar los JSON
         run: node tools/check-data.mjs
 
       # También comprueba que en el servidor no haya cambios que no estén en
-      # GitHub (alguien que subió un JSON por SFTP). Si los hay, para.
+      # GitHub (alguien que subió un JSON por SFTP). Si los hay, para. Y
+      # pre-renderiza una página por dirección (tools/prerender.mjs).
       - name: Preparar dist/
         run: bash tools/build-pangea.sh
 

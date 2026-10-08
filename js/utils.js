@@ -4,7 +4,7 @@
    Sin estado propio salvo la lectura de LANG (binding vivo de state.js).
    ============================================================ */
 
-import { LANG } from './state.js';
+import { LANG, pathOf } from './state.js';
 
 /* ---------- idioma ---------- */
 const MONTHS = {
@@ -95,7 +95,7 @@ export const t = (f) => f == null ? '' : (typeof f === 'string' ? f : (f[LANG] |
 export const imagesOf = (x) => (x.images && x.images.length ? x.images : [].concat(x.image || []));
 
 // Texto de contenido con enlaces internos en sintaxis markdown-lite:
-//   "les trobareu a la [botiga](botiga)"  →  <a href="#botiga">botiga</a>
+//   "les trobareu a la [botiga](botiga)"  →  <a href="/botiga/">botiga</a>
 // El destino es el 'id' de una sección de data/menu.json (agenda, nosaltres,
 // exposicions, recerca, botiga, contacte, newsletter). Así la clienta solo pone
 // corchetes alrededor de la palabra y el paréntesis con el id: no hay que tocar
@@ -105,6 +105,6 @@ export const imagesOf = (x) => (x.images && x.images.length ? x.images : [].conc
 export const richText = (s, ids = null) => esc(s).replace(
   /\[([^\]\n]+)\]\(([a-z0-9_-]+)\)/gi,
   (_, label, id) => (!ids || ids.includes(id))
-    ? `<a class="link-inline" href="#${id}">${label}</a>`
+    ? `<a class="link-inline" href="${pathOf(id)}">${label}</a>`
     : label
 );

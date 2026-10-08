@@ -10,7 +10,7 @@ import { $, esc, ui } from './utils.js';
 import { loadJSON } from './data.js';
 import { buildMenu, openMenu, closeMenu, isMenuOpen, openLangModal, closeLangModal, isLangModalOpen } from './menu.js';
 import { closeModal, openLightbox } from './modal.js';
-import { renderRoute } from './router.js';
+import { renderRoute, migrateHash } from './router.js';
 import { runIntro } from './intro.js';
 
 async function init() {
@@ -30,9 +30,6 @@ async function init() {
   const lang = langs.includes(remembered) ? remembered : (SITE.defaultLang || 'ca');
   setLang(lang);
   document.documentElement.lang = lang;
-
-  // La marca "TAT" del header lleva a la primera sección (home).
-  $('#brand-home').setAttribute('href', '#' + SITE.sections[0].id);
 
   // Colores: TODOS viven en data.json → theme (fuente única), y se publican
   // como --<clau> (--bg, --ink…). Las claves con '_' (comentarios) se ignoran.
@@ -64,8 +61,22 @@ async function init() {
     if (z) openLightbox(z.dataset.zoom, z.querySelector('img')?.alt);
   });
 
-  window.addEventListener('hashchange', renderRoute);
-  if (!location.hash) location.replace('#' + SITE.sections[0].id);
+  // Enlaces internos sin recargar: se cambia la URL (pushState) y se pinta la
+  // sección. Lo que no es una sección (la API, el panel, un PDF, otra web, o
+  // un clic con Cmd/Ctrl para abrir en otra pestaña) navega como siempre.
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target || a.hasAttribute('download')) return;
+    const url = new URL(a.href);
+    if (url.origin !== location.origin || /^\/(api|admin|assets|data|fonts|css|js)\//.test(url.pathname)) return;
+    e.preventDefault();
+    if (url.href !== location.href) history.pushState(null, '', url.href);
+    renderRoute();
+  });
+  window.addEventListener('popstate', renderRoute);
+
+  migrateHash();
   renderRoute();
 }
 

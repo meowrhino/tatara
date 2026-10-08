@@ -2,14 +2,20 @@
 
 DirectoryIndex index.html
 
-# La web es una SPA con router de hash (#agenda, #botiga…), así que NO hace falta
-# reescribir nada: el navegador siempre pide "/" y el hash lo resuelve el JS.
-
-# Por si alguna vez se sube el repo entero: lo que no es web, no se sirve.
+# Cada sección tiene su dirección (/nosaltres/, /exposicions/anna-dot/…) y al
+# publicar se genera su index.html ya pintado (tools/prerender.mjs). Si una
+# dirección no tiene fichero, se sirve el index.html de la raíz y el JS pinta
+# la sección: así nada da 404 aunque el pre-render no se haya hecho.
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Por si alguna vez se sube el repo entero: lo que no es web, no se sirve.
   RewriteRule ^(src|tools|migrations|node_modules|\.wrangler)/ - [F,L]
   RewriteRule \.(sql|toml|md)$ - [F,L]
+
+  RewriteCond %{REQUEST_URI} !^/(api|admin)/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
 </IfModule>
 
 <FilesMatch "^\.(dev\.vars|env|gitignore|assetsignore)">

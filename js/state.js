@@ -14,6 +14,11 @@ export let LANG = 'ca';   // idioma activo
 
 export function setSite(value) { SITE = value; }
 
+// Dirección de una sección (y de una ficha dentro de ella): la primera sección
+// (la agenda) es la portada "/", el resto "/nosaltres/", "/exposicions/anna-dot/"…
+export const pathOf = (id, sub) =>
+  (id === SITE.sections[0].id && !sub ? '/' : `/${id}/${sub ? `${sub}/` : ''}`);
+
 // Fija el idioma activo y lo recuerda para próximas visitas.
 export function setLang(value) {
   LANG = value;

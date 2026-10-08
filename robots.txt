@@ -3,6 +3,7 @@
 # contrasenya, no cal que surti als cercadors.
 User-agent: *
 Disallow: /admin/
+Disallow: /carret/
 Allow: /
 
 Sitemap: https://tatara.cat/sitemap.xml

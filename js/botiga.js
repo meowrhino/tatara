@@ -7,7 +7,8 @@
 import { esc, t, ui, imagesOf, pageWrap } from './utils.js';
 import { openModal, closeModal } from './modal.js';
 import { loadJSON } from './data.js';
-import { hashQuery } from './router.js';
+import { query } from './router.js';
+import { pathOf } from './state.js';
 import { getCart, addToCart, setQty, removeItem, clearCart } from './cart.js';
 
 /* ---------- helpers de compra ----------
@@ -91,26 +92,26 @@ function openProductModal(p, cur, stockMap) {
 }
 
 export async function renderCart(view) {
-  // Vuelta de Stripe: #carret?gracies=1&session_id=… → confirmar el pago con el
+  // Vuelta de Stripe: /carret/?gracies=1&session_id=… → confirmar el pago con el
   // backend antes de vaciar nada (visitar la URL a pelo no borra el carrito).
-  const params = hashQuery();
+  const params = query();
   if (params.get('gracies') && params.get('session_id')) {
     try {
       const res = await fetch(`/api/session-status?session_id=${encodeURIComponent(params.get('session_id'))}`);
       const d = await res.json();
       if (d.payment_status === 'paid' || d.status === 'complete') {
         clearCart();
-        history.replaceState(null, '', '#carret');
+        history.replaceState(null, '', pathOf('carret'));
         view.innerHTML = pageWrap(`<div class="cart cart--thanks">
           <h2 class="cart__thanks-title">${esc(ui('thanksTitle'))}</h2>
           <p>${esc(ui('thanksBody'))}</p>
           ${d.email ? `<p class="cart__receipt">${esc(ui('receiptTo'))} <strong>${esc(d.email)}</strong></p>` : ''}
-          <p><a href="#botiga">← ${esc(ui('keepShopping'))}</a></p>
+          <p><a href="${pathOf('botiga')}">← ${esc(ui('keepShopping'))}</a></p>
         </div>`);
         return;
       }
     } catch { /* API caída: seguimos al carrito normal sin vaciar */ }
-    history.replaceState(null, '', '#carret');
+    history.replaceState(null, '', pathOf('carret'));
   }
 
   const [data, envios] = await Promise.all([
@@ -126,7 +127,7 @@ export async function renderCart(view) {
 
   if (!items.length) {
     view.innerHTML = pageWrap(`<div class="cart"><p class="cart__empty">${esc(ui('cartEmpty'))}</p>
-      <p class="cart__back"><a href="#botiga">← ${esc(ui('keepShopping'))}</a></p></div>`);
+      <p class="cart__back"><a href="${pathOf('botiga')}">← ${esc(ui('keepShopping'))}</a></p></div>`);
     return;
   }
 
@@ -159,7 +160,7 @@ export async function renderCart(view) {
     ${envioHTML}
     <button class="m-buy cart__pay" type="button" data-pay>${esc(ui('checkout'))}</button>
     <p class="cart__feedback" data-feedback></p>
-    <p class="cart__back"><a href="#botiga">← ${esc(ui('keepShopping'))}</a></p>
+    <p class="cart__back"><a href="${pathOf('botiga')}">← ${esc(ui('keepShopping'))}</a></p>
   </div>`);
 
   view.querySelectorAll('.cart-item').forEach((row) => {

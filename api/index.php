@@ -186,9 +186,9 @@ function crear_sesion(): void
         // La sesión caduca en 30 min (mínimo de Stripe): acorta la ventana de
         // sobreventa, porque el stock se descuenta en el webhook, al pagar.
         'expires_at' => time() + 30 * 60,
-        // La vuelta aterriza en #carret: el router entiende los ?params del hash.
-        'success_url' => $frontend . '/#carret?gracies=1&session_id={CHECKOUT_SESSION_ID}',
-        'cancel_url' => $frontend . '/#carret',
+        // La vuelta aterriza en /carret/, que lee los ?params de la URL.
+        'success_url' => $frontend . '/carret/?gracies=1&session_id={CHECKOUT_SESSION_ID}',
+        'cancel_url' => $frontend . '/carret/',
         // Metadata mínima (Stripe limita a 500 chars por valor): solo id+cantidad.
         // El webhook re-enriquece título y precio desde botiga.json.
         'metadata' => [

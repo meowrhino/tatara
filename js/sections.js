@@ -7,8 +7,8 @@
 
 import { esc, t, ui, imagesOf, richText, zoomImg, pageWrap, X_ICON } from './utils.js';
 import { parseDate, dMes, sameDay } from './dates.js';
-import { SITE } from './state.js';
-import { hashQuery } from './router.js';
+import { SITE, pathOf } from './state.js';
+import { subPath } from './router.js';
 
 /* ---------- nosaltres (y cualquier página de texto) ----------
    Cada bloque de 'body' admite:
@@ -24,7 +24,7 @@ export function renderText(view, data) {
     const title = t(b.heading);
     const heading = title
       ? `<h2 class="prose__heading">${b.link && ids.includes(b.link)
-          ? `<a class="link-inline" href="#${esc(b.link)}">${esc(title)}</a>`
+          ? `<a class="link-inline" href="${pathOf(b.link)}">${esc(title)}</a>`
           : esc(title)}</h2>`
       : '';
     const text = t(b.text);
@@ -59,7 +59,7 @@ function rangoExpo(d) {
   return sameDay(s, e) ? dMes(s) : `${dMes(s)} – ${dMes(e)}`;
 }
 
-// Identificador de la ficha en la URL (#exposicions?expo=anna-dot), sacado del
+// Identificador de la ficha en la URL (/exposicions/anna-dot/), sacado del
 // nombre: así el JSON no necesita un campo más y el botón de atrás funciona.
 const slugOf = (p) => p.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -71,15 +71,20 @@ const expoLine = (p) => `<span class="person__name">${esc(p.name)}</span>` +
 
 export function renderPeople(view, data) {
   const people = data.people || [];
-  const slug = hashQuery().get('expo');
+  const id = view.dataset.section;
+  const slug = subPath();
   const open = slug && people.find((p) => p && !p.spacer && slugOf(p) === slug);
-  if (open) { view.innerHTML = pageWrap(expoDetail(open, '#' + view.dataset.section)); return; }
+  if (open) {
+    view.innerHTML = pageWrap(expoDetail(open, pathOf(id)));
+    document.title = `${[open.name, t(open.expo)].filter(Boolean).join(', ')} — ${SITE.site.name}`;
+    return;
+  }
 
   const items = people.map((p) => {
     // Separación entre grupos: un item { "spacer": true } en el JSON deja aire.
     if (p && p.spacer) return `<li class="person-spacer" aria-hidden="true"></li>`;
     return personHasDetail(p)
-      ? `<li class="person"><a href="#${esc(view.dataset.section)}?expo=${slugOf(p)}">${expoLine(p)}</a></li>`
+      ? `<li class="person"><a href="${pathOf(id, slugOf(p))}">${expoLine(p)}</a></li>`
       : `<li class="person">${expoLine(p)}</li>`;
   }).join('');
   view.innerHTML = pageWrap(`<ul class="people">${items}</ul>`);
@@ -117,11 +122,12 @@ export function renderContact(view) {
   const addr = (c.address || []).map(esc).join('<br>');
   // La línea de enlaces del pie sale de data.json → contact.links, para que
   // añadir uno (o poner por fin la URL del Instagram) no obligue a tocar código.
-  // Un enlace interno ("#newsletter") se queda en la pestaña; uno externo la abre
-  // aparte; y sin url se pinta igual pero inerte.
+  // Un enlace interno ("#newsletter": el id de una sección) se queda en la
+  // pestaña; uno externo la abre aparte; y sin url se pinta igual pero inerte.
   const link = ({ label, url }) => {
-    const interno = typeof url === 'string' && url.startsWith('#');
-    return `<a href="${esc(url || '#')}"${url && !interno ? ' target="_blank" rel="noopener"' : ''}>${esc(t(label))}</a>`;
+    if (!url) return `<a>${esc(t(label))}</a>`;
+    if (url.startsWith('#')) return `<a href="${pathOf(url.slice(1))}">${esc(t(label))}</a>`;
+    return `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(t(label))}</a>`;
   };
   view.innerHTML = pageWrap(`
     <div class="contact">

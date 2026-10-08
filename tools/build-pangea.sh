@@ -95,6 +95,9 @@ if [[ -n "$GUARDADA" ]]; then
   echo "· api/config.php conservado del build anterior"
 fi
 
+# ---- Una página ya pintada por dirección (buscadores y vistas previas) ----
+node tools/prerender.mjs "$DEST"
+
 echo "✓ dist/ listo ($(du -sh "$DEST" | cut -f1))"
 echo
 echo "  1. Subir el CONTENIDO de dist/ a la carpeta pública del SFTP de Pangea."

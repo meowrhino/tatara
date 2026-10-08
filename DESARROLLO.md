@@ -13,7 +13,8 @@ index.html            el esqueleto: barras fijas, #view, menú, modal
 css/styles.css        todos los estilos
 js/                   módulos ES, sin build. Entrada: main.js
   main.js               arranca: config, colores, listeners globales
-  router.js             navegación por hash (#agenda, #exposicions?expo=…) y fundido
+  router.js             una dirección por sección (/, /nosaltres/, /exposicions/anna-dot/) y fundido
+  intro.js              la bienvenida (TAT ARA se coloca mientras carga)
   menu.js               menú (columna fija en escritorio, capa en móvil) e idioma
   agenda.js             la agenda
   sections.js           textos (nosaltres, recerca), exposicions, contacte, newsletter
@@ -30,9 +31,10 @@ api/                  el backend PHP (ver "La API")
   config.php            credenciales. NO está en git: vive solo en el servidor
 tools/
   build-pangea.sh       prepara dist/ con lo que se sube
+  prerender.mjs         una página ya pintada por dirección + sitemap + imágenes para compartir
   check-data.mjs        revisa los JSON (npm run check)
   test-api-php.sh       las pruebas de la API (npm test)
-  php-router.php        servidor local
+  php-router.php        servidor local (imita el .htaccess)
   to-webp.sh            convierte fotos (npm run webp)
 schema-tatara.mysql.sql   las tablas, para MariaDB
 schema-tatara.sql         las mismas, para el SQLite de las pruebas
@@ -97,7 +99,24 @@ cartel), los eventos anidados, y abajo la fecha de cierre y el tipo (`kind`). Al
 abrir, la vista arranca en lo que pasa hoy (`scrollAgendaToToday`).
 
 **Exposicions.** Lista de `ARTISTA, Expo`; cada ficha se abre en la propia
-columna, con su dirección (`#exposicions?expo=anna-dot`, sacada del nombre).
+columna, con su dirección (`/exposicions/anna-dot/`, sacada del nombre).
+
+**Direcciones y buscadores.** Cada sección tiene su dirección: la agenda es `/`,
+el resto `/nosaltres/`, `/botiga/`… y cada exposición `/exposicions/<nombre>/`.
+Los enlaces internos no recargan (`pushState` en `main.js`) y el botón de atrás
+funciona. Las direcciones viejas con `#` (`#botiga`, `#exposicions?expo=…`)
+se reescriben solas. Al publicar, `tools/prerender.mjs` abre cada dirección en
+un Chrome sin ventana con la web de verdad (el mismo JS, sin una segunda
+plantilla) y guarda en `dist/<dirección>/index.html` lo que ha pintado, con su
+título, descripción, canonical y una imagen para compartir de 1200×630
+(`dist/og/*.jpg`: TAT, ARA, el título y la primera foto); escribe también el
+`sitemap.xml`. Las direcciones salen de seguir los enlaces desde la portada:
+una exposición nueva tiene su página sin tocar el script. Si una dirección no
+tiene fichero, el `.htaccess` sirve el `index.html` de la raíz y el JS la pinta.
+Si la clienta cambia un JSON por SFTP, la web lo enseña al momento; las páginas
+pre-renderizadas (lo que ven Google y WhatsApp) se ponen al día en la siguiente
+publicación. En local, `npm run build` usa Chrome, Chromium o Brave
+(`CHROME=ruta` para otro).
 
 **Caché.** Sin trucos (ni `?v=` ni `no-store`): el `.htaccess` de la raíz sirve
 JSON, HTML, CSS y JS con `no-cache, must-revalidate`, y fotos y tipografías con

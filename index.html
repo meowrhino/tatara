@@ -2,6 +2,9 @@
 <html lang="ca">
 <head>
   <meta charset="utf-8">
+  <!-- Las direcciones relativas (css/, js/, data/, assets/) se resuelven desde la
+       raíz también en /nosaltres/ o /exposicions/anna-dot/. -->
+  <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bienvenida (js/intro.js): se marca antes de pintar nada, para que TAT ARA
        ya salga en el centro. Con «reducir movimiento», sin bienvenida. -->
@@ -63,10 +66,10 @@
        Escriptori (≥720px): TAT a dalt i ARA a baix, fent de marc. -->
   <header class="bar bar--top">
     <button class="bar__menu" id="open-menu" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu">menú</button>
-    <a class="bar__brand" id="brand-home" href="#" aria-label="TAT ARA, inici">
+    <a class="bar__brand" id="brand-home" href="/" aria-label="TAT ARA, inici">
       <span>T</span><span>A</span><span>T</span><span class="bar__ara">ARA</span>
     </a>
-    <a class="bar__cart" id="cart-link" href="#carret" aria-label="carret">
+    <a class="bar__cart" id="cart-link" href="/carret/" aria-label="carret">
       <img class="bar__cart-icon" src="assets/icons/carrito.png" alt="" aria-hidden="true">
       <span class="bar__cart-count" id="cart-count" aria-hidden="true"></span>
     </a>
