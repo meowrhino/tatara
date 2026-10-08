@@ -180,9 +180,9 @@
         {
           "slug": "sostenir-la-terra-taller-1",
           "kind": {
-            "ca": "O.R. · taller",
-            "es": "O.R. · taller",
-            "en": "O.R. · workshop"
+            "ca": "O.R. – taller",
+            "es": "O.R. – taller",
+            "en": "O.R. – workshop"
           },
           "title": {
             "ca": "Recol·lecta i preparació de ceràmica (1/3)",
@@ -201,9 +201,9 @@
         {
           "slug": "sostenir-la-terra-taller-2",
           "kind": {
-            "ca": "O.R. · taller",
-            "es": "O.R. · taller",
-            "en": "O.R. · workshop"
+            "ca": "O.R. – taller",
+            "es": "O.R. – taller",
+            "en": "O.R. – workshop"
           },
           "title": {
             "ca": "Recol·lecta i preparació de ceràmica (2/3)",
@@ -216,9 +216,9 @@
         {
           "slug": "sostenir-la-terra-taller-3",
           "kind": {
-            "ca": "O.R. · taller",
-            "es": "O.R. · taller",
-            "en": "O.R. · workshop"
+            "ca": "O.R. – taller",
+            "es": "O.R. – taller",
+            "en": "O.R. – workshop"
           },
           "title": {
             "ca": "Recol·lecta i preparació de ceràmica (3/3)",
@@ -302,9 +302,9 @@
         {
           "slug": "tornen-les-esquelles",
           "kind": {
-            "ca": "O.R. · taller",
-            "es": "O.R. · taller",
-            "en": "O.R. · workshop"
+            "ca": "O.R. – taller",
+            "es": "O.R. – taller",
+            "en": "O.R. – workshop"
           },
           "title": {
             "ca": "Tornen les Esquelles",
@@ -346,9 +346,9 @@
         {
           "slug": "taller-recerca-local",
           "kind": {
-            "ca": "O.R. · taller",
-            "es": "O.R. · taller",
-            "en": "O.R. · workshop"
+            "ca": "O.R. – taller",
+            "es": "O.R. – taller",
+            "en": "O.R. – workshop"
           },
           "title": {
             "ca": "Taller per a la recerca local",
@@ -479,9 +479,9 @@
         {
           "slug": "arnau-sala-saez-s12",
           "kind": {
-            "ca": "O.R. · taller",
-            "es": "O.R. · taller",
-            "en": "O.R. · workshop"
+            "ca": "O.R. – taller",
+            "es": "O.R. – taller",
+            "en": "O.R. – workshop"
           },
           "title": {
             "ca": "Sessió 1 i 2",
@@ -502,9 +502,9 @@
         {
           "slug": "arnau-sala-saez-s34",
           "kind": {
-            "ca": "O.R. · taller",
-            "es": "O.R. · taller",
-            "en": "O.R. · workshop"
+            "ca": "O.R. – taller",
+            "es": "O.R. – taller",
+            "en": "O.R. – workshop"
           },
           "title": {
             "ca": "Sessió 3 i 4",

@@ -11,10 +11,10 @@ export const sameDay = (a, b) => a.getFullYear() === b.getFullYear() && a.getMon
 const dm = (d) => `${d.getDate()}/${d.getMonth() + 1}`;             // 2/7
 export const dMes = (d) => `${d.getDate()} ${monthName(d.getMonth())}`;    // 2 juliol / 2 julio / 2 July
 
-// Rango "d/m – d/m" (o un solo día "d/m · hora" si start == end).
+// Rango "d/m – d/m" (o un solo día "d/m – hora" si start == end).
 export function rangeSlash(ev) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
-  const hora = ev.time ? ` · ${ev.time}` : '';
+  const hora = ev.time ? ` – ${ev.time}` : '';
   if (sameDay(s, e)) return dm(s) + hora;
   return `${dm(s)} – ${dm(e)}${hora}`;
 }

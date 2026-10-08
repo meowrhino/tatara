@@ -121,7 +121,7 @@ function eventBlock(ev) {
       // "13:00O.R." todo junto.
       info.innerHTML =
         `<span class="seg__child-when">${esc(rangeSlash(c))}</span> ` +
-        `<span class="seg__child-name">${esc(kindOf(c, OR))} · ${esc(t(c.title))}${c.artist ? ' – ' + esc(c.artist) : ''}</span>`;
+        `<span class="seg__child-name">${esc(kindOf(c, OR))} – ${esc(t(c.title))}${c.artist ? ' – ' + esc(c.artist) : ''}</span>`;
       row.appendChild(info);
       if (c.description) row.appendChild(el('div', 'seg__child-desc', esc(t(c.description))));
       [].concat(c.image || []).forEach((src) => row.insertAdjacentHTML('beforeend', zoomImg(src, t(c.title))));
@@ -135,6 +135,9 @@ function eventBlock(ev) {
   const kind = kindOf(ev);
   if (kind) foot.appendChild(el('span', 'seg__kind', esc(kind)));
   if (foot.children.length) block.appendChild(foot);
+
+  // Dentro de un mismo bloque, la 1.ª foto a la izquierda, la 2.ª a la derecha…
+  block.querySelectorAll('.zoom').forEach((z, i) => { if (i % 2) z.classList.add('zoom--right'); });
 
   return block;
 }
