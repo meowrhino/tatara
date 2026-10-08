@@ -131,6 +131,7 @@ export function renderContact(view) {
         ${addr ? `<p class="contact__addr">${addr}</p>` : ''}
         ${c.email ? `<p class="contact__email"><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>` : ''}
         <p class="contact__links">${(c.links || []).map(link).join(' ')}</p>
+        <p class="contact__credit">web: <a href="https://meowrhino.studio" target="_blank" rel="noopener">meowrhino.studio</a></p>
       </div>
     </div>`);
 }

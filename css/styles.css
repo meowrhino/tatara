@@ -239,6 +239,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 .contact__addr { margin: 0 0 0.4rem; }
 .contact__email { margin: 0 0 1.4rem; }
 .contact__links { margin: 0; display: flex; justify-content: center; gap: 1.6rem; }
+.contact__credit { margin: 1.4rem 0 0; font-size: max(0.8em, 10px); }   /* quién hizo la web: más pequeño, debajo */
 
 /* Newsletter (secció pròpia): intro + alta al butlletí */
 .newsletter { gap: 1.4rem; }
