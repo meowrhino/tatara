@@ -18,12 +18,16 @@ function setCart(items) {
   document.dispatchEvent(new CustomEvent('tatara:cart'));
 }
 
+// Los ids se comparan como texto: desde el HTML (data-id) llegan como string,
+// y en el JSON podrían escribirse como número.
+const same = (a, b) => String(a) === String(b);
+
 const cartCount = () =>
   getCart().reduce((n, it) => n + (Number(it.cantidad) || 0), 0);
 
 export function addToCart(id, cantidad = 1) {
   const cart = getCart();
-  const item = cart.find((it) => it.id === id);
+  const item = cart.find((it) => same(it.id, id));
   if (item) item.cantidad = (Number(item.cantidad) || 0) + cantidad;
   else cart.push({ id, cantidad });
   setCart(cart);
@@ -32,10 +36,10 @@ export function addToCart(id, cantidad = 1) {
 /** Fija la cantidad de un ítem; 0 o menos lo elimina. */
 export function setQty(id, n) {
   const cantidad = Math.max(0, Math.floor(Number(n) || 0));
-  setCart(getCart().map((it) => (it.id === id ? { ...it, cantidad } : it)).filter((it) => it.cantidad > 0));
+  setCart(getCart().map((it) => (same(it.id, id) ? { ...it, cantidad } : it)).filter((it) => it.cantidad > 0));
 }
 
-export const removeItem = (id) => setCart(getCart().filter((it) => it.id !== id));
+export const removeItem = (id) => setCart(getCart().filter((it) => !same(it.id, id)));
 export const clearCart = () => setCart([]);
 
 /** Contador del carrito. El principal es el número junto al icono del header;

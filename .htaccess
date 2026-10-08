@@ -29,7 +29,7 @@ DirectoryIndex index.html
   <FilesMatch "\.(json|html|css|js)$">
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
-  <FilesMatch "\.(webp|jpg|jpeg|png|avif|woff2?|pdf)$">
+  <FilesMatch "\.(webp|jpg|jpeg|png|avif|woff2?|ttf|pdf)$">
     Header set Cache-Control "public, max-age=604800"
   </FilesMatch>
 </IfModule>
