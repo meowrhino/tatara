@@ -85,7 +85,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin: 0 0 6rem;
+  margin: 0 0 12rem;
 }
 
 /* Cabecera, pie y fila de cada O.R.: texto a la izquierda, fechas o tipo a la
@@ -101,8 +101,8 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 /* O.R. / esdeveniments anidados dentro de una exposición. */
 /* Entre O.R., y entre la descripción del bloque y el primero: la mitad del
-   hueco entre bloques (3rem = 1rem de gap de .seg + 2rem de margen). */
-.seg__days { display: flex; flex-direction: column; gap: 3rem; margin-top: 2rem; }
+   hueco entre bloques (6rem = 1rem de gap de .seg + 5rem de margen). */
+.seg__days { display: flex; flex-direction: column; gap: 6rem; margin-top: 5rem; }
 .seg__child { display: flex; flex-direction: column; gap: 0.5rem; }
 /* Fecha y nombre en un solo flujo de texto, NO en flex: al partirse el nombre,
    la segunda línea vuelve al margen y no cuelga de la fecha. */

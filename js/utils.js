@@ -24,6 +24,7 @@ const STR = {
   roomSheet:      { ca: 'full de sala (PDF)', es: 'hoja de sala (PDF)', en: 'room sheet (PDF)' },
   websiteLink:    { ca: 'web', es: 'web', en: 'website' },
   noEvents:       { ca: 'sense esdeveniments', es: 'sin eventos', en: 'no events' },
+  and:            { ca: 'i', es: 'y', en: 'and' },
   enlargeImage:   { ca: 'Ampliar imatge', es: 'Ampliar imagen', en: 'Enlarge image' },
   enlargedImage:  { ca: 'Imatge ampliada', es: 'Imagen ampliada', en: 'Enlarged image' },
   close:          { ca: 'Tancar', es: 'Cerrar', en: 'Close' },
