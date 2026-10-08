@@ -50,16 +50,18 @@ export function renderAgenda(view, data) {
 
 // El bloque de "hoy" queda justo debajo de TAT, donde empieza toda sección
 // (el padding-top de #view es la altura de la barra).
-function scrollToToday(view) {
+function scrollToToday(view, behavior) {
   const tgt = view.querySelector('[data-today-target="1"]');
   if (!tgt) return;
   const y = tgt.getBoundingClientRect().top + window.scrollY;
-  window.scrollTo(0, Math.max(0, y - parseFloat(getComputedStyle(view).paddingTop)));
+  window.scrollTo({ top: Math.max(0, y - parseFloat(getComputedStyle(view).paddingTop)), behavior });
 }
 
-// Al cargar imágenes/fuentes cambian las alturas y "hoy" se desplaza; recolocamos
-// el scroll en cada carga hasta que el usuario hace scroll o pasan 2,5 s (así una
-// imagen lazy tardía no le roba el scroll a media navegación).
+// La agenda se abre arriba y, tras un respiro, baja con scroll suave hasta hoy:
+// así se ve que hay cosas antes. Las fotos de antes de hoy cambian las alturas
+// al cargar, así que se piden ya (se verían igual al pasar por encima) y el
+// scroll espera a saber sus medidas (máx. 2 s). Si alguna llega tarde, se
+// recoloca, hasta que el usuario hace scroll o pasan 5 s.
 export function scrollAgendaToToday(view) {
   let autoScroll = true;
   const opts = { passive: true };
@@ -75,10 +77,27 @@ export function scrollAgendaToToday(view) {
   window.addEventListener('wheel', stop, opts);
   window.addEventListener('touchmove', stop, opts);
   window.addEventListener('keydown', onKey);
-  setTimeout(stop, 2500);
 
-  const settle = () => { if (autoScroll) scrollToToday(view); };
-  requestAnimationFrame(settle);
+  const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  let started = false;
+  const settle = () => { if (autoScroll && started) scrollToToday(view, behavior); };
+
+  const tgt = view.querySelector('[data-today-target="1"]');
+  const before = tgt ? [...view.querySelectorAll('img')].filter((img) =>
+    tgt.contains(img) || (tgt.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_PRECEDING)) : [];
+  before.forEach((img) => { img.loading = 'eager'; });
+  const sized = () => before.every((img) => img.complete || img.naturalWidth > 0);
+
+  const t0 = performance.now();
+  const go = () => {
+    const ms = performance.now() - t0;
+    if (!autoScroll) return;
+    if (ms < 500 || (ms < 2000 && !sized())) { requestAnimationFrame(go); return; }
+    started = true;
+    setTimeout(stop, 5000);
+    settle();
+  };
+  ((document.fonts && document.fonts.ready) || Promise.resolve()).then(go);
 
   view.querySelectorAll('img').forEach((img) => {
     if (img.complete) return;
@@ -86,8 +105,6 @@ export function scrollAgendaToToday(view) {
     img.addEventListener('load', onDone, { once: true });
     img.addEventListener('error', onDone, { once: true });
   });
-
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(settle);
 }
 
 function eventBlock(ev) {

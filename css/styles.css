@@ -96,7 +96,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 .seg__desc, .seg__child-desc { margin: 0; }
 
-.seg .zoom { width: 60%; }   /* en la agenda, 3/5 de la columna */
+.seg .zoom { width: 60%; margin-block: 2rem; }   /* en la agenda, 3/5 de la columna y con aire */
 .seg .zoom--right { align-self: flex-end; }      /* y alternando: izquierda, derecha, izquierda… */
 
 /* O.R. / esdeveniments anidados dentro de una exposición. */
