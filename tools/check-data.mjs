@@ -92,7 +92,7 @@ function revisaAgenda(menu) {
     revisaTraducible('title', ev.title, dónde);
     revisaTraducible('description', ev.description, dónde, false);
     revisaTraducible('kind', ev.kind, dónde, false);
-    revisaImagen(ev.image, dónde);
+    [].concat(ev.image || []).forEach((src) => revisaImagen(src, dónde));
 
     const malStart = fechaMala(ev.start);
     if (malStart) { err(dónde, `"start" (${ev.start}) ${malStart}`); return; }

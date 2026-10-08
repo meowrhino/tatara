@@ -107,7 +107,7 @@ function eventBlock(ev) {
 
   // Descripción e imagen en flujo natural.
   if (ev.description) block.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
-  if (ev.image) block.insertAdjacentHTML('beforeend', zoomImg(ev.image, t(ev.title)));
+  [].concat(ev.image || []).forEach((src) => block.insertAdjacentHTML('beforeend', zoomImg(src, t(ev.title))));
 
   // O.R. anidados (converses, lectures…): simplemente en flujo, uno tras otro.
   if (children.length) {
@@ -124,7 +124,7 @@ function eventBlock(ev) {
         `<span class="seg__child-name">${esc(kindOf(c, OR))} · ${esc(t(c.title))}${c.artist ? ' – ' + esc(c.artist) : ''}</span>`;
       row.appendChild(info);
       if (c.description) row.appendChild(el('div', 'seg__child-desc', esc(t(c.description))));
-      if (c.image) row.insertAdjacentHTML('beforeend', zoomImg(c.image, t(c.title)));
+      [].concat(c.image || []).forEach((src) => row.insertAdjacentHTML('beforeend', zoomImg(src, t(c.title))));
       daysRegion.appendChild(row);
     });
   }

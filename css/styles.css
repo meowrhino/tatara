@@ -5,10 +5,11 @@
    resaltar se subraya.
    ============================================================ */
 
+/* Solo la usa el logo TAT ARA, en Bold (lineto.com/typefaces/superstudio). */
 @font-face {
   font-family: "Superstudio Trial";
-  src: url("../fonts/SuperstudioTrialTT-Regular.ttf") format("truetype");
-  font-weight: 400;
+  src: url("../fonts/SuperstudioTrialTT-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
   font-display: block;
 }
@@ -281,6 +282,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
   display: inline-flex;
   gap: 0.55em;                 /* el aire entre TAT y ARA cuando van juntos (móvil) */
   font-family: var(--font-display);
+  font-weight: 700;
   font-size: var(--brand);
   letter-spacing: 0.14em;
   text-transform: uppercase;

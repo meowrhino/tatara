@@ -137,7 +137,7 @@ dins del fitxer és igual**: la web ordena per `start`.
 
 - `slug` — un nom curt i únic, sense accents ni espais. No es veu enlloc.
 - `kind` — el tipus (exposició, conversa, taller…). Surt a baix a la dreta.
-- `image` — opcional, una sola. Una foto de l'obra, **mai el cartell**: el cartell
+- `image` — opcional. Una foto de l'obra (o dues, en una llista: `["a.webp", "b.webp"]`), **mai el cartell**: el cartell
   repeteix el que ja diu el text. Va a `assets/img/agenda/`.
 - `start` / `end` — sempre `AAAA-MM-DD`. Sense `end`, és d'un sol dia.
 - `time` — opcional, `"18:30"`.
