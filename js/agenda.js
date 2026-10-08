@@ -14,7 +14,7 @@
    Al abrir, el scroll arranca en lo que pasa hoy (o lo próximo).
    ============================================================ */
 
-import { el, esc, t, ui, zoomImg } from './utils.js';
+import { el, esc, t, ui, zoomImg, imagesOf } from './utils.js';
 import { parseDate, todayDate, sameDay, rangeSlash, dMes } from './dates.js';
 import { introDone, setIntroProgress } from './intro.js';
 
@@ -86,7 +86,7 @@ export function scrollAgendaToToday(view) {
 
   const tgt = view.querySelector('[data-today-target="1"]');
   const before = tgt ? [...view.querySelectorAll('img')].filter((img) =>
-    tgt.contains(img) || (tgt.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_PRECEDING)) : [];
+    tgt.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_PRECEDING) : [];
   before.forEach((img) => { img.loading = 'eager'; });
   const isSized = (img) => img.complete || img.naturalWidth > 0;
   const sized = () => before.every(isSized);
@@ -129,7 +129,7 @@ function eventBlock(ev) {
 
   // Descripción e imagen en flujo natural.
   if (ev.description) block.appendChild(el('div', 'seg__desc', esc(t(ev.description))));
-  [].concat(ev.image || []).forEach((src) => block.insertAdjacentHTML('beforeend', zoomImg(src, t(ev.title))));
+  imagesOf(ev).forEach((src) => block.insertAdjacentHTML('beforeend', zoomImg(src, t(ev.title))));
 
   // O.R. anidados (converses, lectures…): simplemente en flujo, uno tras otro.
   if (children.length) {
@@ -146,7 +146,7 @@ function eventBlock(ev) {
         `<span class="seg__child-name">${esc(kindOf(c, OR))} – ${esc(t(c.title))}${c.artist ? ' – ' + esc(c.artist) : ''}</span>`;
       row.appendChild(info);
       if (c.description) row.appendChild(el('div', 'seg__child-desc', esc(t(c.description))));
-      [].concat(c.image || []).forEach((src) => row.insertAdjacentHTML('beforeend', zoomImg(src, t(c.title))));
+      imagesOf(c).forEach((src) => row.insertAdjacentHTML('beforeend', zoomImg(src, t(c.title))));
       daysRegion.appendChild(row);
     });
   }

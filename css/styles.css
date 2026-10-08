@@ -33,6 +33,7 @@
   --bar-h: 52px;
   --gutter: 16px;  /* margen exterior; en escritorio, 40px */
   --brand: 1.8rem; /* cuerpo de TAT ARA: en móvil 1,8 veces el texto, en escritorio 3,3 */
+  --brand-c: calc(var(--bar-h) / 2);   /* del borde de la pantalla al centro de TAT (o de ARA) */
   --fade: 180ms;   /* duración del fundido entre vistas; la lee también el router (JS) */
   --intro: 0;      /* bienvenida: 1 = TAT ARA en el centro, 0 = en las barras (js/intro.js) */
 }
@@ -279,29 +280,25 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 .bar__menu { grid-column: 1; justify-self: start; }
 
+/* TAT en el header y ARA en el footer, en la columna del centro. */
 .bar__brand {
   grid-column: 2;
   justify-self: center;
-  display: inline-flex;
-  gap: 0.55em;                 /* el aire entre TAT y ARA cuando van juntos (móvil) */
+  display: flex;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: var(--brand);
+  line-height: 1;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.bar__word { display: inline-flex; }
 
-/* Bienvenida: la marca sale del centro de la pantalla hacia su barra y, hasta
-   que llega, no se ve nada más. En móvil, TAT ARA entero sube desde el centro;
-   en escritorio, TAT sube y ARA baja (ver DESKTOP). */
-.bar__brand { transform: translateY(calc(var(--intro) * (50dvh - var(--bar-h) / 2))); }
+/* Bienvenida: TAT con el pie y ARA con la cabeza en el centro de la pantalla;
+   se separan hasta su barra y, hasta que llegan, no se ve nada más. */
+.bar--top .bar__brand { transform: translateY(calc(var(--intro) * (50dvh - var(--brand-c) - 0.5em))); }
+.bar--bottom .bar__brand { transform: translateY(calc(var(--intro) * (var(--brand-c) + 0.5em - 50dvh))); }
 .intro #view, .intro .menu, .intro .bar > :not(.bar__brand) { opacity: 0; }
 .bar > :not(.bar__brand) { transition: opacity var(--fade) ease; }
-
-/* MÓVIL (< 720px): la marca entera "TAT ARA" vive en el header; el centro del
-   footer queda vacío. El "ARA" del footer sigue en el DOM pero no se muestra. */
-.bar__brand--foot { display: none; }
 
 /* Carrito: única acción del extremo derecho del header. */
 .bar__cart { grid-column: 3; justify-self: end; display: inline-flex; align-items: center; gap: 0.15rem; }
@@ -310,9 +307,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 /* Footer: sección actual (izq, discreta, abre el menú) e idioma activo (der,
    un botón que abre el modal de idioma). */
 .bar__section { grid-column: 1; justify-self: start; }
-/* Móvil: solo el idioma activo (botón → modal). Escritorio: cat es en inline. */
-/* Columna fija: si el ARA del centro se oculta (móvil) el idioma NO debe
-   deslizarse a la columna central. */
+/* Móvil: solo el idioma activo (botón → modal). Desde 560px: CAT CAST ENG. */
 .bar__langbox { grid-column: 3; justify-self: end; }
 .bar__langs { display: none; gap: 0.7rem; }
 
@@ -423,13 +418,13 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
     --fs: clamp(12px, 1.16vw - 1px, 20px);
     --brand: 3.3rem;
     --bar-h: calc(var(--gutter) + var(--brand) + 2.4rem);
+    --brand-c: calc(var(--gutter) + var(--brand) / 2);
   }
 
   .agenda__strip, .page > * { width: 50%; max-width: none; margin-inline: auto; }
 
   .bar {
     grid-template-columns: repeat(4, 1fr);
-    padding: 0 var(--gutter);
     background: none;
     pointer-events: none;          /* que no tape el contenido que pasa por debajo */
   }
@@ -448,18 +443,12 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
   .bar__menu { visibility: hidden; }   /* el menú ya está a la vista */
   .bar__section { pointer-events: none; }   /* abajo solo dice dónde estás: ya no abre nada */
-  .bar__brand {
+  .bar__brand {   /* repartidas a lo ancho de las dos columnas centrales */
     grid-column: 2 / 4;
     justify-self: stretch;
+    justify-content: space-between;
     letter-spacing: 0;
-    line-height: 1;
   }
-  .bar__word { width: 100%; display: flex; justify-content: space-between; }
-  .bar__brand .bar__word--mobile { display: none; }   /* el ARA de arriba solo es de móvil */
-  .bar__brand--foot { display: flex; }
-  /* Bienvenida: TAT con el pie y ARA con la cabeza en el centro de la pantalla. */
-  .bar--top .bar__brand { transform: translateY(calc(var(--intro) * (50dvh - var(--gutter) - var(--brand)))); }
-  .bar__brand--foot { transform: translateY(calc(var(--intro) * (var(--gutter) + var(--brand) - 50dvh))); }
   .bar__cart, .bar__langbox { grid-column: 4; }
 
   /* El menú deja de ser una capa: es la columna 1, fija. */

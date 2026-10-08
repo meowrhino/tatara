@@ -20,7 +20,6 @@ export const monthName = (i) => (MONTHS[LANG] || MONTHS.ca)[i];
 // Cadenas de interfaz (todo lo que no viene de los JSON de contenido).
 // Mismo formato {ca, es, en} que resuelve t() con el idioma activo.
 const STR = {
-  today:          { ca: 'avui', es: 'hoy', en: 'today' },
   roomSheet:      { ca: 'full de sala (PDF)', es: 'hoja de sala (PDF)', en: 'room sheet (PDF)' },
   websiteLink:    { ca: 'web', es: 'web', en: 'website' },
   noEvents:       { ca: 'sense esdeveniments', es: 'sin eventos', en: 'no events' },
@@ -91,8 +90,9 @@ export const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => (
 // idioma activo, luego a 'ca', luego al primer valor disponible.
 export const t = (f) => f == null ? '' : (typeof f === 'string' ? f : (f[LANG] || f.ca || Object.values(f)[0] || ''));
 
-// Normaliza el campo de imágenes: prioriza 'images' (array) y cae a 'image'.
-export const imagesOf = (x) => x.images && x.images.length ? x.images : (x.image ? [x.image] : []);
+// Normaliza el campo de imágenes: prioriza 'images' (array) y cae a 'image',
+// que puede ser una ruta o una lista de rutas (la agenda admite las dos).
+export const imagesOf = (x) => (x.images && x.images.length ? x.images : [].concat(x.image || []));
 
 // Texto de contenido con enlaces internos en sintaxis markdown-lite:
 //   "les trobareu a la [botiga](botiga)"  →  <a href="#botiga">botiga</a>
