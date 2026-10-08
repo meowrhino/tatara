@@ -35,8 +35,10 @@
   --brand: 1.8rem; /* cuerpo de TAT ARA: en móvil 1,8 veces el texto, en escritorio 3,3 */
   --brand-c: calc(var(--bar-h) / 2);   /* del borde de la pantalla al centro de TAT (o de ARA) */
   --fade: 180ms;   /* duración del fundido entre vistas; la lee también el router (JS) */
-  --intro: 0;      /* bienvenida: 1 = TAT ARA en el centro, 0 = en las barras (js/intro.js) */
+  --intro: 0;      /* bienvenida: 1 = al empezar, 0 = TAT y ARA en sus barras (js/intro.js) */
+  --screen-h: 100vh;
 }
+@supports (height: 100dvh) { :root { --screen-h: 100dvh; } }   /* iOS < 15.4 no tiene dvh */
 .intro { --intro: 1; }
 
 * { box-sizing: border-box; text-decoration-thickness: 1px; }   /* el subrayado, del mismo grueso que hilos y cruces */
@@ -293,10 +295,10 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
   text-transform: uppercase;
 }
 
-/* Bienvenida: TAT con el pie y ARA con la cabeza en el centro de la pantalla;
-   se separan hasta su barra y, hasta que llegan, no se ve nada más. */
-.bar--top .bar__brand { transform: translateY(calc(var(--intro) * (50dvh - var(--brand-c) - 0.5em))); }
-.bar--bottom .bar__brand { transform: translateY(calc(var(--intro) * (var(--brand-c) + 0.5em - 50dvh))); }
+/* Bienvenida (móvil): TAT ARA sale abajo, con TAT justo encima de ARA, y TAT
+   sube hasta su barra a medida que carga, como una barra de progreso. Hasta que
+   llega no se ve nada más. En escritorio salen del centro (ver DESKTOP). */
+.bar--top .bar__brand { transform: translateY(calc(var(--intro) * (var(--screen-h) - 2 * var(--brand-c) - 1em))); }
 .intro #view, .intro .menu, .intro .bar > :not(.bar__brand) { opacity: 0; }
 .bar > :not(.bar__brand) { transition: opacity var(--fade) ease; }
 
@@ -449,6 +451,10 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
     justify-content: space-between;
     letter-spacing: 0;
   }
+  /* Bienvenida: TAT con el pie y ARA con la cabeza en el centro de la pantalla,
+     y se separan hasta su barra. */
+  .bar--top .bar__brand { transform: translateY(calc(var(--intro) * (var(--screen-h) / 2 - var(--brand-c) - 0.5em))); }
+  .bar--bottom .bar__brand { transform: translateY(calc(var(--intro) * (var(--brand-c) + 0.5em - var(--screen-h) / 2))); }
   .bar__cart, .bar__langbox { grid-column: 4; }
 
   /* El menú deja de ser una capa: es la columna 1, fija. */

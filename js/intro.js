@@ -1,9 +1,10 @@
 /* ============================================================
    TAT ARA — bienvenida
-   Al abrir la web, TAT y ARA nacen juntos en el centro y se separan (TAT sube,
-   ARA baja) a medida que carga la primera vista. Cuando llegan a las barras,
-   aparece el resto. El recorrido lo pone el CSS (--intro: 1 = en el centro,
-   0 = en su sitio); aquí solo se anima ese número.
+   Al abrir la web, TAT y ARA se colocan en su barra a medida que carga la
+   primera vista: en escritorio nacen juntos en el centro y se separan; en
+   móvil, TAT sale abajo, encima de ARA, y sube. Cuando llegan, aparece el
+   resto. El recorrido lo pone el CSS (--intro: 1 = al empezar, 0 = en su
+   sitio); aquí solo se anima ese número.
    La clase .intro la pone un script en línea del <head> (para que no se vea
    la marca en su sitio un instante antes de saltar al centro); sin ella, por
    ejemplo con «reducir movimiento», no hay bienvenida.

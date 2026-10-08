@@ -76,8 +76,9 @@ centro (con TAT arriba y ARA abajo repartidas a su ancho) y carret/idiomas en la
 cuarta; las barras son transparentes, el contenido pasa por debajo del logo y
 este va en modo diferencia (invierte lo que tiene debajo).
 En móvil, una columna, el menú como capa y también TAT arriba y ARA abajo.
-Al abrir la web, TAT y ARA salen juntos del centro y se separan hasta sus
-barras mientras carga la primera vista (`js/intro.js`). Un solo cuerpo de letra (`--fs`) y un
+Al abrir la web, TAT y ARA van a sus barras mientras carga la primera vista
+(`js/intro.js`): en escritorio salen juntos del centro y se separan; en móvil,
+TAT sale abajo, encima de ARA, y sube como una barra de progreso. Un solo cuerpo de letra (`--fs`) y un
 solo interlineado (`--lh`); en escritorio el cuerpo crece con la columna para
 mantener unos 72 caracteres por línea. Sin negritas: los títulos van en
 mayúscula y lo que se quiere resaltar, subrayado. Todo va alineado a la
