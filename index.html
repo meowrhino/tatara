@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bienvenida (js/intro.js): se marca antes de pintar nada, para que TAT ARA
+       ya salga en el centro. Con «reducir movimiento», sin bienvenida. -->
+  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('intro');</script>
   <!-- El sitio es negro-sobre-blanco: opt-out del modo oscuro forzado del navegador -->
   <meta name="color-scheme" content="light">
   <title>TAT ARA — espai galeria d'art, disseny i ecologia a Barcelona</title>

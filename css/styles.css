@@ -34,7 +34,9 @@
   --gutter: 16px;  /* margen exterior; en escritorio, 40px */
   --brand: 1.8rem; /* cuerpo de TAT ARA: en móvil 1,8 veces el texto, en escritorio 3,3 */
   --fade: 180ms;   /* duración del fundido entre vistas; la lee también el router (JS) */
+  --intro: 0;      /* bienvenida: 1 = TAT ARA en el centro, 0 = en las barras (js/intro.js) */
 }
+.intro { --intro: 1; }
 
 * { box-sizing: border-box; text-decoration-thickness: 1px; }   /* el subrayado, del mismo grueso que hilos y cruces */
 
@@ -106,7 +108,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 .seg__child { display: flex; flex-direction: column; gap: 0.5rem; }
 /* Fecha y nombre en un solo flujo de texto, NO en flex: al partirse el nombre,
    la segunda línea vuelve al margen y no cuelga de la fecha. */
-.seg__child-when { white-space: nowrap; margin-right: 0.6rem; }   /* "12/9 – 13/9 – 10:00" no se parte */
+.seg__child-when { white-space: nowrap; margin-right: 0.6rem; }   /* "12/9 – 13/9   10:00" no se parte */
 
 /* Imagen ampliable (utils.zoomImg): agenda, recerca y expos. aspect-ratio con
    'auto' delante: manda la proporción real en cuanto se conoce, y mientras
@@ -290,6 +292,13 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 }
 .bar__word { display: inline-flex; }
 
+/* Bienvenida: la marca sale del centro de la pantalla hacia su barra y, hasta
+   que llega, no se ve nada más. En móvil, TAT ARA entero sube desde el centro;
+   en escritorio, TAT sube y ARA baja (ver DESKTOP). */
+.bar__brand { transform: translateY(calc(var(--intro) * (50dvh - var(--bar-h) / 2))); }
+.intro #view, .intro .menu, .intro .bar > :not(.bar__brand) { opacity: 0; }
+.bar > :not(.bar__brand) { transition: opacity var(--fade) ease; }
+
 /* MÓVIL (< 720px): la marca entera "TAT ARA" vive en el header; el centro del
    footer queda vacío. El "ARA" del footer sigue en el DOM pero no se muestra. */
 .bar__brand--foot { display: none; }
@@ -432,7 +441,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
      que la diferencia dé negro sobre blanco, la tinta de la barra es blanca, y
      el carrito (un png negro) se invierte. Solo en escritorio: en móvil las
      barras son opacas y no pasa nada por debajo. */
-  .bar { mix-blend-mode: difference; color: var(--bg); }
+  .bar { mix-blend-mode: difference; color: var(--bg, #ffffff); }
   .bar__cart-icon { filter: invert(1); }
   .bar--top { align-items: start; padding-top: var(--gutter); }
   .bar--bottom { align-items: end; padding-bottom: var(--gutter); }
@@ -448,6 +457,9 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
   .bar__word { width: 100%; display: flex; justify-content: space-between; }
   .bar__brand .bar__word--mobile { display: none; }   /* el ARA de arriba solo es de móvil */
   .bar__brand--foot { display: flex; }
+  /* Bienvenida: TAT con el pie y ARA con la cabeza en el centro de la pantalla. */
+  .bar--top .bar__brand { transform: translateY(calc(var(--intro) * (50dvh - var(--gutter) - var(--brand)))); }
+  .bar__brand--foot { transform: translateY(calc(var(--intro) * (var(--gutter) + var(--brand) - 50dvh))); }
   .bar__cart, .bar__langbox { grid-column: 4; }
 
   /* El menú deja de ser una capa: es la columna 1, fija. */
@@ -458,7 +470,7 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
     background: none;
     opacity: 1;
     visibility: visible;
-    transition: none;
+    transition: opacity var(--fade) ease;   /* solo para aparecer tras la bienvenida */
     z-index: 40;
   }
   .menu__head, .menu__langs { display: none; }

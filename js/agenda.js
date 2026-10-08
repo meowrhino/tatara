@@ -16,6 +16,7 @@
 
 import { el, esc, t, ui, zoomImg } from './utils.js';
 import { parseDate, todayDate, sameDay, rangeSlash, dMes } from './dates.js';
+import { introDone, setIntroProgress } from './intro.js';
 
 // 'kind' (traducible) es el tipo de cada entrada: exposició, lectura, conversa,
 // O.R.… Viene de la columna "tipus" de la tabla de la clienta. Si una entrada
@@ -61,7 +62,8 @@ function scrollToToday(view, behavior) {
 // así se ve que hay cosas antes. Las fotos de antes de hoy cambian las alturas
 // al cargar, así que se piden ya (se verían igual al pasar por encima) y el
 // scroll espera a saber sus medidas (máx. 2 s). Si alguna llega tarde, se
-// recoloca, hasta que el usuario hace scroll o pasan 5 s.
+// recoloca, hasta que el usuario hace scroll o pasan 5 s. Al abrir la web, esa
+// espera es la bienvenida (intro.js), que avanza a medida que llegan las medidas.
 export function scrollAgendaToToday(view) {
   let autoScroll = true;
   const opts = { passive: true };
@@ -86,9 +88,11 @@ export function scrollAgendaToToday(view) {
   const before = tgt ? [...view.querySelectorAll('img')].filter((img) =>
     tgt.contains(img) || (tgt.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_PRECEDING)) : [];
   before.forEach((img) => { img.loading = 'eager'; });
-  const sized = () => before.every((img) => img.complete || img.naturalWidth > 0);
+  const isSized = (img) => img.complete || img.naturalWidth > 0;
+  const sized = () => before.every(isSized);
+  setIntroProgress(() => (before.length ? before.filter(isSized).length / before.length : 1));
 
-  const t0 = performance.now();
+  let t0;
   const go = () => {
     const ms = performance.now() - t0;
     if (!autoScroll) return;
@@ -97,7 +101,8 @@ export function scrollAgendaToToday(view) {
     setTimeout(stop, 5000);
     settle();
   };
-  ((document.fonts && document.fonts.ready) || Promise.resolve()).then(go);
+  Promise.all([introDone, document.fonts ? document.fonts.ready : null])
+    .then(() => { t0 = performance.now(); go(); });
 
   view.querySelectorAll('img').forEach((img) => {
     if (img.complete) return;

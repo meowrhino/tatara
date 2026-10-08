@@ -11,8 +11,10 @@ import { loadJSON } from './data.js';
 import { buildMenu, openMenu, closeMenu, isMenuOpen, openLangModal, closeLangModal, isLangModalOpen } from './menu.js';
 import { closeModal, openLightbox } from './modal.js';
 import { renderRoute } from './router.js';
+import { runIntro } from './intro.js';
 
 async function init() {
+  runIntro();
   try {
     setSite(await loadJSON(CONFIG_URL));
     // El índice de secciones (menú + router) vive en su propio JSON (JAMSTACK).

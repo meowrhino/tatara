@@ -12,6 +12,7 @@ import { closeModal } from './modal.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
 import { renderText, renderPeople, renderContact, renderNewsletter } from './sections.js';
 import { renderShop, renderCart } from './botiga.js';
+import { setIntroProgress } from './intro.js';
 
 // Id de sección del hash actual; cae a la primera sección si no es válido.
 // El hash admite parámetros (#carret?gracies=1&session_id=…, la vuelta de Stripe):
@@ -79,7 +80,10 @@ export async function renderRoute() {
   window.scrollTo(0, 0);   // el scroll vive en el window; #view no tiene overflow
   syncActive();
 
+  // La bienvenida espera a la primera vista: la agenda dice cuánto le falta;
+  // las demás ya están.
   if (section.type === 'agenda') scrollAgendaToToday(view);
+  else setIntroProgress(() => 1);
 
   if (animate) {
     void view.offsetWidth; // fuerza reflow para que el navegador registre opacity:0 antes de quitar la clase
