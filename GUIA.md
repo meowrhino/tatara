@@ -94,17 +94,16 @@ Al connectar s'obre directament la carpeta de la web. A dins hi ha `data/`
 > de manera permanent**: torna a pujar la còpia del pas 1 i la web torna a
 > estar com estava. Després ja es mira amb calma què havia passat.
 
-## Abans de pujar, si tens el projecte al Mac
+## Abans de pujar: obrir-lo amb Visual Studio Code
 
-```bash
-npm run check
-```
+Amb [Visual Studio Code](https://code.visualstudio.com) (gratuït), un JSON amb
+un error de format surt **subratllat en vermell** just on falla, abans de pujar
+res. TextEdit no avisa de res. Si al marge esquerre no hi ha res en vermell, es
+pot pujar tranquil·lament.
 
-Llegeix tots els JSON i diu què està trencat: una coma que falta, una foto amb el
-nom mal escrit, una data que no existeix, un esdeveniment que cau fora del seu
-rang. Si diu `✓ todo correcto`, es pot pujar tranquil·lament.
-
-**Els errors (`✗`) trenquen alguna cosa. Els avisos (`·`) són per mirar.**
+Quan qui porta el codi publica una versió nova, a més es revisa tot sol (fotos
+que no existeixen, dates impossibles, un esdeveniment fora del seu bloc) i, si
+hi ha un error, no es publica res.
 
 ## Els tres idiomes
 
@@ -161,8 +160,8 @@ del seu `eventos[]`, amb els mateixos camps:
 ]
 ```
 
-Si passa fora de qualsevol exposició, va com a entrada de primer nivell.
-`npm run check` avisa si un esdeveniment queda fora del rang del seu bloc.
+Si passa fora de qualsevol exposició, va com a entrada de primer nivell. La
+data ha de caure dins de les dates de l'exposició.
 
 ## Afegir una exposició a la secció Exposicions
 
@@ -183,6 +182,10 @@ A `data/exposicions.json`. Cada fitxa s'obre en clicar el nom:
 
 `link` i `pdf` són opcionals (`"link": null` si no en té). Per deixar aire entre
 grups, s'hi pot intercalar `{ "spacer": true }`.
+
+Cada fitxa té la seva adreça, que surt del `name`:
+`tatara.cat/exposicions/nom-de-l-artista/`. **Si canvies el `name`, canvia
+l'adreça**, i l'antiga (si algú l'havia compartit) porta a la llista.
 
 ## Afegir un producte a la botiga
 
@@ -216,20 +219,16 @@ unitats surt com a **exhaurit**.
 
 ## Fotos
 
-Van totes a `assets/img/` i han de ser `.webp`. Per convertir una carpeta
-sencera:
+Van totes a `assets/img/` i han de ser `.webp`. Per convertir-les:
+**[imgToWeb](https://meowrhino.github.io/imgToWeb/)**, al navegador, sense
+instal·lar res. S'hi arrosseguen les fotos i les torna en `.webp`, de la mida
+justa i numerades (`1.webp`, `2.webp`…).
 
-```bash
-npm run webp "carpeta amb les fotos" assets/img/expos
-```
-
-Redimensiona el costat gran a 1600 px, gira les fotos de mòbil que venen
-tombades, posa **fons blanc** a les que porten transparència (TIF, PNG i PDF
-exportats sovint en porten) i també accepta PDF (els cartells exportats
-d'InDesign). Escriu el nom en minúscules i amb guions.
-
-Si una foto es veu **de costat**, és que venia sense l'etiqueta d'orientació: cal
-girar-la a l'ordinador abans de convertir-la.
+- **Obre-ho amb Chrome o Firefox**, no amb Safari: Safari no sap fer `.webp` i
+  se salta les fotos.
+- Després, posa'ls un nom que s'entengui, sense accents, espais ni majúscules:
+  `guus-vandeweerd-1.webp`.
+- Si una foto es veu **de costat**, gira-la a l'ordinador abans de convertir-la.
 
 ## Enllaços dins d'un text
 
@@ -241,14 +240,14 @@ secció posant-la entre claudàtors:
 ```
 
 Entre parèntesis hi va l'`id` de la secció: `agenda`, `nosaltres`, `exposicions`,
-`recerca`, `botiga`, `contacte`, `newsletter`. Si l'`id` no existeix, `npm run
-check` ho diu i la paraula es queda com a text normal.
+`recerca`, `botiga`, `contacte`, `newsletter`. Si l'`id` no existeix, la paraula es
+queda com a text normal.
 
 ## Els errors més fàcils de cometre
 
 | Passa això | És això |
 |---|---|
-| La web surt **en blanc** | Una coma de més o de menys. `npm run check` diu la línia |
+| La web surt **en blanc** | Una coma de més o de menys. Visual Studio Code la marca en vermell |
 | Hi ha un **buit gris** on hauria d'anar una foto | El nom del fitxer no coincideix. Compte amb accents i majúscules |
 | Una data surt **canviada** | Un dia que no existeix (`2027-02-30`): es converteix sol, sense avisar |
 | Un producte surt però diu **exhaurit** | Falta posar-hi unitats a `/admin/stock.html` |
@@ -263,4 +262,11 @@ El contingut bo és **el que hi ha al servidor**, el que vosaltres pugeu. Quan
 qui toca el codi prepara una versió nova, el procés baixa primer els vostres
 JSON del servidor i hi suma els seus canvis, així no es perd res. Si sabeu que
 algú farà canvis, digueu-li igualment què heu tocat últimament.
+
+## Google i les vistes prèvies (WhatsApp, Instagram…)
+
+El que pugeu es veu a la web **al moment**. Però el que llegeixen Google i les
+vistes prèvies en compartir un enllaç (el títol, el text i la imatge de cada
+pàgina) es prepara quan qui porta el codi publica una versió nova. Si heu
+afegit una exposició i la voleu compartir amb la seva imatge, aviseu-lo.
 
