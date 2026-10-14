@@ -113,9 +113,8 @@ título, descripción, canonical y una imagen para compartir de 1200×630
 `sitemap.xml`. Las direcciones salen de seguir los enlaces desde la portada:
 una exposición nueva tiene su página sin tocar el script. Si una dirección no
 tiene fichero, el `.htaccess` sirve el `index.html` de la raíz y el JS la pinta.
-Si la clienta cambia un JSON por SFTP, la web lo enseña al momento; las páginas
-pre-renderizadas (lo que ven Google y WhatsApp) se ponen al día en la siguiente
-publicación. En local, `npm run build` usa Chrome, Chromium o Brave
+Como la clienta edita en GitHub, cada cambio suyo es una publicación y las
+páginas pre-renderizadas (lo que ven Google y WhatsApp) salen siempre al día. En local, `npm run build` usa Chrome, Chromium o Brave
 (`CHROME=ruta` para otro).
 
 **Caché.** Sin trucos (ni `?v=` ni `no-store`): el `.htaccess` de la raíz sirve
@@ -156,11 +155,10 @@ cambie la contraseña, hay que cambiarla también aquí.**
 Si la publicación falla, GitHub manda un correo a quien hizo el push y el
 detalle está en la pestaña *Actions*. La web se queda como estaba.
 
-Con la publicación automática activa, la clienta puede editar los JSON
-directamente en GitHub (el lápiz de cada fichero → *Commit changes*) y se
-publican solos, ya revisados. Si sigue subiéndolos por SFTP también funciona,
-pero entonces el próximo push de código parará hasta que alguien traiga sus
-cambios al repo (paso 0).
+La clienta edita los JSON directamente en GitHub, en su copia del repo (el
+lápiz de cada fichero → *Commit changes*), y se publican solos, ya revisados
+([GUIA.md](GUIA.md)). Nunca usa el SFTP. Si alguien subiera un JSON por SFTP a
+mano, el próximo push pararía hasta traer ese cambio al repo (paso 0).
 
 ### Publicación a mano
 

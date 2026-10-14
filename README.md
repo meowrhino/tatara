@@ -15,15 +15,15 @@ l'allotjament de [Pangea](https://pangea.org).
 | El codi | aquest repositori |
 | El primer disseny (v0, arxivat) | [meowrhino.github.io/tatarav0](https://meowrhino.github.io/tatarav0/) |
 
-> **Publicar** vol dir pujar fitxers per SFTP a Pangea. Es pot fer a mà o,
-> quan el repositori tingui el secret `SFTP_PASSWORD`, sol amb cada `git push` a
-> `main` (GitHub Actions). Detall a [DESARROLLO.md](DESARROLLO.md#publicar-en-pangea).
+> **Publicar** és sol: cada canvi a `main` (des de GitHub o amb `git push`) es
+> revisa i es puja a Pangea per SFTP, amb GitHub Actions. Detall a
+> [DESARROLLO.md](DESARROLLO.md#publicar-en-pangea).
 
 ## Documents
 
 | | Per a qui | Què hi ha |
 |---|---|---|
-| [GUIA.md](GUIA.md) | TAT ARA | Com canviar textos, dates, fotos i preus, i com pujar-los (en català) |
+| [GUIA.md](GUIA.md) | TAT ARA | Com canviar textos, dates, fotos i preus des de GitHub (en català) |
 | [TRASPASO.md](TRASPASO.md) | totes dues parts | Qui té què, les claus, qui es queda el repositori i la llista del traspàs |
 | [DESARROLLO.md](DESARROLLO.md) | qui toqui el codi | Estructura, disseny, com publicar a Pangea, l'API i les proves |
 | [FUTURO.md](FUTURO.md) | — | Idees plantejades i no pressupostades |

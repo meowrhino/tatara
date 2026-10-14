@@ -26,7 +26,7 @@ trabajo manual y con corte de servicio. Cuanto antes, más barato.
 
 | Quiero… | Se hace… | ¿Cambia tatara.cat? |
 |---|---|---|
-| Cambiar un texto, una fecha, una foto, un precio | editar el JSON y subirlo por SFTP ([GUIA.md](GUIA.md)) | **sí**, al momento |
+| Cambiar un texto, una fecha, una foto, un precio | editar el JSON en GitHub ([GUIA.md](GUIA.md)) | **sí, solo**, en 2-3 minutos, ya revisado |
 | Cambiar las unidades de stock | `/admin/stock.html` | sí, al momento |
 | Cambiar el diseño o el código | commit y `git push` a `main` | **sí, solo**, en un minuto (GitHub Actions) |
 | Publicar a mano | `npm run build` y subir `dist/` por SFTP ([DESARROLLO.md](DESARROLLO.md#publicar-en-pangea)) | sí |
@@ -35,53 +35,55 @@ La publicación automática es un script de GitHub Actions que revisa los JSON y
 sube a Pangea por SFTP con cada push a `main`. **Activa desde el 7 de octubre de
 2026**, con la contraseña de SFTP guardada como secret `SFTP_PASSWORD` del
 repositorio ([DESARROLLO.md](DESARROLLO.md#publicación-automática-github-actions)).
-Con ella, la clienta también podría editar el contenido directamente en GitHub en
-vez de usar Cyberduck.
+**La clienta edita en GitHub** (decidido el 14 de octubre de 2026): nunca toca
+el SFTP.
 
-### Las dos copias del contenido ⚠️
+### Las dos copias del contenido
 
-Los JSON de `data/` existen dos veces: en el servidor (los que edita la clienta)
-y en el repositorio (los que tiene quien programa). **La buena es la del
-servidor.** Si se subieran los JSON del repo sin más, **se pisarían los cambios
-de la clienta**. `npm run build` lo evita: antes de preparar nada, trae a `data/`
-lo que ella haya cambiado desde la última publicación (la etiqueta git
-`publicado`). Detalle en
-[DESARROLLO.md](DESARROLLO.md#0-el-contenido-de-la-clienta-), y la guía de la
-clienta también lo recuerda.
+Mientras la clienta editaba por SFTP, los JSON vivían dos veces (servidor y
+repo) y `npm run build` traía los del servidor antes de publicar
+([DESARROLLO.md](DESARROLLO.md#0-el-contenido-de-la-clienta-)). Con la clienta en
+GitHub hay una sola copia, la del repo; esa protección se queda por si alguien
+sube algo por SFTP a mano: la publicación automática para y avisa.
 
 ---
 
-## ¿Quién se queda el repositorio?
+## El repositorio pasa a TAT ARA (una copia)
 
-Todavía no está decidido. Para el día a día de la clienta da igual: ella no
-necesita GitHub (solo Cyberduck y el navegador). Lo que cambia es quién puede
-tocar el código y dónde vive la copia de referencia.
-
-### A. Lo seguimos llevando nosotros
-
-Es como está hoy. Nada que hacer, salvo dejarlo escrito en el acuerdo: el repo
-`meowrhino/tatara` es la fuente del código, la clienta lleva el contenido por
-SFTP, y cada cambio de código pasa por la regla de las dos copias.
-
-### B. Pasa a ser de TAT ARA
+Decidido: como en todas las webs del estudio, **le pasamos una copia del repo a
+su cuenta** y la clienta edita ahí. `meowrhino/tatara` se queda como nuestra
+copia de referencia.
 
 1. TAT ARA crea una cuenta de GitHub (mejor una organización a nombre de la
-   asociación que una cuenta personal).
-2. En [github.com/meowrhino/tatara](https://github.com/meowrhino/tatara) →
-   *Settings* → *Transfer ownership* → la cuenta nueva. Viaja todo: historial,
-   ramas y etiquetas, y GitHub redirige la dirección vieja.
-3. Si queremos seguir trabajando en ella, nos añaden como colaboradores. Si no,
-   nos quedamos un *fork* como copia y ya está.
-4. Cambiar `meowrhino/tatara` por la dirección nueva en este fichero.
+   asociación que una cuenta personal) y nos pasa el nombre.
+2. Creamos la copia con todo el historial **y las etiquetas** (la publicación
+   necesita la etiqueta `publicado`):
+
+   ```bash
+   git clone --mirror https://github.com/meowrhino/tatara.git
+   cd tatara.git && git push --mirror https://github.com/SU-CUENTA/tatara.git
+   ```
+
+3. En la copia: *Settings → Secrets and variables → Actions* → secret
+   `SFTP_PASSWORD`, y *Settings → Collaborators* → nosotros, para poder seguir
+   arreglando cosas.
+4. **En `meowrhino/tatara`, borrar el secret `SFTP_PASSWORD`**
+   (`gh secret delete SFTP_PASSWORD -R meowrhino/tatara`). Si los dos repos
+   pudieran publicar, un push nuestro subiría JSON viejos encima de los suyos.
+5. Hacer un cambio pequeño en la copia y comprobar que sale el círculo verde en
+   *Actions* y que se ve en tatara.cat.
+6. Cambiar `meowrhino/tatara` por la dirección nueva en este fichero y en el
+   README.
+
+A partir de ahí, los cambios de código se hacen **en su copia** (como
+colaboradores), no en la nuestra.
 
 `tatarav0` se queda en nuestra cuenta: es un archivo de diseño, no forma parte
 de la web.
 
-En los dos casos, **nada de lo que hay en el servidor cambia** y **no hay que
-avisar a Pangea**: Pangea no sabe nada de GitHub. Lo único que une los dos es el
-secret `SFTP_PASSWORD` del repo; si después de transferirlo sigue ahí, la
-publicación automática funciona igual. La web, la base de datos y
-`api/config.php` siguen donde están.
+**Nada de lo que hay en el servidor cambia** y **no hay que avisar a Pangea**:
+Pangea no sabe nada de GitHub. Lo único que une los dos es el secret
+`SFTP_PASSWORD`. La web, la base de datos y `api/config.php` siguen donde están.
 
 ---
 
@@ -108,10 +110,10 @@ openssl rand -hex 32
 
 | Tarea | Quién | Cómo |
 |---|---|---|
-| Textos, fechas, fotos, precios | TAT ARA | editar el JSON y subirlo por SFTP |
+| Textos, fechas, fotos, precios | TAT ARA | editar el JSON en GitHub |
 | Unidades de stock | TAT ARA | `/admin/stock.html` |
 | Ver pedidos, mensajes y altas | TAT ARA | `/admin/tickets.html` |
-| Diseño, secciones nuevas, código | desarrollo | GitHub + publicar por SFTP |
+| Diseño, secciones nuevas, código | desarrollo | push a su copia en GitHub (publica sola) |
 | Restaurar una copia de seguridad | Pangea | `suport@pangea.org`, L–V de 9 a 14 |
 
 ---
@@ -143,14 +145,12 @@ con el diseño viejo y sus propios datos. En este orden:
 - [ ] **Cambiar la contraseña SFTP**, cuando el traspaso esté cerrado: pedirla
       a Pangea, actualizar el secret `SFTP_PASSWORD` y borrar la vieja del
       `.docx` del Drive.
-- [ ] Decidir quién se queda el repositorio (A o B, arriba).
+- [x] Decidir quién se queda el repositorio: una copia en su cuenta (arriba).
+- [ ] Hacer la copia y borrar el secret de `meowrhino/tatara` (arriba, pasos 1-6).
 - [x] Publicación automática: `SFTP_PASSWORD` guardada como secret del repo.
 - [ ] **Al cambiar la contraseña de SFTP, cambiarla también en el secret**
-      (`gh secret set SFTP_PASSWORD`). Si el repo pasa a TAT ARA (opción B),
-      comprobar después que el secret sigue en *Settings → Secrets* y, si no,
-      volver a crearlo.
-- [ ] Decidir si la clienta pasa a editar en GitHub (sin Cyberduck) y
-      actualizar [GUIA.md](GUIA.md) en consecuencia.
+      **de su copia** (*Settings → Secrets*).
+- [x] La clienta edita en GitHub, sin Cyberduck: [GUIA.md](GUIA.md) reescrita.
 
 ### 3. Contenido
 
@@ -219,11 +219,12 @@ durante 6 meses. La pérdida máxima es de un día.
 
 Sin esto el traspaso no está terminado:
 
-- [ ] Instalar Cyberduck y guardar el marcador ([GUIA.md](GUIA.md), "Com es
-      publica").
-- [ ] Cambiar un texto de principio a fin, ella sola: copia, editar, subir,
-      recargar.
-- [ ] Qué pasa si se rompe un JSON y cómo volver atrás.
+- [ ] Su cuenta de GitHub y la copia del repo ([GUIA.md](GUIA.md), punto 0).
+- [ ] Cambiar un texto de principio a fin, ella sola: lápiz, *Commit changes*,
+      círculo verde en *Actions*, recargar.
+- [ ] Subir una foto pasada por imgToWeb y ponerla en el JSON.
+- [ ] Romper un JSON a propósito (una coma), ver el círculo rojo y el mensaje,
+      y arreglarlo.
 - [ ] Entrar en `/admin/`, contar stock y marcar un pedido como enviado.
 - [ ] A quién llamar cuando algo se rompa.
 

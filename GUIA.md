@@ -1,111 +1,79 @@
 # Guia — com actualitzar la web de TAT ARA
 
-Per a qui porta el contingut de la web: textos, dates, fotos i preus. No cal
-saber programar ni tenir GitHub: només un editor de text, Cyberduck i el
-navegador.
+Aquesta guia és per canviar la web vosaltres mateixes: l'agenda, les
+exposicions, els textos, la botiga… Tot es fa des del navegador, a GitHub,
+sense instal·lar res.
 
-## La regla
-
-**Tot el contingut viu a `data/`, en fitxers `.json`.** Per canviar un text, una
-data, un preu o una foto no cal tocar codi: s'edita el JSON, es puja per SFTP al
-servidor, i al recarregar la web ja hi és.
-
-L'única excepció és l'**stock** de la botiga, que es porta des de `/admin/`
-perquè ha de baixar tot sol amb cada venda.
-
-## Quin fitxer toco
-
-| Vull canviar… | Fitxer |
-|---|---|
-| L'agenda: exposicions, converses, tallers | `data/agenda.json` |
-| El text de "nosaltres" | `data/nosaltres.json` |
-| Les fitxes de les exposicions (text, fotos, bio, full de sala) | `data/exposicions.json` |
-| El text i les fotos de recerca | `data/recerca.json` |
-| Els productes de la botiga: títol, preu, foto | `data/botiga.json` |
-| L'adreça, el correu, els enllaços del peu | `data/data.json` |
-| Els noms del menú | `data/menu.json` |
-| Les zones i preus d'enviament | `data/envios.json` |
-| **Quantes unitats queden** de cada peça | `/admin/stock.html` |
-
-Cada fitxer comença amb un `_comment` que explica què admet cada camp. És la
-documentació més fiable, perquè viu al costat de les dades.
-
-## Com es publica
-
-La web viu en un allotjament de **Pangea**. Publicar vol dir **copiar el fitxer
-al servidor**. No cal ni GitHub ni terminal: només un programa per copiar
-fitxers a distància.
-
-### Un sol cop: instal·lar Cyberduck
-
-[Cyberduck](https://cyberduck.io) és gratuït i és el que farem servir. Funciona
-com el Finder: a l'esquerra el teu ordinador, a la dreta el servidor, i
-s'arrosseguen fitxers d'un costat a l'altre.
-
-1. Descarregar-lo de [cyberduck.io](https://cyberduck.io) i arrossegar-lo a
-   *Aplicacions*. (A la seva web demana una donació; el programa funciona igual
-   sense pagar.)
-2. Obrir-lo → **Nova connexió**.
-3. A dalt de tot, al desplegable, triar **SFTP (SSH File Transfer Protocol)**.
-   Això és important: si es queda en *FTP* no connecta.
-4. Omplir:
-
-   ```
-   Servidor:    web-12.pangea.org
-   Port:        22
-   Usuari:      tatara-web
-   Contrasenya: (la del gestor de contrasenyes)
-   ```
-
-5. Marcar **Afegeix al clauer** i **Connecta**.
-6. Un cop dins: menú **Marcadors → Nou marcador**. A partir d'ara s'entra amb
-   dos clics i sense escriure res.
-
-### Cada cop que es vol canviar alguna cosa
-
-Al connectar s'obre directament la carpeta de la web. A dins hi ha `data/`
-(el contingut), `assets/` (les fotos), `admin/` i algun fitxer més.
-
-**Per canviar un text, una data o un preu:**
-
-1. **Baixa't el JSON que vols tocar**: arrossega'l del servidor a l'escriptori.
-   Aquesta còpia és la xarxa de seguretat — no la esborris fins que tot vagi bé.
-2. **Fes-ne una segona còpia** i guarda-la en una altra carpeta, per si de cas.
-3. Obre la primera amb un editor de text i canvia el que calgui. A macOS, amb
-   clic dret → *Obre amb* → **TextEdit**. (Millor encara:
-   [Visual Studio Code](https://code.visualstudio.com), gratuït, que avisa dels
-   errors de format mentre escrius.)
-4. Guarda, i arrossega el fitxer de l'escriptori a la carpeta `data/` del
-   servidor. Pregunta si vols substituir: sí.
-5. Recarrega `https://tatara.cat` i mira que es vegi bé.
-
-**Per canviar o afegir una foto:**
-
-1. Posa-li un nom sense accents, sense espais i sense majúscules:
-   `exposicio-nova-1.webp`.
-2. Puja-la a la carpeta d'`assets/img/` que toqui (`agenda/`, `expos/`,
-   `recerca/`, `edicions/`).
-3. Escriu aquest nom al JSON de la secció, com al pas de dalt.
-
-> ### Si alguna cosa surt en blanc
+> **La regla d'or**: només toqueu **dues carpetes**: `data/` (els textos, les
+> dates i els preus) i `assets/` (les fotos i els PDF). La resta és el codi:
+> millor no tocar-lo.
 >
-> Vol dir que el JSON té un error de format: quasi sempre una coma de més, una
-> de menys, o unes cometes sense tancar. **No passa res i no s'ha trencat res
-> de manera permanent**: torna a pujar la còpia del pas 1 i la web torna a
-> estar com estava. Després ja es mira amb calma què havia passat.
+> L'única cosa que **no** es fa a GitHub són les **unitats de la botiga** i les
+> comandes: van al panell `tatara.cat/admin/` (punt 6).
 
-## Abans de pujar: obrir-lo amb Visual Studio Code
+Quan guardeu un canvi, la web s'actualitza sola en **2 o 3 minuts**. Si us
+equivoqueu en alguna cosa, la web **no es trenca**: es queda com estava fins que
+ho arregleu (punt 7, *Si alguna cosa va malament*).
 
-Amb [Visual Studio Code](https://code.visualstudio.com) (gratuït), un JSON amb
-un error de format surt **subratllat en vermell** just on falla, abans de pujar
-res. TextEdit no avisa de res. Si al marge esquerre no hi ha res en vermell, es
-pot pujar tranquil·lament.
+---
 
-Quan qui porta el codi publica una versió nova, a més es revisa tot sol (fotos
-que no existeixen, dates impossibles, un esdeveniment fora del seu bloc) i, si
-hi ha un error, no es publica res.
+## 0. Abans de començar (només el primer cop)
 
-## Els tres idiomes
+1. Feu-vos un compte a [github.com](https://github.com) (millor una
+   organització a nom de l'associació) i passeu-nos el nom d'usuari.
+2. Us passem **una còpia de la web al vostre compte**: des d'aquell moment és
+   vostra i viu a `https://github.com/EL-VOSTRE-USUARI/tatara`. És allà on es
+   fan els canvis d'aquesta guia.
+
+Per preparar les fotos, **imgToWeb**: https://meowrhino.github.io/imgToWeb/ (les
+passa al format de la web, `.webp`, a la mida justa). **Obriu-lo amb Chrome o
+Firefox**, no amb Safari: Safari no sap fer `.webp` i imgToWeb se salta les
+fotos.
+
+---
+
+## 1. Com està organitzat
+
+```
+data/
+  agenda.json          ← l'agenda: exposicions, converses, tallers
+  exposicions.json     ← les fitxes de la secció Exposicions
+  nosaltres.json       ← el text de Nosaltres
+  recerca.json         ← el text i les fotos de Recerca
+  botiga.json          ← els productes: títol, autor, preu, foto
+  envios.json          ← les zones i preus d'enviament
+  data.json            ← l'adreça, el correu, els enllaços de Contacte
+  menu.json            ← els noms del menú
+assets/
+  img/agenda/          ← les fotos de l'agenda
+  img/expos/           ← les fotos de les exposicions
+  img/recerca/         ← les fotos de recerca
+  img/edicions/        ← les fotos de la botiga
+  pdf/                 ← els fulls de sala
+```
+
+Cada fitxer de `data/` comença amb un `_comment` que explica què admet cada
+camp: és la documentació més fiable, perquè viu al costat de les dades.
+
+---
+
+## 2. Com s'edita un fitxer a GitHub
+
+1. Entreu al fitxer (per exemple `data/agenda.json`).
+2. Cliqueu el **llapis** ✏️ (a dalt a la dreta del fitxer).
+3. Canvieu el que calgui.
+4. Cliqueu **Commit changes…** (el botó verd), escriviu en una línia què heu
+   canviat ("agenda: taller de novembre") i un altre cop **Commit changes**.
+
+Ja està: en 2-3 minuts surt a la web.
+
+**Per pujar fotos o PDF**: entreu a la carpeta (per exemple `assets/img/expos/`),
+cliqueu **Add file → Upload files**, arrossegueu-hi els fitxers i **Commit
+changes**.
+
+---
+
+## 3. Els tres idiomes
 
 Qualsevol text es pot escriure de dues maneres:
 
@@ -117,10 +85,15 @@ Qualsevol text es pot escriure de dues maneres:
 La primera és per al que no es tradueix (noms propis, títols d'obra). La segona,
 per a tota la resta. Si falta un idioma, la web ensenya el català.
 
-## Afegir una exposició a l'agenda
+---
 
-Es copia un bloc existent de `data/agenda.json` i es canvien els camps. **L'ordre
-dins del fitxer és igual**: la web ordena per `start`.
+## 4. El que més fareu
+
+### Afegir una exposició a l'agenda
+
+A `data/agenda.json`, **copieu un bloc que ja hi sigui** (de `{` a `},`, amb la
+coma) i canvieu-ne els camps. L'ordre dins del fitxer és igual: la web ordena
+per data.
 
 ```json
 {
@@ -128,23 +101,28 @@ dins del fitxer és igual**: la web ordena per `start`.
   "kind": { "ca": "Exposició", "es": "Exposición", "en": "Exhibition" },
   "title": { "ca": "Títol", "es": "Título", "en": "Title" },
   "artist": "Nom de l'artista",
+  "image": "assets/img/agenda/nom-curt.webp",
   "start": "2027-03-01",
   "end": "2027-04-15",
   "description": { "ca": "…", "es": "…", "en": "…" }
-}
+},
 ```
 
-- `slug` — un nom curt i únic, sense accents ni espais. No es veu enlloc.
-- `kind` — el tipus (exposició, conversa, taller…). Surt a baix a la dreta.
-- `image` — opcional. Una foto de l'obra (o dues, en una llista: `["a.webp", "b.webp"]`), **mai el cartell**: el cartell
-  repeteix el que ja diu el text. Va a `assets/img/agenda/`.
-- `start` / `end` — sempre `AAAA-MM-DD`. Sense `end`, és d'un sol dia.
-- `time` — opcional, `"18:30"`.
+| camp | què és | exemple |
+|---|---|---|
+| `slug` | un nom curt i únic, sense accents ni espais. No es veu enlloc | `"guus-vandeweerd"` |
+| `kind` | el tipus. Surt a baix a la dreta | `{ "ca": "Conversa", … }` |
+| `title` | el títol | `{ "ca": "Inventory", … }` |
+| `artist` | *(opcional)* qui | `"Guus Vandeweerd"` |
+| `image` | *(opcional)* una foto de l'obra, **mai el cartell** (repeteix el que ja diu el text). O dues, en una llista | `["assets/img/agenda/a.webp", "assets/img/agenda/b.webp"]` |
+| `start` / `end` | sempre `AAAA-MM-DD`. Sense `end`, és d'un sol dia | `"2027-03-01"` |
+| `time` | *(opcional)* l'hora | `"18:30"` |
+| `description` | *(opcional)* el text | `{ "ca": "…", … }` |
 
-## Afegir un esdeveniment dins d'una exposició
+### Afegir una conversa, una lectura o un taller dins d'una exposició
 
-Una conversa, una lectura o un taller que passa **durant** una exposició va dins
-del seu `eventos[]`, amb els mateixos camps:
+Si passa **durant** una exposició, va dins del seu `eventos`, amb els mateixos
+camps. La data ha de caure dins de les de l'exposició:
 
 ```json
 "eventos": [
@@ -154,16 +132,14 @@ del seu `eventos[]`, amb els mateixos camps:
     "title": { "ca": "…", "es": "…", "en": "…" },
     "artist": "Qui hi participa",
     "start": "2027-03-12",
-    "time": "18:30",
-    "description": { "ca": "…", "es": "…", "en": "…" }
+    "time": "18:30"
   }
 ]
 ```
 
-Si passa fora de qualsevol exposició, va com a entrada de primer nivell. La
-data ha de caure dins de les dates de l'exposició.
+Si passa fora de qualsevol exposició, va com un bloc més de l'agenda.
 
-## Afegir una exposició a la secció Exposicions
+### Afegir una fitxa a la secció Exposicions
 
 A `data/exposicions.json`. Cada fitxa s'obre en clicar el nom:
 
@@ -177,17 +153,16 @@ A `data/exposicions.json`. Cada fitxa s'obre en clicar el nom:
   "bio": { "ca": "Bio de l'artista", "es": "…", "en": "…" },
   "link": "https://laseva.web",
   "pdf": "assets/pdf/nom-full-de-sala.pdf"
-}
+},
 ```
 
-`link` i `pdf` són opcionals (`"link": null` si no en té). Per deixar aire entre
-grups, s'hi pot intercalar `{ "spacer": true }`.
+- `link` i `pdf` són opcionals (`"link": null` si no en té).
+- Per deixar aire entre grups, s'hi pot posar `{ "spacer": true },`.
+- Cada fitxa té la seva adreça, que surt del `name`:
+  `tatara.cat/exposicions/nom-de-l-artista/`. **Si canvieu el `name`, canvia
+  l'adreça**, i l'antiga (si algú l'havia compartit) porta a la llista.
 
-Cada fitxa té la seva adreça, que surt del `name`:
-`tatara.cat/exposicions/nom-de-l-artista/`. **Si canvies el `name`, canvia
-l'adreça**, i l'antiga (si algú l'havia compartit) porta a la llista.
-
-## Afegir un producte a la botiga
+### Afegir un producte a la botiga
 
 A `data/botiga.json`:
 
@@ -200,73 +175,105 @@ A `data/botiga.json`:
   "price": 18,
   "images": ["assets/img/edicions/nom.webp"],
   "description": { "ca": "…", "es": "…", "en": "…" }
-}
+},
 ```
 
-La fitxa es pinta sempre igual: a l'esquerra el **títol**, a sota l'**autor** i
-a sota l'**editorial** (o qualsevol altra dada de context); a la dreta, sol, el
-**preu**.
+- **`"price": null` vol dir "pròximament"**: es veu però no es pot comprar. En
+  posar-hi un número, passa a ser comprable tot sol.
+- **L'`id` no es canvia mai** un cop el producte ha existit: és la clau amb què
+  es guarden l'stock i les comandes.
+- Després, al panell, poseu-hi les unitats (punt 6). Sense unitats surt com a
+  **exhaurit**.
 
-Dues coses importants:
+### Canviar un text de Nosaltres o de Recerca
 
-- **`price: null` vol dir "pròximament"**: es veu però no es pot comprar. En
-  posar-hi un número passa a ser comprable tot sol.
-- **L'`id` no s'ha de canviar mai** un cop el producte ha existit: és la clau amb
-  què la base de dades guarda l'stock i les comandes.
-
-Després d'afegir-lo, cal anar a `/admin/stock.html` i posar-hi les unitats. Sense
-unitats surt com a **exhaurit**.
-
-## Fotos
-
-Van totes a `assets/img/` i han de ser `.webp`. Per convertir-les:
-**[imgToWeb](https://meowrhino.github.io/imgToWeb/)**, al navegador, sense
-instal·lar res. S'hi arrosseguen les fotos i les torna en `.webp`, de la mida
-justa i numerades (`1.webp`, `2.webp`…).
-
-- **Obre-ho amb Chrome o Firefox**, no amb Safari: Safari no sap fer `.webp` i
-  se salta les fotos.
-- Després, posa'ls un nom que s'entengui, sense accents, espais ni majúscules:
-  `guus-vandeweerd-1.webp`.
-- Si una foto es veu **de costat**, gira-la a l'ordinador abans de convertir-la.
-
-## Enllaços dins d'un text
-
-A `nosaltres.json` i `recerca.json`, qualsevol paraula pot enllaçar a una altra
-secció posant-la entre claudàtors:
+A `data/nosaltres.json` o `data/recerca.json`. Qualsevol paraula pot enllaçar a
+una altra secció posant-la entre claudàtors:
 
 ```
 "les trobareu a la [botiga](botiga)"
 ```
 
-Entre parèntesis hi va l'`id` de la secció: `agenda`, `nosaltres`, `exposicions`,
-`recerca`, `botiga`, `contacte`, `newsletter`. Si l'`id` no existeix, la paraula es
-queda com a text normal.
+Entre parèntesis hi va el nom de la secció: `agenda`, `nosaltres`,
+`exposicions`, `recerca`, `botiga`, `contacte`, `newsletter`.
 
-## Els errors més fàcils de cometre
+### Fotos
+
+1. Passeu-les per imgToWeb.
+2. Poseu-los un nom que s'entengui, sense accents, espais ni majúscules:
+   `guus-vandeweerd-1.webp`.
+3. Pugeu-les a la carpeta que toqui d'`assets/img/` (punt 2).
+4. Escriviu aquest nom al JSON, amb la carpeta davant:
+   `"assets/img/expos/guus-vandeweerd-1.webp"`.
+
+Si una foto es veu **de costat**, gireu-la a l'ordinador abans de passar-la per
+imgToWeb.
+
+La imatge que surt en compartir un enllaç (WhatsApp, Instagram…) i el que veu
+Google **es fan sols** en publicar: no cal fer res.
+
+---
+
+## 5. Contacte, menú i enviaments
+
+- **Adreça, correu i enllaços de Contacte** (IG, Newsletter, Medium): a
+  `data/data.json`, dins de `contact`. Un enllaç a una secció de la web s'escriu
+  `"#newsletter"`; un a una altra web, sencer: `"https://…"`.
+- **Els noms del menú**: a `data/menu.json`, el `label` de cada secció. L'`id`
+  no es toca.
+- **Les zones d'enviament**: a `data/envios.json`. Buit (`[]`) vol dir que només
+  es pot recollir a la galeria.
+
+---
+
+## 6. Stock i comandes: el panell
+
+A **`tatara.cat/admin/`**, amb la contrasenya del panell:
+
+- **`stock.html`**: quantes unitats queden de cada peça. Baixen soles amb cada
+  venda; aquí es posen quan arriben exemplars nous.
+- **`tickets.html`**: les comandes, els missatges i les altes a la newsletter.
+
+Això no és a GitHub perquè ho ha de poder canviar el servidor tot sol (quan
+algú paga), i el servidor no pot escriure a GitHub.
+
+---
+
+## 7. Si alguna cosa va malament
+
+**Quasi sempre és una coma o unes cometes.** En un `.json`:
+
+- cada text va entre cometes dobles: `"així"`;
+- entre dos blocs, o dues coses d'una llista, hi va una coma: `["1", "2", "3"]`;
+- **després de l'últim, no**: `["1", "2", "3",]` ✗.
+
+**Com saber si ha anat bé**: a GitHub, pestanya **Actions**. L'últim que heu
+guardat surt amb un cercle:
+
+- 🟢 verd: publicat.
+- 🟡 groc: publicant-se (2-3 minuts).
+- 🔴 vermell: no s'ha publicat, i **la web segueix com estava**. Entreu-hi,
+  cliqueu **publicar** i al pas **Revisar los JSON** veureu una línia amb ✗ que
+  diu què passa i on. Per exemple:
+
+  ```
+  ✗ data/agenda.json no es un JSON válido y la web no lo va a poder abrir.
+       Expected double-quoted property name in JSON at position 28881 (line 542 column 27)
+       línea 542:  "end": "2026-10-31",,
+  ✗ guus-vandeweerd-swab: la imagen no existe: assets/img/agenda/guus.webp
+  ✗ taller-recerca-local: "start" (2027-02-30) es un día que no existe en el calendario
+  ```
+
+  Arregleu-ho (el número de línia diu on mirar), guardeu un altre cop, i
+  llestos.
+
+Les línies amb **·** en comptes de ✗ són avisos (per exemple, un text sense
+traduir): la web es publica igual.
 
 | Passa això | És això |
 |---|---|
-| La web surt **en blanc** | Una coma de més o de menys. Visual Studio Code la marca en vermell |
-| Hi ha un **buit gris** on hauria d'anar una foto | El nom del fitxer no coincideix. Compte amb accents i majúscules |
-| Una data surt **canviada** | Un dia que no existeix (`2027-02-30`): es converteix sol, sense avisar |
-| Un producte surt però diu **exhaurit** | Falta posar-hi unitats a `/admin/stock.html` |
+| Un **buit gris** on hauria d'anar una foto | El nom del fitxer no coincideix. Compte amb accents i majúscules |
+| Un producte surt però diu **exhaurit** | Falten unitats a `admin/stock.html` |
 | Un producte surt però diu **pròximament** | Li falta el `price` |
 
-Cada entrada d'un JSON va separada per una coma **menys l'última**. És l'error
-número u, i és el que deixa la web en blanc.
-
-## Si algú fa canvis de disseny a la web
-
-El contingut bo és **el que hi ha al servidor**, el que vosaltres pugeu. Quan
-qui toca el codi prepara una versió nova, el procés baixa primer els vostres
-JSON del servidor i hi suma els seus canvis, així no es perd res. Si sabeu que
-algú farà canvis, digueu-li igualment què heu tocat últimament.
-
-## Google i les vistes prèvies (WhatsApp, Instagram…)
-
-El que pugeu es veu a la web **al moment**. Però el que llegeixen Google i les
-vistes prèvies en compartir un enllaç (el títol, el text i la imatge de cada
-pàgina) es prepara quan qui porta el codi publica una versió nova. Si heu
-afegit una exposició i la voleu compartir amb la seva imatge, aviseu-lo.
-
+Si no veieu què és, escriviu-nos amb el missatge en vermell i ho mirem.
