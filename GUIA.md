@@ -1,8 +1,9 @@
 # Guia — com actualitzar la web de TAT ARA
 
 Aquesta guia és per canviar la web vosaltres mateixes: l'agenda, les
-exposicions, els textos, la botiga… Tot es fa des del navegador, a GitHub,
-sense instal·lar res.
+exposicions, els textos, la botiga… Tot es fa amb **Visual Studio Code**, un
+programa gratuït: canvieu els fitxers a l'ordinador i, en guardar-los, pugen a
+GitHub i es publiquen sols.
 
 > **La regla d'or**: només toqueu **dues carpetes**: `data/` (els textos, les
 > dates i els preus) i `assets/` (les fotos i els PDF). La resta és el codi:
@@ -22,8 +23,15 @@ ho arregleu (punt 7, *Si alguna cosa va malament*).
 1. Feu-vos un compte a [github.com](https://github.com) (millor una
    organització a nom de l'associació) i passeu-nos el nom d'usuari.
 2. Us passem **una còpia de la web al vostre compte**: des d'aquell moment és
-   vostra i viu a `https://github.com/EL-VOSTRE-USUARI/tatara`. És allà on es
-   fan els canvis d'aquesta guia.
+   vostra i viu a `https://github.com/EL-VOSTRE-USUARI/tatara`.
+3. Instal·leu **Visual Studio Code**: https://code.visualstudio.com
+4. Obriu-lo i porteu-hi la web: a l'esquerra, la icona de les branques
+   (**Source Control**) → **Clone Repository** → **Clone from GitHub** → entreu
+   amb el vostre compte → trieu `EL-VOSTRE-USUARI/tatara` → trieu una carpeta
+   de l'ordinador → **Open**. Si us demana instal·lar Git, accepteu.
+
+A partir d'aquí, la web és aquella carpeta: cada cop que obriu VS Code, s'obre
+allà.
 
 Per preparar les fotos, **imgToWeb**: https://meowrhino.github.io/imgToWeb/ (les
 passa al format de la web, `.webp`, a la mida justa). **Obriu-lo amb Chrome o
@@ -57,19 +65,23 @@ camp: és la documentació més fiable, perquè viu al costat de les dades.
 
 ---
 
-## 2. Com s'edita un fitxer a GitHub
+## 2. Com es fa un canvi amb VS Code
 
-1. Entreu al fitxer (per exemple `data/agenda.json`).
-2. Cliqueu el **llapis** ✏️ (a dalt a la dreta del fitxer).
-3. Canvieu el que calgui.
-4. Cliqueu **Commit changes…** (el botó verd), escriviu en una línia què heu
-   canviat ("agenda: taller de novembre") i un altre cop **Commit changes**.
+1. **Abans de res, baixeu l'última versió**: a la barra de baix de tot, cliqueu
+   les fletxes ⟳ (**Sync**). Així teniu el que hi ha publicat.
+2. A la columna de l'esquerra, obriu el fitxer (per exemple `data/agenda.json`)
+   i canvieu el que calgui. Guardeu amb **Cmd+S**.
+   Si alguna cosa surt **subratllada en vermell**, hi ha una coma o unes
+   cometes malament: arregleu-ho abans de seguir (punt 7).
+3. A l'esquerra, la icona de les branques (**Source Control**): escriviu en una
+   línia què heu canviat ("agenda: taller de novembre") i cliqueu **Commit**.
+4. Cliqueu **Sync Changes** (el mateix botó blau).
 
 Ja està: en 2-3 minuts surt a la web.
 
-**Per pujar fotos o PDF**: entreu a la carpeta (per exemple `assets/img/expos/`),
-cliqueu **Add file → Upload files**, arrossegueu-hi els fitxers i **Commit
-changes**.
+**Per afegir fotos o PDF**: arrossegueu els fitxers a la carpeta que toqui (per
+exemple `assets/img/expos/`) a la columna de l'esquerra de VS Code, i després
+els passos 3 i 4.
 
 ---
 

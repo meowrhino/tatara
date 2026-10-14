@@ -26,7 +26,7 @@ trabajo manual y con corte de servicio. Cuanto antes, más barato.
 
 | Quiero… | Se hace… | ¿Cambia tatara.cat? |
 |---|---|---|
-| Cambiar un texto, una fecha, una foto, un precio | editar el JSON en GitHub ([GUIA.md](GUIA.md)) | **sí, solo**, en 2-3 minutos, ya revisado |
+| Cambiar un texto, una fecha, una foto, un precio | editar el JSON con VS Code y *Sync* ([GUIA.md](GUIA.md)) | **sí, solo**, en 2-3 minutos, ya revisado |
 | Cambiar las unidades de stock | `/admin/stock.html` | sí, al momento |
 | Cambiar el diseño o el código | commit y `git push` a `main` | **sí, solo**, en un minuto (GitHub Actions) |
 | Publicar a mano | `npm run build` y subir `dist/` por SFTP ([DESARROLLO.md](DESARROLLO.md#publicar-en-pangea)) | sí |
@@ -35,8 +35,8 @@ La publicación automática es un script de GitHub Actions que revisa los JSON y
 sube a Pangea por SFTP con cada push a `main`. **Activa desde el 7 de octubre de
 2026**, con la contraseña de SFTP guardada como secret `SFTP_PASSWORD` del
 repositorio ([DESARROLLO.md](DESARROLLO.md#publicación-automática-github-actions)).
-**La clienta edita en GitHub** (decidido el 14 de octubre de 2026): nunca toca
-el SFTP.
+**La clienta edita en GitHub** (decidido el 14 de octubre de 2026), con
+**VS Code** en su ordenador: nunca toca el SFTP.
 
 ### Las dos copias del contenido
 
@@ -110,7 +110,7 @@ openssl rand -hex 32
 
 | Tarea | Quién | Cómo |
 |---|---|---|
-| Textos, fechas, fotos, precios | TAT ARA | editar el JSON en GitHub |
+| Textos, fechas, fotos, precios | TAT ARA | editar el JSON con VS Code |
 | Unidades de stock | TAT ARA | `/admin/stock.html` |
 | Ver pedidos, mensajes y altas | TAT ARA | `/admin/tickets.html` |
 | Diseño, secciones nuevas, código | desarrollo | push a su copia en GitHub (publica sola) |
@@ -219,9 +219,10 @@ durante 6 meses. La pérdida máxima es de un día.
 
 Sin esto el traspaso no está terminado:
 
-- [ ] Su cuenta de GitHub y la copia del repo ([GUIA.md](GUIA.md), punto 0).
-- [ ] Cambiar un texto de principio a fin, ella sola: lápiz, *Commit changes*,
-      círculo verde en *Actions*, recargar.
+- [ ] Su cuenta de GitHub, la copia del repo y VS Code con la copia clonada
+      ([GUIA.md](GUIA.md), punto 0).
+- [ ] Cambiar un texto de principio a fin, ella sola: *Sync*, cambiar, *Commit*,
+      *Sync Changes*, círculo verde en *Actions*, recargar.
 - [ ] Subir una foto pasada por imgToWeb y ponerla en el JSON.
 - [ ] Romper un JSON a propósito (una coma), ver el círculo rojo y el mensaje,
       y arreglarlo.
