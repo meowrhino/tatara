@@ -219,8 +219,9 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 
 /* Ficha de una exposición, dentro de la columna. */
 .expo p { margin: 0 0 1rem; }
-.expo .zoom { margin: 0 0 1rem; }
-.expo__close { display: block; width: max(var(--brand), 2.4rem); margin: 0 0 1rem auto; line-height: 0; }
+.expo .zoom { margin: 0 0 1rem; clear: right; }   /* las fotos, siempre por debajo de la cruz */
+/* La cruz flota a la derecha: el título empieza arriba, a su lado, sin una línea vacía encima. */
+.expo__close { float: right; width: max(var(--brand), 2.4rem); margin: 0 0 1rem 1rem; line-height: 0; }
 .expo__close svg { width: 100%; height: auto; }
 .expo__title { margin: 0 0 1rem; text-decoration: underline; }
 
