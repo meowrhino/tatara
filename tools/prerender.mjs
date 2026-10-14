@@ -5,13 +5,14 @@
  * es una página vacía con el título de la portada. Esto abre cada dirección en
  * un Chrome sin ventana, con la web de verdad (el mismo JS: no hay una segunda
  * plantilla que mantener), y guarda lo que ha pintado en dist/<dirección>/index.html
- * con su título, descripción, canonical y og:image. Al cargar, el JS vuelve a
+ * con su título, descripción, canonical, og:image y las mismas páginas en los
+ * otros idiomas (hreflang: el catalán sin prefijo, /es/… y /en/…). Al cargar, el JS vuelve a
  * pintar encima lo mismo. Escribe también dist/sitemap.xml y, para cada página
  * con foto, su imagen para compartir (dist/og/<dirección>.jpg, 1200×630: TAT
  * arriba, ARA abajo, el título y la foto), porque las redes no siempre
  * enseñan un .webp.
  *
- * Las direcciones salen de seguir los enlaces desde la portada, así que una
+ * Las direcciones salen de seguir los enlaces desde la portada de cada idioma, así que una
  * exposición nueva en el JSON tiene su página sin tocar nada aquí.
  *
  *   node tools/prerender.mjs dist     (lo llama tools/build-pangea.sh)
@@ -139,12 +140,20 @@ try {
   const template = readFileSync(join(DIST, 'index.html'), 'utf8');
   const ocultas = new Set(JSON.parse(readFileSync(join(DIST, 'data/menu.json'), 'utf8'))
     .sections.filter((s) => s.hidden).map((s) => s.id));
-  const esPagina = (p) => !NO_ES_SECCION.test(p) && !/\.\w+$/.test(p) && !ocultas.has(p.split('/')[1]);
+  const { languages: idiomas = ['ca'], defaultLang: porDefecto = 'ca' } = JSON.parse(readFileSync(join(DIST, 'data/data.json'), 'utf8'));
+  const prefijo = (l) => (l === porDefecto ? '' : `/${l}`);
+  // '/es/nosaltres/' → ['es', '/nosaltres/']; '/nosaltres/' → ['ca', '/nosaltres/']
+  const partir = (p) => {
+    const l = p.split('/')[1];
+    return l !== porDefecto && idiomas.includes(l) ? [l, p.slice(l.length + 1)] : [porDefecto, p];
+  };
+  const esPagina = (p) => !NO_ES_SECCION.test(p) && !/\.\w+$/.test(p) && !ocultas.has(partir(p)[1].split('/')[1]);
+  const LOCALE = { ca: 'ca_ES', es: 'es_ES', en: 'en_GB' };
 
   // ---- seguir los enlaces desde la portada -------------------------------
   const ws = await abrirPestana();
   const paginas = new Map();
-  const cola = ['/'];
+  const cola = idiomas.map((l) => `${prefijo(l)}/`);
   const vistas = new Set(cola);
   while (cola.length) {
     const path = cola.shift();
@@ -165,7 +174,7 @@ try {
   mkdirSync(join(DIST, 'og'), { recursive: true });
   for (const [path, pagina] of paginas) {
     const foto = (pagina.view.match(/data-zoom="(assets\/[^"]+)"/) || pagina.view.match(/class="product__img" src="(assets\/[^"]+)"/) || [])[1];
-    if (path === '/' || !foto) continue;
+    if (partir(path)[1] === '/' || !foto) continue;
     pagina.og = `og/${path.split('/').filter(Boolean).join('-')}.jpg`;
     await tarjeta(pagina.title.replace(/^TAT ARA — | — TAT ARA$/g, ''), foto, join(DIST, pagina.og));
   }
@@ -173,7 +182,18 @@ try {
 
   // ---- escribir cada página -----------------------------------------------
   for (const [path, { title, view, menu, og }] of paginas) {
+    const [lang, base] = partir(path);
+    // La misma página en cada idioma que se haya pintado, y el catalán como x-default.
+    const alternas = idiomas.filter((l) => paginas.has(prefijo(l) + base))
+      .map((l) => `<link rel="alternate" hreflang="${l}" href="${SITE_URL}${prefijo(l)}${base}">`);
+    if (paginas.has(base)) alternas.push(`<link rel="alternate" hreflang="x-default" href="${SITE_URL}${base}">`);
     let html = template
+      .replace(/<html lang="[^"]*"/, `<html lang="${lang}"`)
+      .replace(/(<link rel="canonical" href="[^"]*">)/, `$1\n  ${alternas.join('\n  ')}`)
+      .replace(/(<meta property="og:locale" content=")[^"]*/, `$1${LOCALE[lang] || lang}`)
+      // la portada y el carrito, en su idioma (el JS lo hace igual al cargar)
+      .replace(/(id="brand-home" href=")\//, `$1${prefijo(lang)}/`)
+      .replace(/(id="cart-link" href=")\//, `$1${prefijo(lang)}/`)
       .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`)
       .replace(/(<link rel="canonical" href=")[^"]*/, `$1${SITE_URL}${path}`)
       .replace(/(<meta property="og:url" content=")[^"]*/, `$1${SITE_URL}${path}`)

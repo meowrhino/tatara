@@ -105,12 +105,17 @@ columna, con su dirección (`/exposicions/anna-dot/`, sacada del nombre).
 el resto `/nosaltres/`, `/botiga/`… y cada exposición `/exposicions/<nombre>/`.
 Los enlaces internos no recargan (`pushState` en `main.js`) y el botón de atrás
 funciona. Las direcciones viejas con `#` (`#botiga`, `#exposicions?expo=…`)
-se reescriben solas. Al publicar, `tools/prerender.mjs` abre cada dirección en
+se reescriben solas. **Cada idioma tiene sus direcciones**: el catalán, sin
+prefijo (`/nosaltres/`), y los otros con él delante (`/es/nosaltres/`,
+`/en/exposicions/anna-dot/`); manda la dirección. Elegir un idioma con los
+botones lo recuerda, y la próxima visita a una dirección sin prefijo pasa a la
+de ese idioma. Al publicar, `tools/prerender.mjs` abre cada dirección en
 un Chrome sin ventana con la web de verdad (el mismo JS, sin una segunda
 plantilla) y guarda en `dist/<dirección>/index.html` lo que ha pintado, con su
-título, descripción, canonical y una imagen para compartir de 1200×630
+título, descripción, canonical, `hreflang` hacia sus versiones en los otros
+idiomas (y el catalán como `x-default`) y una imagen para compartir de 1200×630
 (`dist/og/*.jpg`: TAT, ARA, el título y la primera foto); escribe también el
-`sitemap.xml`. Las direcciones salen de seguir los enlaces desde la portada:
+`sitemap.xml`. Las direcciones salen de seguir los enlaces desde la portada de cada idioma:
 una exposición nueva tiene su página sin tocar el script. Si una dirección no
 tiene fichero, el `.htaccess` sirve el `index.html` de la raíz y el JS la pinta.
 Como la clienta edita en GitHub, cada cambio suyo es una publicación y las

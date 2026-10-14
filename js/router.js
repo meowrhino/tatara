@@ -9,7 +9,7 @@
    ============================================================ */
 
 import { $, esc, t, ui } from './utils.js';
-import { SITE, pathOf } from './state.js';
+import { SITE, pathOf, langOfPath } from './state.js';
 import { loadJSON } from './data.js';
 import { closeModal } from './modal.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
@@ -17,8 +17,8 @@ import { renderText, renderPeople, renderContact, renderNewsletter } from './sec
 import { renderShop, renderCart } from './botiga.js';
 import { setIntroProgress } from './intro.js';
 
-// "/exposicions/anna-dot/" → ['exposicions', 'anna-dot']
-const segments = () => location.pathname.split('/').filter(Boolean);
+// "/exposicions/anna-dot/" (o "/es/exposicions/anna-dot/") → ['exposicions', 'anna-dot']
+const segments = () => location.pathname.split('/').filter(Boolean).slice(langOfPath() ? 1 : 0);
 
 // Id de la sección actual; cae a la primera sección si no es válido.
 function currentId() {

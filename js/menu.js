@@ -7,7 +7,7 @@
    ============================================================ */
 
 import { $, esc, t, captureFocus } from './utils.js';
-import { SITE, LANG, setLang, pathOf } from './state.js';
+import { SITE, LANG, setLang, pathOf, pathInLang } from './state.js';
 import { renderRoute } from './router.js';
 import { updateCartBadge } from './cart.js';
 
@@ -43,6 +43,9 @@ export function buildMenu() {
     `<li><a href="${pathOf(s.id)}" data-id="${s.id}">${esc(t(s.label))}</a></li>`).join('');
   list.querySelectorAll('a').forEach((a) =>
     a.addEventListener('click', () => closeMenu()));
+  // La portada y el carrito, en el idioma activo (en el HTML van en catalán).
+  $('#brand-home').href = pathOf(SITE.sections[0].id);
+  $('#cart-link').href = pathOf('carret');
   updateCartBadge();
   buildLangs();
 }
@@ -85,10 +88,12 @@ export function closeLangModal() {
   if ($('#modal').hidden && !isMenuOpen()) document.body.classList.remove('no-scroll');
 }
 
-// Cambia el idioma activo y re-renderiza: menú (etiquetas + estado activo) y la
-// sección actual. renderRoute ya llama a syncActive al terminar.
+// Cambia el idioma activo y re-renderiza: la dirección (/es/…), el menú
+// (etiquetas + estado activo) y la sección actual. renderRoute ya llama a
+// syncActive al terminar.
 function changeLang(lang) {
-  setLang(lang);
+  history.replaceState(null, '', pathInLang(lang) + location.search);
+  setLang(lang, true);
   document.documentElement.lang = lang;
   buildMenu();
   renderRoute();

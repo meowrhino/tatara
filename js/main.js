@@ -5,7 +5,7 @@
    (type="module"); el resto de módulos se importan desde aquí.
    ============================================================ */
 
-import { CONFIG_URL, SITE, setSite, setLang, storedLang } from './state.js';
+import { CONFIG_URL, SITE, setSite, setLang, storedLang, langOfPath, pathInLang } from './state.js';
 import { $, esc, ui } from './utils.js';
 import { loadJSON } from './data.js';
 import { buildMenu, openMenu, closeMenu, isMenuOpen, openLangModal, closeLangModal, isLangModalOpen } from './menu.js';
@@ -23,13 +23,15 @@ async function init() {
     $('#view').innerHTML = `<p class="loading">${ui('configError')}<br><small>${esc(err.message)}</small></p>`;
     return;
   }
-  // Idioma: el recordado de una visita anterior si sigue siendo válido, si no el
-  // por defecto de la config.
+  // Idioma: el de la dirección (/es/…, /en/…). Una dirección sin prefijo es la
+  // catalana, salvo que en una visita anterior se eligiera otro idioma: entonces
+  // se pasa a la misma dirección en ese idioma, sin recargar.
   const langs = SITE.languages || ['ca'];
   const remembered = storedLang();
-  const lang = langs.includes(remembered) ? remembered : (SITE.defaultLang || 'ca');
+  const lang = langOfPath() || (langs.includes(remembered) ? remembered : (SITE.defaultLang || 'ca'));
   setLang(lang);
   document.documentElement.lang = lang;
+  if (!langOfPath()) history.replaceState(null, '', pathInLang(lang) + location.search + location.hash);
 
   // Colores: TODOS viven en data.json → theme (fuente única), y se publican
   // como --<clau> (--bg, --ink…). Las claves con '_' (comentarios) se ignoran.
