@@ -18,6 +18,14 @@
       <h1>Comandes</h1>
       <p class="soft">Les cent últimes. L'estat es guarda sol en triar-lo.</p>
 
+      <p id="acces" hidden>
+        <label>contrasenya
+          <input id="token" type="password" placeholder="ADMIN_TOKEN" autocomplete="off" />
+        </label>
+        <button id="token-ok" type="button">entrar</button>
+        <span id="token-fb" class="feedback"></span>
+      </p>
+
       <div class="taula-scroll">
         <table id="taula" hidden>
           <thead>
@@ -42,8 +50,8 @@
       <span class="bar__side bar__side--right"></span>
     </footer>
 
+    <script src="token.js"></script>
     <script>
-      const token = localStorage.getItem("tatara:admin") || "";
       const ESTATS = ["pendiente", "enviado", "entregado", "cancelado"];
       const $ = (sel) => document.querySelector(sel);
       const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -66,14 +74,18 @@
 
       async function carrega() {
         if (!token) {
-          return avis('Falta la contrasenya. <a href="index.html">Posa-la al panell</a> i torna.', true);
+          $("#estat").hidden = true;
+          return demanaToken("falta la contrasenya");
         }
         let comandes;
         try {
           const res = await fetch("/api/admin/historial?limit=100", {
             headers: { Authorization: `Bearer ${token}` },
           });
-          if (res.status === 401) return avis("Contrasenya incorrecta.", true);
+          if (res.status === 401) {
+            $("#estat").hidden = true;
+            return demanaToken("la contrasenya guardada no és correcta");
+          }
           if (!res.ok) return avis("Error " + res.status + " en demanar les comandes.", true);
           comandes = await res.json();
         } catch (err) {
@@ -125,6 +137,10 @@
         });
       }
 
+      campToken(() => {
+        $("#acces").hidden = true;
+        carrega();
+      });
       carrega();
     </script>
   </body>

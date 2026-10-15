@@ -151,7 +151,8 @@ la pestaña *Actions* → *Publicar en tatara.cat* → *Run workflow*. Hace esto
    commit y push.
 3. Sube `dist/` por SFTP con `lftp mirror`: solo lo que ha cambiado, sin borrar
    nada del servidor (así `api/config.php` no se toca). La clave del servidor va
-   fijada en el script: si no es la de Pangea, no sube.
+   fijada en el script: si no es la de Pangea, no sube. Lo único que borra son
+   dos carpetas viejas que ya no usa nadie (`assets/img/expos/`, `assets/pdf/`).
 4. Comprueba `/api/health` y mueve la etiqueta `publicado`.
 
 **Para activarla**: en GitHub, *Settings* → *Secrets and variables* → *Actions* →

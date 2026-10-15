@@ -20,6 +20,14 @@
         web com a <em>exhaurit</em>: es veu, però no es pot comprar. Les vendes
         les resta la web sola.</p>
 
+      <p id="acces" hidden>
+        <label>contrasenya
+          <input id="token" type="password" placeholder="ADMIN_TOKEN" autocomplete="off" />
+        </label>
+        <button id="token-ok" type="button">entrar</button>
+        <span id="token-fb" class="feedback"></span>
+      </p>
+
       <div class="taula-scroll">
         <table id="taula" hidden>
           <thead>
@@ -58,8 +66,8 @@
       <span class="bar__side bar__side--right"></span>
     </footer>
 
+    <script src="token.js"></script>
     <script>
-      const token = localStorage.getItem("tatara:admin") || "";
       const $ = (sel) => document.querySelector(sel);
       const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -84,15 +92,21 @@
 
       async function carrega() {
         if (!token) {
-          return avis('Falta la contrasenya. <a href="index.html">Posa-la al panell</a> i torna.', true);
+          $("#estat").hidden = true;
+          return demanaToken("falta la contrasenya");
         }
         try {
           const auth = { headers: { Authorization: `Bearer ${token}` } };
-          const [cataleg, stock, mov] = await Promise.all([
+          const [cataleg, stock, movRes] = await Promise.all([
             fetch("../data/botiga.json").then((r) => r.json()),
             fetch("/api/stock").then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
-            fetch("/api/admin/stock-mov", auth).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+            fetch("/api/admin/stock-mov", auth).catch(() => null),
           ]);
+          if (movRes?.status === 401) {
+            $("#estat").hidden = true;
+            return demanaToken("la contrasenya guardada no és correcta");
+          }
+          const mov = movRes?.ok ? await movRes.json() : [];
           registre = mov;
           productes = (cataleg.products || []).map((p) => ({
             id: p.id,
@@ -166,7 +180,12 @@
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             body: JSON.stringify({ productos: payload, nota: $("#nota").value.trim() }),
           });
-          feedback.textContent = res.ok ? "guardat ✓" : (res.status === 401 ? "contrasenya incorrecta" : "error " + res.status);
+          if (res.status === 401) {
+            // El que hi ha escrit a la taula es queda: amb la bona, es torna a clicar Guardar.
+            demanaToken("la contrasenya no és correcta: no s'ha guardat res");
+            return;
+          }
+          feedback.textContent = res.ok ? "guardat ✓" : "error " + res.status;
           feedback.className = "feedback " + (res.ok ? "feedback--ok" : "feedback--error");
           if (res.ok) { $("#nota").value = ""; await carrega(); }
         } catch {
@@ -177,6 +196,11 @@
         }
       });
 
+      campToken(() => {
+        $("#acces").hidden = true;
+        if ($("#taula").hidden) carrega();
+        else { $("#feedback").textContent = "contrasenya correcta: torneu a clicar Guardar"; $("#feedback").className = "feedback"; }
+      });
       carrega();
     </script>
   </body>

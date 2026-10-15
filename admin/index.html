@@ -20,14 +20,15 @@
         queden de cada peça i què passa amb cada comanda.</p>
 
       <h2>Contrasenya</h2>
-      <p class="soft">És l'<code>ADMIN_TOKEN</code>. Es guarda en aquest navegador,
+      <p class="soft">És l'<code>ADMIN_TOKEN</code>. En guardar-la es comprova:
+        si no és correcta, ho diu i no es guarda. Es queda en aquest navegador,
         així que només cal escriure-la un cop per dispositiu.</p>
-      <p>
+      <p id="acces">
         <label>token
           <input id="token" type="password" placeholder="ADMIN_TOKEN" autocomplete="off" />
         </label>
-        <button id="save" type="button">guardar</button>
-        <span id="feedback" class="feedback"></span>
+        <button id="token-ok" type="button">guardar</button>
+        <span id="token-fb" class="feedback"></span>
       </p>
 
       <h2>Què vols fer</h2>
@@ -58,21 +59,13 @@
       <span class="bar__side bar__side--right"></span>
     </footer>
 
+    <script src="token.js"></script>
     <script>
-      const input = document.getElementById("token");
-      const feedback = document.getElementById("feedback");
-      input.value = localStorage.getItem("tatara:admin") || "";
-
-      document.getElementById("save").addEventListener("click", () => {
-        const valor = input.value.trim();
-        localStorage.setItem("tatara:admin", valor);
-        feedback.textContent = valor ? "guardat ✓" : "esborrat";
-        feedback.className = "feedback feedback--ok";
-      });
-      // Enter dins del camp també guarda: és l'únic botó de la pantalla.
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") document.getElementById("save").click();
-      });
+      campToken();
+      // Si ja n'hi ha una de guardada, diu de seguida si encara serveix.
+      if (token) provaToken(token)
+        .then((bo) => avisToken(bo ? "la guardada és correcta ✓" : "la guardada no és correcta", bo))
+        .catch(() => {});
     </script>
   </body>
 </html>
