@@ -17,7 +17,8 @@
     <main>
       <h1>Stock</h1>
       <p class="soft">Quantes unitats queden de cada peça. Una peça amb 0 surt a la
-        web com a <em>exhaurit</em>: es veu, però no es pot comprar.</p>
+        web com a <em>exhaurit</em>: es veu, però no es pot comprar. Les vendes
+        les resta la web sola.</p>
 
       <div class="taula-scroll">
         <table id="taula" hidden>
@@ -26,7 +27,9 @@
               <th></th>
               <th>Peça</th>
               <th class="num">Preu</th>
-              <th class="num">Unitats</th>
+              <th class="num">Queden</th>
+              <th class="num">Venudes</th>
+              <th class="num">Afegir</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -35,13 +38,18 @@
       <p class="estat" id="estat">carregant…</p>
 
       <div class="accions" id="accions" hidden>
-        <button id="guardar" type="button">Guardar canvis</button>
+        <label>Nota <input id="nota" type="text" placeholder="p. ex. arriben de la impremta" size="28"></label>
+        <button id="guardar" type="button">Guardar</button>
         <span id="feedback" class="feedback"></span>
       </div>
 
+      <p class="nota"><b>Afegir</b>: quantes n'arriben (<code>20</code>). Per treure'n,
+        en negatiu (<code>-1</code>, per exemple si se n'ha trencat una). Cada canvi
+        queda apuntat, amb la data i la nota: cliqueu el nom d'una peça per veure'n
+        el registre.</p>
       <p class="nota">El títol, el preu i la foto surten de <code>data/botiga.json</code>
         i no es canvien des d'aquí. Una peça sense preu no és comprable encara que
-        tingui unitats.</p>
+        tingui unitats. Una peça nova surt amb 0 fins que n'hi afegiu.</p>
     </main>
 
     <footer class="bar bar--bottom">
@@ -66,16 +74,26 @@
       }
 
       let productes = [];
+      let registre = [];
+
+      const MOTIU = { inicial: "inicial", entrada: "entrada", salida: "sortida", ajuste: "ajust", venta: "venda" };
+      const data = (s) => {
+        const d = new Date(String(s).replace(" ", "T") + "Z");
+        return isNaN(d) ? esc(s) : d.toLocaleString("ca", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+      };
 
       async function carrega() {
         if (!token) {
           return avis('Falta la contrasenya. <a href="index.html">Posa-la al panell</a> i torna.', true);
         }
         try {
-          const [cataleg, stock] = await Promise.all([
+          const auth = { headers: { Authorization: `Bearer ${token}` } };
+          const [cataleg, stock, mov] = await Promise.all([
             fetch("../data/botiga.json").then((r) => r.json()),
             fetch("/api/stock").then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+            fetch("/api/admin/stock-mov", auth).then((r) => (r.ok ? r.json() : [])).catch(() => []),
           ]);
+          registre = mov;
           productes = (cataleg.products || []).map((p) => ({
             id: p.id,
             titol: titol(p),
@@ -83,6 +101,8 @@
             moneda: cataleg.currency || "€",
             foto: (p.images || [])[0] || null,
             unitats: Number(stock[p.id]?._ ?? 0),
+            venudes: mov.filter((m) => m.producto_id === p.id && m.motivo === "venta")
+                        .reduce((n, m) => n - Number(m.cambio), 0),
           }));
         } catch (err) {
           return avis("No s'ha pogut carregar el catàleg: " + esc(err.message), true);
@@ -91,37 +111,64 @@
         pinta();
       }
 
+      const historial = (p) => {
+        const files = registre.filter((m) => m.producto_id === p.id);
+        if (!files.length) return '<p class="soft">Encara no hi ha cap moviment.</p>';
+        return `<table class="registre"><tbody>${files.map((m) => `
+          <tr><td>${data(m.createdAt)}</td>
+              <td class="num">${m.cambio > 0 ? "+" : ""}${esc(m.cambio)}</td>
+              <td>${esc(MOTIU[m.motivo] || m.motivo)}</td>
+              <td>${esc(m.nota || "")}${m.pedido_id ? ` <span class="soft">${esc(m.pedido_id)}</span>` : ""}</td></tr>`).join("")}
+        </tbody></table>`;
+      };
+
       function pinta() {
         $("#taula tbody").innerHTML = productes.map((p, i) => `
           <tr>
             <td>${p.foto ? `<img class="mini" src="../${esc(p.foto)}" alt="" loading="lazy">` : '<span class="mini"></span>'}</td>
-            <td>${esc(p.titol)}${p.preu === null ? ' <span class="tag tag--avis">sense preu</span>' : ""}</td>
+            <td><button type="button" class="enllac" data-hist="${i}" aria-expanded="false">${esc(p.titol)}</button>${p.preu === null ? ' <span class="tag tag--avis">sense preu</span>' : ""}</td>
             <td class="num">${p.preu === null ? "—" : esc(p.preu + p.moneda)}</td>
-            <td class="num"><input type="number" min="0" step="1" value="${p.unitats}"
-                  data-prod="${i}" aria-label="unitats de ${esc(p.titol)}"></td>
-          </tr>`).join("");
+            <td class="num">${p.unitats}</td>
+            <td class="num">${p.venudes}</td>
+            <td class="num"><input type="number" step="1" placeholder="0"
+                  data-prod="${i}" aria-label="unitats que arriben de ${esc(p.titol)}"></td>
+          </tr>
+          <tr class="hist" data-hist-de="${i}" hidden><td></td><td colspan="5">${historial(p)}</td></tr>`).join("");
         $("#estat").hidden = true;
         $("#taula").hidden = false;
         $("#accions").hidden = false;
       }
 
+      $("#taula").addEventListener("click", (e) => {
+        const b = e.target.closest("[data-hist]");
+        if (!b) return;
+        const fila = document.querySelector(`[data-hist-de="${b.dataset.hist}"]`);
+        fila.hidden = !fila.hidden;
+        b.setAttribute("aria-expanded", String(!fila.hidden));
+      });
+
       $("#guardar").addEventListener("click", async (e) => {
         const btn = e.currentTarget;
         const feedback = $("#feedback");
-        btn.disabled = true;
+        const payload = [...document.querySelectorAll("input[data-prod]")]
+          .map((inp) => ({ id: productes[Number(inp.dataset.prod)].id, suma: Math.trunc(Number(inp.value) || 0) }))
+          .filter((u) => u.suma !== 0);
         feedback.textContent = "";
-        const payload = [...document.querySelectorAll("input[data-prod]")].map((inp) => ({
-          id: productes[Number(inp.dataset.prod)].id,
-          cantidad: Math.max(0, Number(inp.value) || 0),
-        }));
+        if (!payload.length) {
+          feedback.textContent = "no hi ha res a guardar";
+          feedback.className = "feedback";
+          return;
+        }
+        btn.disabled = true;
         try {
           const res = await fetch("/api/admin/stock-bulk", {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-            body: JSON.stringify({ productos: payload }),
+            body: JSON.stringify({ productos: payload, nota: $("#nota").value.trim() }),
           });
           feedback.textContent = res.ok ? "guardat ✓" : (res.status === 401 ? "contrasenya incorrecta" : "error " + res.status);
           feedback.className = "feedback " + (res.ok ? "feedback--ok" : "feedback--error");
+          if (res.ok) { $("#nota").value = ""; await carrega(); }
         } catch {
           feedback.textContent = "sense connexió amb el servidor";
           feedback.className = "feedback feedback--error";

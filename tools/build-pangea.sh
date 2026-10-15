@@ -24,17 +24,23 @@ git rev-parse -q --verify publicado >/dev/null || {
 git diff --quiet HEAD -- data/ || {
   echo "✗ data/ tiene cambios sin guardar. Haz commit antes de publicar."; exit 1; }
 
-for f in data/*.json; do
+# Los JSON de data/ y el de cada exposición (data/exposicions/<slug>/project.json).
+# Uno que aún no estaba en lo publicado (una exposición nueva) no está en el
+# servidor: no hay nada suyo que traer.
+# Solo cuentan los que se han bajado: lo demás de data/ (fotos, PDF, carpetas
+# nuevas) es nuestro, no de ella.
+BAJADOS=()
+for f in data/*.json data/*/*/project.json; do
+  [[ -f "$f" ]] || continue
+  git cat-file -e "publicado:$f" 2>/dev/null || continue
   if ! curl -fsS "$ORIGEN/$f" -o "$f" 2>/dev/null; then
     git checkout -q -- data/
-    if git cat-file -e "publicado:$f" 2>/dev/null; then
-      echo "✗ No se ha podido bajar $f de $ORIGEN (¿sin red?). No se ha tocado nada."; exit 1
-    fi
-    echo "✗ $f es nuevo y aún no está en el servidor: súbelo primero a mano, o quita este control."; exit 1
+    echo "✗ No se ha podido bajar $f de $ORIGEN (¿sin red?). No se ha tocado nada."; exit 1
   fi
+  BAJADOS+=("$f")
 done
 PARCHE=$(mktemp)
-git diff publicado -- data/ > "$PARCHE"
+(( ${#BAJADOS[@]} )) && git diff publicado -- "${BAJADOS[@]}" > "$PARCHE"
 git checkout -q -- data/
 if [[ -s "$PARCHE" ]]; then
   # En GitHub Actions nadie puede revisar ni guardar esos cambios: se publicarían

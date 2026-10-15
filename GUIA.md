@@ -6,8 +6,8 @@ programa gratuït: canvieu els fitxers a l'ordinador i, en guardar-los, pugen a
 GitHub i es publiquen sols.
 
 > **La regla d'or**: només toqueu **dues carpetes**: `data/` (els textos, les
-> dates i els preus) i `assets/` (les fotos i els PDF). La resta és el codi:
-> millor no tocar-lo.
+> dates, els preus i cada exposició amb les seves fotos) i `assets/` (les fotos
+> de l'agenda, la recerca i la botiga). La resta és el codi: millor no tocar-lo.
 >
 > L'única cosa que **no** es fa a GitHub són les **unitats de la botiga** i les
 > comandes: van al panell `tatara.cat/admin/` (punt 6).
@@ -45,7 +45,12 @@ fotos.
 ```
 data/
   agenda.json          ← l'agenda: exposicions, converses, tallers
-  exposicions.json     ← les fitxes de la secció Exposicions
+  exposicions.json     ← l'ordre de les fitxes de la secció Exposicions
+  exposicions/         ← una carpeta per exposició:
+    anna-dot/
+      project.json       ← el text de la fitxa
+      img/1.webp, 2.webp ← les seves fotos
+      full-de-sala.pdf   ← el seu full de sala, si en té
   nosaltres.json       ← el text de Nosaltres
   recerca.json         ← el text i les fotos de Recerca
   botiga.json          ← els productes: títol, autor, preu, foto
@@ -54,10 +59,8 @@ data/
   menu.json            ← els noms del menú
 assets/
   img/agenda/          ← les fotos de l'agenda
-  img/expos/           ← les fotos de les exposicions
   img/recerca/         ← les fotos de recerca
   img/edicions/        ← les fotos de la botiga
-  pdf/                 ← els fulls de sala
 ```
 
 Cada fitxer de `data/` comença amb un `_comment` que explica què admet cada
@@ -80,7 +83,7 @@ camp: és la documentació més fiable, perquè viu al costat de les dades.
 Ja està: en 2-3 minuts surt a la web.
 
 **Per afegir fotos o PDF**: arrossegueu els fitxers a la carpeta que toqui (per
-exemple `assets/img/expos/`) a la columna de l'esquerra de VS Code, i després
+exemple `data/exposicions/anna-dot/img/`) a la columna de l'esquerra de VS Code, i després
 els passos 3 i 4.
 
 ---
@@ -153,7 +156,16 @@ Si passa fora de qualsevol exposició, va com un bloc més de l'agenda.
 
 ### Afegir una fitxa a la secció Exposicions
 
-A `data/exposicions.json`. Cada fitxa s'obre en clicar el nom:
+**Una exposició, una carpeta**, a `data/exposicions/`. Tot el que és d'una
+exposició (el text, les fotos, el full de sala) és a dins.
+
+1. **Copieu la carpeta** d'una altra exposició i poseu-li de nom el de
+   l'artista, sense accents, espais ni majúscules: `nom-de-l-artista`. Aquest
+   nom és també l'adreça de la fitxa: `tatara.cat/exposicions/nom-de-l-artista/`.
+2. **Les fotos**: buideu la seva carpeta `img/` i poseu-hi les noves, passades
+   per imgToWeb, que ja surten numerades: `1.webp`, `2.webp`…
+3. **El full de sala** (si en té): el PDF, dins de la carpeta.
+4. **El text**: canvieu el seu `project.json`:
 
 ```json
 {
@@ -161,18 +173,27 @@ A `data/exposicions.json`. Cada fitxa s'obre en clicar el nom:
   "expo": { "ca": "Títol de la mostra", "es": "…", "en": "…" },
   "date": { "start": "2027-03-01", "end": "2027-04-15" },
   "text": { "ca": "Text de l'exposició", "es": "…", "en": "…" },
-  "images": ["assets/img/expos/nom-1.webp", "assets/img/expos/nom-2.webp"],
+  "photos": ["1", "2", "3"],
   "bio": { "ca": "Bio de l'artista", "es": "…", "en": "…" },
-  "link": "https://laseva.web",
-  "pdf": "assets/pdf/nom-full-de-sala.pdf"
-},
+  "url": "https://laseva.web",
+  "pdf": "full-de-sala.pdf"
+}
 ```
 
-- `link` i `pdf` són opcionals (`"link": null` si no en té).
-- Per deixar aire entre grups, s'hi pot posar `{ "spacer": true },`.
-- Cada fitxa té la seva adreça, que surt del `name`:
-  `tatara.cat/exposicions/nom-de-l-artista/`. **Si canvieu el `name`, canvia
-  l'adreça**, i l'antiga (si algú l'havia compartit) porta a la llista.
+5. **Poseu-la a la llista**: a `data/exposicions.json`, afegiu el nom de la
+   carpeta a `projects`, on vulgueu que surti (la primera de la llista és la
+   primera de la web).
+
+- `photos`: les fotos de `img/` que surten, **pel seu número i sense
+  `.webp`**, en l'ordre en què surten.
+- `url` i `pdf` són opcionals: si no en té, esborreu la línia (i la coma de la
+  línia d'abans).
+- Per deixar aire entre grups, a la llista de `data/exposicions.json` s'hi pot
+  posar `{ "spacer": true }`.
+- **No canvieu el nom de la carpeta** un cop publicada: canviaria l'adreça, i
+  l'antiga (si algú l'havia compartit) portaria a la llista.
+- Per treure una exposició de la web sense esborrar-la, traieu-la de la llista:
+  la carpeta es queda.
 
 ### Afegir un producte a la botiga
 
@@ -216,7 +237,10 @@ Entre parèntesis hi va el nom de la secció: `agenda`, `nosaltres`,
    `guus-vandeweerd-1.webp`.
 3. Pugeu-les a la carpeta que toqui d'`assets/img/` (punt 2).
 4. Escriviu aquest nom al JSON, amb la carpeta davant:
-   `"assets/img/expos/guus-vandeweerd-1.webp"`.
+   `"assets/img/recerca/guus-vandeweerd-1.webp"`.
+
+Les fotos de les **exposicions** són diferents: van a la carpeta de cada
+exposició, numerades, i al JSON només el número (vegeu més amunt).
 
 Si una foto es veu **de costat**, gireu-la a l'ordinador abans de passar-la per
 imgToWeb.
@@ -240,14 +264,35 @@ Google **es fan sols** en publicar: no cal fer res.
 
 ## 6. Stock i comandes: el panell
 
-A **`tatara.cat/admin/`**, amb la contrasenya del panell:
+**La regla**: al JSON hi va **què** es ven (títol, preu, fotos). **Quantes
+unitats** n'hi ha es posa al panell, a **`tatara.cat/admin/`** (amb la
+contrasenya del panell) → **`stock.html`**.
 
-- **`stock.html`**: quantes unitats queden de cada peça. Baixen soles amb cada
-  venda; aquí es posen quan arriben exemplars nous.
-- **`tickets.html`**: les comandes, els missatges i les altes a la newsletter.
+1. **Un producte nou**: l'afegiu a `data/botiga.json` (punt 4) i es publica.
+   Surt a la web com a **exhaurit** fins que hi poseu unitats.
+2. **N'arriben exemplars**: a la columna **Afegir**, quants n'arriben (`20`).
+   Si voleu, una nota a sota ("arriben de la impremta"). **Guardar**. Des
+   d'aquell moment es pot comprar.
+3. **Se'n ven un**: no cal fer res. La web el resta sola quan el pagament es
+   confirma.
+4. **Se'n trenca un, se'n regala un, el recompte no quadra**: a **Afegir**, en
+   negatiu (`-1`), i una nota ("un de trencat"). Mai baixa de 0.
+5. **Què ha passat amb aquest producte?**: cliqueu-ne el nom i surt el seu
+   **registre**: cada entrada, sortida i venda, amb la data, la nota i, a les
+   vendes, el número de comanda. La columna **Venudes** diu quantes se n'han
+   venut en total.
 
-Això no és a GitHub perquè ho ha de poder canviar el servidor tot sol (quan
-algú paga), i el servidor no pot escriure a GitHub.
+```
+15/10/2026 17:12   +20   entrada   arriben de la impremta
+16/10/2026 11:03    -1   venda     ord_1792…
+18/10/2026 09:40    -1   sortida   un de trencat
+```
+
+L'altra pàgina del panell, **`tickets.html`**, té les comandes, els missatges i
+les altes a la newsletter.
+
+Les unitats no són a GitHub perquè les ha de poder canviar el servidor tot sol
+(quan algú paga), i el servidor no pot escriure a GitHub.
 
 ---
 

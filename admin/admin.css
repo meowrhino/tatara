@@ -216,3 +216,10 @@ td.num { text-align: right; white-space: nowrap; }
   .bar--bottom .word { margin: 0 auto; }
   h1 { font-size: 0.9rem; }
 }
+
+/* stock: el nom de la peça obre el seu registre */
+.enllac { border: 0; background: none; padding: 0; font: inherit; letter-spacing: 0; text-align: left; text-decoration: underline; text-underline-offset: 0.18em; }
+.enllac:hover:not(:disabled) { background: none; color: inherit; }
+tr.hist > td { background: rgba(0, 0, 0, 0.02); }
+.registre { font-size: 0.8rem; }
+.registre td { padding: 0.3rem 0.5rem; border-bottom: 1px solid var(--grey-soft); }

@@ -87,6 +87,21 @@ P_STOCK=$(printf '{"productos":[{"id":"%s","cantidad":5}]}' "$PRODUCTO")
 comprobar "stock-bulk actualiza"   '"updated":1' "$(curl -s -X POST "${AUTH[@]}" "$BASE/admin/stock-bulk" -d "$P_STOCK")"
 comprobar "el stock quedó en 5"    "\"$PRODUCTO\":{\"_\":5}" "$(curl -s "$BASE/stock")"
 
+echo "registro del stock"
+REG() { curl -s "${AUTH[@]}" "$BASE/admin/stock-mov?id=$PRODUCTO"; }
+comprobar "fijar a 5 queda como ajuste +5" '"cambio":5,"motivo":"ajuste"' "$(REG)"
+P_SUMA=$(printf '{"nota":"arriben 3","productos":[{"id":"%s","suma":3}]}' "$PRODUCTO")
+P_RESTA=$(printf '{"nota":"un de trencat","productos":[{"id":"%s","suma":-3}]}' "$PRODUCTO")
+P_MUCHO=$(printf '{"productos":[{"id":"%s","suma":-99}]}' "$PRODUCTO")
+comprobar "sumar 3"                '"updated":1' "$(curl -s -X POST "${AUTH[@]}" "$BASE/admin/stock-bulk" -d "$P_SUMA")"
+comprobar "el stock quedó en 8"    "\"$PRODUCTO\":{\"_\":8}" "$(curl -s "$BASE/stock")"
+comprobar "queda la entrada con su nota" '"cambio":3,"motivo":"entrada","nota":"arriben 3"' "$(REG)"
+comprobar "restar 3"               '"updated":1' "$(curl -s -X POST "${AUTH[@]}" "$BASE/admin/stock-bulk" -d "$P_RESTA")"
+comprobar "queda la salida"        '"cambio":-3,"motivo":"salida"' "$(REG)"
+comprobar "restar más de lo que hay deja 0, no negativo" "\"$PRODUCTO\":{\"_\":0}" "$(curl -s -X POST "${AUTH[@]}" "$BASE/admin/stock-bulk" -d "$P_MUCHO" >/dev/null; curl -s "$BASE/stock")"
+comprobar "y apunta lo que bajó de verdad" '"cambio":-5,"motivo":"salida"' "$(REG)"
+curl -s -X POST "${AUTH[@]}" "$BASE/admin/stock-bulk" -d "$P_STOCK" >/dev/null
+
 echo "instalar tablas desde cero"
 # La base de pruebas ya tiene las tablas, así que se tiran y se piden otra vez.
 if [[ "$TATARA_DB_DRIVER" == "mysql" ]]; then
@@ -102,6 +117,14 @@ comprobar "llamarlo dos veces no rompe" '"faltan":[]' "$(curl -s "${AUTH[@]}" "$
 comprobar "y el stock vuelve"          "\"$PRODUCTO\":{\"_\":0}" "$(curl -s "$BASE/stock")"
 # Se deja el stock otra vez a 5 para lo que viene después.
 curl -s -X POST "${AUTH[@]}" "$BASE/admin/stock-bulk" -d "$P_STOCK" >/dev/null
+
+echo "el registro se crea solo si no está (código publicado antes que la tabla)"
+if [[ "$TATARA_DB_DRIVER" == "mysql" ]]; then
+  "${MY[@]}" "$TATARA_DB_NAME" -e "DROP TABLE tatara_stock_mov"
+else
+  php -r '$db=new PDO("sqlite:".getenv("TATARA_SQLITE_PATH")); $db->exec("DROP TABLE tatara_stock_mov");'
+fi
+comprobar "sin tabla, el registro arranca con lo que hay" '"cambio":5,"motivo":"inicial"' "$(REG)"
 
 echo "checkout sin claves de Stripe"
 P_CARRITO=$(printf '{"carrito":[{"id":"%s","cantidad":1}]}' "$PRODUCTO")
@@ -126,6 +149,7 @@ firmar() { php -r '$c=file_get_contents($argv[1]);$t=time();echo "t=$t,v1=".hash
 comprobar "firma inválida → 400" '400' "$(codigo -X POST "$BASE/stripe-webhook" -H 'Stripe-Signature: t=1,v1=falsa' --data-binary "@$EVENTO")"
 comprobar "firma válida → recibido" '"received":true' "$(curl -s -X POST "$BASE/stripe-webhook" -H "Stripe-Signature: $(firmar "$EVENTO")" --data-binary "@$EVENTO")"
 comprobar "el stock bajó de 5 a 3" "\"$PRODUCTO\":{\"_\":3}" "$(curl -s "$BASE/stock")"
+comprobar "la venta queda en el registro, con su pedido" '"cambio":-2,"motivo":"venta","nota":null,"pedido_id":"ord_' "$(REG)"
 comprobar "el pedido se guardó"    'compra@tatara.cat' "$(curl -s "${AUTH[@]}" "$BASE/admin/historial")"
 comprobar "guardó la dirección"    'Barcelona'         "$(curl -s "${AUTH[@]}" "$BASE/admin/historial")"
 comprobar "guardó el título del JSON, no el del navegador" '"nombre":' "$(curl -s "${AUTH[@]}" "$BASE/admin/historial")"
@@ -133,6 +157,7 @@ comprobar "guardó el título del JSON, no el del navegador" '"nombre":' "$(curl
 echo "idempotencia (Stripe reenvía el mismo evento)"
 comprobar "segundo envío → 200"    '"received":true' "$(curl -s -X POST "$BASE/stripe-webhook" -H "Stripe-Signature: $(firmar "$EVENTO")" --data-binary "@$EVENTO")"
 comprobar "el stock NO vuelve a bajar" "\"$PRODUCTO\":{\"_\":3}" "$(curl -s "$BASE/stock")"
+comprobar "ni se apunta otra venta" '1' "$(REG | php -r '$d=json_decode(stream_get_contents(STDIN),true); echo count(array_filter($d, fn($m) => $m["motivo"]==="venta"));')"
 comprobar "sigue habiendo un solo pedido" '1' "$(curl -s "${AUTH[@]}" "$BASE/admin/historial" | php -r '$d=json_decode(stream_get_contents(STDIN),true); echo is_array($d)&&array_is_list($d)?count($d):"no es una lista";')"
 
 echo "estado del pedido"

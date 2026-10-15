@@ -173,7 +173,7 @@ try {
   await sleep(300);
   mkdirSync(join(DIST, 'og'), { recursive: true });
   for (const [path, pagina] of paginas) {
-    const foto = (pagina.view.match(/data-zoom="(assets\/[^"]+)"/) || pagina.view.match(/class="product__img" src="(assets\/[^"]+)"/) || [])[1];
+    const foto = (pagina.view.match(/data-zoom="((?:assets|data)\/[^"]+)"/) || pagina.view.match(/class="product__img" src="(assets\/[^"]+)"/) || [])[1];
     if (partir(path)[1] === '/' || !foto) continue;
     pagina.og = `og/${path.split('/').filter(Boolean).join('-')}.jpg`;
     await tarjeta(pagina.title.replace(/^TAT ARA — | — TAT ARA$/g, ''), foto, join(DIST, pagina.og));

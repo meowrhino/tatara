@@ -34,20 +34,61 @@ ini_set('display_errors', '0');
 
 // ─── stock ───────────────────────────────────────────────
 
-/** Da de alta en la tabla el stock de los productos comprables. Idempotente. */
+/** Da de alta en la tabla, a 0, los productos comprables. Idempotente.
+ *  El JSON no lleva stock: un producto nuevo sale agotado hasta que se le
+ *  ponen unidades en el panel (admin/stock.html). Ver GUIA.md, punto 6. */
 function ensure_stock(): void
 {
     $comprables = array_values(array_filter(productos(), 'comprable'));
     if (!$comprables) return;
-    $sql = sql_insert_ignore('tatara_stock', 'producto_id, talla, cantidad', "?, '_', ?");
+    $sql = sql_insert_ignore('tatara_stock', 'producto_id, talla, cantidad', "?, '_', 0");
     db_tx(function (PDO $pdo) use ($comprables, $sql) {
         $st = $pdo->prepare($sql);
-        foreach ($comprables as $p) {
-            $inicial = isset($p['stockInicial']) && is_numeric($p['stockInicial'])
-                ? max(0, (int) $p['stockInicial']) : 0;
-            $st->execute([(string) $p['id'], $inicial]);
-        }
+        foreach ($comprables as $p) $st->execute([(string) $p['id']]);
     });
+}
+
+/**
+ * El registro de movimientos (tatara_stock_mov): una línea cada vez que cambia
+ * el stock, con lo que entra (+), lo que se vende o sale (−) y una nota.
+ * tatara_stock es el número de ahora; el registro, de dónde sale.
+ *
+ * La tabla se crea sola la primera vez que hace falta (con el mismo fichero de
+ * esquema que /admin/instalar), para que publicar este código antes de crearla
+ * a mano no rompa el webhook. Si ya había stock, entra como una línea "inicial".
+ */
+function asegurar_registro(): void
+{
+    static $hecho = false;
+    if ($hecho) return;
+    try {
+        db_first('SELECT 1 FROM tatara_stock_mov LIMIT 1');
+    } catch (Throwable $e) {
+        crear_tablas();
+        db_run("INSERT INTO tatara_stock_mov (producto_id, talla, cambio, motivo, nota)
+                SELECT producto_id, talla, cantidad, 'inicial', 'stock al empezar el registro'
+                  FROM tatara_stock WHERE cantidad > 0");
+    }
+    $hecho = true;
+}
+
+/** Suma (o resta) unidades y lo apunta en el registro. Dentro de una transacción.
+ *  Nunca baja de 0: el cambio que se apunta es el que ha habido de verdad.
+ *  Devuelve ese cambio. */
+function mover_stock(PDO $pdo, string $id, string $talla, int $cambio, string $motivo,
+                     ?string $nota = null, ?string $pedido = null): int
+{
+    $st = $pdo->prepare('SELECT cantidad FROM tatara_stock WHERE producto_id = ? AND talla = ?');
+    $st->execute([$id, $talla]);
+    $actual = (int) ($st->fetchColumn() ?: 0);
+    $nuevo = max(0, $actual + $cambio);
+    $real = $nuevo - $actual;
+    if ($real === 0 && $motivo !== 'venta') return 0;
+    $pdo->prepare(sql_upsert_stock())->execute([$id, $talla, $nuevo]);
+    $pdo->prepare('INSERT INTO tatara_stock_mov (producto_id, talla, cambio, motivo, nota, pedido_id)
+                   VALUES (?, ?, ?, ?, ?, ?)')
+        ->execute([$id, $talla, $real, $motivo, $nota, $pedido]);
+    return $real;
 }
 
 /** {producto_id: {talla: cantidad}} — la forma que espera el frontend. */
@@ -318,13 +359,16 @@ function registrar_pedido(array $sesion): void
 
     $pedidoId = 'ord_' . time() . '_' . bin2hex(random_bytes(3));
 
+    asegurar_registro();   // fuera de la transacción: un CREATE TABLE la cerraría
     db_tx(function (PDO $pdo) use ($carrito, $items, $envioInfo, $sesion, $pedidoId) {
-        $baja = $pdo->prepare(
-            'UPDATE tatara_stock SET cantidad = ' . sql_maximo('0', 'cantidad - ?') .
-            " WHERE producto_id = ? AND talla = '_'"
-        );
         foreach ($carrito as $it) {
-            $baja->execute([(int) ($it['cantidad'] ?? 0), (string) ($it['id'] ?? '')]);
+            $pedida = (int) ($it['cantidad'] ?? 0);
+            $real = mover_stock($pdo, (string) ($it['id'] ?? ''), '_', -$pedida, 'venta', null, $pedidoId);
+            if (-$real < $pedida) {
+                // Se vendió más de lo que quedaba: queda apuntado para revisarlo.
+                $pdo->prepare("UPDATE tatara_stock_mov SET nota = ? WHERE pedido_id = ? AND producto_id = ?")
+                    ->execute(['pedidas ' . $pedida . ', quedaban ' . (-$real), $pedidoId, (string) ($it['id'] ?? '')]);
+            }
         }
 
         $pdo->prepare(
@@ -440,6 +484,18 @@ function despachar_admin(string $ruta, string $metodo): void
         case 'POST /stock-bulk':
             stock_bulk();
 
+        case 'GET /stock-mov':
+            asegurar_registro();
+            $limiteRaw = (int) ($_GET['limit'] ?? 0);
+            $limite = $limiteRaw > 0 ? min($limiteRaw, 5000) : 1000;
+            $id = $_GET['id'] ?? null;
+            json_out(db_all(
+                'SELECT producto_id, talla, cambio, motivo, nota, pedido_id, created_at AS createdAt
+                   FROM tatara_stock_mov' . ($id ? ' WHERE producto_id = ?' : '') .
+                ' ORDER BY id DESC LIMIT ' . $limite,
+                $id ? [(string) $id] : []
+            ));
+
         case 'GET /instalar':
             instalar_tablas();
     }
@@ -449,33 +505,48 @@ function despachar_admin(string $ruta, string $metodo): void
 
 function stock_bulk(): void
 {
-    $updates = cuerpo_json()['productos'] ?? [];
+    $body = cuerpo_json();
+    $updates = $body['productos'] ?? [];
     if (!is_array($updates)) fail('productos debe ser array', 400);
+    $nota = trim((string) ($body['nota'] ?? '')) ?: null;
 
-    // Acepta {id, cantidad} (formato tatara) y {id, stockByTalla} (formato semilla /
-    // quienNoCorre), para que las herramientas admin sean intercambiables entre tiendas.
-    $escrituras = [];
+    // Cada producto, una de dos:
+    //   {id, suma: 20}  → llegan 20 (o -1: se ha roto uno). Es lo que usa el panel.
+    //   {id, cantidad: 5} o {id, stockByTalla: {_: 5}} → "ahora hay 5" (formato
+    //   semilla / quienNoCorre, para que las herramientas sean intercambiables).
+    // Las dos quedan en el registro: la primera como entrada o salida, la segunda
+    // como ajuste, con la diferencia.
+    $cambios = [];
     foreach ($updates as $u) {
         if (empty($u['id'])) continue;
-        $porTalla = [];
-        if (isset($u['stockByTalla']) && is_array($u['stockByTalla'])) {
-            $porTalla = $u['stockByTalla'];
-        } elseif (isset($u['cantidad']) && is_numeric($u['cantidad'])) {
-            $porTalla = ['_' => $u['cantidad']];
+        $id = (string) $u['id'];
+        if (isset($u['suma']) && is_numeric($u['suma']) && (int) $u['suma'] !== 0) {
+            $cambios[] = [$id, (string) ($u['talla'] ?? '_'), 'suma', (int) $u['suma']];
+            continue;
         }
+        $porTalla = [];
+        if (isset($u['stockByTalla']) && is_array($u['stockByTalla'])) $porTalla = $u['stockByTalla'];
+        elseif (isset($u['cantidad']) && is_numeric($u['cantidad'])) $porTalla = ['_' => $u['cantidad']];
         foreach ($porTalla as $talla => $cantidad) {
-            $escrituras[] = [(string) $u['id'], (string) $talla, max(0, (int) $cantidad)];
+            $cambios[] = [$id, (string) $talla, 'fija', max(0, (int) $cantidad)];
         }
     }
 
-    if ($escrituras) {
-        $sql = sql_upsert_stock();
-        db_tx(function (PDO $pdo) use ($escrituras, $sql) {
-            $st = $pdo->prepare($sql);
-            foreach ($escrituras as $e) $st->execute($e);
-        });
-    }
-    json_out(['updated' => count($escrituras)]);
+    asegurar_registro();
+    $hechos = $cambios ? db_tx(function (PDO $pdo) use ($cambios, $nota) {
+        $n = 0;
+        foreach ($cambios as [$id, $talla, $modo, $valor]) {
+            if ($modo === 'suma') {
+                $n += mover_stock($pdo, $id, $talla, $valor, $valor > 0 ? 'entrada' : 'salida', $nota) !== 0 ? 1 : 0;
+            } else {
+                $st = $pdo->prepare('SELECT cantidad FROM tatara_stock WHERE producto_id = ? AND talla = ?');
+                $st->execute([$id, $talla]);
+                $n += mover_stock($pdo, $id, $talla, $valor - (int) ($st->fetchColumn() ?: 0), 'ajuste', $nota) !== 0 ? 1 : 0;
+            }
+        }
+        return $n;
+    }) : 0;
+    json_out(['updated' => $hechos]);
 }
 
 /**
@@ -487,8 +558,20 @@ function stock_bulk(): void
  */
 function instalar_tablas(): void
 {
+    crear_tablas();
+    $tablas = ['tatara_stock', 'tatara_stock_mov', 'tatara_pedidos', 'tatara_newsletter', 'tatara_mensajes'];
+    $creadas = [];
+    foreach ($tablas as $t) {
+        try { db_first("SELECT 1 FROM $t LIMIT 1"); $creadas[] = $t; } catch (Throwable $e) {}
+    }
+    json_out(['tablas' => $creadas, 'faltan' => array_values(array_diff($tablas, $creadas))]);
+}
+
+/** Ejecuta el fichero de esquema: todo CREATE ... IF NOT EXISTS, no borra nada. */
+function crear_tablas(): void
+{
     $fichero = __DIR__ . '/../' . (db_driver() === 'sqlite' ? 'schema-tatara.sql' : 'schema-tatara.mysql.sql');
-    if (!is_file($fichero)) fail('no encuentro el fichero de esquema', 500);
+    if (!is_file($fichero)) throw new RuntimeException('no encuentro el fichero de esquema');
 
     $sql = file_get_contents($fichero);
     // Fuera los comentarios de línea, y una sentencia por cada ';' final.
@@ -496,13 +579,6 @@ function instalar_tablas(): void
     $sentencias = array_filter(array_map('trim', explode(';', $sql)));
 
     foreach ($sentencias as $sentencia) db()->exec($sentencia);
-
-    $tablas = ['tatara_stock', 'tatara_pedidos', 'tatara_newsletter', 'tatara_mensajes'];
-    $creadas = [];
-    foreach ($tablas as $t) {
-        try { db_first("SELECT 1 FROM $t LIMIT 1"); $creadas[] = $t; } catch (Throwable $e) {}
-    }
-    json_out(['tablas' => $creadas, 'faltan' => array_values(array_diff($tablas, $creadas))]);
 }
 
 /** https://tatara.cat — de dónde vino la petición, para las URLs de vuelta de Stripe. */

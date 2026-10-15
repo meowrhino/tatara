@@ -172,20 +172,36 @@ function revisaTextos(menu) {
 function revisaFichas(menu) {
   for (const sec of menu.sections.filter((s) => s.type === 'people' && s.data)) {
     console.log(`\n${sec.data}`);
-    const data = leer(sec.data);
-    (data.people || []).forEach((p, i) => {
-      if (p.spacer) return;
-      const dónde = p.name || `ficha ${i + 1}`;
+    const indice = leer(sec.data);
+    // data/exposicions.json → data/exposicions/: una carpeta por ficha
+    const dir = sec.data.replace(/\.json$/, '');
+    if (!Array.isArray(indice.projects)) { err(sec.data, '"projects" tiene que ser una lista: ["anna-dot", "tasio-ranz"]'); continue; }
+    const carpetas = existsSync(join(ROOT, dir))
+      ? readdirSync(join(ROOT, dir), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name) : [];
+    const vistas = new Set();
+    for (const slug of indice.projects) {
+      if (slug && slug.spacer) continue;
+      if (typeof slug !== 'string') { err(sec.data, 'en "projects" va el nombre de una carpeta entre comillas, o { "spacer": true }'); continue; }
+      if (vistas.has(slug)) err(sec.data, `"${slug}" está dos veces en la lista`);
+      vistas.add(slug);
+      if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) err(slug, 'el nombre de la carpeta solo puede llevar minúsculas, números y guiones (sin acentos ni espacios): es la dirección de la ficha');
+      const rel = `${dir}/${slug}/project.json`;
+      if (!existsSync(join(ROOT, rel))) { err(sec.data, `la lista dice "${slug}", pero no hay ningún ${rel}`); continue; }
+      const p = leer(rel);
+      const dónde = `${dir}/${slug}`;
       if (!p.name) err(dónde, 'falta "name"');
       revisaTraducible('expo', p.expo, dónde, false);
       revisaTraducible('text', p.text, dónde, false);
       revisaTraducible('bio', p.bio, dónde, false);
-      (p.images || []).forEach((src) => revisaImagen(src, dónde));
+      if (p.photos && !Array.isArray(p.photos)) err(dónde, '"photos" tiene que ser una lista: ["1", "2"]');
+      for (const n of p.photos || []) {
+        if (!existsSync(join(ROOT, dónde, 'img', `${n}.webp`))) err(dónde, `"photos" dice "${n}", pero no hay ningún img/${n}.webp`);
+      }
       // pdf admite string, {url,label} o un array de cualquiera de los dos
       const pdfs = Array.isArray(p.pdf) ? p.pdf : (p.pdf ? [p.pdf] : []);
       pdfs.forEach((pdf) => {
         const url = typeof pdf === 'string' ? pdf : pdf && pdf.url;
-        if (url && !existsSync(join(ROOT, url))) err(dónde, `el PDF no existe: ${url}`);
+        if (url && !/^https?:/.test(url) && !existsSync(join(ROOT, dónde, url))) err(dónde, `el PDF no está en la carpeta: ${url}`);
       });
       if (p.date) {
         for (const k of ['start', 'end']) {
@@ -193,8 +209,11 @@ function revisaFichas(menu) {
           if (mal) err(dónde, `"date.${k}" (${p.date[k]}) ${mal}`);
         }
       }
-      if (p.link && !/^https?:\/\//.test(p.link)) avi(dónde, `"link" no empieza por http: ${p.link}`);
-    });
+      if (p.url && !/^https?:\/\//.test(p.url)) avi(dónde, `"url" no empieza por http: ${p.url}`);
+    }
+    for (const c of carpetas.filter((c) => !vistas.has(c))) {
+      avi(`${dir}/${c}`, `no está en la lista de ${sec.data}: no sale en la web`);
+    }
   }
 }
 

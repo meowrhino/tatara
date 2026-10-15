@@ -14,6 +14,22 @@ CREATE TABLE IF NOT EXISTS tatara_stock (
   CHECK (cantidad >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- El registro del stock: una línea cada vez que cambia. tatara_stock es el
+-- número de ahora; esto, de dónde sale (lo que entra, lo que se vende, lo que
+-- se corrige). Lo escriben el webhook (ventas) y el panel (entradas y salidas).
+CREATE TABLE IF NOT EXISTS tatara_stock_mov (
+  id          INT          NOT NULL AUTO_INCREMENT,
+  producto_id VARCHAR(100) NOT NULL,
+  talla       VARCHAR(32)  NOT NULL DEFAULT '_',
+  cambio      INT          NOT NULL,                -- +20 entran, -1 se vende
+  motivo      VARCHAR(20)  NOT NULL,                -- inicial | entrada | salida | ajuste | venta
+  nota        VARCHAR(500) DEFAULT NULL,
+  pedido_id   VARCHAR(64)  DEFAULT NULL,
+  created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_mov_producto (producto_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS tatara_pedidos (
   id                VARCHAR(64)  NOT NULL,
   stripe_session_id VARCHAR(191) DEFAULT NULL,

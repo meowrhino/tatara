@@ -9,6 +9,18 @@ CREATE TABLE IF NOT EXISTS tatara_stock (
   PRIMARY KEY (producto_id, talla)
 );
 
+-- El registro del stock: una línea cada vez que cambia (ver schema-tatara.mysql.sql).
+CREATE TABLE IF NOT EXISTS tatara_stock_mov (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  producto_id TEXT NOT NULL,
+  talla       TEXT NOT NULL DEFAULT '_',
+  cambio      INTEGER NOT NULL,   -- +20 entran, -1 se vende
+  motivo      TEXT NOT NULL,      -- inicial | entrada | salida | ajuste | venta
+  nota        TEXT,
+  pedido_id   TEXT,
+  created_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 CREATE TABLE IF NOT EXISTS tatara_pedidos (
   id                 TEXT PRIMARY KEY,
   stripe_session_id  TEXT UNIQUE,

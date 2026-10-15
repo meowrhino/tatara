@@ -24,8 +24,10 @@ js/                   módulos ES, sin build. Entrada: main.js
   utils.js              $, el, esc, t (i18n), ui (textos de interfaz), zoomImg, X_ICON…
   dates.js · data.js · state.js
 data/*.json           TODO el contenido. Cada fichero se llama como su sección
-assets/img/           fotos .webp: expos/ · recerca/ · edicions/ · nosaltres/
-assets/pdf/           hojas de sala de las exposiciones
+data/exposicions/     una carpeta por exposición: project.json + img/1.webp… + su PDF.
+                        data/exposicions.json es solo el índice (orden y spacers);
+                        js/data.js → loadFichas() las junta en el navegador
+assets/img/           fotos .webp: agenda/ · recerca/ · edicions/ · nosaltres/
 admin/                panel interno: stock y pedidos
 api/                  el backend PHP (ver "La API")
   config.php            credenciales. NO está en git: vive solo en el servidor

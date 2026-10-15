@@ -50,7 +50,7 @@ export function renderText(view, data) {
 
 // Un artista es "ampliable" (tiene ficha) si tiene algo que enseñar: bio, fotos,
 // hoja de sala (PDF) o web. Si no, se lista como nombre a secas.
-const personHasDetail = (p) => !!(t(p.bio) || t(p.expo) || t(p.text) || imagesOf(p).length || p.pdf || p.link);
+const personHasDetail = (p) => !!(t(p.bio) || t(p.expo) || t(p.text) || imagesOf(p).length || p.pdf || p.url);
 
 // "17 octubre – 30 novembre" a partir de date {start, end}. Si no hay fechas, cadena vacía.
 function rangoExpo(d) {
@@ -58,11 +58,6 @@ function rangoExpo(d) {
   const s = parseDate(d.start), e = d.end ? parseDate(d.end) : s;
   return sameDay(s, e) ? dMes(s) : `${dMes(s)} – ${dMes(e)}`;
 }
-
-// Identificador de la ficha en la URL (/exposicions/anna-dot/), sacado del
-// nombre: así el JSON no necesita un campo más y el botón de atrás funciona.
-const slugOf = (p) => p.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-  .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 // "ANNA DOT, Pàteres de llet": el artista en mayúscula, la expo tal cual.
 const expoLine = (p) => `<span class="person__name">${esc(p.name)}</span>` +
@@ -73,7 +68,7 @@ export function renderPeople(view, data) {
   const people = data.people || [];
   const id = view.dataset.section;
   const slug = subPath();
-  const open = slug && people.find((p) => p && !p.spacer && slugOf(p) === slug);
+  const open = slug && people.find((p) => p && !p.spacer && p.slug === slug);
   if (open) {
     view.innerHTML = pageWrap(expoDetail(open, pathOf(id)));
     document.title = `${[open.name, t(open.expo)].filter(Boolean).join(', ')} — ${SITE.site.name}`;
@@ -84,7 +79,7 @@ export function renderPeople(view, data) {
     // Separación entre grupos: un item { "spacer": true } en el JSON deja aire.
     if (p && p.spacer) return `<li class="person-spacer" aria-hidden="true"></li>`;
     return personHasDetail(p)
-      ? `<li class="person"><a href="${pathOf(id, slugOf(p))}">${expoLine(p)}</a></li>`
+      ? `<li class="person"><a href="${pathOf(id, p.slug)}">${expoLine(p)}</a></li>`
       : `<li class="person">${expoLine(p)}</li>`;
   }).join('');
   view.innerHTML = pageWrap(`<ul class="people">${items}</ul>`);
@@ -112,7 +107,7 @@ function expoDetail(p, back) {
     ${texto ? `<p>${esc(texto)}</p>` : ''}
     ${gallery}
     ${bio ? `<p>${esc(bio)}</p>` : ''}
-    ${p.link ? `<p><a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(ui('websiteLink'))} ↗</a></p>` : ''}
+    ${p.url ? `<p><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(ui('websiteLink'))} ↗</a></p>` : ''}
     ${pdfLinks}
   </article>`;
 }
