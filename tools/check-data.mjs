@@ -14,6 +14,7 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validar } from './validar.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const IDIOMAS = ['ca', 'es', 'en'];
@@ -221,7 +222,7 @@ function revisaFichas(menu) {
 /* ---------- menú ---------- */
 
 function revisaMenu(menu) {
-  console.log('\ndata/menu.json');
+  console.log('\ndata/site.json → menu');
   const vistos = new Set();
   menu.sections.forEach((s) => {
     const dónde = s.id || '(sin id)';
@@ -232,10 +233,32 @@ function revisaMenu(menu) {
   });
 }
 
+/* ---------- cada JSON con su esquema (schema/) ---------- */
+
+// Lo mismo que VS Code subraya en rojo: un campo mal escrito o de otro tipo.
+// Los mensajes, en catalán, como la GUIA: los lee la clienta.
+function revisaEsquemas(menu) {
+  console.log('\nschema/ (lo que VS Code subraya en rojo)');
+  const esquema = (t) => JSON.parse(readFileSync(join(ROOT, 'schema', `${t}.json`), 'utf8'));
+  const mira = (rel, t) => validar(leer(rel), esquema(t), rel).forEach((m) => { errores++; console.log(`  ✗ ${m}`); });
+  const TIPO = { agenda: 'agenda', text: 'text', people: 'exposicions', shop: 'botiga' };
+  mira('data/site.json', 'site');
+  mira('data/envios.json', 'envios');
+  for (const sec of menu.sections.filter((s) => s.data && TIPO[s.type])) {
+    mira(sec.data, TIPO[sec.type]);
+    if (sec.type !== 'people') continue;
+    const dir = sec.data.replace(/\.json$/, '');
+    for (const slug of [].concat(leer(sec.data).projects || []).filter((x) => typeof x === 'string')) {
+      if (existsSync(join(ROOT, dir, slug, 'project.json'))) mira(`${dir}/${slug}/project.json`, 'project');
+    }
+  }
+}
+
 /* ---------- ejecutar ---------- */
 
-const menu = leer('data/menu.json');
+const menu = { sections: leer('data/site.json').menu || [] };
 revisaMenu(menu);
+revisaEsquemas(menu);
 revisaAgenda(menu);
 revisaFichas(menu);
 revisaTextos(menu);

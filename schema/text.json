@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "una pàgina de text (nosaltres, recerca)",
+  "description": "data/nosaltres.json, data/recerca.json: el títol i una llista de blocs. VS Code llegeix aquest fitxer (pel \"$schema\" de dalt del JSON) per completar, explicar cada camp i subratllar el que està malament; npm run check (i la publicació) el fa servir per revisar.",
+  "type": "object",
+  "required": [
+    "title",
+    "body"
+  ],
+  "additionalProperties": false,
+  "patternProperties": {
+    "^_": {
+      "description": "Una nota (\"_comment\", \"_nota\"…): no surt a la web."
+    }
+  },
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "title": {
+      "$ref": "#/$defs/text",
+      "description": "El títol de la pàgina."
+    },
+    "body": {
+      "type": "array",
+      "description": "Els blocs, en ordre.",
+      "items": {
+        "type": "object",
+        "required": [],
+        "additionalProperties": false,
+        "properties": {
+          "heading": {
+            "$ref": "#/$defs/text",
+            "description": "Opcional: un títol."
+          },
+          "link": {
+            "type": "string",
+            "description": "Opcional: l'id d'una secció del menú (\"exposicions\"): el títol hi porta."
+          },
+          "text": {
+            "$ref": "#/$defs/text",
+            "description": "Opcional: el text. Un enllaç a una secció: [etiqueta](exposicions)."
+          },
+          "image": {
+            "$ref": "#/$defs/foto"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/foto"
+            }
+          },
+          "alt": {
+            "$ref": "#/$defs/text",
+            "description": "Què es veu a la foto (per a qui no la veu)."
+          },
+          "people": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "\"https://…\" o null."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "En els tres idiomes: { \"ca\": \"…\", \"es\": \"…\", \"en\": \"…\" }",
+      "properties": {
+        "ca": {
+          "type": "string"
+        },
+        "es": {
+          "type": "string"
+        },
+        "en": {
+          "type": "string"
+        }
+      }
+    },
+    "data": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "AAAA-MM-DD: \"2027-03-01\""
+    },
+    "foto": {
+      "type": "string",
+      "pattern": "^assets/img/.+\\.(webp|jpg|jpeg|png|svg)$",
+      "description": "La foto, amb la carpeta: \"assets/img/agenda/nom.webp\""
+    }
+  }
+}

@@ -1,5 +1,6 @@
 {
-  "_comment": "Página NOSALTRES. Cada bloque de 'body' admite: heading (título), link (id de sección de menu.json → el título se vuelve enlace), text (párrafo) e image. Dentro de 'text' se pueden poner enlaces internos con la sintaxis [etiqueta](id-de-seccion). Ids válidos: agenda, nosaltres, artistes (=exposicions), diari (=recerca), botiga, contacte, newsletter. Si el id no existe, el enlace se muestra como texto normal.",
+  "$schema": "../schema/text.json",
+  "_comment": "Página NOSALTRES. Cada bloque de 'body' admite: heading (título), link (id de sección de site.json → menu → el título se vuelve enlace), text (párrafo) e image. Dentro de 'text' se pueden poner enlaces internos con la sintaxis [etiqueta](id-de-seccion). Ids válidos: agenda, nosaltres, artistes (=exposicions), diari (=recerca), botiga, contacte, newsletter. Si el id no existe, el enlace se muestra como texto normal.",
   "title": {
     "ca": "Nosaltres",
     "es": "Nosotres",

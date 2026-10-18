@@ -86,7 +86,7 @@ cero. La clienta no escribe nada: lo genera el script.
 Son seis líneas por entrada, quince veces en el archivo, y nada impide escribir
 una traducción distinta cada vez.
 
-**La idea.** Definir el catálogo una vez en `data/data.json`, como ya se hace con
+**La idea.** Definir el catálogo una vez en `data/site.json`, como ya se hace con
 la paleta de colores, y escribir solo `"kind": "conversa"`. `npm run check` puede
 listar los tipos válidos cuando alguien se equivoque.
 

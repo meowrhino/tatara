@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "data/envios.json: les zones d'enviament",
+  "description": "data/envios.json: les zones i preus d'enviament. Buit ([]) vol dir que només es pot recollir a la galeria. Com que és una llista, no porta \"$schema\" a dalt: VS Code el troba per .vscode/settings.json. VS Code llegeix aquest fitxer (pel \"$schema\" de dalt del JSON) per completar, explicar cada camp i subratllar el que està malament; npm run check (i la publicació) el fa servir per revisar.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "zone"
+    ],
+    "properties": {
+      "zone": {
+        "type": "string",
+        "description": "El nom de la zona."
+      },
+      "price": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Preu fix, en euros."
+      },
+      "rates": {
+        "type": "array",
+        "description": "Preus per pes."
+      },
+      "paises": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Els països de la zona."
+      }
+    }
+  }
+}

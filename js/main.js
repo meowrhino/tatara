@@ -17,8 +17,8 @@ async function init() {
   runIntro();
   try {
     setSite(await loadJSON(CONFIG_URL));
-    // El índice de secciones (menú + router) vive en su propio JSON (JAMSTACK).
-    SITE.sections = (await loadJSON('data/menu.json')).sections;
+    // El índice de secciones (menú + router): site.json → menu.
+    SITE.sections = SITE.menu;
   } catch (err) {
     $('#view').innerHTML = `<p class="loading">${ui('configError')}<br><small>${esc(err.message)}</small></p>`;
     return;
@@ -33,7 +33,7 @@ async function init() {
   document.documentElement.lang = lang;
   if (!langOfPath()) history.replaceState(null, '', pathInLang(lang) + location.search + location.hash);
 
-  // Colores: TODOS viven en data.json → theme (fuente única), y se publican
+  // Colores: TODOS viven en site.json → theme (fuente única), y se publican
   // como --<clau> (--bg, --ink…). Las claves con '_' (comentarios) se ignoran.
   const setVars = (obj, prefix) =>
     Object.entries(obj || {}).forEach(([key, hex]) => {

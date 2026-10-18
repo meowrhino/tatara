@@ -55,8 +55,7 @@ data/
   recerca.json         ← el text i les fotos de Recerca
   botiga.json          ← els productes: títol, autor, preu, foto
   envios.json          ← les zones i preus d'enviament
-  data.json            ← l'adreça, el correu, els enllaços de Contacte
-  menu.json            ← els noms del menú
+  site.json            ← l'adreça, el correu, els enllaços de Contacte i el menú
 assets/
   img/agenda/          ← les fotos de l'agenda
   img/recerca/         ← les fotos de recerca
@@ -75,7 +74,11 @@ camp: és la documentació més fiable, perquè viu al costat de les dades.
 2. A la columna de l'esquerra, obriu el fitxer (per exemple `data/agenda.json`)
    i canvieu el que calgui. Guardeu amb **Cmd+S**.
    Si alguna cosa surt **subratllada en vermell**, hi ha una coma o unes
-   cometes malament: arregleu-ho abans de seguir (punt 7).
+   cometes malament, o un camp mal escrit: arregleu-ho abans de seguir (punt 7).
+   **VS Code us ajuda amb els camps**: si passeu el ratolí per sobre d'un
+   (`"title"`, `"start"`…) us diu què és i com s'escriu, i dins de les claus,
+   **Ctrl+Espai** us ensenya quins camps hi podeu posar. Ho sap per la primera
+   línia de cada JSON (`"$schema": …`): **no l'esborreu**.
 3. A l'esquerra, la icona de les branques (**Source Control**): escriviu en una
    línia què heu canviat ("agenda: taller de novembre") i cliqueu **Commit**.
 4. Cliqueu **Sync Changes** (el mateix botó blau).
@@ -253,9 +256,9 @@ Google **es fan sols** en publicar: no cal fer res.
 ## 5. Contacte, menú i enviaments
 
 - **Adreça, correu i enllaços de Contacte** (IG, Newsletter, Medium): a
-  `data/data.json`, dins de `contact`. Un enllaç a una secció de la web s'escriu
+  `data/site.json`, dins de `contact`. Un enllaç a una secció de la web s'escriu
   `"#newsletter"`; un a una altra web, sencer: `"https://…"`.
-- **Els noms del menú**: a `data/menu.json`, el `label` de cada secció. L'`id`
+- **Els noms del menú**: a `data/site.json`, dins de `menu`, el `label` de cada secció. L'`id`
   no es toca.
 - **Les zones d'enviament**: a `data/envios.json`. Buit (`[]`) vol dir que només
   es pot recollir a la galeria.
@@ -321,6 +324,8 @@ guardat surt amb un cercle:
        línea 542:  "end": "2026-10-31",,
   ✗ guus-vandeweerd-swab: la imagen no existe: assets/img/agenda/guus.webp
   ✗ taller-recerca-local: "start" (2027-02-30) es un día que no existe en el calendario
+  ✗ data/agenda.json: "events → 3 → artista" no és un camp d'aquí (mal escrit?). Els que hi ha: slug, kind, title, artist…
+  ✗ data/botiga.json: "products → 2 → price" ha de ser un número (El preu en euros, sense cometes: 18…)
   ```
 
   Arregleu-ho (el número de línia diu on mirar), guardeu un altre cop, i

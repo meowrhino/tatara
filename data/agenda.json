@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema/agenda.json",
   "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (opcional: una foto de la obra, o una lista de fotos, NUNCA el cartel, que repite lo que ya dice el texto), start, end, time, description {ca,es,en} y events[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). Los anos son los de esa tabla: la temporada va de septiembre de 2025 a enero de 2027. Las filas del final que solo traen el mes ('dec', 'gener') son diciembre de 2026 y enero de 2027.",
   "events": [
     {

@@ -1,5 +1,6 @@
 {
-  "_comment": "Seccion Recerca. Misma estructura que nosaltres.json (type 'text' en menu.json): 'body' es una lista de bloques y cada uno admite heading, link (id de seccion), text (con enlaces [etiqueta](id-de-seccion)), image (una), images[] (varias, se pintan como galeria y se amplian al hacer clic) o people[] (una lista de {name, link} que se pinta en linea separada por comas; el nombre se enlaza cuando 'link' no es null). Fuente: apartado RECERCA de 'web tatara-TEXT-SETEMBRE.docx'. Las fichas con bio de cada persona vivian aqui antes; ahora la seccion es texto + noms + fotos, tal como el documento.",
+  "$schema": "../schema/text.json",
+  "_comment": "Seccion Recerca. Misma estructura que nosaltres.json (type 'text' en site.json → menu): 'body' es una lista de bloques y cada uno admite heading, link (id de seccion), text (con enlaces [etiqueta](id-de-seccion)), image (una), images[] (varias, se pintan como galeria y se amplian al hacer clic) o people[] (una lista de {name, link} que se pinta en linea separada por comas; el nombre se enlaza cuando 'link' no es null). Fuente: apartado RECERCA de 'web tatara-TEXT-SETEMBRE.docx'. Las fichas con bio de cada persona vivian aqui antes; ahora la seccion es texto + noms + fotos, tal como el documento.",
   "title": {
     "ca": "Recerca",
     "es": "Investigación",

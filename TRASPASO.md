@@ -154,8 +154,8 @@ con el diseño viejo y sus propios datos. En este orden:
 
 ### 3. Contenido
 
-- [ ] **Datos de contacto** en `data/data.json`: correo, dirección, redes.
-- [ ] **Instagram** para el pie de contacte (`data.json` → `contact.links`).
+- [ ] **Datos de contacto** en `data/site.json`: correo, dirección, redes.
+- [ ] **Instagram** para el pie de contacte (`site.json` → `contact.links`).
 - [ ] **Enlaces** a la web de cada artista: faltan trece.
 - [ ] Confirmar si HOLON, Alicia Monreal y el colectivo de Alba Yruela siguen
       vigentes.

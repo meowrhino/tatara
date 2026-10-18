@@ -25,6 +25,9 @@ Cuando falla, tatara.cat se queda como estaba. Para arreglarlo:
      del JSON y dilo.
    - "es un día que no existe", "es anterior a start": la fecha, en
      `AAAA-MM-DD`.
+   - "no és un camp d'aquí (mal escrit?)" o "ha de ser un número…": no cuadra
+     con su esquema (`schema/`). El mensaje dice qué campos hay o cómo tiene que
+     ser; se arregla el dato, no el esquema.
    - "En el servidor hay cambios en data/ que no están en GitHub": alguien
      subió un JSON por SFTP. **No los pises**: `npm run build` en local los
      trae a `data/`; revísalos con `git diff`, haz commit y push, y se publica.

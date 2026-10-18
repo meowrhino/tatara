@@ -16,7 +16,7 @@ import { subPath } from './router.js';
      link     id de sección → el título se convierte en enlace interno
      text     párrafo traducible; acepta enlaces [etiqueta](id-de-seccion)
      image    ruta de imagen (p. ej. el logo de la Generalitat) + 'alt'
-   Los ids válidos son los de data/menu.json, así que la clienta puede
+   Los ids válidos son los de data/site.json → menu, así que la clienta puede
    añadir o mover enlaces editando solo el JSON. */
 export function renderText(view, data) {
   const ids = (SITE.sections || []).map((s) => s.id);
@@ -115,7 +115,7 @@ function expoDetail(p, back) {
 export function renderContact(view) {
   const c = (SITE && SITE.contact) || {};
   const addr = (c.address || []).map(esc).join('<br>');
-  // La línea de enlaces del pie sale de data.json → contact.links, para que
+  // La línea de enlaces del pie sale de site.json → contact.links, para que
   // añadir uno (o poner por fin la URL del Instagram) no obligue a tocar código.
   // Un enlace interno ("#newsletter": el id de una sección) se queda en la
   // pestaña; uno externo la abre aparte; y sin url se pinta igual pero inerte.

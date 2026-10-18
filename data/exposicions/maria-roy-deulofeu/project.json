@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../schema/project.json",
   "name": "Maria Roy Deulofeu",
   "expo": {"ca": "Sostenir la Terra", "es": "Sostenir la Terra", "en": "Sostenir la Terra"},
   "date": {"start": "2025-12-13", "end": "2026-01-28"},

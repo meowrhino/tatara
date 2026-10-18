@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema/exposicions.json",
   "_comment": "Seccio Exposicions: l'ordre de la llista. Cada nom és una carpeta de data/exposicions/, amb el seu project.json i les fotos a img/ (1.webp, 2.webp…). El nom de la carpeta és també l'adreça de la fitxa: /exposicions/<nom>/. Per separar grups, un { \"spacer\": true }. Una carpeta que no és a la llista no surt a la web. Les persones que van passar per l'espai sense exposar (converses, lectures, tallers) van a data/recerca.json.",
   "projects": [
     "anna-dot",

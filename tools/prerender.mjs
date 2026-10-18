@@ -138,9 +138,8 @@ for (let i = 0; ; i++) {
 
 try {
   const template = readFileSync(join(DIST, 'index.html'), 'utf8');
-  const ocultas = new Set(JSON.parse(readFileSync(join(DIST, 'data/menu.json'), 'utf8'))
-    .sections.filter((s) => s.hidden).map((s) => s.id));
-  const { languages: idiomas = ['ca'], defaultLang: porDefecto = 'ca' } = JSON.parse(readFileSync(join(DIST, 'data/data.json'), 'utf8'));
+  const { languages: idiomas = ['ca'], defaultLang: porDefecto = 'ca', menu = [] } = JSON.parse(readFileSync(join(DIST, 'data/site.json'), 'utf8'));
+  const ocultas = new Set(menu.filter((s) => s.hidden).map((s) => s.id));
   const prefijo = (l) => (l === porDefecto ? '' : `/${l}`);
   // '/es/nosaltres/' → ['es', '/nosaltres/']; '/nosaltres/' → ['ca', '/nosaltres/']
   const partir = (p) => {

@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../schema/project.json",
   "name": "Tasio Ranz",
   "expo": {
     "ca": "Ensayo de lo Espontáneo",

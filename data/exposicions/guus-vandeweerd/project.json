@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../schema/project.json",
   "name": "Guus Vandeweerd",
   "expo": {"ca": "Inventory", "es": "Inventory", "en": "Inventory"},
   "date": {"start": "2026-10-08", "end": "2026-10-31"},

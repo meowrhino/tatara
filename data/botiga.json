@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema/botiga.json",
   "_comment": "Seccion Botiga. price en euros (number) o null si esta PENDIENTE de precio: sin precio el producto sale como 'proximament' y no es comprable. 'id' es la clave con la que el Worker guarda el stock y los pedidos en la D1 (tabla tatara_stock): cambiarlo desvincula el stock ya contado. 'title' y 'description' admiten {ca,es,en}. Fuente: apartados BOTIGA / TIENDA / SHOP de 'web tatara-TEXT-SETEMBRE.docx'.",
   "currency": "€",
   "products": [

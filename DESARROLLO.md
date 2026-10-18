@@ -31,10 +31,15 @@ assets/img/           fotos .webp: agenda/ · recerca/ · edicions/ · nosaltres
 admin/                panel interno: stock y pedidos
 api/                  el backend PHP (ver "La API")
   config.php            credenciales. NO está en git: vive solo en el servidor
+schema/               qué campos lleva cada JSON (site, agenda, botiga, envios, exposicions,
+                      project, text): VS Code autocompleta y subraya; npm run check valida.
+                      Cada JSON lo nombra arriba ("$schema"); envios.json, que es una lista,
+                      por .vscode/settings.json. No se sube a Pangea.
 tools/
   build-pangea.sh       prepara dist/ con lo que se sube
   prerender.mjs         una página ya pintada por dirección + sitemap + imágenes para compartir
-  check-data.mjs        revisa los JSON (npm run check)
+  check-data.mjs        revisa los JSON (npm run check), también con su esquema
+  validar.mjs           el JSON Schema sin dependencias (de JAMstack), mensajes en catalán
   test-api-php.sh       las pruebas de la API (npm test)
   php-router.php        servidor local (imita el .htaccess)
   to-webp.sh            convierte fotos (npm run webp)
@@ -69,9 +74,9 @@ TATARA_DB_USER=root TATARA_DB_PASS=xxx npm test
 
 ## Cómo funciona
 
-**Secciones y router.** El índice vive en `data/menu.json`: `id`, `type`, `data`
+**Secciones y router.** El índice vive en `data/site.json` → `menu`: `id`, `type`, `data`
 y `label`. El menú y el router salen de ahí, y cada sección es `#id`. Añadir una
-= una entrada en `menu.json` + su JSON + (solo si el `type` es nuevo) un
+= una entrada en `menu` + su JSON + (solo si el `type` es nuevo) un
 `render*()` y su `case` en el `switch` de `js/router.js`.
 
 **Diseño.** Blanco y negro: el color solo llega con las fotos. En escritorio,
@@ -92,7 +97,7 @@ Serrahima (octubre de 2026). El diseño anterior, con bloques de color, está en
 la etiqueta `v0-disseny-color` y publicado en
 [meowrhino.github.io/tatarav0](https://meowrhino.github.io/tatarav0/).
 
-**Colores.** Salen de `data.json` → `theme`, que se publica como custom
+**Colores.** Salen de `site.json` → `theme`, que se publica como custom
 properties (`--bg`, `--ink`…) desde `main.js`.
 
 **Agenda.** Una entrada por exposición, en orden cronológico, separadas por un

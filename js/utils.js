@@ -96,7 +96,7 @@ export const imagesOf = (x) => (x.images && x.images.length ? x.images : [].conc
 
 // Texto de contenido con enlaces internos en sintaxis markdown-lite:
 //   "les trobareu a la [botiga](botiga)"  →  <a href="/botiga/">botiga</a>
-// El destino es el 'id' de una sección de data/menu.json (agenda, nosaltres,
+// El destino es el 'id' de una sección de data/site.json → menu (agenda, nosaltres,
 // exposicions, recerca, botiga, contacte, newsletter). Así la clienta solo pone
 // corchetes alrededor de la palabra y el paréntesis con el id: no hay que tocar
 // código para añadir, quitar o mover enlaces.

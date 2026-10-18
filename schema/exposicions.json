@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "data/exposicions.json: la llista d'exposicions",
+  "description": "data/exposicions.json: quines fitxes surten i en quin ordre. Cada una, una carpeta a data/exposicions/. VS Code llegeix aquest fitxer (pel \"$schema\" de dalt del JSON) per completar, explicar cada camp i subratllar el que està malament; npm run check (i la publicació) el fa servir per revisar.",
+  "type": "object",
+  "required": [
+    "projects"
+  ],
+  "additionalProperties": false,
+  "patternProperties": {
+    "^_": {
+      "description": "Una nota (\"_comment\", \"_nota\"…): no surt a la web."
+    }
+  },
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "projects": {
+      "type": "array",
+      "description": "Els noms de les carpetes de data/exposicions/, en ordre. Un buit: { \"spacer\": true }",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "description": "Minúscules, números i guions, sense accents ni espais."
+          },
+          {
+            "type": "object",
+            "required": [
+              "spacer"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "spacer": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "data/agenda.json: l'agenda",
+  "description": "data/agenda.json: les exposicions i activitats, cada una amb les seves activitats a dins (events). VS Code llegeix aquest fitxer (pel \"$schema\" de dalt del JSON) per completar, explicar cada camp i subratllar el que està malament; npm run check (i la publicació) el fa servir per revisar.",
+  "type": "object",
+  "required": [
+    "events"
+  ],
+  "additionalProperties": false,
+  "patternProperties": {
+    "^_": {
+      "description": "Una nota (\"_comment\", \"_nota\"…): no surt a la web."
+    }
+  },
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "En els tres idiomes: { \"ca\": \"…\", \"es\": \"…\", \"en\": \"…\" }",
+      "properties": {
+        "ca": {
+          "type": "string"
+        },
+        "es": {
+          "type": "string"
+        },
+        "en": {
+          "type": "string"
+        }
+      }
+    },
+    "data": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "AAAA-MM-DD: \"2027-03-01\""
+    },
+    "foto": {
+      "type": "string",
+      "pattern": "^assets/img/.+\\.(webp|jpg|jpeg|png|svg)$",
+      "description": "La foto, amb la carpeta: \"assets/img/agenda/nom.webp\""
+    },
+    "activitat": {
+      "type": "object",
+      "required": [
+        "slug",
+        "title",
+        "start"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Un nom curt i únic. No es veu enlloc: \"guus-vandeweerd\""
+        },
+        "kind": {
+          "$ref": "#/$defs/text",
+          "description": "El tipus. Surt a baix a la dreta."
+        },
+        "title": {
+          "$ref": "#/$defs/text",
+          "description": "El títol."
+        },
+        "artist": {
+          "type": "string",
+          "description": "Opcional: qui."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/foto"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/foto"
+              }
+            }
+          ],
+          "description": "Opcional: una foto de l'obra (mai el cartell), o dues en una llista."
+        },
+        "start": {
+          "$ref": "#/$defs/data",
+          "description": "Quan comença: AAAA-MM-DD."
+        },
+        "end": {
+          "$ref": "#/$defs/data",
+          "description": "Opcional: quan acaba, AAAA-MM-DD. Sense, és d'un sol dia."
+        },
+        "time": {
+          "type": "string",
+          "pattern": "^\\d{1,2}[:.]\\d{2}",
+          "description": "Opcional: l'hora, \"18:30\""
+        },
+        "description": {
+          "$ref": "#/$defs/text",
+          "description": "Opcional: el text."
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "slug",
+        "title",
+        "start"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Un nom curt i únic. No es veu enlloc: \"guus-vandeweerd\""
+        },
+        "kind": {
+          "$ref": "#/$defs/text",
+          "description": "El tipus. Surt a baix a la dreta."
+        },
+        "title": {
+          "$ref": "#/$defs/text",
+          "description": "El títol."
+        },
+        "artist": {
+          "type": "string",
+          "description": "Opcional: qui."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/foto"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/foto"
+              }
+            }
+          ],
+          "description": "Opcional: una foto de l'obra (mai el cartell), o dues en una llista."
+        },
+        "start": {
+          "$ref": "#/$defs/data",
+          "description": "Quan comença: AAAA-MM-DD."
+        },
+        "end": {
+          "$ref": "#/$defs/data",
+          "description": "Opcional: quan acaba, AAAA-MM-DD. Sense, és d'un sol dia."
+        },
+        "time": {
+          "type": "string",
+          "pattern": "^\\d{1,2}[:.]\\d{2}",
+          "description": "Opcional: l'hora, \"18:30\""
+        },
+        "description": {
+          "$ref": "#/$defs/text",
+          "description": "Opcional: el text."
+        },
+        "events": {
+          "type": "array",
+          "description": "Les activitats d'aquesta exposició.",
+          "items": {
+            "$ref": "#/$defs/activitat"
+          }
+        }
+      }
+    }
+  }
+}

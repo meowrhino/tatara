@@ -5,11 +5,11 @@
    se llama al setter correspondiente (no hace falta re-importar).
    ============================================================ */
 
-export const CONFIG_URL = 'data/data.json';
+export const CONFIG_URL = 'data/site.json';
 
 const LANG_KEY = 'tatara:lang';   // clave de localStorage donde se recuerda el idioma
 
-export let SITE = null;   // configuración general (data/data.json)
+export let SITE = null;   // configuración general (data/site.json)
 export let LANG = 'ca';   // idioma activo
 
 export function setSite(value) { SITE = value; }

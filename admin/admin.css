@@ -4,7 +4,7 @@
    pública (no té router, ni idiomes, ni el marc TAT·ARA sencer) i barrejar els
    dos fulls faria que tocar un color de la web pogués trencar el panell.
 
-   El que sí es copia són els tokens de data.json → theme i palette, perquè el
+   El que sí es copia són els tokens de site.json → theme i palette, perquè el
    panell es reconegui com a part de la mateixa casa. Si allà canvia un color,
    canviar-lo també aquí, a :root. Són set línies.
    ============================================================ */
@@ -13,14 +13,14 @@
   color-scheme: only light;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
-  /* mateixos valors que data.json → theme */
+  /* mateixos valors que site.json → theme */
   --bg: #ffffff;
   --ink: #111111;
   --ink-mid: #6f6f6f;
   --ink-soft: #9a9a9a;
   --grey-soft: #eae7e0;
 
-  /* mateixos valors que data.json → palette */
+  /* mateixos valors que site.json → palette */
   --blau: #aec6cd;
   --menta: #cbdac3;
   --rosa: #e3a57e;

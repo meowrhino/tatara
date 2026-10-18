@@ -37,7 +37,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --font-display: "Superstudio Trial", "JetBrains Mono", ui-monospace, monospace;
 
-  /* Los COLORES no viven aquí: están todos en data/data.json → "theme"
+  /* Los COLORES no viven aquí: están todos en data/site.json → "theme"
      (--bg, --ink, --overlay-ink…) y los inyecta js/main.js al arrancar. */
 
   /* Tipografía: UN solo cuerpo (--fs) y UN solo interlineado (--lh) para toda
@@ -65,7 +65,7 @@ html, body {
   margin: 0;
   padding: 0;
   background: var(--bg, #ffffff);   /* el fallback solo se ve el instante */
-  color: var(--ink, #111111);      /* previo a que cargue data.json */
+  color: var(--ink, #111111);      /* previo a que cargue site.json */
   font-family: var(--font-mono);
   font-size: var(--fs);
   line-height: var(--lh);
