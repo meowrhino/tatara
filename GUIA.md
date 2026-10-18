@@ -136,11 +136,11 @@ per data.
 
 ### Afegir una conversa, una lectura o un taller dins d'una exposició
 
-Si passa **durant** una exposició, va dins del seu `eventos`, amb els mateixos
+Si passa **durant** una exposició, va dins del seu `events`, amb els mateixos
 camps. La data ha de caure dins de les de l'exposició:
 
 ```json
-"eventos": [
+"events": [
   {
     "slug": "conversa-amb-algu",
     "kind": { "ca": "Conversa", "es": "Conversación", "en": "Conversation" },
@@ -309,9 +309,11 @@ guardat surt amb un cercle:
 
 - 🟢 verd: publicat.
 - 🟡 groc: publicant-se (2-3 minuts).
-- 🔴 vermell: no s'ha publicat, i **la web segueix com estava**. Entreu-hi,
-  cliqueu **publicar** i al pas **Revisar los JSON** veureu una línia amb ✗ que
-  diu què passa i on. Per exemple:
+- 🔴 vermell: no s'ha publicat, i **la web segueix com estava**. A la pestanya
+  **Issues** del repositori n'hi haurà un de nou, *La web no se ha publicado*,
+  amb l'error a dins (i GitHub us ho avisa per correu). També el podeu veure
+  aquí: entreu-hi, cliqueu **publicar** i al pas **Revisar los JSON** veureu una
+  línia amb ✗ que diu què passa i on. Per exemple:
 
   ```
   ✗ data/agenda.json no es un JSON válido y la web no lo va a poder abrir.
@@ -322,7 +324,7 @@ guardat surt amb un cercle:
   ```
 
   Arregleu-ho (el número de línia diu on mirar), guardeu un altre cop, i
-  llestos.
+  llestos: en publicar-se, l'issue es tanca sol.
 
 Les línies amb **·** en comptes de ✗ són avisos (per exemple, un text sense
 traduir): la web es publica igual.

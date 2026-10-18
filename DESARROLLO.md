@@ -160,11 +160,13 @@ la pestaña *Actions* → *Publicar en tatara.cat* → *Run workflow*. Hace esto
 Sin ese secret el workflow revisa y prepara, pero no sube nada. **Cuando Pangea
 cambie la contraseña, hay que cambiarla también aquí.**
 
-Si la publicación falla, GitHub manda un correo a quien hizo el push y el
-detalle está en la pestaña *Actions*. La web se queda como estaba.
+Si la publicación falla, la web se queda como estaba y la Action abre un issue
+(etiqueta `build`) con las líneas ✗ y el enlace al registro; un fallo más, un
+comentario en el mismo, y al volver a publicar se cierra solo. Cómo arreglarlo:
+[CLAUDE.md](CLAUDE.md).
 
-La clienta edita los JSON directamente en GitHub, en su copia del repo (el
-lápiz de cada fichero → *Commit changes*), y se publican solos, ya revisados
+La clienta edita los JSON con VS Code, en su copia del repo (*Commit* y *Sync
+Changes*), y se publican solos, ya revisados
 ([GUIA.md](GUIA.md)). Nunca usa el SFTP. Si alguien subiera un JSON por SFTP a
 mano, el próximo push pararía hasta traer ese cambio al repo (paso 0).
 

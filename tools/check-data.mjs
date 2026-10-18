@@ -114,7 +114,8 @@ function revisaAgenda(menu) {
   eventos.forEach((ev) => {
     const dónde = ev.slug || '(sin slug)';
     revisaEntrada(ev, dónde);
-    (ev.eventos || []).forEach((c) => revisaEntrada(c, `${dónde} › ${c.slug || '(sin slug)'}`, ev));
+    if (ev.eventos) err(dónde, '"eventos" ahora se llama "events" (sin él, la web no los enseña)');
+    (ev.events || []).forEach((c) => revisaEntrada(c, `${dónde} › ${c.slug || '(sin slug)'}`, ev));
   });
 
 }

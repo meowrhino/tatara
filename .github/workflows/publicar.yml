@@ -21,6 +21,7 @@ concurrency:
 
 permissions:
   contents: write             # para mover la etiqueta 'publicado'
+  issues: write               # el aviso de una publicación que falla (abajo)
 
 jobs:
   publicar:
@@ -38,14 +39,18 @@ jobs:
         with:
           node-version: 22
 
+      # Lo que dicen la revisión y el build va también a build.log: si algo
+      # falla, sale en un issue.
       - name: Revisar los JSON
-        run: node tools/check-data.mjs
+        run: node tools/check-data.mjs 2>&1 | tee build.log
+        shell: bash
 
       # También comprueba que en el servidor no haya cambios que no estén en
       # GitHub (alguien que subió un JSON por SFTP). Si los hay, para. Y
       # pre-renderiza una página por dirección (tools/prerender.mjs).
       - name: Preparar dist/
-        run: bash tools/build-pangea.sh
+        run: bash tools/build-pangea.sh 2>&1 | tee -a build.log
+        shell: bash
 
       - name: Subir a Pangea
         env:
@@ -81,3 +86,32 @@ jobs:
         run: |
           git tag -f publicado
           git push -f origin publicado
+
+      # Si algo falla, un issue con el error, para verlo al entrar al repo (uno
+      # abierto a la vez; los siguientes fallos, como comentarios). Se cierra
+      # solo cuando vuelve a publicarse. Cómo arreglarlo: CLAUDE.md.
+      - name: Avisar del error en un issue
+        if: failure()
+        continue-on-error: true   # el aviso nunca impide publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REGISTRO: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GUIA: ${{ github.server_url }}/${{ github.repository }}/blob/main/CLAUDE.md
+        run: |
+          errores=$(grep -E -A2 '✗' build.log 2>/dev/null || echo 'Ha fallado al subir a Pangea o al comprobarlo: mira el registro.')
+          cuerpo=$(printf 'El push %s no se ha publicado: la web sigue como estaba.\n\n```\n%s\n```\n\n[El registro entero](%s) · [cómo arreglarlo](%s) ("Si no se publica")' "${GITHUB_SHA::7}" "$errores" "$REGISTRO" "$GUIA")
+          n=$(gh issue list --state open --label build --json number -q '.[0].number')
+          if [ -n "$n" ]; then gh issue comment "$n" --body "$cuerpo"
+          else
+            gh label create build --color B60205 --description 'la web no se ha publicado' --force
+            gh issue create --title 'La web no se ha publicado' --label build --body "$cuerpo"
+          fi
+      - name: Cerrar el aviso, si lo hay
+        if: success() && env.PUBLICADO == '1'
+        continue-on-error: true   # el aviso nunca impide publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for n in $(gh issue list --state open --label build --json number -q '.[].number'); do
+            gh issue close "$n" --comment "Arreglado: ${GITHUB_SHA::7} ya está publicado."
+          done

@@ -114,7 +114,7 @@ export function scrollAgendaToToday(view) {
 
 function eventBlock(ev) {
   const s = parseDate(ev.start), e = ev.end ? parseDate(ev.end) : s;
-  const children = (ev.eventos || []).slice().sort((a, b) => parseDate(a.start) - parseDate(b.start));
+  const children = (ev.events || []).slice().sort((a, b) => parseDate(a.start) - parseDate(b.start));
 
   const block = el('div', 'seg');
   block.dataset.slug = ev.slug;

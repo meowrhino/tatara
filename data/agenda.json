@@ -1,5 +1,5 @@
 {
-  "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (opcional: una foto de la obra, o una lista de fotos, NUNCA el cartel, que repite lo que ya dice el texto), start, end, time, description {ca,es,en} y eventos[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). Los anos son los de esa tabla: la temporada va de septiembre de 2025 a enero de 2027. Las filas del final que solo traen el mes ('dec', 'gener') son diciembre de 2026 y enero de 2027.",
+  "_comment": "Agenda TAT ARA. Cada entrada, en este orden: slug (identificador unico), kind (el tipo: exposicio, lectura, conversa... traducible), title {ca,es,en}, artist, image (opcional: una foto de la obra, o una lista de fotos, NUNCA el cartel, que repite lo que ya dice el texto), start, end, time, description {ca,es,en} y events[] (lo que ocurre DENTRO del rango de una exposicion, con el MISMO esquema). Lo que no cae dentro de ninguna exposicion es una entrada de primer nivel. El orden del array da igual: la web ordena por 'start'. Fuente: tabla AGENDA de 'web tatara-TEXT-SETEMBRE.docx' (septiembre 2026). Los anos son los de esa tabla: la temporada va de septiembre de 2025 a enero de 2027. Las filas del final que solo traen el mes ('dec', 'gener') son diciembre de 2026 y enero de 2027.",
   "events": [
     {
       "slug": "pateres-de-llet",
@@ -44,7 +44,7 @@
         "es": "Investigación matérica que busca la conexión con las ruralidades y el cuestionamiento de nuestra relación con los objetos.",
         "en": "Material research that seeks to connect with ruralities and question our relationship with objects."
       },
-      "eventos": [
+      "events": [
         {
           "slug": "lectura-ecologias-enraizadas",
           "kind": {
@@ -176,7 +176,7 @@
         "es": "Escombros, ladrillos, rocas, casas que se desintegran, tierra, barro, esmalte, piedras, arcillas de los caminos del bosque y minerales a alta temperatura visibilizan un lenguaje oculto de la riqueza del sol que conforman las piezas de la exposición.",
         "en": "Rubble, bricks, rocks, crumbling houses, earth, mud, glaze, stones, clays gathered from forest paths, and minerals fired at high temperatures reveal the hidden language of the soil’s richness, shaping the pieces in the exhibition."
       },
-      "eventos": [
+      "events": [
         {
           "slug": "sostenir-la-terra-taller-1",
           "kind": {
@@ -298,7 +298,7 @@
         "es": "Retrospectiva donde se podrá consultado todo el catálogo del artista, entre conversaciones alrededor de libros de pensamiento crítico como Lxs Subcomunes, El Mensaje Mata, Fricción y Brujería Capitalista.",
         "en": "A retrospective offering access to the artist’s complete catalogue."
       },
-      "eventos": [
+      "events": [
         {
           "slug": "tornen-les-esquelles",
           "kind": {
@@ -342,7 +342,7 @@
         "es": "Dalannais explora el color de la flora silvestre a través de una investigación de alquimia. La simbiosis entre bacterias, esporas y plantas abre el campo de investigación de las ecologías de la aparición y procesos de activación, al mismo tiempo que obra la mirada para entrelazarse en el territorio en un proceso de aceptación y vínculo.",
         "en": "Dalannais explores the colours of wild flora through alchemical research. The symbiosis between bacteria, spores, and plants opens a field of inquiry into ecologies of emergence and processes of activation, while expanding our ways of seeing and allowing us to become intertwined with the territory through a process of acceptance and connection."
       },
-      "eventos": [
+      "events": [
         {
           "slug": "taller-recerca-local",
           "kind": {
@@ -409,7 +409,7 @@
         "es": "Tocar Fusta es la propuesta de Emma Prats por el festival de arte emergente, Artnou. El artista parte del gesto, expresión y superstición popular homónima. Que tiene su origen en la antigua creencia que los malos espíritus habitaban a la madera. A partir de este fenómeno, se pretende explorar su vigencia en la contemporaneidad mediante la construcción colectiva de relatos de sentido y la ritualitzación del sujeto. Desvelando una incertidumbre vinculada a un miedo o un deseo. Así como la latencia de la materialidad y el lenguaje como capacidad de acción, funcionando como una suerte de amuleto.",
         "en": "Tocar Fusta (Knock on wood) stems from the gesture, expression, and popular superstition of the same name. It originates from the ancient belief that evil spirits inhabited wood; the contact between hand and surface interfered with these spirits’ ability to hear, creating an obstacle that prevented them from reversing the spoken wish. From this phenomenon, the work seeks to explore its persistence in the contemporary moment through the collective construction of narratives of meaning and the ritualization of the subject. It reveals an uncertainty linked to fear or desire, invoking a greater protective force. At the same time, it tends to the latency of materiality and language as forms of agency, acknowledging their capacity to structure and transform reality, functioning as a kind of amulet."
       },
-      "eventos": [
+      "events": [
         {
           "slug": "tocar-fusta-projeccio",
           "kind": {
@@ -475,7 +475,7 @@
         "es": "La galería se transforma en un espacio colectivo de investigación sobre el té. A través de dos sesiones de trabajo dirigidas por el artista la sala irá tomando forma. El punto de inicio es los procesos en que se trate el té y explorar las posibilidades de aplicarlo a plantas locales.",
         "en": "The gallery is transformed into a collective research space dedicated to tea. Through two working sessions led by the artist, the space will gradually take shape. The starting point is an exploration of tea-processing methods and the possibilities of applying them to local plants."
       },
-      "eventos": [
+      "events": [
         {
           "slug": "arnau-sala-saez-s12",
           "kind": {

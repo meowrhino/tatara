@@ -3,9 +3,11 @@
 DirectoryIndex index.html
 
 # Cada sección tiene su dirección (/nosaltres/, /exposicions/anna-dot/…) y al
-# publicar se genera su index.html ya pintado (tools/prerender.mjs). Si una
-# dirección no tiene fichero, se sirve el index.html de la raíz y el JS pinta
-# la sección: así nada da 404 aunque el pre-render no se haya hecho.
+# publicar se genera su index.html ya pintado (tools/prerender.mjs). Una
+# dirección que no existe contesta 404 (para Google, si no, existiría) con el
+# index.html de la raíz, que pinta la agenda: quien llega ahí ve la web igual.
+ErrorDocument 404 /index.html
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
@@ -23,10 +25,9 @@ DirectoryIndex index.html
   RewriteRule ^(src|tools|migrations|node_modules|\.wrangler)/ - [F,L]
   RewriteRule \.(sql|toml|md)$ - [F,L]
 
-  RewriteCond %{REQUEST_URI} !^/(api|admin)/
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^ index.html [L]
+  # El carret no se pre-renderiza (no es para Google), pero existe: ahí vuelve
+  # Stripe después de pagar (/carret/?gracies=1).
+  RewriteRule ^((es|en)/)?carret/?$ index.html [L]
 </IfModule>
 
 <FilesMatch "^\.(dev\.vars|env|gitignore|assetsignore)">

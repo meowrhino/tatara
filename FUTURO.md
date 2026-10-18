@@ -14,7 +14,7 @@ Lo que sí está pendiente y sí está dentro del encargo vive en
 **El problema.** Hoy, añadir una exposición o un evento a la agenda significa
 editar `data/agenda.json` a mano: acertar con las comas y las llaves, escribir
 `kind` en tres idiomas, saber si la entrada va suelta o dentro del array
-`eventos` de una exposición, convertir la foto a webp por terminal y subirlo
+`events` de una exposición, convertir la foto a webp por terminal y subirlo
 por SFTP. `npm run check` avisa de casi todos los errores posibles, pero llega
 *después* y hace falta terminal.
 
