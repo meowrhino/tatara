@@ -29,7 +29,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
 const DIST = process.argv[2] || 'dist';
-const SITE_URL = 'https://tatara.cat';
+const SITE_URL = JSON.parse(readFileSync(join(DIST, 'data/site.json'), 'utf8')).url;   // el dominio, de data/site.json
 const PORT = 8790;
 const ORIGIN = `http://127.0.0.1:${PORT}`;
 const CDP = 'http://127.0.0.1:9339';   // el navegador, por el protocolo de DevTools

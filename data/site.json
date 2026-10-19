@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/site.json",
   "_comment": "Configuración general de la web TAT ARA: identidad, idiomas, colores, datos de contacto y el menú. 'menu' es el índice de secciones: alimenta el menú (js/menu.js) y el router (js/router.js), en su orden. Cada archivo de datos se llama como su etiqueta en catalán. 'hidden': la ruta existe pero NO se lista en el menú — p. ej. 'carret', que se abre desde el icono del carrito arriba a la derecha.",
+  "url": "https://tatara.cat",
   "site": {
     "name": "TAT ARA",
     "studio": "tatara studio",

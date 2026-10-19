@@ -4,6 +4,7 @@
   "description": "data/site.json: el nom, els idiomes, els colors, el contacte i el menú. VS Code llegeix aquest fitxer (pel \"$schema\" de dalt del JSON) per completar, explicar cada camp i subratllar el que està malament; npm run check (i la publicació) el fa servir per revisar.",
   "type": "object",
   "required": [
+    "url",
     "site",
     "languages",
     "defaultLang",
@@ -20,6 +21,11 @@
   "properties": {
     "$schema": {
       "type": "string"
+    },
+    "url": {
+      "type": "string",
+      "pattern": "^https://[^/]+$",
+      "description": "El domini de la web, sense barra al final: \"https://tatara.cat\". La publicació el fa servir per a les adreces que surten a Google i en compartir."
     },
     "site": {
       "type": "object",

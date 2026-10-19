@@ -2,6 +2,9 @@
   "name": "tatara",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22"
+  },
   "scripts": {
     "dev": "php -S 127.0.0.1:8788 -t . tools/php-router.php",
     "test": "bash tools/test-api-php.sh",

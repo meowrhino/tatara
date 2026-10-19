@@ -13,7 +13,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-ORIGEN="${ORIGEN:-https://tatara.cat}"   # solo se cambia para probar el script
+ORIGEN="${ORIGEN:-$(node -p "require('./data/site.json').url")}"   # el dominio, de data/site.json; solo se cambia para probar el script
 
 # ---- 0. Los cambios de la clienta ----------------------------------------
 # data/ del servidor = lo publicado + lo que ella ha tocado. Restando lo
