@@ -14,7 +14,7 @@
 | La base de datos (stock, pedidos, newsletter, mensajes) | MariaDB en Pangea | la misma cuenta |
 | El código | [github.com/meowrhino/tatara](https://github.com/meowrhino/tatara) | cuenta de desarrollo (ver más abajo) |
 | El primer diseño, archivado | [meowrhino.github.io/tatarav0](https://meowrhino.github.io/tatarav0/) | cuenta de desarrollo; no cambia nunca |
-| Una copia vieja de pruebas | `tatara.manuellatourf.workers.dev` | cuenta personal de Cloudflare: **hay que borrarla** (punto 1) |
+| El diseño anterior, en marcha | `tatara.manuellatourf.workers.dev` (Worker + D1) | cuenta personal de Cloudflare; **se queda**, como `tatarav0`, de archivo nuestro (punto 1) |
 | Los cobros | Stripe, sin activar | tendrá que ser de TAT ARA |
 
 **Que la cuenta de Pangea sea de L'Afluent** fue decisión suya (30/09/2026). La
@@ -120,24 +120,23 @@ openssl rand -hex 32
 
 ## Lista del traspaso
 
-### 1. Cerrar lo de la etapa anterior — antes de nada
+### 1. La etapa anterior: el Worker de Cloudflare
 
 Durante el desarrollo la web corrió en un Worker de Cloudflare, en la cuenta de
-Manu, con una base D1 compartida con otro proyecto (quienNoCorre). **El 7 de
-octubre de 2026 sigue publicado** (`tatara.manuellatourf.workers.dev` contesta),
-con el diseño viejo y sus propios datos. En este orden:
+Manu, con una base D1 compartida con otro proyecto (quienNoCorre). Sigue
+publicado en `tatara.manuellatourf.workers.dev`, con el diseño anterior y sus
+propios datos. **Decidido el 19 de octubre de 2026: se queda**, como archivo
+nuestro del primer diseño (igual que `tatarav0`), fuera del traspaso: no es de
+la clienta ni se le menciona. Cómo nos quedamos una copia de la web actual se
+decide después del traspaso.
 
-- [ ] **Sacar los datos.** Si alguien se apuntó a la newsletter o escribió
-      durante las pruebas, está ahí y solo ahí:
+- [ ] **Sacar los datos.** Sus formularios siguen vivos: a 19 de octubre de 2026
+      la D1 tiene **2 altas** en `tatara_newsletter` (0 mensajes, 0 pedidos).
+      Pasarlas a la base nueva (un `POST /api/newsletter` por email) y, de vez
+      en cuando, volver a mirar:
 
       npx wrangler d1 execute shop --remote \
         --command "SELECT COUNT(*) FROM tatara_newsletter"
-
-      Lo mismo con `tatara_mensajes` y `tatara_pedidos`. Si algo no da 0,
-      exportarlo y meter las altas en la base nueva (un `POST /api/newsletter`
-      por email).
-- [ ] **Borrar el Worker `tatara`** desde el panel de Cloudflare.
-- [ ] **Borrar las tablas `tatara_*`** de la D1 compartida.
 
 ### 2. Claves
 
@@ -236,8 +235,7 @@ Sin esto el traspaso no está terminado:
 | Se olvida | Qué pasa |
 |---|---|
 | Mover la etiqueta `publicado` después de subir | La próxima publicación compara con una versión vieja y puede deshacer cambios |
-| Sacar los datos antes de borrar el Worker | Se pierden las altas de newsletter de las pruebas |
-| Borrar el Worker viejo | Sigue habiendo otra web pública, vieja, en una cuenta personal |
+| Mirar la D1 del Worker viejo | Alguien se apunta a la newsletter en la web vieja y nadie se entera |
 | Webhook de Stripe | Se cobra, pero el stock no baja y el pedido no se registra |
 | Cambiar la contraseña SFTP | Sigue circulando por WhatsApp y por el Drive |
 | Stock | Toda la botiga sale como *exhaurit* |
