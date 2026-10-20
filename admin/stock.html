@@ -144,7 +144,7 @@
             <td class="num">${p.preu === null ? "—" : esc(p.preu + p.moneda)}</td>
             <td class="num">${p.unitats}</td>
             <td class="num">${p.venudes}</td>
-            <td class="num"><input type="number" step="1" placeholder="0"
+            <td class="num"><input type="number" step="1" placeholder="0" min="-${p.unitats}"
                   data-prod="${i}" aria-label="unitats que arriben de ${esc(p.titol)}"></td>
           </tr>
           <tr class="hist" data-hist-de="${i}" hidden><td></td><td colspan="5">${historial(p)}</td></tr>`).join("");
@@ -171,6 +171,14 @@
         if (!payload.length) {
           feedback.textContent = "no hi ha res a guardar";
           feedback.className = "feedback";
+          return;
+        }
+        // No es poden treure més unitats de les que hi ha (el servidor ho deixaria a 0).
+        const massa = payload.find((u) => u.suma < -productes.find((p) => p.id === u.id).unitats);
+        if (massa) {
+          const p = productes.find((p) => p.id === massa.id);
+          feedback.textContent = `${p.titol}: només n'hi ha ${p.unitats}, no en pots treure ${-massa.suma}`;
+          feedback.className = "feedback feedback--error";
           return;
         }
         btn.disabled = true;
