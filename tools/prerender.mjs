@@ -128,7 +128,8 @@ const browser = spawn(chrome, [
 ], { stdio: 'ignore' });
 const salir = (code) => {
   server.kill(); browser.kill();
-  setTimeout(() => { rmSync(perfil, { recursive: true, force: true }); process.exit(code); }, 300);
+  // Chrome aún puede estar escribiendo en su perfil: si no se deja borrar, da igual.
+  setTimeout(() => { try { rmSync(perfil, { recursive: true, force: true, maxRetries: 5 }); } catch {} process.exit(code); }, 300);
 };
 for (let i = 0; ; i++) {
   try { if ((await fetch(ORIGIN + '/')).ok && (await fetch(`${CDP}/json/version`)).ok) break; } catch { /* aún arrancando */ }
