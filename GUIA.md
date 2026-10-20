@@ -23,11 +23,11 @@ ho arregleu (punt 7, *Si alguna cosa va malament*).
 1. Feu-vos un compte a [github.com](https://github.com) (millor una
    organització a nom de l'associació) i passeu-nos el nom d'usuari.
 2. Us passem **una còpia de la web al vostre compte**: des d'aquell moment és
-   vostra i viu a `https://github.com/EL-VOSTRE-USUARI/tatara`.
+   vostra i viu a `https://github.com/cristinanoguer/TATARAWEB`.
 3. Instal·leu **Visual Studio Code**: https://code.visualstudio.com
 4. Obriu-lo i porteu-hi la web: a l'esquerra, la icona de les branques
    (**Source Control**) → **Clone Repository** → **Clone from GitHub** → entreu
-   amb el vostre compte → trieu `EL-VOSTRE-USUARI/tatara` → trieu una carpeta
+   amb el vostre compte → trieu `cristinanoguer/TATARAWEB` → trieu una carpeta
    de l'ordinador → **Open**. Si us demana instal·lar Git, accepteu.
 
 A partir d'aquí, la web és aquella carpeta: cada cop que obriu VS Code, s'obre

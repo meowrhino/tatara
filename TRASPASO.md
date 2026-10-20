@@ -12,7 +12,7 @@
 | **La web de verdad** | `https://tatara.cat`, alojamiento de Pangea (`web-12`) | cuenta de socia de **L'Afluent SCCL** |
 | El dominio y el certificado HTTPS | Pangea (el certificado lo renuevan ellos) | la misma cuenta |
 | La base de datos (stock, pedidos, newsletter, mensajes) | MariaDB en Pangea | la misma cuenta |
-| El código | [github.com/meowrhino/tatara](https://github.com/meowrhino/tatara) | cuenta de desarrollo (ver más abajo) |
+| El código | [github.com/cristinanoguer/TATARAWEB](https://github.com/cristinanoguer/TATARAWEB) | cuenta de TAT ARA (Cris); meowrhino es colaborador |
 | El primer diseño, archivado | [meowrhino.github.io/tatarav0](https://meowrhino.github.io/tatarav0/) | cuenta de desarrollo; no cambia nunca |
 | El diseño anterior, en marcha | `tatara.manuellatourf.workers.dev` (Worker + D1) | cuenta personal de Cloudflare; **se queda**, como `tatarav0`, de archivo nuestro (punto 1) |
 | Los cobros | Stripe, sin activar | tendrá que ser de TAT ARA |
@@ -48,39 +48,17 @@ sube algo por SFTP a mano: la publicación automática para y avisa.
 
 ---
 
-## El repositorio pasa a TAT ARA (una copia)
+## El repositorio es de TAT ARA (hecho el 20 de octubre de 2026)
 
-Decidido: como en todas las webs del estudio, **le pasamos una copia del repo a
-su cuenta** y la clienta edita ahí. `meowrhino/tatara` se queda como nuestra
-copia de referencia.
+La web vive en **[cristinanoguer/TATARAWEB](https://github.com/cristinanoguer/TATARAWEB)**,
+una copia sin historial con la etiqueta `publicado` en el primer commit. El
+secret `SFTP_PASSWORD` está solo ahí: es el único repo que publica en
+tatara.cat. `meowrhino/tatara` se queda como archivo del estudio, sin secret.
+meowrhino es colaborador: los cambios de código se hacen **aquí**.
 
-1. TAT ARA crea una cuenta de GitHub (mejor una organización a nombre de la
-   asociación que una cuenta personal) y nos pasa el nombre.
-2. Creamos la copia **sin historial** (decidido el 20 de octubre de 2026): solo
-   los ficheros del repo (nada de lo ignorado: fotos originales, `.dev.vars`,
-   `api/config.php`), un primer commit y la etiqueta `publicado` sobre él, que
-   la publicación necesita. Su repo tiene que estar **vacío** (sin README):
-
-   ```bash
-   mkdir /tmp/tatara-entrega && git -C ~/Documents/GitHub/tatara archive HEAD | tar -x -C /tmp/tatara-entrega
-   cd /tmp/tatara-entrega && git init -b main && git add -A && git commit -m "La web de TAT ARA"
-   git tag publicado && git remote add origin https://github.com/SU-CUENTA/tatara.git
-   git push -u origin main --tags
-   ```
-
-3. En la copia: *Settings → Secrets and variables → Actions* → secret
-   `SFTP_PASSWORD`, y *Settings → Collaborators* → nosotros, para poder seguir
-   arreglando cosas.
-4. **En `meowrhino/tatara`, borrar el secret `SFTP_PASSWORD`**
-   (`gh secret delete SFTP_PASSWORD -R meowrhino/tatara`). Si los dos repos
-   pudieran publicar, un push nuestro subiría JSON viejos encima de los suyos.
-5. Hacer un cambio pequeño en la copia y comprobar que sale el círculo verde en
-   *Actions* y que se ve en tatara.cat.
-6. Cambiar `meowrhino/tatara` por la dirección nueva en este fichero y en el
-   README.
-
-A partir de ahí, los cambios de código se hacen **en su copia** (como
-colaboradores), no en la nuestra.
+Para el día a día en VS Code, `.vscode/settings.json` hace que *Sync* ponga
+los commits propios encima de los nuestros sin preguntar y no baje etiquetas.
+El clon tiene que estar **fuera de Google Drive** (Drive corrompe `.git`).
 
 `tatarav0` se queda en nuestra cuenta: es un archivo de diseño, no forma parte
 de la web.
@@ -149,7 +127,7 @@ decide después del traspaso.
       a Pangea, actualizar el secret `SFTP_PASSWORD` y borrar la vieja del
       `.docx` del Drive.
 - [x] Decidir quién se queda el repositorio: una copia en su cuenta (arriba).
-- [ ] Hacer la copia y borrar el secret de `meowrhino/tatara` (arriba, pasos 1-6).
+- [x] Hacer la copia y borrar el secret de `meowrhino/tatara` (20/10/2026).
 - [x] Publicación automática: `SFTP_PASSWORD` guardada como secret del repo.
 - [ ] **Al cambiar la contraseña de SFTP, cambiarla también en el secret**
       **de su copia** (*Settings → Secrets*).
@@ -222,14 +200,14 @@ durante 6 meses. La pérdida máxima es de un día.
 
 Sin esto el traspaso no está terminado:
 
-- [ ] Su cuenta de GitHub, la copia del repo y VS Code con la copia clonada
+- [x] Su cuenta de GitHub, la copia del repo y VS Code con la copia clonada
       ([GUIA.md](GUIA.md), punto 0).
-- [ ] Cambiar un texto de principio a fin, ella sola: *Sync*, cambiar, *Commit*,
+- [x] Cambiar un texto de principio a fin, ella sola: *Sync*, cambiar, *Commit*,
       *Sync Changes*, círculo verde en *Actions*, recargar.
-- [ ] Subir una foto pasada por imgToWeb y ponerla en el JSON.
-- [ ] Romper un JSON a propósito (una coma), ver el círculo rojo y el mensaje,
-      y arreglarlo.
-- [ ] Entrar en `/admin/`, contar stock y marcar un pedido como enviado.
+- [x] Subir una foto pasada por imgToWeb y ponerla en el JSON.
+- [x] Ver el círculo rojo y el issue que se abre solo, y cómo se cierra al
+      arreglarlo (pasó en la reunión).
+- [x] Entrar en `/admin/` y contar stock (las unidades reales ya están).
 - [ ] A quién llamar cuando algo se rompa.
 
 ---
