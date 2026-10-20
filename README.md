@@ -27,7 +27,6 @@ l'allotjament de [Pangea](https://pangea.org).
 | [TRASPASO.md](TRASPASO.md) | totes dues parts | Qui té què, les claus, qui es queda el repositori i la llista del traspàs |
 | [DESARROLLO.md](DESARROLLO.md) | qui toqui el codi | Estructura, disseny, com publicar a Pangea, l'API i les proves |
 | [CLAUDE.md](CLAUDE.md) | Claude | Què fer si la web no es publica (la Action en vermell, un issue) |
-| [FUTURO.md](FUTURO.md) | — | Idees plantejades i no pressupostades |
 
 ## En dues línies
 
