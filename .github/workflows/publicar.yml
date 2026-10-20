@@ -67,8 +67,10 @@ jobs:
           echo "web-12.pangea.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA9TPoIqxI1p0LUiaz5IibCy+rYXyQppUV8TI70IkMsQ" >> ~/.ssh/known_hosts
           # Sube lo que ha cambiado y no borra nada del servidor: api/config.php
           # (que no está en dist/) se queda donde está.
+          # cmd:fail-exit: si falla el login o el mirror, lftp sale con error.
+          # Sin esto seguía hasta 'bye' y salía con 0: verde sin haber subido.
           lftp --env-password -u tatara-web sftp://web-12.pangea.org -e "
-            set net:max-retries 2; set net:timeout 30;
+            set cmd:fail-exit yes; set net:max-retries 2; set net:timeout 30;
             mirror --reverse --verbose --parallel=4 dist /tatara;
             rm -r -f /tatara/assets/img/expos /tatara/assets/pdf;
             bye"
@@ -77,9 +79,15 @@ jobs:
           # Si ya no están, no hace nada; se puede quitar cuando se quiera.
           echo "PUBLICADO=1" >> "$GITHUB_ENV"
 
+      # La API responde y los JSON del servidor son exactamente los de dist/.
       - name: Comprobar
         if: env.PUBLICADO == '1'
-        run: curl -fsS https://tatara.cat/api/health
+        run: |
+          curl -fsS https://tatara.cat/api/health
+          for f in dist/data/*.json; do
+            curl -fsS "https://tatara.cat/data/$(basename "$f")" | cmp -s - "$f" \
+              || { echo "✗ $f no es lo que hay en el servidor: la subida no ha ido bien."; exit 1; }
+          done
 
       - name: Marcar lo publicado
         if: env.PUBLICADO == '1'
