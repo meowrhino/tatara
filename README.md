@@ -1,5 +1,12 @@
 # TAT ARA — web
 
+> **Aquest repositori és l'arxiu de l'estudi.** Des del 20 d'octubre de 2026 la
+> web viu a [cristinanoguer/TATARAWEB](https://github.com/cristinanoguer/TATARAWEB)
+> i es publica des d'allà. Aquí, `main` és el que es va entregar aquell dia, i la
+> branca `cliente` és una còpia del seu repositori que s'actualitza cada nit
+> (`.github/workflows/espejo.yml`) i es publica, només estàtica, a
+> `tatara-copia.manuellatourf.workers.dev`.
+
 Web de **TAT ARA**, espai galeria d'art, disseny i ecologia (Carrer Martí 59B,
 Barcelona): agenda, exposicions, recerca, botiga i newsletter, en català,
 castellà i anglès.
