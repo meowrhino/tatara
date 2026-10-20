@@ -2,13 +2,10 @@
 
 > **Aquest repositori és l'arxiu de l'estudi.** Des del 20 d'octubre de 2026 la
 > web viu a [cristinanoguer/TATARAWEB](https://github.com/cristinanoguer/TATARAWEB)
-> i es publica des d'allà. Aquí, `main` és el que es va entregar aquell dia, i la
-> branca `cliente` és una còpia del seu repositori que s'actualitza cada nit
-> (`.github/workflows/espejo.yml`). Una còpia navegable, només estàtica, viu a
-> `tatara-copia.manuellatourf.workers.dev`; es puja a mà des del Mac de l'estudi
-> (`npm run build` a la còpia de la clienta, `rm -rf dist/api dist/admin`, i
-> `npx wrangler deploy --name tatara-copia --assets dist`), o cada nit si el
-> repo té els secrets `CLOUDFLARE_API_TOKEN` i `CLOUDFLARE_ACCOUNT_ID`.
+> i es publica des d'allà; aquí es porten els seus commits de tant en tant. Una
+> còpia navegable, només estàtica, viu a `tatara-copia.manuellatourf.workers.dev`
+> (es puja a mà: `npm run build` a la còpia de la clienta, `rm -rf dist/api
+> dist/admin` i `npx wrangler deploy --name tatara-copia --assets dist`).
 
 Web de **TAT ARA**, espai galeria d'art, disseny i ecologia (Carrer Martí 59B,
 Barcelona): agenda, exposicions, recerca, botiga i newsletter, en català,
