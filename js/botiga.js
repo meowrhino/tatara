@@ -114,16 +114,24 @@ export async function renderCart(view) {
     history.replaceState(null, '', pathOf('carret'));
   }
 
-  const [data, envios] = await Promise.all([
+  const [data, envios, stockMap] = await Promise.all([
     loadJSON('data/botiga.json'),
     loadJSON('data/envios.json').catch(() => []),
+    fetchStockMap(),
   ]);
   const cur = data.currency || '€';
   const productos = data.products || [];
-  // Solo ítems que sigan existiendo y siendo comprables en el catálogo actual.
+  // Solo ítems que sigan existiendo y siendo comprables en el catálogo actual,
+  // y nunca más unidades de las que hay (el servidor lo rechazaría al pagar).
   const items = getCart()
-    .map((it) => ({ ...it, p: productos.find((p) => String(p.id) === String(it.id)) }))
-    .filter((it) => comprable(it.p));
+    .map((it) => ({ ...it, p: productos.find((p) => String(p.id) === String(it.id)), stock: stockDe(stockMap, it.id) }))
+    .filter((it) => comprable(it.p))
+    .map((it) => {
+      if (it.stock === null || it.cantidad <= it.stock) return it;
+      setQty(it.id, it.stock);
+      return { ...it, cantidad: it.stock };
+    })
+    .filter((it) => it.cantidad > 0);
 
   if (!items.length) {
     view.innerHTML = pageWrap(`<div class="cart"><p class="cart__empty">${esc(ui('cartEmpty'))}</p>
@@ -138,6 +146,7 @@ export async function renderCart(view) {
       ${img ? `<img class="cart-item__img" src="${esc(img)}" alt="">` : '<span></span>'}
       <span class="cart-item__title">${esc(t(it.p.title))}</span>
       <input class="cart-item__qty" type="number" min="0" step="1" value="${it.cantidad}"
+        ${it.stock === null ? '' : `max="${it.stock}" title="${esc(ui('onlyLeft'))} ${it.stock}"`}
         aria-label="${esc(ui('quantity'))}" data-qty>
       <span class="cart-item__price">${esc(String(it.p.price * it.cantidad))}${esc(cur)}
         <button class="cart-item__remove" type="button" data-remove aria-label="${esc(ui('removeItem'))}">×</button>

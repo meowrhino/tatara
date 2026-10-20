@@ -39,6 +39,7 @@ const STR = {
   addedToCart:    { ca: 'afegit al carret ✓', es: 'añadido al carrito ✓', en: 'added to cart ✓' },
   soldOut:        { ca: 'exhaurit', es: 'agotado', en: 'sold out' },
   quantity:       { ca: 'quantitat', es: 'cantidad', en: 'quantity' },
+  onlyLeft:       { ca: 'només en queden', es: 'solo quedan', en: 'only' },
   removeItem:     { ca: 'treure del carret', es: 'quitar del carrito', en: 'remove from cart' },
   total:          { ca: 'total', es: 'total', en: 'total' },
   checkout:       { ca: 'tramitar la compra', es: 'tramitar la compra', en: 'checkout' },
