@@ -1,5 +1,10 @@
 {
   "json.schemas": [
     { "fileMatch": ["data/envios.json"], "url": "./schema/envios.json" }
-  ]
+  ],
+  // Sync: si en GitHub hay un commit que aquí no está (uno nuestro), el suyo se
+  // pone encima sin preguntar. Y no bajar etiquetas: 'publicado' se mueve con
+  // cada publicación y git se queja al actualizarla.
+  "git.rebaseWhenSync": true,
+  "git.pullTags": false
 }
