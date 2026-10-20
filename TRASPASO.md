@@ -56,12 +56,16 @@ copia de referencia.
 
 1. TAT ARA crea una cuenta de GitHub (mejor una organización a nombre de la
    asociación que una cuenta personal) y nos pasa el nombre.
-2. Creamos la copia con todo el historial **y las etiquetas** (la publicación
-   necesita la etiqueta `publicado`):
+2. Creamos la copia **sin historial** (decidido el 20 de octubre de 2026): solo
+   los ficheros del repo (nada de lo ignorado: fotos originales, `.dev.vars`,
+   `api/config.php`), un primer commit y la etiqueta `publicado` sobre él, que
+   la publicación necesita. Su repo tiene que estar **vacío** (sin README):
 
    ```bash
-   git clone --mirror https://github.com/meowrhino/tatara.git
-   cd tatara.git && git push --mirror https://github.com/SU-CUENTA/tatara.git
+   mkdir /tmp/tatara-entrega && git -C ~/Documents/GitHub/tatara archive HEAD | tar -x -C /tmp/tatara-entrega
+   cd /tmp/tatara-entrega && git init -b main && git add -A && git commit -m "La web de TAT ARA"
+   git tag publicado && git remote add origin https://github.com/SU-CUENTA/tatara.git
+   git push -u origin main --tags
    ```
 
 3. En la copia: *Settings → Secrets and variables → Actions* → secret
