@@ -142,11 +142,11 @@ decide después del traspaso.
       vigentes.
 - [ ] Fotos para la agenda: opcionales, una por entrada, de la obra (nunca el
       cartel). Hoy no hay ninguna.
-- [ ] `npm run check` en verde.
+- [x] `npm run check` en verde.
 
 ### 4. Botiga y Stripe — cuando se quiera cobrar de verdad
 
-- [ ] **Stock.** Nace a 0, y sin unidades nada se puede comprar: contar
+- [x] **Stock.** Nace a 0, y sin unidades nada se puede comprar: contar
       ejemplares en `/admin/stock.html`.
 - [ ] **Envíos.** `data/envios.json` está vacío (`[]`) = solo recogida en la
       galería. Si van a enviar, rellenar las zonas

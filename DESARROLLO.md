@@ -321,8 +321,10 @@ api/
 - **Backend en Cloudflare.** Durante el desarrollo, la API fue un Worker de
   Cloudflare con base D1. Se cambió a Pangea para no sacar el dominio de un
   alojamiento de proximidad. El código está entero en la rama
-  `opcion-cloudflare`. El Worker sigue publicado y hay que borrarlo: ver
-  [TRASPASO.md](TRASPASO.md), punto 1.
+  `opcion-cloudflare` de `meowrhino/tatara`. El Worker sigue publicado en
+  `tatara.manuellatourf.workers.dev` como archivo del estudio del diseño
+  anterior (decidido el 19 de octubre de 2026): ver [TRASPASO.md](TRASPASO.md),
+  punto 1.
 - **Diseño v0.** El primer diseño (bloques de color, menú desplegable) está en la
   etiqueta `v0-disseny-color` y en el repo
   [meowrhino/tatarav0](https://github.com/meowrhino/tatarav0), publicado en
