@@ -1,5 +1,12 @@
 # tatara, para Claude
 
+> **Desde el 20 de octubre de 2026 este repo es archivo y no publica.** La web
+> vive en **[cristinanoguer/TATARAWEB](https://github.com/cristinanoguer/TATARAWEB)**
+> (la copia de la clienta; somos colaboradores), clonada en
+> `~/Documents/GitHub/TATARAWEB`. **Todo cambio de código se hace y se
+> commitea allí**: cada push a su `main` publica en tatara.cat. Lo que se
+> commitee aquí no llega a la web.
+
 La web de TAT ARA (tatara.cat), hecha por meowrhino con la receta del estudio
 ([meowrhino/JAMstack](https://github.com/meowrhino/JAMstack)), en su variante
 Pangea: sin build, PHP + MariaDB, y cada push a `main` se revisa y se sube por
