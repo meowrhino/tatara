@@ -88,8 +88,7 @@ En móvil, una columna, el menú como capa y TAT ARA entero arriba.
 Al abrir la web, la marca va a su sitio mientras carga la primera vista
 (`js/intro.js`): en escritorio TAT y ARA salen juntos del centro y se separan;
 en móvil, TAT ARA sale abajo y sube entero, como una barra de progreso. Un solo cuerpo de letra (`--fs`) y un
-solo interlineado (`--lh`); en escritorio el cuerpo crece con la columna para
-mantener unos 72 caracteres por línea. Sin negritas: los títulos van en
+solo interlineado (`--lh`); el cuerpo es de 12px en móvil y en escritorio. Sin negritas: los títulos van en
 mayúscula y lo que se quiere resaltar, subrayado. Todo va alineado a la
 izquierda salvo las secciones con poco contenido (contacte, newsletter, carret
 vacío), que van centradas en las dos direcciones. Viene del feedback de Ariadna

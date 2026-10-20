@@ -42,8 +42,7 @@
 
   /* Tipografía: UN solo cuerpo (--fs) y UN solo interlineado (--lh) para toda
      la web. La única excepción es la lista de exposiciones (--lh-list), que
-     tiene poco texto. En escritorio el cuerpo crece con la columna central
-     para que quepan unos 72 caracteres por línea, como en la maqueta. */
+     tiene poco texto. 12px en móvil y en escritorio. */
   --fs: 12px;
   --lh: 1.4;
   --lh-list: 1.7;
@@ -441,10 +440,6 @@ a:not(.bar__brand):hover, a:not(.bar__brand):focus-visible,
 @media (min-width: 720px) {
   :root {
     --gutter: 40px;
-    /* columna central = (100vw - 80px) / 2; 72 caracteres de 0,6em → /86,4.
-       Suelo de 12px (tablet: la línea se acorta) y techo de 20px (pantallas de
-       más de 1800px: la línea se alarga un poco en vez de crecer la letra). */
-    --fs: clamp(12px, 1.16vw - 1px, 20px);
     --brand: 3.3rem;
     --bar-h: calc(var(--gutter) + var(--brand) + 2.4rem);
     --brand-c: calc(var(--gutter) + var(--brand) / 2);
