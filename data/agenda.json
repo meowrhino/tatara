@@ -548,20 +548,25 @@
       }
     },
     {
-      "slug": "bsb-at-loop",
+      "slug": "mmf-at-loop",
       "kind": {
         "ca": "Exposició i festival",
         "es": "Exposición y festival",
         "en": "Exhibition and festival"
       },
       "title": {
-        "ca": "BSB at Loop",
-        "es": "BSB at Loop",
-        "en": "BSB at Loop"
+        "ca": "Miquel Matas Ferrer at Loop",
+        "es": "Miquel Matas Ferrer at Loop",
+        "en": "Miquel Matas Ferrer at Loop"
       },
       "image": "assets/img/agenda/24-bsb-at-loop.webp",
       "start": "2026-11-11",
-      "end": "2026-11-30"
+      "end": "2026-11-30",
+       "description": {
+        "ca": "Un viatge sensorial a través de les darreres traces d'una argila blanca local. Explorant l'extracció, la transformació industrial i la memòria, el film reflexiona sobre la nostra relació amb la terra, on l'argila esdevé un testimoni viu del progrés, l'esgotament i la pèrdua.",
+        "es": "Un viaje sensorial a través de las últimas huellas de una arcilla blanca local. Explorando la extracción, la transformación industrial y la memoria, el film refleja sobre nuestra relación con la tierra, donde la arcilla se convierte en un testimonio vivo del progreso, el agotamiento y la pérdida.",
+        "en": "A sensory journey through the last traces of a local white clay. Exploring extraction, industrial transformation and memory, the film reflects on our relationship with the earth, where the clay becomes a living testimony of progress, depletion and loss."
+      }
     },
     {
       "slug": "ines-sistiaga",
