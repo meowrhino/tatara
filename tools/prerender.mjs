@@ -133,7 +133,8 @@ const salir = (code) => {
 };
 for (let i = 0; ; i++) {
   try { if ((await fetch(ORIGIN + '/')).ok && (await fetch(`${CDP}/json/version`)).ok) break; } catch { /* aún arrancando */ }
-  if (i > 60) { console.log('✗ pre-render: no arrancan php o el navegador'); salir(1); }
+  // 40 s: en GitHub Actions Chrome a veces tarda más de 12 s en arrancar.
+  if (i > 200) { console.log('✗ pre-render: no arrancan php o el navegador'); salir(1); }
   await sleep(200);
 }
 
