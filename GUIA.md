@@ -45,12 +45,7 @@ fotos.
 ```
 data/
   agenda.json          ← l'agenda: exposicions, converses, tallers
-  exposicions.json     ← l'ordre de les fitxes de la secció Exposicions
-  exposicions/         ← una carpeta per exposició:
-    anna-dot/
-      project.json       ← el text de la fitxa
-      img/1.webp, 2.webp ← les seves fotos
-      full-de-sala.pdf   ← el seu full de sala, si en té
+  exposicions.json     ← les fitxes de la secció Exposicions (com l'agenda)
   nosaltres.json       ← el text de Nosaltres
   recerca.json         ← el text i les fotos de Recerca
   botiga.json          ← els productes: títol, autor, preu, foto
@@ -58,8 +53,10 @@ data/
   site.json            ← l'adreça, el correu, els enllaços de Contacte i el menú
 assets/
   img/agenda/          ← les fotos de l'agenda
+  img/exposicions/     ← les fotos de les exposicions
   img/recerca/         ← les fotos de recerca
   img/edicions/        ← les fotos de la botiga
+  pdf/                 ← els fulls de sala
 ```
 
 Cada fitxer de `data/` comença amb un `_comment` que explica què admet cada
@@ -86,7 +83,7 @@ camp: és la documentació més fiable, perquè viu al costat de les dades.
 Ja està: en 2-3 minuts surt a la web.
 
 **Per afegir fotos o PDF**: arrossegueu els fitxers a la carpeta que toqui (per
-exemple `data/exposicions/anna-dot/img/`) a la columna de l'esquerra de VS Code, i després
+exemple `assets/img/exposicions/`) a la columna de l'esquerra de VS Code, i després
 els passos 3 i 4.
 
 ---
@@ -159,44 +156,40 @@ Si passa fora de qualsevol exposició, va com un bloc més de l'agenda.
 
 ### Afegir una fitxa a la secció Exposicions
 
-**Una exposició, una carpeta**, a `data/exposicions/`. Tot el que és d'una
-exposició (el text, les fotos, el full de sala) és a dins.
+Igual que l'agenda: a `data/exposicions.json`, un bloc per exposició, en
+l'ordre en què surten a la web (la primera de la llista és la primera de la
+web).
 
-1. **Copieu la carpeta** d'una altra exposició i poseu-li de nom el de
-   l'artista, sense accents, espais ni majúscules: `nom-de-l-artista`. Aquest
-   nom és també l'adreça de la fitxa: `tatara.cat/exposicions/nom-de-l-artista/`.
-2. **Les fotos**: buideu la seva carpeta `img/` i poseu-hi les noves, passades
-   per imgToWeb, que ja surten numerades: `1.webp`, `2.webp`…
-3. **El full de sala** (si en té): el PDF, dins de la carpeta.
-4. **El text**: canvieu el seu `project.json`:
+1. **Les fotos**: passades per imgToWeb, amb un nom que s'entengui
+   (`nom-de-l-artista-1.webp`, `nom-de-l-artista-2.webp`…), a
+   `assets/img/exposicions/`.
+2. **El full de sala** (si en té): el PDF, a `assets/pdf/`.
+3. **El bloc**: copieu-ne un i canvieu-lo:
 
 ```json
 {
+  "slug": "nom-de-l-artista",
   "name": "Nom de l'artista",
   "expo": { "ca": "Títol de la mostra", "es": "…", "en": "…" },
   "date": { "start": "2027-03-01", "end": "2027-04-15" },
   "text": { "ca": "Text de l'exposició", "es": "…", "en": "…" },
-  "photos": ["1", "2", "3"],
+  "image": ["assets/img/exposicions/nom-de-l-artista-1.webp", "assets/img/exposicions/nom-de-l-artista-2.webp"],
   "bio": { "ca": "Bio de l'artista", "es": "…", "en": "…" },
   "url": "https://laseva.web",
-  "pdf": "full-de-sala.pdf"
-}
+  "pdf": "assets/pdf/nom-de-l-artista-full-de-sala.pdf"
+},
 ```
 
-5. **Poseu-la a la llista**: a `data/exposicions.json`, afegiu el nom de la
-   carpeta a `projects`, on vulgueu que surti (la primera de la llista és la
-   primera de la web).
-
-- `photos`: les fotos de `img/` que surten, **pel seu número i sense
-  `.webp`**, en l'ordre en què surten.
+- `slug`: l'adreça de la fitxa, `tatara.cat/exposicions/nom-de-l-artista/`:
+  sense accents, espais ni majúscules. **No el canvieu** un cop publicada:
+  canviaria l'adreça, i l'antiga (si algú l'havia compartit) portaria a la
+  llista.
+- `image`: les fotos amb la carpeta davant, en l'ordre en què surten.
 - `url` i `pdf` són opcionals: si no en té, esborreu la línia (i la coma de la
   línia d'abans).
-- Per deixar aire entre grups, a la llista de `data/exposicions.json` s'hi pot
-  posar `{ "spacer": true }`.
-- **No canvieu el nom de la carpeta** un cop publicada: canviaria l'adreça, i
-  l'antiga (si algú l'havia compartit) portaria a la llista.
-- Per treure una exposició de la web sense esborrar-la, traieu-la de la llista:
-  la carpeta es queda.
+- Per deixar aire entre grups, un bloc `{ "spacer": true }`.
+- Per treure una exposició de la web sense esborrar-la, traieu el bloc del
+  JSON i guardeu-lo en un document a part; les fotos es poden quedar.
 
 ### Afegir un producte a la botiga
 
@@ -241,9 +234,6 @@ Entre parèntesis hi va el nom de la secció: `agenda`, `nosaltres`,
 3. Pugeu-les a la carpeta que toqui d'`assets/img/` (punt 2).
 4. Escriviu aquest nom al JSON, amb la carpeta davant:
    `"assets/img/recerca/guus-vandeweerd-1.webp"`.
-
-Les fotos de les **exposicions** són diferents: van a la carpeta de cada
-exposició, numerades, i al JSON només el número (vegeu més amunt).
 
 Si una foto es veu **de costat**, gireu-la a l'ordinador abans de passar-la per
 imgToWeb.

@@ -10,7 +10,7 @@
 
 import { $, esc, t, ui } from './utils.js';
 import { SITE, pathOf, langOfPath } from './state.js';
-import { loadJSON, loadFichas } from './data.js';
+import { loadJSON } from './data.js';
 import { closeModal } from './modal.js';
 import { renderAgenda, scrollAgendaToToday } from './agenda.js';
 import { renderText, renderPeople, renderContact, renderNewsletter } from './sections.js';
@@ -76,8 +76,7 @@ export async function renderRoute() {
   if (sectionEl) sectionEl.textContent = label;   // "on ets" del footer
 
   try {
-    const data = !section.data ? null
-      : section.type === 'people' ? await loadFichas(section.data) : await loadJSON(section.data);
+    const data = section.data ? await loadJSON(section.data) : null;
     view.innerHTML = '';
     switch (section.type) {
       case 'agenda':  renderAgenda(view, data); break;

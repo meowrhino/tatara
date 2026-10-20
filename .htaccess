@@ -11,15 +11,10 @@ ErrorDocument 404 /index.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Los fulls de sala vivían en /assets/pdf/ hasta el 2026-10-15; ahora, en la
-  # carpeta de cada exposición (data/exposicions/<slug>/). Por si alguien guardó
-  # o compartió el enlace viejo.
-  RewriteRule ^assets/pdf/ariadna-serrahima-cataleg\.pdf$ /data/exposicions/ariadna-serrahima/ariadna-serrahima-cataleg.pdf [R=301,L]
-  RewriteRule ^assets/pdf/emma-prats-full-de-sala\.pdf$ /data/exposicions/emma-prats/emma-prats-full-de-sala.pdf [R=301,L]
-  RewriteRule ^assets/pdf/no-limits-full-de-sala\.pdf$ /data/exposicions/joana-mallol-olatz-azcona-i-sara-g-de-ubieta/no-limits-full-de-sala.pdf [R=301,L]
-  RewriteRule ^assets/pdf/maria-roy-full-de-sala\.pdf$ /data/exposicions/maria-roy-deulofeu/maria-roy-full-de-sala.pdf [R=301,L]
-  RewriteRule ^assets/pdf/solange-full-de-sala\.pdf$ /data/exposicions/solange-dalannais/solange-full-de-sala.pdf [R=301,L]
-  RewriteRule ^assets/pdf/tasio-ranz-full-de-sala\.pdf$ /data/exposicions/tasio-ranz/tasio-ranz-full-de-sala.pdf [R=301,L]
+  # Del 15 al 20 de octubre de 2026 los fulls de sala vivieron en la carpeta de
+  # cada exposición (data/exposicions/<slug>/); ahora, en /assets/pdf/. Por si
+  # alguien guardó o compartió un enlace de esos días.
+  RewriteRule ^data/exposicions/[^/]+/([^/]+\.pdf)$ /assets/pdf/$1 [R=301,L]
 
   # Por si alguna vez se sube el repo entero: lo que no es web, no se sirve.
   RewriteRule ^(src|tools|migrations|node_modules|\.wrangler)/ - [F,L]

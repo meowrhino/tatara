@@ -24,15 +24,15 @@ js/                   módulos ES, sin build. Entrada: main.js
   utils.js              $, el, esc, t (i18n), ui (textos de interfaz), zoomImg, X_ICON…
   dates.js · data.js · state.js
 data/*.json           TODO el contenido. Cada fichero se llama como su sección
-data/exposicions/     una carpeta por exposición: project.json + img/1.webp… + su PDF.
-                        data/exposicions.json es solo el índice (orden y spacers);
-                        js/data.js → loadFichas() las junta en el navegador
-assets/img/           fotos .webp: agenda/ · recerca/ · edicions/ · nosaltres/
+                        (exposicions.json como la agenda: una entrada por exposición,
+                        con slug, image[] y pdf por ruta; desde el 2026-10-20)
+assets/img/           fotos .webp: agenda/ · exposicions/ · recerca/ · edicions/ · nosaltres/
+assets/pdf/           los fulls de sala
 admin/                panel interno: stock y pedidos
 api/                  el backend PHP (ver "La API")
   config.php            credenciales. NO está en git: vive solo en el servidor
 schema/               qué campos lleva cada JSON (site, agenda, botiga, envios, exposicions,
-                      project, text): VS Code autocompleta y subraya; npm run check valida.
+                      text): VS Code autocompleta y subraya; npm run check valida.
                       Cada JSON lo nombra arriba ("$schema"); envios.json, que es una lista,
                       por .vscode/settings.json. No se sube a Pangea.
 tools/

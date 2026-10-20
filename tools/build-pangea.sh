@@ -24,13 +24,10 @@ git rev-parse -q --verify publicado >/dev/null || {
 git diff --quiet HEAD -- data/ || {
   echo "✗ data/ tiene cambios sin guardar. Haz commit antes de publicar."; exit 1; }
 
-# Los JSON de data/ y el de cada exposición (data/exposicions/<slug>/project.json).
-# Uno que aún no estaba en lo publicado (una exposición nueva) no está en el
+# Los JSON de data/. Uno que aún no estaba en lo publicado no está en el
 # servidor: no hay nada suyo que traer.
-# Solo cuentan los que se han bajado: lo demás de data/ (fotos, PDF, carpetas
-# nuevas) es nuestro, no de ella.
 BAJADOS=()
-for f in data/*.json data/*/*/project.json; do
+for f in data/*.json; do
   [[ -f "$f" ]] || continue
   git cat-file -e "publicado:$f" 2>/dev/null || continue
   if ! curl -fsS "$ORIGEN/$f" -o "$f" 2>/dev/null; then

@@ -174,36 +174,27 @@ function revisaTextos(menu) {
 function revisaFichas(menu) {
   for (const sec of menu.sections.filter((s) => s.type === 'people' && s.data)) {
     console.log(`\n${sec.data}`);
-    const indice = leer(sec.data);
-    // data/exposicions.json → data/exposicions/: una carpeta por ficha
-    const dir = sec.data.replace(/\.json$/, '');
-    if (!Array.isArray(indice.projects)) { err(sec.data, '"projects" tiene que ser una lista: ["anna-dot", "tasio-ranz"]'); continue; }
-    const carpetas = existsSync(join(ROOT, dir))
-      ? readdirSync(join(ROOT, dir), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name) : [];
+    const data = leer(sec.data);
+    // Como la agenda: una entrada por exposición, con sus fotos y su PDF por ruta.
+    if (!Array.isArray(data.people)) { err(sec.data, '"people" tiene que ser una lista de exposiciones'); continue; }
     const vistas = new Set();
-    for (const slug of indice.projects) {
-      if (slug && slug.spacer) continue;
-      if (typeof slug !== 'string') { err(sec.data, 'en "projects" va el nombre de una carpeta entre comillas, o { "spacer": true }'); continue; }
-      if (vistas.has(slug)) err(sec.data, `"${slug}" está dos veces en la lista`);
-      vistas.add(slug);
-      if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) err(slug, 'el nombre de la carpeta solo puede llevar minúsculas, números y guiones (sin acentos ni espacios): es la dirección de la ficha');
-      const rel = `${dir}/${slug}/project.json`;
-      if (!existsSync(join(ROOT, rel))) { err(sec.data, `la lista dice "${slug}", pero no hay ningún ${rel}`); continue; }
-      const p = leer(rel);
-      const dónde = `${dir}/${slug}`;
+    data.people.forEach((p, i) => {
+      if (p && p.spacer) return;
+      const dónde = p.slug || `entrada ${i + 1}`;
+      if (!p.slug) err(dónde, 'falta "slug" (la dirección de la ficha: "anna-dot")');
+      else if (vistas.has(p.slug)) err(dónde, '"slug" repetido: tiene que ser único');
+      else if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(p.slug)) err(dónde, 'el "slug" solo puede llevar minúsculas, números y guiones (sin acentos ni espacios): es la dirección de la ficha');
+      vistas.add(p.slug);
       if (!p.name) err(dónde, 'falta "name"');
       revisaTraducible('expo', p.expo, dónde, false);
       revisaTraducible('text', p.text, dónde, false);
       revisaTraducible('bio', p.bio, dónde, false);
-      if (p.photos && !Array.isArray(p.photos)) err(dónde, '"photos" tiene que ser una lista: ["1", "2"]');
-      for (const n of p.photos || []) {
-        if (!existsSync(join(ROOT, dónde, 'img', `${n}.webp`))) err(dónde, `"photos" dice "${n}", pero no hay ningún img/${n}.webp`);
-      }
+      [].concat(p.image || []).forEach((src) => revisaImagen(src, dónde));
       // pdf admite string, {url,label} o un array de cualquiera de los dos
       const pdfs = Array.isArray(p.pdf) ? p.pdf : (p.pdf ? [p.pdf] : []);
       pdfs.forEach((pdf) => {
         const url = typeof pdf === 'string' ? pdf : pdf && pdf.url;
-        if (url && !/^https?:/.test(url) && !existsSync(join(ROOT, dónde, url))) err(dónde, `el PDF no está en la carpeta: ${url}`);
+        if (url && !/^https?:/.test(url) && !existsSync(join(ROOT, url))) err(dónde, `el PDF no existe: ${url}`);
       });
       if (p.date) {
         for (const k of ['start', 'end']) {
@@ -212,10 +203,7 @@ function revisaFichas(menu) {
         }
       }
       if (p.url && !/^https?:\/\//.test(p.url)) avi(dónde, `"url" no empieza por http: ${p.url}`);
-    }
-    for (const c of carpetas.filter((c) => !vistas.has(c))) {
-      avi(`${dir}/${c}`, `no está en la lista de ${sec.data}: no sale en la web`);
-    }
+    });
   }
 }
 
@@ -244,14 +232,7 @@ function revisaEsquemas(menu) {
   const TIPO = { agenda: 'agenda', text: 'text', people: 'exposicions', shop: 'botiga' };
   mira('data/site.json', 'site');
   mira('data/envios.json', 'envios');
-  for (const sec of menu.sections.filter((s) => s.data && TIPO[s.type])) {
-    mira(sec.data, TIPO[sec.type]);
-    if (sec.type !== 'people') continue;
-    const dir = sec.data.replace(/\.json$/, '');
-    for (const slug of [].concat(leer(sec.data).projects || []).filter((x) => typeof x === 'string')) {
-      if (existsSync(join(ROOT, dir, slug, 'project.json'))) mira(`${dir}/${slug}/project.json`, 'project');
-    }
-  }
+  for (const sec of menu.sections.filter((s) => s.data && TIPO[s.type])) mira(sec.data, TIPO[sec.type]);
 }
 
 /* ---------- ejecutar ---------- */

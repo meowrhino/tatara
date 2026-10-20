@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "data/exposicions.json: la llista d'exposicions",
-  "description": "data/exposicions.json: quines fitxes surten i en quin ordre. Cada una, una carpeta a data/exposicions/. VS Code llegeix aquest fitxer (pel \"$schema\" de dalt del JSON) per completar, explicar cada camp i subratllar el que està malament; npm run check (i la publicació) el fa servir per revisar.",
+  "title": "data/exposicions.json: les exposicions",
+  "description": "data/exposicions.json: una entrada per exposició, en l'ordre de la web, com l'agenda. VS Code llegeix aquest fitxer (pel \"$schema\" de dalt del JSON) per completar, explicar cada camp i subratllar el que està malament; npm run check (i la publicació) el fa servir per revisar.",
   "type": "object",
   "required": [
-    "projects"
+    "people"
   ],
   "additionalProperties": false,
   "patternProperties": {
@@ -16,15 +16,13 @@
     "$schema": {
       "type": "string"
     },
-    "projects": {
+    "people": {
       "type": "array",
-      "description": "Els noms de les carpetes de data/exposicions/, en ordre. Un buit: { \"spacer\": true }",
+      "description": "Les exposicions, en ordre. Un buit entre grups: { \"spacer\": true }",
       "items": {
         "anyOf": [
           {
-            "type": "string",
-            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-            "description": "Minúscules, números i guions, sense accents ni espais."
+            "$ref": "#/$defs/exposicio"
           },
           {
             "type": "object",
@@ -39,6 +37,139 @@
             }
           }
         ]
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "En els tres idiomes: { \"ca\": \"…\", \"es\": \"…\", \"en\": \"…\" }",
+      "properties": {
+        "ca": {
+          "type": "string"
+        },
+        "es": {
+          "type": "string"
+        },
+        "en": {
+          "type": "string"
+        }
+      }
+    },
+    "data": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "AAAA-MM-DD: \"2027-03-01\""
+    },
+    "foto": {
+      "type": "string",
+      "pattern": "^assets/img/.+\\.(webp|jpg|jpeg|png|svg)$",
+      "description": "La foto, amb la carpeta: \"assets/img/exposicions/nom.webp\""
+    },
+    "pdf": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "El PDF, amb la carpeta: \"assets/pdf/nom.pdf\""
+        },
+        {
+          "type": "object",
+          "required": [
+            "url"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "label": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        }
+      ]
+    },
+    "exposicio": {
+      "type": "object",
+      "required": [
+        "slug",
+        "name"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^_": {
+          "description": "Una nota: no surt a la web."
+        }
+      },
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "L'adreça de la fitxa (tatara.cat/exposicions/<slug>/): minúscules, números i guions, sense accents ni espais. No es canvia un cop publicada."
+        },
+        "name": {
+          "type": "string",
+          "description": "Qui: \"Anna Dot\""
+        },
+        "expo": {
+          "$ref": "#/$defs/text",
+          "description": "El títol de l'exposició."
+        },
+        "date": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "start": {
+              "$ref": "#/$defs/data"
+            },
+            "end": {
+              "$ref": "#/$defs/data"
+            }
+          },
+          "description": "Les dates: { \"start\": \"2026-01-15\", \"end\": \"2026-02-28\" }"
+        },
+        "text": {
+          "$ref": "#/$defs/text",
+          "description": "El text de l'exposició."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/foto"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/foto"
+              }
+            }
+          ],
+          "description": "Les fotos, en ordre: [\"assets/img/exposicions/nom-1.webp\", \"assets/img/exposicions/nom-2.webp\"]"
+        },
+        "bio": {
+          "$ref": "#/$defs/text",
+          "description": "La bio de l'artista."
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https?://",
+          "description": "Opcional: la web de l'artista, \"https://…\""
+        },
+        "pdf": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/pdf"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/pdf"
+              }
+            }
+          ],
+          "description": "Opcional: el full de sala, \"assets/pdf/nom.pdf\", o { \"url\": \"…\", \"label\": { \"ca\": \"…\" } }, o una llista."
+        }
       }
     }
   }

@@ -27,9 +27,8 @@ Cuando falla, tatara.cat se queda como estaba. Para arreglarlo:
 3. **Arréglalo donde dice**, casi siempre en `data/`:
    - "no es un JSON válido … línea 542": una coma de más o de menos, o unas
      comillas sin cerrar, cerca de esa línea.
-   - "la imagen no existe: assets/img/…" o una foto de `photos` que no está en
-     `data/exposicions/<slug>/img/`: pregunta si falta subirla; si no, quítala
-     del JSON y dilo.
+   - "la imagen no existe: assets/img/…" o "el PDF no existe": pregunta si
+     falta subirlo; si no, quítalo del JSON y dilo.
    - "es un día que no existe", "es anterior a start": la fecha, en
      `AAAA-MM-DD`.
    - "no és un camp d'aquí (mal escrit?)" o "ha de ser un número…": no cuadra

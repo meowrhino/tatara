@@ -20,26 +20,3 @@ export async function loadJSON(url) {
   CACHE.set(url, data);
   return data;
 }
-
-/* Una sección de fichas (exposicions): su JSON es el índice —"projects", en
-   orden, con { "spacer": true } para dejar aire— y cada ficha vive en su
-   carpeta, al lado: data/exposicions/<slug>/project.json, con sus fotos en
-   img/ (1.webp, 2.webp…) y su PDF. Aquí se juntan en la lista "people" que
-   pinta renderPeople, con las rutas ya enteras. */
-export async function loadFichas(url) {
-  const indice = await loadJSON(url);
-  const dir = url.replace(/\.json$/, '/');
-  const people = await Promise.all((indice.projects || []).map(async (slug) => {
-    if (typeof slug !== 'string') return slug;   // { "spacer": true }
-    const en = (f) => (/^(https?:)?\//.test(f) ? f : `${dir}${slug}/${f}`);
-    const p = await loadJSON(`${dir}${slug}/project.json`);
-    // pdf admite un string, un objeto {url, label} o un array de cualquiera de los dos
-    const pdf = (x) => (typeof x === 'string' ? en(x) : { ...x, url: en(x.url) });
-    return {
-      ...p, slug,
-      images: (p.photos || []).map((n) => en(`img/${n}.webp`)),
-      pdf: Array.isArray(p.pdf) ? p.pdf.map(pdf) : (p.pdf ? pdf(p.pdf) : null),
-    };
-  }));
-  return { ...indice, people };
-}

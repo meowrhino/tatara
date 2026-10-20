@@ -72,11 +72,11 @@ jobs:
           lftp --env-password -u tatara-web sftp://web-12.pangea.org -e "
             set cmd:fail-exit yes; set net:max-retries 2; set net:timeout 30;
             mirror --reverse --verbose --parallel=4 dist /tatara;
-            rm -r -f /tatara/assets/img/expos /tatara/assets/pdf;
+            rm -r -f /tatara/data/exposicions;
             bye"
-          # Esa línea de rm: lo viejo de antes de 'una carpeta por exposición'
-          # (2026-10-15). Las direcciones de los PDF siguen redirigiendo (.htaccess).
-          # Si ya no están, no hace nada; se puede quitar cuando se quiera.
+          # Esa línea de rm: las carpetas por exposición (del 15 al 20 de octubre
+          # de 2026); ahora las fotos van en assets/img/exposicions/ y los PDF en
+          # assets/pdf/. Si ya no está, no hace nada; se puede quitar cuando se quiera.
           echo "PUBLICADO=1" >> "$GITHUB_ENV"
 
       # La API responde y los JSON del servidor son exactamente los de dist/.
