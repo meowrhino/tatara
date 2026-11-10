@@ -112,10 +112,10 @@ nuestro del primer diseño (igual que `tatarav0`), fuera del traspaso: no es de
 la clienta ni se le menciona. Cómo nos quedamos una copia de la web actual se
 decide después del traspaso.
 
-- [ ] **Sacar los datos.** Sus formularios siguen vivos: a 19 de octubre de 2026
-      la D1 tiene **2 altas** en `tatara_newsletter` (0 mensajes, 0 pedidos).
-      Pasarlas a la base nueva (un `POST /api/newsletter` por email) y, de vez
-      en cuando, volver a mirar:
+- [x] **Sacar los datos.** El 21 de octubre de 2026 la D1 tenía 2 altas en
+      `tatara_newsletter` (0 mensajes, 0 pedidos): una real, pasada a la base
+      nueva (`POST /api/newsletter`), y la de Manu, de pruebas. Sus formularios
+      siguen vivos: de vez en cuando, volver a mirar:
 
       npx wrangler d1 execute shop --remote \
         --command "SELECT COUNT(*) FROM tatara_newsletter"
